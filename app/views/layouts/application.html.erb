@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- title is function from app/helpers/ApplicationHelper -->
+    <title><%= title %></title>
+    <%= csrf_meta_tag %>
+    <%= javascript_include_tag "application" %>
+    <%= render 'layouts/stylesheets' %>
+  </head>
+  <body>
+
+    
+    <div class="container" id="user_nav">
+
+      <%= render 'layouts/header' %>
+
+      <section class="round">
+	<%= yield %>
+      </section>
+
+      <%= render 'layouts/footer' %>
+
+    </div>
+  </body>
+</html>

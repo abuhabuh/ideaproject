@@ -1,0 +1,23 @@
+      <header>
+	<nav class="round">
+	  <ul>
+	    
+	    <% if user_signed_in? %>
+              <li> Hello <%= current_user.email %> </li>
+	      <li> <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete%> </li>
+	    <% else %>
+              <li> <%= link_to 'Sign In', new_user_session_path %> </li>
+	      <li> <%= link_to 'Sign Up', new_user_registration_path %> </li>
+	    <% end %>
+	  </ul>
+	</nav>
+
+	<% if flash[:notice] %>
+          <p class="notice"><%= notice %></p>
+	<% end %>
+	<% if flash[:alert] %>
+          <p class="alert"><%= alert %></p>
+	<% end %>
+	<!-- or flash.each do |key, msg| -->
+
+      </header>

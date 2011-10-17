@@ -1,0 +1,11 @@
+<h1>JustAnIdea</h1>
+
+Welcome to Just an Idea . com 
+
+<br \>
+<br \>
+Enter your idea: 
+<%= form_tag initial_idea_path, :method => 'post' do %>
+<%= text_field_tag :idea %>
+<%= submit_tag "Submit" %>
+<% end %>

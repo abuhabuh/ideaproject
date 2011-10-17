@@ -1,0 +1,11 @@
+<h1>Yay, Here's Your homepage:</h1>
+
+<p> Your idea was:    <%= @initial_idea %> </p>
+
+
+Add an idea: 
+<%= form_tag add_idea_path, :method => 'post' do %>
+  <%= text_field_tag :idea, @initial_idea %>
+  <%= submit_tag "Add Idea" %>
+<% end %>
+

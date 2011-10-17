@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Admin flag:</b>
+  <%= @user_event.admin_flag %>
+</p>
+
+<p>
+  <b>Invited:</b>
+  <%= @user_event.invited %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @user_event.user %>
+</p>
+
+<p>
+  <b>Event:</b>
+  <%= @user_event.event %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_event_path(@user_event) %> |
+<%= link_to 'Back', user_events_path %>

@@ -1,0 +1,27 @@
+<h1>Listing user_ideas</h1>
+
+<table>
+  <tr>
+    <th>Invited</th>
+    <th>User</th>
+    <th>Idea</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @user_ideas.each do |user_idea| %>
+  <tr>
+    <td><%= user_idea.invited %></td>
+    <td><%= user_idea.user %></td>
+    <td><%= user_idea.idea %></td>
+    <td><%= link_to 'Show', user_idea %></td>
+    <td><%= link_to 'Edit', edit_user_idea_path(user_idea) %></td>
+    <td><%= link_to 'Destroy', user_idea, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User idea', new_user_idea_path %>
