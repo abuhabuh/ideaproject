@@ -5,12 +5,28 @@ gem 'rails', '3.1.1'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
-
+gem 'mysql2' # driver for mysql
 gem 'json'
+gem 'devise' # authentication package
+gem 'foreigner' # foreign key for database
 
-gem 'devise'
-gem 'foreigner'
+# TEST GEM INSTALL <BEGIN>
+#group :development do
+#  gem 'rspec-rails', '2.6.1'
+#end
+#
+#group :test do
+#  gem 'rspec-rails', '2.6.1'
+#  gem 'webrat', '0.7.1'
+#end
+#
+#gem 'autotest-standalone'
+#gem 'autotest-rails-pure', '4.1.2'
+#gem 'autotest-growl'
+#
+#
+# TEST GEM INSTALL <END>
+
 
 # Gems used only for assets and not required
 # in production environments by default.

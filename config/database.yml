@@ -25,10 +25,10 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: idea_app_test
+  database: test_schema
   pool: 5
-  username: root
-  password:
+  username: app_test_db
+  password: pswd
   host: localhost
 
 production:
