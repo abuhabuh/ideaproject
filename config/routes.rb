@@ -1,5 +1,7 @@
 IdeaApp::Application.routes.draw do
 
+  resources :friendships
+
   resources :user_events
 
   resources :user_ideas
@@ -13,9 +15,17 @@ IdeaApp::Application.routes.draw do
   get "home/index"
   root :to => "home#index"
 
-  match "home/add_idea", :to => "home#add_idea", :as => :add_idea
-  match "home/process_idea", :to => "home#process_idea", :as => :initial_idea
-  match "home/authenticated_home", :to => "home#authenticated_home", :as => :authenticated_home
+  match "home/add_idea", :to => "ideas#add_idea", \
+        :as => :add_idea, :via => "POST"
+  match "home/process_idea", :to => "ideas#process_idea", \
+        :as => :initial_idea, :via => "POST"
+  match "home/authenticated_home", :to => "home#authenticated_home", \
+        :as => :authenticated_home, :via => "GET"
+
+  match "users", :to => "users#index", \
+        :as => :users, :via => "GET"
+  match "users/profile", :to => "users#profile", \
+        :as => :users_profile, :via => "GET"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

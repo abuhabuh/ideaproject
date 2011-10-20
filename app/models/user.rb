@@ -4,15 +4,19 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, \
-    :user_name, :first_name, :last_name, :location, :dob
-
+  # Associations
   has_many :user_ideas
   has_many :ideas, :through => :user_ideas
 
   has_many :user_events
   has_many :events, :through => :user_events
+
+  has_many :friendships
+  has_many :friends, :through => :friendships
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me, \
+    :user_name, :first_name, :last_name, :location, :dob
 
 
   # Create new idea object for user

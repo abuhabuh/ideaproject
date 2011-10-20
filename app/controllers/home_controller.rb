@@ -45,37 +45,6 @@ class HomeController < ApplicationController
   end
 
 
-  
-  def add_idea
-    current_user.create_idea(params[:idea])
 
-    render :authenticated_home
-  end
-
-
-
-
-  def process_idea
-
-    # TODO: validate :idea parameter on client side through
-    #   form validation
-    if params[:idea] && !params[:idea].blank?
-      @ideaText = params[:idea]
-      
-      # Add string to session to save for when user
-      #   authenticates
-      session[:initial_idea] = params[:idea]
-      
-      # Do matching on ideaText to list top similar ideas
-      #   Create idea object and call idea.getmatches
-
-      # Forward to process_idea view page to show results
-      #   and incentivize to sign up
-    else
-      # Handle unexpected nil error
-      puts " TRACE HomeController:process_idea - unexpected nil"
-    end
-
-  end
 
 end
