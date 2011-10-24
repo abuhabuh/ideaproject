@@ -1,5 +1,5 @@
 IdeaApp::Application.routes.draw do
-
+ 
   resources :friendships
 
   resources :user_events
@@ -15,9 +15,11 @@ IdeaApp::Application.routes.draw do
   get "home/index"
   root :to => "home#index"
 
-  match "home/add_idea", :to => "ideas#add_idea", \
+  match "home/add_idea", :to => "home#add_idea", \
         :as => :add_idea, :via => "POST"
-  match "home/process_idea", :to => "ideas#process_idea", \
+  match "home/add_idea_id", :to => "home#add_idea_id", \
+        :as => :add_idea_id, :via => "POST"
+  match "home/process_idea", :to => "home#process_idea", \
         :as => :initial_idea, :via => "POST"
   match "home/authenticated_home", :to => "home#authenticated_home", \
         :as => :authenticated_home, :via => "GET"

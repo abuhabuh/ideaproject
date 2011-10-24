@@ -41,4 +41,63 @@ class User < ActiveRecord::Base
     puts "IDEA added for  user: idea id - #{idea.id} : user id - #{self[:id]}"
   end
 
+  # Join the user to the idea
+  def join_idea (idea_id)
+    # TODO: check input: is number, is not an idea user already has
+    
+    user_idea = UserIdea.new(:user_id => self[:id], :idea_id => idea_id)
+    if (user_idea.save)
+      puts " TRACE User:join_idea - user_idea saved successfully"
+    else
+      puts " TRACE User:join_idea - error saving user_idea"
+    end
+    
+  end
+
+
+
+
+  # Returns user's ideas as relation that can be operated on or queried
+  def self.get_my_ideas (current_user)
+    current_user.ideas
+  end
+  
+  # Returns user's ideas' ids as array of idea ids
+  def self.get_my_idea_ids (current_user)
+    query_results = current_user.ideas.select('ideas.id')
+    
+    idea_ids = Array.new
+    query_results.each do |item|
+      idea_ids << item.id.to_s
+    end
+    
+    return idea_ids
+  end
+
+  # Returns idea of user's friends
+  #   Return parameters have to be same as get_public_ideas
+  def self.get_my_friends_ideas (current_user)
+    
+    current_user.friendships\
+                .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')\
+                .joins('INNER JOIN ideas ON user_ideas.idea_id = ideas.id')\
+                .group('user_ideas.idea_id')\
+                .select('ideas.text as idea_text, ideas.id as idea_id, count(user_ideas.idea_id) as user_count')
+    
+  end
+  
+  # Returns all public ideas grouped by idea id with count of all users who
+  #   subscribe to the idea
+  #   Return parameters have to be same as get_my_friends_ideas
+
+  #   TODO: param that specifies how many rows to get at a time
+  def self.get_public_ideas
+
+    UserIdea.joins(:idea)\
+            .joins(:user)\
+            .group('ideas.id')\
+            .select('ideas.text as idea_text, ideas.id as idea_id, count(ideas.id) as user_count')
+            
+  end
+
 end

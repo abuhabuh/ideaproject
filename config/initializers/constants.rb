@@ -1,0 +1,5 @@
+# CONSTANTS FOR IDEA PROJECT
+
+# Stream View Constants
+STREAM_VIEW_PUBLIC = "public"
+STREAM_VIEW_FRIENDS = "friends"

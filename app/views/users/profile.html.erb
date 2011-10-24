@@ -5,6 +5,26 @@ Email: <%= current_user.email %>
 <br/>
 <br/>
 
+Ideas:
+
+<table>
+  <tr>
+    <th>Idea Text</th>
+    <th>Idea ID</th>
+    <th></th>
+  </tr>
+
+  <% current_user.user_ideas.each do |user_idea| %>
+    <tr>
+      <td><%= user_idea.idea.text %></td>
+      <td><%= user_idea.idea.id %></td>
+      <td><%= link_to 'remove', user_idea, :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br/>
+
 Friends:
 
 <table>
@@ -18,7 +38,7 @@ Friends:
     <tr>
       <td><%= friendship.friend.user_name %></td>
       <td><%= friendship.friend.email %></td>
-      <td><%= link_to 'Defriend', friendship, :method => :delete %></td>
+      <td><%= link_to 'defriend', friendship, :method => :delete %></td>
     </tr>
   <% end %>
 </table>
