@@ -2,24 +2,15 @@
 
 <table>
   <tr>
-    <th>User Name</th>
-    <th>Email</th>
+    <th>User</th>
+    <th>Name</th>
     <th></th>
   </tr>
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.user_name %></td>
-    <td><%= user.email %></td>
-    <% tmp_index = @friends_ids.index(user.id) %>
-    <% if tmp_index != nil %>
-      <td><%= link_to 'Defriend', friendship_path(@friendships_ids[tmp_index]), :method => :delete %></td>
-    <% else %>
-      <td><%= link_to 'Add Friend', friendships_path(:friend_id => user), \
-              :method => :post %></td>
-    <% end %>
-  </tr>
-<% end %>
+  <%= render :partial => "list_users", :collection => @users, :as => :user %>
+
 </table>
+
+
 
 <br />

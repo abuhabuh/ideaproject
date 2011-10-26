@@ -9,6 +9,7 @@ gem 'mysql2' # driver for mysql
 gem 'json'
 gem 'devise' # authentication package
 gem 'foreigner' # foreign key for database
+gem 'paperclip', '~> 2.4'
 
 # TEST GEM INSTALL <BEGIN>
 #group :development do

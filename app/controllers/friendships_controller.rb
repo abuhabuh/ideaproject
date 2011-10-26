@@ -43,16 +43,20 @@ class FriendshipsController < ApplicationController
   def create
     @friendship = current_user.friendships.build
     @friendship.friend_id = params[:friend_id]
-
-    # TODO catch non-unique record insert exception from Active Record
+    
+    # TODO: flash doesn't work with AJAX request?
     if @friendship.save
       flash[:notice] = 'Friendship was successfully created.'
     else
       flash[:error] = 'Error creating friendship'
     end
     
-    @users = User.all
-    render 'users/index'
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js 
+      #format.json { render json: @friendship }
+    end
+
   end
 
   # PUT /friendships/1
@@ -74,10 +78,15 @@ class FriendshipsController < ApplicationController
   # DELETE /friendships/1
   def destroy
     @friendship = current_user.friendships.find(params[:id])
+    @friend = @friendship.friend
     @friendship.destroy
 
     flash[:notice] = "Removed friendship."
     
-    render users_profile_path
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js
+      #format.json { render json: @friendship }
+    end
   end
 end

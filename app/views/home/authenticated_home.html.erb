@@ -56,21 +56,23 @@ Add an idea:
       
       <table>
         <tr>
+          <th>Creator</th>
           <th>Idea Text</th>
           <th>Users Sharing</th>
           <th>Idea Id</th>
           <th></th>
         </tr>
-        <% @stream_ideas.each do |idea| %>
+        <% @stream_ideas.each do |query_results| %>
           <tr>
-            <td><%= link_to idea.idea_text, idea_path(idea.idea_id), {:method => 'get'}%></td>
-            <td><%= idea.user_count%></td>
-            <td><%= idea.idea_id%></td>
-            <% if @user_idea_ids.include?(idea.idea_id.to_s) %>
+            <td><%= image_tag User.find(query_results.idea_creator).profile_pic.url(:stream) %></td>
+            <td><%= link_to query_results.idea_text, idea_path(query_results.idea_id), {:method => 'get'}%></td>
+            <td><%= query_results.user_count%></td>
+            <td><%= query_results.idea_id%></td>
+            <% if @user_idea_ids.include?(query_results.idea_id.to_s) %>
               <td><%= link_to 'View Idea', '#' %></td>
             <% else %>
               <td><%= link_to 'Add Idea',
-                              add_idea_id_path(:idea_id => idea.idea_id),
+                              add_idea_id_path(:idea_id => query_results.idea_id),
                               {:method => 'post', \
                                :title => 'Add to your idea list'} %>
             <% end %>

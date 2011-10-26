@@ -14,10 +14,12 @@ class User < ActiveRecord::Base
   has_many :friendships
   has_many :friends, :through => :friendships
 
+  # Setup paperclip photo attachment property
+  has_attached_file :profile_pic, :styles => { :medium => "300x300#", :thumb => "100x100#", :stream => "50x50#" }
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, \
-    :user_name, :first_name, :last_name, :location, :dob
-
+    :user_name, :first_name, :last_name, :location, :dob, :profile_pic
 
   # Create new idea object for user
   def create_idea (idea_string)
@@ -82,7 +84,7 @@ class User < ActiveRecord::Base
                 .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')\
                 .joins('INNER JOIN ideas ON user_ideas.idea_id = ideas.id')\
                 .group('user_ideas.idea_id')\
-                .select('ideas.text as idea_text, ideas.id as idea_id, count(user_ideas.idea_id) as user_count')
+                .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(user_ideas.idea_id) as user_count')
     
   end
   
@@ -96,7 +98,7 @@ class User < ActiveRecord::Base
     UserIdea.joins(:idea)\
             .joins(:user)\
             .group('ideas.id')\
-            .select('ideas.text as idea_text, ideas.id as idea_id, count(ideas.id) as user_count')
+            .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(ideas.id) as user_count')
             
   end
 

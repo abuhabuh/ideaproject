@@ -28,4 +28,8 @@ IdeaApp::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  # Set paperclip config to find identify command from ImageMagick
+  Paperclip.options[:command_path] = 'C:\Program Files\ImageMagick-6.7.3-Q16'
+  Paperclip.options[:swallow_stderr] = false
 end

@@ -1,5 +1,7 @@
 IdeaApp::Application.routes.draw do
  
+  resources :idea_events
+
   resources :friendships
 
   resources :user_events
