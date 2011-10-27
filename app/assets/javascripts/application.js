@@ -9,3 +9,17 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+// faye chat client functionality
+$(function() {
+  var faye = new Faye.Client('http://localhost:9292/faye');
+
+  if(document.getElementById("IDEA_CHAT_PAGE_FLAG")){
+    var chat_id = document.getElementById("IDEA_CHAT_PAGE_FLAG").value
+    // TODO: ensure you don't have to unsubscribe from channel
+    //       specifications seem to say that this is not required
+    faye.subscribe('/idea_chat/'+chat_id, function (data) {
+      eval(data);
+    });
+  }
+});

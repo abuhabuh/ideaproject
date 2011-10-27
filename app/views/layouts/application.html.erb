@@ -7,6 +7,10 @@
     <%= javascript_include_tag "application" %>
     <%= javascript_include_tag :defaults %>
     <%= render 'layouts/stylesheets' %>
+    <!-- faye server mount location - CHANGE FOR ENVIRONMENT MIGRATION! -->
+    <%= javascript_include_tag "http://localhost:9292/faye.js" %>
+
+    <%= yield :head %>
   </head>
   <body>
 

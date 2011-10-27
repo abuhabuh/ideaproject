@@ -14,6 +14,9 @@ class User < ActiveRecord::Base
   has_many :friendships
   has_many :friends, :through => :friendships
 
+  has_many :chat_messages
+  #TODO: should add has_many :ideas, :through => :chat_messages ????
+
   # Setup paperclip photo attachment property
   has_attached_file :profile_pic, :styles => { :medium => "300x300#", :thumb => "100x100#", :stream => "50x50#" }
 

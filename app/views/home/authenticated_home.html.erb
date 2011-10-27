@@ -58,7 +58,13 @@ Add an idea:
         <tr>
           <th>Creator</th>
           <th>Idea Text</th>
-          <th>Users Sharing</th>
+          <% case session[:stream_view] %>
+            <% when STREAM_VIEW_PUBLIC %>
+
+              <th>Users Sharing</th>
+            <% when STREAM_VIEW_FRIENDS %>
+              <th>Friends Sharing</th>
+          <% end %>
           <th>Idea Id</th>
           <th></th>
         </tr>

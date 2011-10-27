@@ -9,7 +9,18 @@ gem 'mysql2' # driver for mysql
 gem 'json'
 gem 'devise' # authentication package
 gem 'foreigner' # foreign key for database
-gem 'paperclip', '~> 2.4'
+gem 'paperclip', '~> 2.4' # for fast pic attachments - uses file system though
+                          #   need a better way to do this in DB
+
+# XXX CUDN'T INSTALL XXX Juggernaut chat client 
+#gem 'gemcutter' # for juggernaut install requirement
+#gem 'eventmachine', '1.0.0.beta.3' # eventmachine version that works with windows
+#gem 'juggernaut_rails' # for juggernaut chat client
+
+# Faye chat client setup
+gem 'eventmachine', '1.0.0.beta.3' # eventmachine version that works with windows
+gem 'faye'
+
 
 # TEST GEM INSTALL <BEGIN>
 #group :development do

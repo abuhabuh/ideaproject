@@ -1,18 +1,81 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Text:</b>
-  <%= @idea.text %>
-</p>
 
-<p>
-  <b>Photo:</b>
-  <%= image_tag @idea.photo.url%>
-</p>
+<form>
+  <input id="IDEA_CHAT_PAGE_FLAG" type="hidden" value="<%=@idea.id%>" />
+</form>
 
-This is the idea page where initial chatting and excitement building needs to
-take place.
-<br/>
-<br/>
-<%= link_to 'Edit', edit_idea_path(@idea) %> |
-<%= link_to 'Back', ideas_path %>
+<table>
+  <tr>
+    <!-- Left users list block -->
+    <td>
+      <% @idea.users.each do |user| %>
+        
+        <%= image_tag user.profile_pic.url("stream") %><br/>
+        <%= user.user_name %><br/>
+        <br/>
+        
+      <% end %>
+    </td>
+    
+    <!-- Right main content block -->
+    <td>
+      <p>
+        This is the idea page where initial chatting and excitement building needs to
+        take place.
+      </p>
+      <p>
+        <b>Text:</b>
+        <%= @idea.text %>
+      </p>
+      
+      <p>
+        <b>Photo:</b>
+        <%= image_tag @idea.photo.url("thumb")%>
+      </p>
+      
+      <br/>
+      <br/>
+      
+      <div>
+      
+        <p>Message Board</p>
+        <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
+        <div id = <%=ID_IDEA_CHAT+"#{@idea.id}"%> style="border : solid 2px #ff0000; background : #000000; color : #ffffff; padding : 4px; height : 100px; overflow : auto;" >
+          <% @idea.chat_messages.each do |msg| %>
+            <!-- TODO: break this out to a render call for each chat text? efficiency? -->
+            <%= msg.user.user_name %>: <%= msg.text %> <br/>
+          <% end %>
+        </div>
+      
+      
+        Add Chat Msg:
+        <% @chat_message = ChatMessage.new %>
+        <%= form_for @chat_message, :remote => true do |f| %>
+          <div class="message">
+            <%= f.label :text %><br />
+            <%= f.text_field :text %>
+          </div>
+          <div class="idea_id">
+            <%= f.hidden_field :idea_id, :value => @idea.id %>
+          </div>
+          <div class="user_id">
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          
+          <div class="actions">
+            <%= f.submit %>
+          </div>
+        <% end %>
+      
+      </div>
+      
+      
+      <br/>
+      <br/>
+      <%= link_to 'Edit', edit_idea_path(@idea) %> |
+      <%= link_to 'Back', ideas_path %>
+    </td>
+  </tr>
+</table>
+  

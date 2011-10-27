@@ -1,5 +1,7 @@
 IdeaApp::Application.routes.draw do
  
+  resources :chat_messages
+
   resources :idea_events
 
   resources :friendships

@@ -7,3 +7,4 @@ STREAM_VIEW_FRIENDS = "friends"
 
 # AJAX ID TAGS
 ID_TAG_USER_ROW = "user_row_id_"
+ID_IDEA_CHAT = "idea_chat_"

@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111024182546) do
+ActiveRecord::Schema.define(:version => 20111027185159) do
+
+  create_table "chat_messages", :force => true do |t|
+    t.integer  "idea_id"
+    t.string   "text"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "chat_messages", ["idea_id"], :name => "index_chat_messages_on_idea_id"
+  add_index "chat_messages", ["user_id"], :name => "index_chat_messages_on_user_id"
 
   create_table "events", :force => true do |t|
     t.string   "name"
@@ -109,6 +120,9 @@ ActiveRecord::Schema.define(:version => 20111024182546) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  add_foreign_key "chat_messages", "ideas", :name => "chat_messages_idea_id_fk"
+  add_foreign_key "chat_messages", "users", :name => "chat_messages_user_id_fk"
 
   add_foreign_key "friendships", "users", :name => "friendships_friend_id_fk", :column => "friend_id"
   add_foreign_key "friendships", "users", :name => "friendships_user_id_fk"

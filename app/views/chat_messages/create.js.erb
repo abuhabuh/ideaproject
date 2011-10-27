@@ -1,0 +1,8 @@
+<% broadcast "/idea_chat/"+@chat_message.idea_id.to_s do %>
+
+  $("#<%=ID_IDEA_CHAT+@chat_message.idea_id.to_s%>").append
+    ("<%= escape_javascript(
+      render :partial => "chat_msg_table_row", :locals => {:chat_msg => @chat_message}
+    ) %>");
+
+<% end %>

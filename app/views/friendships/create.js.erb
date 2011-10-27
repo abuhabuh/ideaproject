@@ -1,4 +1,4 @@
 $("#<%=ID_TAG_USER_ROW + @friendship.friend_id.to_s%>").replaceWith
     ("<%= escape_javascript (
         render :partial => "users/list_users", :locals => {:user => @friendship.friend}
-        ) %>");
+    ) %>");
