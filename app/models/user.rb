@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   # Create new idea object for user
   def create_idea (idea_string)
 
-    idea = Idea.new(:text => idea_string)
+    idea = Idea.new(:text => idea_string, :creator => self.id)
 
     # Save both idea object and user / idea pair to DB
     if (idea.save)

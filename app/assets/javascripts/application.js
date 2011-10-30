@@ -8,7 +8,10 @@
 
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//  Using require_directory instead of require_tree because subdirectories are used
+//    to store page specific javascript
+//= require_directory .
+
 
 // faye chat client functionality
 $(function() {

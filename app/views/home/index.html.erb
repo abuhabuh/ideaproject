@@ -1,11 +1,22 @@
-<h1>JustAnIdea</h1>
-
-Welcome to Just an Idea . com 
-
-<br \>
-<br \>
-Enter your idea: 
-<%= form_tag initial_idea_path, :method => 'post' do %>
-  <%= text_field_tag :idea %>
-  <%= submit_tag "Submit" %>
+<!-- think about including these scroll tools for scrolling texts
+  -- javascript files under assets/javascripts/external/
+<% content_for :head do %>
+  <%= javascript_include_tag "external/mootools" %>
+  <%= javascript_include_tag "external/qscroller" %>
 <% end %>
+-->
+
+<div >
+  
+  Welcome to Just an Idea dot com 
+  
+  <br \>
+  <br \>
+  
+  Enter your idea: 
+  <%= form_tag initial_idea_path, :method => 'post' do %>
+    <%= text_field_tag :idea %>
+    <%= submit_tag "Submit" %>
+  <% end %>
+
+</div>

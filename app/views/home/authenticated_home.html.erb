@@ -37,6 +37,7 @@ Add an idea:
       <% end %>
       
     </td>
+    <% puts "****** after my ideas print*** " %>
     <td>
       <% case session[:stream_view] %>
         <% when STREAM_VIEW_PUBLIC %>
@@ -53,14 +54,13 @@ Add an idea:
       <% end %>
       <br/>
       <br/>
-      
+    <% puts "****** after view selector print *** " %>      
       <table>
         <tr>
           <th>Creator</th>
           <th>Idea Text</th>
           <% case session[:stream_view] %>
             <% when STREAM_VIEW_PUBLIC %>
-
               <th>Users Sharing</th>
             <% when STREAM_VIEW_FRIENDS %>
               <th>Friends Sharing</th>
@@ -68,6 +68,9 @@ Add an idea:
           <th>Idea Id</th>
           <th></th>
         </tr>
+        
+        <% puts "****** before printing ideas *** " %>        
+        
         <% @stream_ideas.each do |query_results| %>
           <tr>
             <td><%= image_tag User.find(query_results.idea_creator).profile_pic.url(:stream) %></td>
@@ -84,6 +87,9 @@ Add an idea:
             <% end %>
           </tr>
         <% end %>  
+
+        <% puts "****** after printing ideas *** " %>        
+
       </table>
     </td>
     <td>
