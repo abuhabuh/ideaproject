@@ -11,6 +11,9 @@ gem 'devise' # authentication package
 gem 'foreigner' # foreign key for database
 gem 'paperclip', '~> 2.4' # for fast pic attachments - uses file system though
                           #   need a better way to do this in DB
+                          
+gem 'heroku' # actually had to manually run 'gem install heroku' after bundle
+             #   install to get it to find heroku executable
 
 # XXX CUDN'T INSTALL XXX Juggernaut chat client 
 #gem 'gemcutter' # for juggernaut install requirement
@@ -65,4 +68,9 @@ gem 'jquery-rails'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+end
+
+# Gems for Heroku deployment
+group :production do
+  gem 'pg'
 end
