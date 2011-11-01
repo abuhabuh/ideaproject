@@ -102,7 +102,7 @@ class User < ActiveRecord::Base
 
     UserIdea.joins(:idea)\
             .joins(:user)\
-            .group('ideas.id')\
+            .group('ideas.id, ideas.text, ideas.creator')\
             .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(ideas.id) as user_count')
             
   end
