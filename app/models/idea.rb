@@ -11,6 +11,6 @@ class Idea < ActiveRecord::Base
 
   has_attached_file :photo, :styles => { :medium => "300x300#", :thumb => "100x100#", :stream => "50x50#" }
 
-  attr_accessible :text, :photo, :creator, :photo
+  attr_accessible :text, :photo, :creator
 
 end

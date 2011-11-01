@@ -22,7 +22,8 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, \
-    :user_name, :first_name, :last_name, :location, :dob, :profile_pic
+    :user_name, :first_name, :last_name, :location, :dob, :profile_pic, \
+    :description, :interests
 
   # Create new idea object for user
   def create_idea (idea_string)

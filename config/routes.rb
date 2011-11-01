@@ -30,7 +30,9 @@ IdeaApp::Application.routes.draw do
 
   match "users", :to => "users#index", \
         :as => :users, :via => "GET"
-  match "users/profile", :to => "users#profile", \
+  match "users/:id", :to => "users#show", \
+        :as => :user, :via => "GET"
+  match "user/profile", :to => "users#profile", \
         :as => :users_profile, :via => "GET"
 
   # The priority is based upon order of creation:

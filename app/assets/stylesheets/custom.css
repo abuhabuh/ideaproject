@@ -101,3 +101,16 @@ footer {
 footer nav {
   float: none;
 }
+
+
+/* Page layout divs*/
+
+div.left-side-bar-float {
+  float: left;
+  width: 20%;
+}
+
+div.center-main-float {
+  float: left;
+  width: 70%;
+}

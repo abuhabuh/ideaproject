@@ -1,0 +1,9 @@
+$(document).ready(function(){
+
+    $("#<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + @idea.id.to_s%>").replaceWith("Idea Added");
+
+    $("#<%=ID_TAG_AUTH_HOME_USER_IDEAS%>").append("<%= escape_javascript(render :partial => "list_my_ideas",
+                                       :locals => {:idea => @idea}) %>");
+
+    $("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + @idea.id.to_s%>").html(String(parseInt($("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + @idea.id.to_s%>").html())+1));
+});

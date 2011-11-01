@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111027185159) do
+ActiveRecord::Schema.define(:version => 20111101040423) do
 
   create_table "chat_messages", :force => true do |t|
     t.integer  "idea_id"
@@ -116,6 +116,8 @@ ActiveRecord::Schema.define(:version => 20111027185159) do
     t.string   "profile_pic_content_type"
     t.integer  "profile_pic_file_size"
     t.datetime "profile_pic_updated_at"
+    t.string   "description"
+    t.string   "interests"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

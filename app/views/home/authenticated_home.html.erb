@@ -1,5 +1,3 @@
-<h1>Yay, Here's Your homepage:</h1>
-
 Add an idea: 
 <%= form_tag add_idea_path, :method => 'post' do %>
   <%= text_field_tag :idea, @initial_idea %>
@@ -23,22 +21,26 @@ Add an idea:
   </tr>
 
   <tr>
-    <td>
-      <%= link_to 'View Users', users_path %>
+    <td style="vertical-align: top">
+      <%= link_to 'Browse Community', users_path %>
       
       <br/>
       <br/>
       
+      <!-- TODO: make *'s images; format this left column better -->
       My Ideas
+      <div id="<%=ID_TAG_AUTH_HOME_USER_IDEAS%>">
+        <%= render :partial => "list_my_ideas", :collection => @user_ideas, :as => :idea %>
+      </div>
+      
       <br/>
-      <% @user_ideas.each do |idea| %>
-        <%= idea.text %>
-        <br/>
-      <% end %>
+      <br/>
+      My Events
+      <br/>
+      (coming soon)
       
     </td>
-    <% puts "****** after my ideas print*** " %>
-    <td>
+    <td style="vertical-align: top">
       <% case session[:stream_view] %>
         <% when STREAM_VIEW_PUBLIC %>
           Ideas: Public | <%= link_to 'Friends', \
@@ -54,7 +56,7 @@ Add an idea:
       <% end %>
       <br/>
       <br/>
-    <% puts "****** after view selector print *** " %>      
+      
       <table>
         <tr>
           <th>Creator</th>
@@ -65,34 +67,38 @@ Add an idea:
             <% when STREAM_VIEW_FRIENDS %>
               <th>Friends Sharing</th>
           <% end %>
-          <th>Idea Id</th>
-          <th></th>
         </tr>
         
-        <% puts "****** before printing ideas *** " %>        
-        
         <% @stream_ideas.each do |query_results| %>
+          <% idea_owner = User.find(query_results.idea_creator) %>
           <tr>
-            <td><%= image_tag User.find(query_results.idea_creator).profile_pic.url(:stream) %></td>
-            <td><%= link_to query_results.idea_text, idea_path(query_results.idea_id), {:method => 'get'}%></td>
-            <td><%= query_results.user_count%></td>
-            <td><%= query_results.idea_id%></td>
-            <% if @user_idea_ids.include?(query_results.idea_id.to_s) %>
-              <td><%= link_to 'View Idea', '#' %></td>
-            <% else %>
-              <td><%= link_to 'Add Idea',
-                              add_idea_id_path(:idea_id => query_results.idea_id),
-                              {:method => 'post', \
-                               :title => 'Add to your idea list'} %>
-            <% end %>
+            <td><%= link_to image_tag(idea_owner.profile_pic.url(:stream)),
+                            user_path(idea_owner.id),
+                            {:method => 'get'} %></td>
+            <td>
+              <%= link_to query_results.idea_text,
+                            idea_path(query_results.idea_id),
+                            {:method => 'get'} %><br/>
+              <% unless @user_idea_ids.include?(query_results.idea_id.to_s) %>
+                <%= render :partial => "home/idea_action_add",
+                           :locals => {:idea_id => query_results.idea_id} %>
+              <% end %>
+            </td>
+            <td>
+              <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+query_results.idea_id.to_s%>"><%=query_results.user_count%></div>
+            </td>
+              <!--
+              <% if @user_idea_ids.include?(query_results.idea_id.to_s) %>
+                <%= render :partial => "idea_action_view", :locals => {:idea_id => query_results.idea_id} %>
+              <% else %>
+                <%= render :partial => "idea_action_add", :locals => {:idea_id => query_results.idea_id} %>
+              <% end %>
+              -->
           </tr>
         <% end %>  
-
-        <% puts "****** after printing ideas *** " %>        
-
       </table>
     </td>
-    <td>
+    <td style="vertical-align: top">
       Blahblah add this
     </td>
   </tr>

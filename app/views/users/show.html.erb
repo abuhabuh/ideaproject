@@ -1,0 +1,43 @@
+<table>
+  <tr>
+    <td style="vertical-align: top; width: 35%">
+      
+      <%= image_tag @user.profile_pic.url(:thumb) %><br/>
+      <%= @user.user_name %>
+      <% if @friendship.nil? %>
+        <!-- TODO - split string "show" in :prev_page => 'show' into a global var
+             Make this ajax -->
+        <%= link_to '(add friend)', friendships_path(:friend_id => @user.id, :prev_page => 'show'), 
+                  :method => :post, :remote => false %>
+      <% else %>
+        <%= link_to '(defriend)', friendship_path(@friendship.id),
+                  :method => :delete, :remote => false %>
+      <% end %>
+      <br/>
+      <br/>
+      Name: <%= @user.first_name %> <%= @user.last_name %><br/>
+      Location: <%= @user.location %><br/>
+      Birthday: <%= @user.dob %><br/>
+      <br/>
+      About Me: <%= @user.description %><br/>
+      <br/>
+      Interests: <%= @user.interests %><br/>
+    </td>
+    <!-- TODO fix non-css formatting hack -->
+    <td style="vertical-align: top; width: 65%">
+      <b>Ideas: </b>
+      
+      <table>
+        <% @user.ideas.each do |idea| %>
+        <tr>
+          <td><%= link_to image_tag(idea.photo.url(:stream)), idea_path(idea.id),
+                            {:method => 'get'} %></td>
+          <td><%= link_to idea.text, idea_path(idea.id),
+                            {:method => 'get'} %></td>
+        </tr>
+        <% end %>
+      </table>
+      
+    </td>
+  </tr>
+</table>

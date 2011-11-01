@@ -43,17 +43,19 @@ class FriendshipsController < ApplicationController
   def create
     @friendship = current_user.friendships.build
     @friendship.friend_id = params[:friend_id]
-    
-    # TODO: flash doesn't work with AJAX request?
-    if @friendship.save
-      flash[:notice] = 'Friendship was successfully created.'
+    @prev_page = params[:prev_page]
+        
+    # AJAX call will remove these notices
+    @friendship_save_successful = @friendship.save
+    if @friendship_save_successful
+      flash[:notice] = USER_ACTION_FRIENDSHIP_ADDED
     else
-      flash[:error] = 'Error creating friendship'
+      flash[:error] = USER_ACTION_FRIENDSHIP_ADD_ERROR
     end
     
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js 
+      format.js
       #format.json { render json: @friendship }
     end
 
@@ -80,8 +82,9 @@ class FriendshipsController < ApplicationController
     @friendship = current_user.friendships.find(params[:id])
     @friend = @friendship.friend
     @friendship.destroy
-
-    flash[:notice] = "Removed friendship."
+    
+    # AJAX call will remove these notices
+    flash[:notice] = USER_ACTION_FRIENDSHIP_REMOVED
     
     respond_to do |format|
       format.html { redirect_to :back }

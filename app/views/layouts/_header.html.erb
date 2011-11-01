@@ -21,12 +21,16 @@
     </tr>
   </table>
 
-  <% if flash[:notice] %>
-    <p class="notice"><%= notice %></p>
-  <% end %>
-  <% if flash[:alert] %>
-    <p class="alert"><%= alert %></p>
-  <% end %>
+  <!-- AJAX picks up DIV ids to insert proper notices -->
+  <div id='flash_notice_div'>
+    <% if flash[:notice] %>
+      <%= render :partial => "layouts/flash_notice" %>
+    <% end %>
+  </div>
+  <div id='flash_alert_div'>
+    <% if flash[:alert] %>
+      <%= render :partial => "layouts/flash_alert" %>
+    <% end %>
+  </div>
   <!-- or flash.each do |key, msg| -->
-
 </header>

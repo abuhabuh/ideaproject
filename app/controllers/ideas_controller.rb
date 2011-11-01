@@ -16,6 +16,7 @@ class IdeasController < ApplicationController
   def show
     #TODO - nil sanity checks on variables
     @idea = Idea.find(params[:id])
+    @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
     
     respond_to do |format|
       format.html # show.html.erb

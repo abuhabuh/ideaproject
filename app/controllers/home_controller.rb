@@ -65,11 +65,11 @@ class HomeController < ApplicationController
 
   # IMPLEMENTED
   # Adds new idea to user idea object
+  # Creates new idea in database
   #   @input: idea needs to be in params
   #   - Don't need to see if new idea matches because this will be handled when
   #     user first views idea detail page (this is for user convenience and to
   #     promote the ease of adding a bunch of ideas quickly)
-  # TODO: make ajax call
   # POST /ideas/add_idea
   def add_idea
     if params[:idea] && !params[:idea].blank?
@@ -78,26 +78,37 @@ class HomeController < ApplicationController
       # Handle unexpected nil error
       puts " TRACE HomeController:add_idea - no param for idea"
     end
-
-    set_objs_to_render(session[:stream_view])
-
-    redirect_to authenticated_home_path
+    
+    respond_to do |format|
+      format.html {
+        set_objs_to_render(session[:stream_view])
+        redirect_to authenticated_home_path
+      }
+      # TODO: make ajax call
+      format.js
+    end
   end
 
   # IMPLEMENTED
   # Joins user to existing idea
+  # Doesn't create new idea object
   # TODO make this ajax call
   def add_idea_id
     if params[:idea_id] && !params[:idea_id].blank?
-      current_user.join_idea(params[:idea_id])
+      @idea = Idea.find(params[:idea_id])
+      current_user.join_idea(@idea.id)
     else
       # Handle unexpected nil error
       puts " TRACE HomeController:add_idea_id - no param for idea"
     end
-
-    set_objs_to_render(session[:stream_view])
     
-    redirect_to authenticated_home_path
+    respond_to do |format|
+      format.html {
+        set_objs_to_render(session[:stream_view])
+        redirect_to authenticated_home_path
+      }
+      format.js
+    end
   end
 
 
@@ -142,10 +153,8 @@ class HomeController < ApplicationController
  
       case stream_view.to_s
         when STREAM_VIEW_FRIENDS
-          puts "getting friends ****************************************"
           return User.get_my_friends_ideas(current_user)
         else STREAM_VIEW_PUBLIC
-          puts "getting public ****************************************"
           return User.get_public_ideas
       end
       

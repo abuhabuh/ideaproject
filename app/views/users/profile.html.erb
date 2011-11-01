@@ -1,36 +1,35 @@
-<h1>User Profile</h1>
-
-<%= image_tag current_user.profile_pic.url(:thumb) %>
-<br />
-<br />
-Email: <%= current_user.email %>
-<br />
-<%= link_to 'edit', edit_user_registration_path, :method => :get %>
+<%= image_tag current_user.profile_pic.url(:thumb) %><br />
+<%= link_to 'edit profile', edit_user_registration_path, :method => :get %><br/>
+<br/>
+<b>User Name</b>: <%= current_user.user_name %><br />
+<b>Email</b>: <%= current_user.email %><br />
+<b>Name</b>: <%= current_user.first_name + " " + current_user.last_name%><br />
+<b>Description</b>: <%= current_user.description %><br/>
+<b>Interests</b>: <%= current_user.interests %><br/>
 
 <br/>
 <br/>
 
-Ideas:
+<b>Ideas:</b>
 
 <table>
   <tr>
-    <th>Idea Text</th>
-    <th>Idea ID</th>
+    <th>Idea Description</th>
     <th></th>
   </tr>
 
-  <% current_user.user_ideas.each do |user_idea| %>
+  <% current_user.user_ideas.each do |user_idea_link| %>
     <tr>
-      <td><%= user_idea.idea.text %></td>
-      <td><%= user_idea.idea.id %></td>
-      <td><%= link_to 'remove', user_idea, :method => :delete %></td>
+      <td><%= link_to user_idea_link.idea.text, idea_path(user_idea_link.idea),
+                {:method => 'get'} %></td>
+      <td><%= link_to 'remove', user_idea_link, {:method => :delete} %></td>
     </tr>
   <% end %>
 </table>
 
 <br/>
 
-Friends:
+<b>Friends:</b>
 
 <table>
   <tr>
@@ -41,7 +40,8 @@ Friends:
 
   <% current_user.friendships.each do |friendship| %>
     <tr>
-      <td><%= friendship.friend.user_name %></td>
+      <td><%= link_to friendship.friend.user_name, user_path(friendship.friend),
+                {:method => 'get'} %></td>
       <td><%= friendship.friend.email %></td>
       <td><%= link_to 'defriend', friendship, :method => :delete %></td>
     </tr>

@@ -1,4 +1,26 @@
-$("#<%=ID_TAG_USER_ROW + @friendship.friend_id.to_s%>").replaceWith
-    ("<%= escape_javascript (
-        render :partial => "users/list_users", :locals => {:user => @friendship.friend}
-    ) %>");
+<% if @prev_page.nil? or @prev_page == 'index' %>
+
+    $(document).ready(function(){
+    
+        $("#<%=ID_TAG_USER_LIST_USER_ROW + @friendship.friend_id.to_s%>").replaceWith
+            ("<%= escape_javascript (
+                render :partial => "users/list_users", :locals => {:user => @friendship.friend}
+            ) %>");
+        
+        <% if @friendship_save_successful %>
+        $("#flash_notice_div").html("<%= escape_javascript (
+            render :partial => "layouts/flash_notice", :locals => {:notice => USER_ACTION_FRIENDSHIP_ADDED}
+            )%>");
+        <% else %>
+        $("#flash_alert_div").html("<%= escape_javascript (
+            render :partial => "layouts/flash_notice", :locals => {:notice => USER_ACTION_FRIENDSHIP_ADD_ERROR}
+            )%>");
+        <% end %>
+        
+        <% flash.discard %>
+    
+    });
+    
+<% elsif @prev_page == 'show' %>
+    <% puts "********* show!" %>
+<% end %>

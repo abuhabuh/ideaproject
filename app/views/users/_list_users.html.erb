@@ -1,5 +1,7 @@
-<tr id = <%= "'" + ID_TAG_USER_ROW + user.id.to_s + "'" %> >
-  <td><%= link_to image_tag(user.profile_pic.url(:stream)), "#" %></td>
+<tr id = <%= "'" + ID_TAG_USER_LIST_USER_ROW + user.id.to_s + "'" %> >
+  <td><%= link_to image_tag(user.profile_pic.url(:stream)),
+                            user_path(user.id),
+                            {:method => 'get'} %></td>
   <td><%= user.user_name %></td>
   <!-- Figuring out if user is friends with current user is kinda hacky
         Built relation and used 'first' to force execution to return object-->
@@ -8,7 +10,8 @@
     <td><%= link_to 'Defriend', friendship_path(friendship_link.id),
             :method => :delete, :remote => true %></td>
   <% else %>
-    <td><%= link_to 'Add Friend', friendships_path(:friend_id => user), 
+    <!-- TODO - split string "index" in :prev_page => 'index' into a global var -->
+    <td><%= link_to 'Add Friend', friendships_path(:friend_id => user.id, :prev_page => 'index'), 
             :method => :post, :remote => true %></td>
   <% end %>
 </tr>
