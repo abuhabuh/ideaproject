@@ -15,9 +15,10 @@
 
 // faye chat client functionality
 $(function() {
-  var faye = new Faye.Client('http://localhost:9292/faye');
-
   if(document.getElementById("IDEA_CHAT_PAGE_FLAG")){
+    var faye_uri = document.getElementById("IDEA_CHAT_FAYE_URI").value
+    var faye = new Faye.Client(faye_uri);
+    
     var chat_id = document.getElementById("IDEA_CHAT_PAGE_FLAG").value
     // TODO: ensure you don't have to unsubscribe from channel
     //       specifications seem to say that this is not required

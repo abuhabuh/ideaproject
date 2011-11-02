@@ -1,5 +1,19 @@
 # CONSTANTS FOR IDEA PROJECT
 
+
+# Faye messaging js file URIs
+FAYE_JS_LOC = 'http://localhost:9292/faye.js' # default to development
+FAYE_URI = 'http://localhost:9292/faye' # default to development
+if Rails.env.test?
+# TODO: change to actual test URL
+  FAYE_JS_LOC = 'http://localhost:9292/faye.js'
+  FAYE_URI = 'http://localhost:9292/faye'
+elsif Rails.env.production?
+  FAYE_JS_LOC = 'http://young-galaxy-9203.heroku.com:9292/faye.js'
+  FAYE_URI = 'http://young-galaxy-9203.heroku.com:9292/faye'
+end
+
+
 # Stream View Constants
 STREAM_VIEW_PUBLIC = "public"
 STREAM_VIEW_FRIENDS = "friends"
