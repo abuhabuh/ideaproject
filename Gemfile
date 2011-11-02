@@ -14,6 +14,8 @@ gem 'paperclip', '~> 2.4' # for fast pic attachments - uses file system though
                           
 gem 'heroku' # actually had to manually run 'gem install heroku' after bundle
              #   install to get it to find heroku executable
+gem 'aws-s3' # integration with Amazon s3 storage for test and prod environments
+             #   Nov 1 2011 djmnemonic s3 account activated
 
 # XXX CUDN'T INSTALL XXX Juggernaut chat client 
 #gem 'gemcutter' # for juggernaut install requirement
