@@ -70,9 +70,6 @@ GEM
       thin (>= 1.2)
     foreigner (1.1.1)
       activerecord (>= 3.0.0)
-    foreman (0.25.0)
-      term-ansicolor (~> 1.0.5)
-      thor (>= 0.13.6)
     heroku (2.11.0)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
@@ -173,7 +170,6 @@ DEPENDENCIES
   eventmachine (= 1.0.0.beta.3)
   faye
   foreigner
-  foreman
   heroku
   jquery-rails
   json
