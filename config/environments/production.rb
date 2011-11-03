@@ -58,4 +58,9 @@ IdeaApp::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  PAPERCLIP_STORAGE_OPTIONS = { # Use Amazon S3
+    :storage => :s3,
+    :s3_credentials => "#{Rails.root}/config/s3.yml",
+    :path => "/:style/:id/:filename"
+  }
 end

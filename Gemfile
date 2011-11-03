@@ -23,8 +23,12 @@ gem 'aws-s3' # integration with Amazon s3 storage for test and prod environments
 #gem 'juggernaut_rails' # for juggernaut chat client
 
 # Faye chat client setup
-gem 'eventmachine', '1.0.0.beta.3' # eventmachine version that works with windows
-gem 'faye'
+#gem 'eventmachine', '1.0.0.beta.3' # eventmachine version that works with windows
+#gem 'faye'
+
+# Pusher chat client setup
+#gem 'pusher'
+#gem 'pusher-client'
 
 
 # TEST GEM INSTALL <BEGIN>

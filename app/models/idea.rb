@@ -9,15 +9,13 @@ class Idea < ActiveRecord::Base
   has_many :chat_messages
   #TODO: should add has_many :users, :through => :chat_messages ????
 
-  has_attached_file :photo,
+  has_attached_file :photo, {
     :styles => {
       :medium => "300x300#",
       :thumb => "100x100#",
-      :stream => "50x50#"},
-    :storage => :s3,
-    :s3_credentials => "#{Rails.root}/config/s3.yml",
-    :path => "/:style/:id/:filename"
-    
+      :stream => "50x50#"}
+  }.merge(PAPERCLIP_STORAGE_OPTIONS)
+  
   attr_accessible :text, :photo, :creator
 
 end

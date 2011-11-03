@@ -19,14 +19,12 @@ class User < ActiveRecord::Base
   #TODO: should add has_many :ideas, :through => :chat_messages ????
 
   # Setup paperclip photo attachment property
-  has_attached_file :profile_pic, 
+  has_attached_file :profile_pic, {
     :styles => {
       :medium => "300x300#",
       :thumb => "100x100#",
-      :stream => "50x50#"},
-    :storage => :s3,
-    :s3_credentials => "#{Rails.root}/config/s3.yml",
-    :path => "/:style/:id/:filename"
+      :stream => "50x50#"}
+  }.merge(PAPERCLIP_STORAGE_OPTIONS)
     
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, \

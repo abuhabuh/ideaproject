@@ -1,6 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+
+#// SWITCHED FROM FAYE TO PUSHER
 require 'net/http' # :john wang: for faye messaging
 
 if defined?(Bundler)
