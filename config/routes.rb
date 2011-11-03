@@ -35,6 +35,10 @@ IdeaApp::Application.routes.draw do
   match "user/profile", :to => "users#profile", \
         :as => :users_profile, :via => "GET"
 
+	# route for pusher private / presence channel authentication
+	match "pusher/auth", :to => "pusher#auth", \
+				:as => :pusher_auth, :via => "POST"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

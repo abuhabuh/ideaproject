@@ -4,16 +4,12 @@
     <!-- title is function from app/helpers/ApplicationHelper -->
     <title><%= title %></title>
     <%= csrf_meta_tag %>
+    
     <%= javascript_include_tag "application" %>
     <%= javascript_include_tag :defaults %>
+    
     <%= render 'layouts/stylesheets' %>
-    
-    <!-- // SWITCHED FROM FAYE TO PUSHER -->
-    <!-- faye server mount location - CHANGE FOR ENVIRONMENT MIGRATION! -->
-    <!--
-    <%= javascript_include_tag FAYE_JS_LOC %>
-    -->
-    
+        
     <%= yield :head %>
   </head>
   <body>

@@ -17,6 +17,7 @@ class IdeasController < ApplicationController
     #TODO - nil sanity checks on variables
     @idea = Idea.find(params[:id])
     @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
+    @idea_chat_msgs = @idea.chat_messages.order("id ASC")
     
     respond_to do |format|
       format.html # show.html.erb

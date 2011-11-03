@@ -1,7 +1,49 @@
-<form>
-  <input id="IDEA_CHAT_PAGE_FLAG" type="hidden" value="<%=@idea.id%>" />
-  <input id="IDEA_CHAT_FAYE_URI" type="hidden" value="<%=FAYE_URI%>" />
-</form>
+<% content_for :head do %>
+  <%= javascript_include_tag "http://js.pusherapp.com/1.9/pusher.min.js" %>
+
+  <script type="text/javascript">
+    
+		$(document).ready(function(){
+      $("div#<%=ID_TAG_IDEA_CHAT+@idea.id.to_s%>").prop({
+        scrollTop: $("div#<%=ID_TAG_IDEA_CHAT+@idea.id.to_s%>").prop("scrollHeight")
+      });
+
+			pusher = new Pusher('<%=Pusher.key%>');
+			chat_presence_channel = pusher.subscribe('<%=PUSHER_CHANNEL_PREFIX_IDEA + @idea.id.to_s%>');
+					 
+			chat_presence_channel.bind('<%=PUSHER_CHAT_MSG_EVENT%>',
+				function(data) {
+					eval(data);
+				}
+			);
+			
+			chat_presence_channel.bind('pusher:subscription_succeeded', function(members){
+				$('#people_chatting').html("");
+				       
+				// this is not working TODO: fix this
+				members.each(function(member){
+					add_member(member.id, member.info.name);
+				});
+			});
+
+			chat_presence_channel.bind('pusher:member_removed', function(member){
+				$('#member_' + member.id).replaceWith("");
+			});
+
+			chat_presence_channel.bind('pusher:member_added', function(member){
+				add_member(member.id, member.info.name);
+			});
+			
+		});
+
+		function add_member(user_id, name) {
+			var content = '<li id=member_' + user_id + '>' + name + '</li>';
+			$('#people_chatting').append(content);
+		}
+
+  </script>
+<% end %>
+
 
 <table>
   <tr>
@@ -42,19 +84,30 @@
       
       <div>
       
-        <b>Chat Board </b><br/>
-        Talk about the idea! Create an event when you're ready to plan time, place, etc.<br/>
-        <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
-        <div id = <%=ID_TAG_IDEA_CHAT+"#{@idea.id}"%>
-             style="border : solid 2px #adadad; background : #ffffff;
-                    color : #000000; padding : 4px; height : 220px;
-                    overflow : auto;" >
-          <% @idea.chat_messages.each do |msg| %>
-            <!-- TODO: break this out to a render call for each chat text? efficiency? -->
-            <%= msg.user.user_name %>: <%= msg.text %> <br/>
-          <% end %>
-        </div>
-      
+        <table>
+					<tr>
+						<td>
+							<b>Chat Board </b><br/>
+							Talk about the idea! Create an event when you're ready to plan time, place, etc.<br/>
+							<!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
+							<div id = <%=ID_TAG_IDEA_CHAT+"#{@idea.id}"%>
+									 style="border : solid 2px #adadad; background : #ffffff;
+													color : #000000; padding : 4px; height : 220px;
+													overflow : auto;" >
+								<% @idea_chat_msgs.each do |msg| %>
+									<!-- TODO: break this out to a render call for each chat text? efficiency? -->
+									<%= msg.user.user_name %>: <%= msg.text %> <br/>
+								<% end %>
+							</div>
+						</td>
+						<td>
+							<u>Online:</u><br />
+							<ul>
+								<div id = 'people_chatting'></div>
+							</ul>
+						</td>
+					</tr>
+				</table>	
       
         <% @chat_message = ChatMessage.new %>
         <%= form_for @chat_message, :remote => true do |f| %>

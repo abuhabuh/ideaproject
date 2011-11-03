@@ -5,7 +5,7 @@ gem 'rails', '3.1.1'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2' # driver for mysql
+gem 'pg' # driver for postgresql
 gem 'json'
 gem 'devise' # authentication package
 gem 'foreigner' # foreign key for database
@@ -27,8 +27,8 @@ gem 'aws-s3' # integration with Amazon s3 storage for test and prod environments
 #gem 'faye'
 
 # Pusher chat client setup
-#gem 'pusher'
-#gem 'pusher-client'
+gem 'pusher'
+gem 'pusher-client'
 
 
 # TEST GEM INSTALL <BEGIN>
@@ -74,9 +74,4 @@ gem 'jquery-rails'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
-end
-
-# Gems for Heroku deployment
-group :production do
-  gem 'pg'
 end

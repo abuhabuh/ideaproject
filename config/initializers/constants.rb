@@ -1,17 +1,18 @@
 # CONSTANTS FOR IDEA PROJECT
 
 
-# Faye messaging js file URIs
-FAYE_JS_LOC = 'http://localhost:9292/faye.js' # default to development
-FAYE_URI = 'http://localhost:9292/faye' # default to development
+# Pusher chat config
+Pusher.app_id = '10463'
+Pusher.key = '8c4eff4efff8afc004d2'
+Pusher.secret = '8d035ff5acc21edf0fcb'
+PUSHER_CHAT_MSG_EVENT = 'chat_msg_event'
+PUSHER_CHANNEL_PREFIX_IDEA = 'presence-idea_dev_' # append idea id for unique channel per idea - default to dev
 if Rails.env.test?
-# TODO: change to actual test URL
-  FAYE_JS_LOC = 'http://localhost:9292/faye.js'
-  FAYE_URI = 'http://localhost:9292/faye'
+  PUSHER_CHANNEL_PREFIX_IDEA = 'presence-idea_test_'
 elsif Rails.env.production?
-  FAYE_JS_LOC = 'http://young-galaxy-9203.heroku.com:9292/faye.js'
-  FAYE_URI = 'http://young-galaxy-9203.heroku.com:9292/faye'
+  PUSHER_CHANNEL_PREFIX_IDEA = 'presence-idea_prod_'
 end
+
 
 
 # Stream View Constants

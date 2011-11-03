@@ -1,11 +1,46 @@
+<% content_for :head do %>
+
+  <script type="text/javascript">
+
+		$(document).ready(function(){
+
+      $('#user_first_name').bind('keyup keypress blur', function() {
+        var first_name = $(this).val();
+        var last_name = $('#user_last_name').val();
+        $('#user_user_name').val(first_name+" "+last_name);
+      });
+
+      $('#user_last_name').bind('keyup keypress blur', function() {
+        var last_name = $(this).val();
+        var first_name = $('#user_first_name').val();
+        $('#user_user_name').val(first_name+" "+last_name);
+      });
+
+		});
+
+  </script>
+
+<% end %>
+
+
 <h2>Sign up</h2>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :multipart => true }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :user_name %><br />
-  <%= f.text_field :user_name %></div>  
+  <div><%= f.label :profile_pic %><br />
+  <%= f.file_field :profile_pic %></div>
+  
+  <div><%= f.label :first_name %><br />
+  <%= f.text_field :first_name %></div>  
 
+  <div><%= f.label :last_name %><br />
+  <%= f.text_field :last_name%></div>  
+  
+  User name: <%= f.text_field :user_name, :readonly=>"readonly", :style=>"border: none"%><br/>
+  
+  <br/>
+  
   <div><%= f.label :email %><br />
   <%= f.email_field :email %></div>
 
@@ -15,10 +50,9 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.label :profile_pic %><br />
-  <%= f.file_field :profile_pic %></div>
+  <br />
   
   <div><%= f.submit "Sign up" %></div>
 <% end %>
-
+<br />
 <%= render :partial => "devise/shared/links" %>
