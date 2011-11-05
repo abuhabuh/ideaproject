@@ -1,0 +1,92 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "http://js.pusherapp.com/1.9/pusher.min.js" %>
+
+  <script type="text/javascript">
+
+		$(document).ready(function(){
+      $("div#<%=ID_TAG_FEEDBACK_CHAT%>").prop({
+        scrollTop: $("div#<%=ID_TAG_FEEDBACK_CHAT%>").prop("scrollHeight")
+      });
+
+			pusher = new Pusher('<%=Pusher.key%>');
+			chat_presence_channel = pusher.subscribe('<%=PUSHER_CHANNEL_FEEDBACK_CHAT%>');
+					 
+			chat_presence_channel.bind('<%=PUSHER_CHAT_MSG_EVENT%>',
+				function(data) {
+					eval(data);
+				}
+			);
+			
+			chat_presence_channel.bind('pusher:subscription_succeeded', function(members){
+				$('#people_chatting').html("");
+				// this is not working TODO: fix this
+				members.each(function(member){
+					add_member(member.id, member.info.name);
+				});
+			});
+
+			chat_presence_channel.bind('pusher:member_removed', function(member){
+				$('#member_' + member.id).replaceWith("");
+			});
+
+			chat_presence_channel.bind('pusher:member_added', function(member){
+				add_member(member.id, member.info.name);
+			});
+			
+		});
+
+		function add_member(user_id, name) {
+			var content = '<li id=member_' + user_id + '>' + name + '</li>';
+			$('#people_chatting').append(content);
+		}
+
+  </script>
+<% end %>
+
+<table>
+  <tr>
+    <td>
+      <b>Leave us feedback & problems. We're probably online and might even msg you back! </b><br/>
+      <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
+      <div id = <%=ID_TAG_FEEDBACK_CHAT %>
+		       style="border : solid 2px #adadad; background : #ffffff;
+						      color : #000000; padding : 4px; height : 220px;
+						      overflow : auto;" >
+	      <% @feedback_messages.reverse.each do |msg| %>
+		      <!-- TODO: break this out to a render call for each chat text? efficiency? -->
+            <%= render :partial => "admin_messages/admin_msg_item", :locals => {:admin_msg => msg}%>
+	      <% end %>
+      </div>
+    </td>
+
+		<td>
+			<u>Online:</u><br />
+			<ul>
+				<div id = 'people_chatting'></div>
+			</ul>
+		</td>
+  </tr>
+</table>
+						
+<% @admin_message = AdminMessage.new %>
+<%= form_for @admin_message, :remote => true do |f| %>
+  <!-- TODO: fix this table hack layout with CSS and div (and all other formatted table hacks) -->
+  <table>
+    <tr>
+      <td>
+        <div class="message">
+          <%= f.text_field :text, :size=>"70" %>
+        </div>
+        <div class="user_id">
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+        </div>
+      </td>
+      <td>
+        <div class="actions">
+          <%= f.submit "Send" %>
+        </div>
+      </td>
+    </tr>
+  </table>
+<% end %>
+

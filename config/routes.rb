@@ -1,5 +1,7 @@
 IdeaApp::Application.routes.draw do
  
+  resources :admin_messages
+
   resources :chat_messages
 
   resources :idea_events
@@ -34,6 +36,10 @@ IdeaApp::Application.routes.draw do
         :as => :user, :via => "GET"
   match "user/profile", :to => "users#profile", \
         :as => :users_profile, :via => "GET"
+
+  # route for feedback chat client
+  match "feedback/index", :to => "feedback#index",\
+        :as => :feedback, :via => "GET"
 
 	# route for pusher private / presence channel authentication
 	match "pusher/auth", :to => "pusher#auth", \

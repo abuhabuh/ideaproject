@@ -1,8 +1,9 @@
 <footer>
   <nav class="round">
     <ul>
-      <li><%= link_to "About", '#' %></li>
-      <li><%= link_to "Contact", '#' %></li>
+      <% if user_signed_in? %>
+        <li><%= link_to "Feedback? Chat us up!", feedback_path, {:target => "_blank"} %></li>
+      <% end %>
     </ul>
   </nav>
 </footer>

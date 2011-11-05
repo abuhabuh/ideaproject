@@ -1,0 +1,18 @@
+<% broadcast PUSHER_CHANNEL_FEEDBACK_CHAT, PUSHER_CHAT_MSG_EVENT do %>
+  $(document).ready(function(){
+
+    $("#<%=ID_TAG_FEEDBACK_CHAT%>").append
+      ("<%= escape_javascript(
+        render :partial => "admin_msg_item", :locals => {:admin_msg => @admin_message}
+      ) %>");
+    
+    $("div#<%=ID_TAG_FEEDBACK_CHAT%>").prop({
+      scrollTop: $("div#<%=ID_TAG_FEEDBACK_CHAT%>").prop("scrollHeight")
+    });
+
+  });
+<% end %>
+
+$(document).ready(function(){
+  $("#admin_message_text").val("");
+});

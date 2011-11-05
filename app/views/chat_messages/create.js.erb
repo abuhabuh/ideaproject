@@ -1,16 +1,39 @@
-<% broadcast PUSHER_CHANNEL_PREFIX_IDEA+@chat_message.idea_id.to_s, PUSHER_CHAT_MSG_EVENT do %>
-  $(document).ready(function(){
 
-    $("#<%=ID_TAG_IDEA_CHAT+@chat_message.idea_id.to_s%>").append
-      ("<%= escape_javascript(
-        render :partial => "chat_msg_table_row", :locals => {:chat_msg => @chat_message}
-      ) %>");
-    
-    $("div#<%=ID_TAG_IDEA_CHAT+@chat_message.idea_id.to_s%>").prop({
-      scrollTop: $("div#<%=ID_TAG_IDEA_CHAT+@chat_message.idea_id.to_s%>").prop("scrollHeight")
+<% if @chat_message.idea_id == 0 %>
+
+  <% broadcast PUSHER_CHANNEL_FEEDBACK_CHAT, PUSHER_CHAT_MSG_EVENT do %>
+    $(document).ready(function(){
+
+      $("#<%=ID_TAG_FEEDBACK_CHAT%>").append
+        ("<%= escape_javascript(
+          render :partial => "chat_msg_table_row", :locals => {:chat_msg => @chat_message}
+        ) %>");
+      
+      $("div#<%=ID_TAG_FEEDBACK_CHAT%>").prop({
+        scrollTop: $("div#<%=ID_TAG_FEEDBACK_CHAT%>").prop("scrollHeight")
+      });
+
     });
+  <% end %>
 
-  });
+
+<% else %>
+
+  <% broadcast PUSHER_CHANNEL_PREFIX_IDEA+@chat_message.idea_id.to_s, PUSHER_CHAT_MSG_EVENT do %>
+    $(document).ready(function(){
+
+      $("#<%=ID_TAG_IDEA_CHAT+@chat_message.idea_id.to_s%>").append
+        ("<%= escape_javascript(
+          render :partial => "chat_msg_table_row", :locals => {:chat_msg => @chat_message}
+        ) %>");
+      
+      $("div#<%=ID_TAG_IDEA_CHAT+@chat_message.idea_id.to_s%>").prop({
+        scrollTop: $("div#<%=ID_TAG_IDEA_CHAT+@chat_message.idea_id.to_s%>").prop("scrollHeight")
+      });
+
+    });
+  <% end %>
+
 <% end %>
 
 $(document).ready(function(){

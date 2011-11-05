@@ -12,7 +12,7 @@ if Rails.env.test?
 elsif Rails.env.production?
   PUSHER_CHANNEL_PREFIX_IDEA = 'presence-idea_prod_'
 end
-
+PUSHER_CHANNEL_FEEDBACK_CHAT = "presence-feedback_chat"
 
 
 # Stream View Constants
@@ -29,7 +29,8 @@ ID_TAG_IDEA_CHAT = "idea_view_chat_id_" #append idea id
 ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION = "auth_home_stream_idea_action_id_" #append idea id
 ID_TAG_AUTH_HOME_STREAM_NUM_USERS = "auth_home_stream_num_users_" #append idea id
 ID_TAG_AUTH_HOME_USER_IDEAS = "auth_home_user_ideas"
-
+#   Feedback chat window ID
+ID_TAG_FEEDBACK_CHAT = "feedback_chat_id"
 
 # MESSAGES
 USER_ACTION_FRIENDSHIP_ADDED = "Friend has been added."
