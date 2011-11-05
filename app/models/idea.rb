@@ -7,7 +7,7 @@ class Idea < ActiveRecord::Base
   has_many :events, :through => :idea_events
 
   has_many :chat_messages
-  #TODO: should add has_many :users, :through => :chat_messages ????
+  # TODO: should add has_many :users, :through => :chat_messages ????
 
   has_attached_file :photo, {
     :styles => {
@@ -16,6 +16,12 @@ class Idea < ActiveRecord::Base
       :stream => "50x50#"}
   }.merge(PAPERCLIP_STORAGE_OPTIONS)
   
-  attr_accessible :text, :photo, :creator
+  # Sunspot search index
+  searchable do
+    text :text
+    integer :num_users_joined
+  end
+  
+  attr_accessible :text, :photo, :creator, :num_users_joined
 
 end

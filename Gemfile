@@ -17,19 +17,20 @@ gem 'heroku' # actually had to manually run 'gem install heroku' after bundle
 gem 'aws-s3' # integration with Amazon s3 storage for test and prod environments
              #   Nov 1 2011 djmnemonic s3 account activated
 
-# XXX CUDN'T INSTALL XXX Juggernaut chat client 
+# CHAT CLIENT GEMS
+# Juggernaut chat client - failed on Win 7
 #gem 'gemcutter' # for juggernaut install requirement
 #gem 'eventmachine', '1.0.0.beta.3' # eventmachine version that works with windows
 #gem 'juggernaut_rails' # for juggernaut chat client
-
-# Faye chat client setup
+# Faye chat client setup - couldn't deploy to Heroku easily
 #gem 'eventmachine', '1.0.0.beta.3' # eventmachine version that works with windows
 #gem 'faye'
-
-# Pusher chat client setup
+# Pusher chat client setup - current solution
 gem 'pusher'
 gem 'pusher-client'
 
+# SEARCH GEMS
+gem 'sunspot_rails'
 
 # TEST GEM INSTALL <BEGIN>
 #group :development do

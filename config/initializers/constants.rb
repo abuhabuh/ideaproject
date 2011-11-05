@@ -18,7 +18,7 @@ end
 # Stream View Constants
 STREAM_VIEW_PUBLIC = "public"
 STREAM_VIEW_FRIENDS = "friends"
-
+STREAM_VIEW_SEARCH = "search"
 
 # AJAX ID TAGS
 #   User list view page

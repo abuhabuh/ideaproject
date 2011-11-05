@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   # Create new idea object for user
   def create_idea (idea_string)
 
-    idea = Idea.new(:text => idea_string, :creator => self.id)
+    idea = Idea.new(:text => idea_string, :creator => self.id, :num_users_joined => 1)
 
     # Save both idea object and user / idea pair to DB
     if (idea.save)
@@ -56,6 +56,14 @@ class User < ActiveRecord::Base
   # Join the user to the idea
   def join_idea (idea_id)
     # TODO: check input: is number, is not an idea user already has
+    idea = Idea.find(idea_id)
+    idea.num_users_joined += 1
+    # TODO: catch save exception
+    if (idea.save)
+      puts " TRACE User:join_idea - idea saved successfull"
+    else
+      puts " TRACE User:join_idea - idea save error"
+    end 
     
     user_idea = UserIdea.new(:user_id => self[:id], :idea_id => idea_id)
     if (user_idea.save)
@@ -93,9 +101,16 @@ class User < ActiveRecord::Base
     current_user.friendships\
                 .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')\
                 .joins('INNER JOIN ideas ON user_ideas.idea_id = ideas.id')\
-                .group('user_ideas.idea_id')\
-                .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(user_ideas.idea_id) as user_count')
-    
+                .group('user_ideas.idea_id, ideas.text, ideas.creator, ideas.id')\
+                .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(user_ideas.idea_id) as user_count')\
+                .order('user_count DESC')
+                
+#    current_user.friendships\
+#                .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')\
+#                .joins('INNER JOIN ideas ON user_ideas.idea_id = ideas.id')\
+#                .group('user_ideas.idea_id')\
+#                .count(:idea_id)
+
   end
   
   # Returns all public ideas grouped by idea id with count of all users who
@@ -105,10 +120,17 @@ class User < ActiveRecord::Base
   #   TODO: param that specifies how many rows to get at a time
   def self.get_public_ideas
 
+    # TODO: change this implementation to no longer join users together to get count
     UserIdea.joins(:idea)\
             .joins(:user)\
             .group('ideas.id, ideas.text, ideas.creator')\
-            .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(ideas.id) as user_count')
+            .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(ideas.id) as user_count')\
+            .order('user_count DESC')
+            
+#    UserIdea.joins(:idea)\
+#            .joins(:user)\
+#            .group('ideas.id, ideas.text, ideas.creator')\
+#            .count(:id)
             
   end
 

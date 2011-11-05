@@ -1,6 +1,6 @@
 .bundle
 db/*.sqlite3
-log/*.log
+log/
 tmp/
 .sass-cache/
 *~
@@ -8,3 +8,4 @@ doc/
 tmp/
 public/system/profile_pics/
 public/system/photos/
+solr/data

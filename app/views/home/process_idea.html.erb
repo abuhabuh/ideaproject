@@ -1,7 +1,31 @@
-<h1>Yay, we got your idea and here are matches:</h1>
+<% if @idea_search_res.size.to_s == 0 %>
+  <b>No one has your idea yet! <%= link_to 'Sign up', new_user_session_path %> to submit it and invite your friends.</b><br />
+<% else %>
+  <b>You have idea matches below! <%= link_to 'Sign up', new_user_session_path %> to join them or create your own.</b><br />
+  <br />
+  <p>
+    Your Idea: <%= @ideaText %> <br/>
+    Matches: <br />
+    <table>
+      <tr>
+        <th></th>
+        <th>Idea</th>
+        <th>Users Sharing</th>
+      </tr>
+      <% @idea_search_res.each do |idea_result| %>
+        <% idea_owner = User.find(idea_result.creator) %>
+        <tr>
+          <td><%= image_tag(idea_owner.profile_pic.url(:stream)) %></td>
+          <td><%= idea_result.text %><br/></td>
+          <td><%=idea_result.num_users_joined%></td>
+        </tr>
+      <% end %>
+    </table>
+  </p>
+<% end %>
 
-<p> Your Idea: <%= @ideaText %> </p>
-<p> Matches: </p>
+<br />
+<br />
 
 <p> <%= link_to 'Login', new_user_session_path %> or <%= link_to 'Create an Account', new_user_session_path %> to see more! </p>
 

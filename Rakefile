@@ -8,3 +8,5 @@ require File.expand_path('../config/application', __FILE__)
 
 IdeaApp::Application.load_tasks
 
+# May need this to run sunspot rake tasks on Heroku
+require 'sunspot/rails/tasks'

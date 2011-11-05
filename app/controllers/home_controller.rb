@@ -5,10 +5,7 @@ class HomeController < ApplicationController
     #   1. Unauthenticated users taken to index page with idea input
     #   2. Authenticated users taken to main home page
     if user_signed_in?
-      puts "******** SIGNED IN **********"
       redirect_to :action => :authenticated_home # TODO: still requires round trip to browser 
-    else
-      puts "******** Not SIGNED IN *********"
     end
   end
 
@@ -48,18 +45,54 @@ class HomeController < ApplicationController
     # Determine what we're sorting on
     # TODO: IMPLEMENT THIS
     
-    # Gets collections of user ideas, friends' ideas, public ideas
-    # Also determine what type of stream we're rendering: Public, Friends, etc
-    #   Default is public view
-    set_objs_to_render(session[:stream_view])
-    
-    @query_res = UserIdea.joins('RIGHT OUTER JOIN ideas ON ideas.id = user_ideas.id')\
-            #.joins(:user)\
-            .joins('LEFT OUTER JOIN users ON user_ideas.user_id = users.id')\
-            #.group('ideas.id')\
-            .select("users.id as user_id, users.email as user_email, \
-            ideas.text as idea_text, ideas.id as idea_id")
+    # Gets collections of user ideas, friends' ideas
+    set_objs_to_render()
 
+    if params[:search] && !params[:search].blank?
+
+      @search = Idea.search do
+        fulltext params[:search]
+        order_by :num_users_joined, :desc
+      end
+      @idea_search_res = @search.results
+      
+    else
+      # Get stream ideas based on what type of stream we're rendering: Public, 
+      #   Friends, etc. Default is public view.
+      @stream_ideas = get_stream_ideas(session[:stream_view])
+    end
+  end
+
+
+  # IMPLEMENTED
+  # Processes initial idea from unauthenticated page
+  #   TODO: May need to show ideas that match this one
+  # POST /ideas/process_idea
+  def process_idea
+
+    # TODO: validate :idea parameter on client side through
+    #   form validation
+    if params[:idea] && !params[:idea].blank?
+      @ideaText = params[:idea]
+      
+      # Add string to session to save for when user
+      #   authenticates
+      session[:initial_idea] = params[:idea]
+      
+      @search = Idea.search do
+        keywords params[:idea]
+        order_by :num_users_joined, :desc
+        paginate :page => 1, :per_page => 5
+      end
+      @idea_search_res = @search.results
+      
+      puts "******* idea res size: " + @idea_search_res.size.to_s
+      
+    else
+      # Handle unexpected nil error
+      puts " TRACE IdeasController:process_idea - no param for idea"
+    end
+    
   end
 
 
@@ -112,33 +145,6 @@ class HomeController < ApplicationController
   end
 
 
-  # IMPLEMENTED
-  # Processes initial idea from unauthenticated page
-  #   TODO: May need to show ideas that match this one
-  # POST /ideas/process_idea
-  def process_idea
-
-    # TODO: validate :idea parameter on client side through
-    #   form validation
-    if params[:idea] && !params[:idea].blank?
-      @ideaText = params[:idea]
-      
-      # Add string to session to save for when user
-      #   authenticates
-      session[:initial_idea] = params[:idea]
-      
-      # Do matching on ideaText to list top similar ideas
-      #   Create idea object and call idea.getmatches
-
-      # Forward to process_idea view page to show results
-      #   and incentivize to sign up
-    else
-      # Handle unexpected nil error
-      puts " TRACE IdeasController:process_idea - no param for idea"
-    end
-    
-  end
-
 
   
   ######################################################
@@ -165,10 +171,9 @@ class HomeController < ApplicationController
     end
   end
   
-  def set_objs_to_render(stream_view)
+  def set_objs_to_render()
     @user_ideas = User.get_my_ideas(current_user)
     @user_idea_ids = User.get_my_idea_ids(current_user)
-    @stream_ideas = get_stream_ideas(stream_view)
   end
 
 end
