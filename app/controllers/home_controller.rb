@@ -51,7 +51,7 @@ class HomeController < ApplicationController
     if params[:search] && !params[:search].blank?
 
       @search = Idea.search do
-        fulltext params[:search]
+        fulltext params[:search] {minimum_match 1}
         order_by :num_users_joined, :desc
       end
       @idea_search_res = @search.results
@@ -80,7 +80,7 @@ class HomeController < ApplicationController
       session[:initial_idea] = params[:idea]
       
       @search = Idea.search do
-        keywords params[:idea]
+        fulltext params[:idea] {minimum_match 1}
         order_by :num_users_joined, :desc
         paginate :page => 1, :per_page => 5
       end
@@ -114,7 +114,22 @@ class HomeController < ApplicationController
     
     respond_to do |format|
       format.html {
-        set_objs_to_render(session[:stream_view])
+        set_objs_to_render()
+
+        if params[:search] && !params[:search].blank?
+
+          @search = Idea.search do
+            fulltext params[:search] {minimum_match 1}
+            order_by :num_users_joined, :desc
+          end
+          @idea_search_res = @search.results
+          
+        else
+          # Get stream ideas based on what type of stream we're 
+          #   rendering: Public, Friends, etc. Default is public view.
+          @stream_ideas = get_stream_ideas(session[:stream_view])
+        end
+
         redirect_to authenticated_home_path
       }
       # TODO: make ajax call
@@ -137,7 +152,22 @@ class HomeController < ApplicationController
     
     respond_to do |format|
       format.html {
-        set_objs_to_render(session[:stream_view])
+        set_objs_to_render()
+
+        if params[:search] && !params[:search].blank?
+
+          @search = Idea.search do
+            fulltext params[:search] {minimum_match 1}
+            order_by :num_users_joined, :desc
+          end
+          @idea_search_res = @search.results
+          
+        else
+          # Get stream ideas based on what type of stream we're 
+          #   rendering: Public, Friends, etc. Default is public view.
+          @stream_ideas = get_stream_ideas(session[:stream_view])
+        end
+
         redirect_to authenticated_home_path
       }
       format.js
