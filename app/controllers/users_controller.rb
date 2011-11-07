@@ -16,4 +16,8 @@ class UsersController < ApplicationController
     
   end
 
+  def facebook_callback
+    put "CALLBACK HERE!" 
+  end
+
 end

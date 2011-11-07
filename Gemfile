@@ -32,6 +32,11 @@ gem 'pusher-client'
 # SEARCH GEMS
 gem 'sunspot_rails'
 
+# Facebook auth gem
+#gem 'omniauth-facebook','1.0.0.rc1'
+#gem 'omniauth'
+gem "oa-oauth", :require => "omniauth/oauth"
+
 # TEST GEM INSTALL <BEGIN>
 #group :development do
 #  gem 'rspec-rails', '2.6.1'

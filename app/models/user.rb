@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :timeoutable
+         :timeoutable, :omniauthable
 
   # Associations
   has_many :user_ideas
@@ -132,6 +132,15 @@ class User < ActiveRecord::Base
 #            .group('ideas.id, ideas.text, ideas.creator')\
 #            .count(:id)
             
+  end
+
+  def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
+    data = access_token['extra']['user_hash']
+    if user = User.find_by_email(data["email"])
+      user
+    else # Create a user with a stub password. 
+      User.new(:email => data["email"], :password => Devise.friendly_token[0,20]) 
+    end
   end
 
 end
