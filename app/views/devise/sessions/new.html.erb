@@ -1,10 +1,22 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+
+    // TODO: can set autofocus with HTML5 as well so don't need this javascript to run for HTML5 browsers -->
+    $(document).ready(function(){
+      $("#user_email").focus();
+    });
+
+  </script>
+<% end %>
+
+
 <h2>Sign in</h2>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+  <%= f.email_field :email%></div>
 
-  <div><%= f.label :password %><br />
+  <div><%= f.label :password%><br />
   <%= f.password_field :password %></div>
   
   <% if devise_mapping.rememberable? -%>

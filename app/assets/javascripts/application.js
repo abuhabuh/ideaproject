@@ -13,24 +13,3 @@
 //= require_directory .
 
 
-
-
-
-
-
-
-// SWITCHED FROM FAYE TO PUSHER
-// faye chat client functionality
-//$(function() {
-//  if(document.getElementById("IDEA_CHAT_PAGE_FLAG")){
-//    var faye_uri = document.getElementById("IDEA_CHAT_FAYE_URI").value
-//    var faye = new Faye.Client(faye_uri);
-//    
-//    var chat_id = document.getElementById("IDEA_CHAT_PAGE_FLAG").value
-//    // TODO: ensure you don't have to unsubscribe from channel
-//    //       specifications seem to say that this is not required
-//    faye.subscribe('/idea_chat/'+chat_id, function (data) {
-//      eval(data);
-//    });
-//  }
-//});

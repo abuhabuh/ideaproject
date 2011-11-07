@@ -31,6 +31,7 @@ gem 'pusher-client'
 
 # SEARCH GEMS
 gem 'sunspot_rails'
+gem 'will_paginate'
 
 # TEST GEM INSTALL <BEGIN>
 #group :development do

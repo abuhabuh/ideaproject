@@ -17,6 +17,7 @@ class Idea < ActiveRecord::Base
   }.merge(PAPERCLIP_STORAGE_OPTIONS)
   
   # Sunspot search index
+  # SUNSPOT WIKI!!!!! https://github.com/sunspot/sunspot/wiki
   searchable do
     text :text
     integer :num_users_joined

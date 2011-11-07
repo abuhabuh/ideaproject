@@ -17,6 +17,9 @@ class HomeController < ApplicationController
     end
     # make sure we have stream_view variable in session
     session[:stream_view] = params[:stream_view]
+    params[:page] ||= 1
+    session[:page] = params[:page] # session[:page] is written to hidden div on html page to support
+                                   #   ajax call to render more ideas on stream
     
     # Case1: users have inputed an idea and have just authenticated
     #        or logged in. They should have an idea string in the session
@@ -46,25 +49,46 @@ class HomeController < ApplicationController
     # TODO: IMPLEMENT THIS
     
     # Gets collections of user ideas, friends' ideas
-    set_objs_to_render()
+    set_objs_to_render
 
-    if params[:search] && !params[:search].blank?
+#    if params[:search] && !params[:search].blank?
 
-      @search = Idea.search do
-        fulltext params[:search] {minimum_match 1}
-        order_by :num_users_joined, :desc
-      end
-      @idea_search_res = @search.results
-      
-    else
+    @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+#    else
       # Get stream ideas based on what type of stream we're rendering: Public, 
       #   Friends, etc. Default is public view.
-      @stream_ideas = get_stream_ideas(session[:stream_view])
-    end
+    @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+#    end
   end
 
 
-  # IMPLEMENTED
+  # Renders JS for appending additional stream content to auth home stream
+  # - works for friends ideas and search ideas
+  # - need to have :page parameter is passed in and :stream_view is in session
+  # TODO: Call from jquery.ajax() data type is HTML, but still JS call so these js files that are rendered
+  #   are returning HTML. Make sure this is right
+  def next_ideas_batch_js
+    session[:page] = params[:page] # session[:page] written to hidden div to support ajax
+
+    set_objs_to_render
+
+    respond_to do |format|
+      # JS is the only format that this function should be called as
+      format.js {
+        if session[:stream_view] == STREAM_VIEW_FRIENDS
+          @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+          render "next_friends_ideas_batch.js.erb"
+        else
+          @search_result_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+          render "next_search_ideas_batch.js.erb"
+        end
+      }
+    end
+
+  end
+
+
+
   # Processes initial idea from unauthenticated page
   #   TODO: May need to show ideas that match this one
   # POST /ideas/process_idea
@@ -79,15 +103,8 @@ class HomeController < ApplicationController
       #   authenticates
       session[:initial_idea] = params[:idea]
       
-      @search = Idea.search do
-        fulltext params[:idea] {minimum_match 1}
-        order_by :num_users_joined, :desc
-        paginate :page => 1, :per_page => 5
-      end
-      @idea_search_res = @search.results
-      
-      puts "******* idea res size: " + @idea_search_res.size.to_s
-      
+      @search_result_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+           
     else
       # Handle unexpected nil error
       puts " TRACE IdeasController:process_idea - no param for idea"
@@ -96,7 +113,6 @@ class HomeController < ApplicationController
   end
 
 
-  # IMPLEMENTED
   # Adds new idea to user idea object
   # Creates new idea in database
   #   @input: idea needs to be in params
@@ -111,23 +127,20 @@ class HomeController < ApplicationController
       # Handle unexpected nil error
       puts " TRACE HomeController:add_idea - no param for idea"
     end
-    
+       
     respond_to do |format|
       format.html {
-        set_objs_to_render()
+        set_objs_to_render
 
         if params[:search] && !params[:search].blank?
 
-          @search = Idea.search do
-            fulltext params[:search] {minimum_match 1}
-            order_by :num_users_joined, :desc
-          end
-          @idea_search_res = @search.results
+          @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
           
         else
           # Get stream ideas based on what type of stream we're 
           #   rendering: Public, Friends, etc. Default is public view.
-          @stream_ideas = get_stream_ideas(session[:stream_view])
+          @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+          
         end
 
         redirect_to authenticated_home_path
@@ -137,7 +150,7 @@ class HomeController < ApplicationController
     end
   end
 
-  # IMPLEMENTED
+
   # Joins user to existing idea
   # Doesn't create new idea object
   # TODO make this ajax call
@@ -152,20 +165,16 @@ class HomeController < ApplicationController
     
     respond_to do |format|
       format.html {
-        set_objs_to_render()
+        set_objs_to_render
 
         if params[:search] && !params[:search].blank?
-
-          @search = Idea.search do
-            fulltext params[:search] {minimum_match 1}
-            order_by :num_users_joined, :desc
-          end
-          @idea_search_res = @search.results
+          
+          @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
           
         else
           # Get stream ideas based on what type of stream we're 
           #   rendering: Public, Friends, etc. Default is public view.
-          @stream_ideas = get_stream_ideas(session[:stream_view])
+          @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
         end
 
         redirect_to authenticated_home_path
@@ -182,28 +191,29 @@ class HomeController < ApplicationController
   ######################################################
   private
   
-  def get_stream_ideas(stream_view)
+  def get_friends_ideas(stream_view, ideas_per_page, current_page)
     # TODO: public ideas that don't have any subscribers are not displayed
     #       figure out a good way to integrate these
-    unless stream_view.blank?
- 
-      case stream_view.to_s
-        when STREAM_VIEW_FRIENDS
-          return User.get_my_friends_ideas(current_user)
-        else STREAM_VIEW_PUBLIC
-          return User.get_public_ideas
-      end
-      
-    else
-      # TODO: catch error / throw error - stream_view type not specified
-      #  OR this should default to public view
-      puts "error"
-    end
+    page_number = current_page || 1
+    User.get_my_friends_ideas(current_user, ideas_per_page, page_number)
   end
   
   def set_objs_to_render()
     @user_ideas = User.get_my_ideas(current_user)
     @user_idea_ids = User.get_my_idea_ids(current_user)
+  end
+
+  def search_ideas(search_string, ideas_per_page, current_page)
+
+    page_number = current_page || 1
+    @search = Idea.search do
+      fulltext search_string.to_s {minimum_match 1}
+      order_by :num_users_joined, :desc
+      paginate :page => page_number, :per_page => ideas_per_page
+    end
+    
+    @search.results
+
   end
 
 end

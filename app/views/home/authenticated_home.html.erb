@@ -1,4 +1,59 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    last_scroll_position = $(window).scrollTop();
+
+    // TODO: can set autofocus with HTML5 as well so don't need this javascript to run for HTML5 browsers -->
+    $(document).ready(function(){
+      $("#idea").focus();
+    });
+
+    // Windows scroll detection function
+    $(window).scroll(function() {
+      current_scroll_position = $(window).scrollTop();
+      if (current_scroll_position > last_scroll_position){
+        did_scroll = true;
+      }else{
+        did_scroll = false;
+      }
+      last_scroll_position = current_scroll_position;      
+    });
+
+    setInterval(function() {
+      if ( did_scroll ) {
+        did_scroll = false;
+        
+        if  ( ($(document).height() - $(window).height()) - $(window).scrollTop() < 50 ){
+          var page_num = parseInt($("#page_num_store").html()) + 1
+
+          $.ajax({
+              url: "next_ideas_batch_js", 
+              data: {page : page_num}, 
+              dataType: 'html',
+              success: function(returned_html){
+                $("#main_stream_table").append(returned_html);
+                if ($.trim(returned_html).length != 0){
+                  $("#page_num_store").html(String(page_num)); // TODO: check this works
+                }
+              },
+              error: function(msg){ // remove this for live deploy
+                alert(msg);
+              }
+            });
+
+        }
+      }
+    }, 1000); // 1 second delay for function gives ajax to return and make page longer before next at_bottom check 
+
+    // Function to load in next NUM_IDEAS_STREAM_DISPLAY number of Ideas to display on the stream
+
+
+  </script>
+<% end %>
+
 <!-- Main Body for side menu, stream, and suggestion block -->
+<!--  style="display:none" -->
+<div id='page_num_store' ><%=session[:page]%></div>
+
 <table>
   <tr>
     <th>
@@ -42,6 +97,7 @@
     </td>
     <td style="vertical-align: top">
       
+      <!-- Method has to be get for will_paginate compatibility -->
       <%= form_tag authenticated_home_path, :method => :get do %>
         <p>
           <%= text_field_tag :search, params[:search] %>
@@ -73,7 +129,7 @@
                      :title => "See friends' ideas"}%> | Search <br />
       <% end %>
       
-      <table>
+      <table id='main_stream_table'>
         <tr>
           <th>Creator</th>
           <th>Idea Text</th>
@@ -87,53 +143,24 @@
           <% end %>
         </tr>
         
-        <!-- STREAM result display -->
-        <% if session[:stream_view] != STREAM_VIEW_SEARCH %>
-          <% @stream_ideas.each do |query_results| %>
-            <% idea_owner = User.find(query_results.idea_creator) %>
-            <tr>
-              <td><%= link_to image_tag(idea_owner.profile_pic.url(:stream)),
-                              user_path(idea_owner.id),
-                              {:method => 'get'} %></td>
-              <td>
-                <%= link_to query_results.idea_text,
-                              idea_path(query_results.idea_id),
-                              {:method => 'get'} %><br/>
-                <% unless @user_idea_ids.include?(query_results.idea_id.to_s) %>
-                  <%= render :partial => "home/idea_action_add",
-                             :locals => {:idea_id => query_results.idea_id} %>
-                <% end %>
-              </td>
-              <td>
-                <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+query_results.idea_id.to_s%>"><%=query_results.user_count%></div>
-              </td>
-            </tr>
+        <!-- STREAM FRIENDS result display -->
+        <% if session[:stream_view] == STREAM_VIEW_FRIENDS %>
+          <% @friends_ideas.each do |query_result| %>
+            <%= render :partial=>"row_item_friend_idea", :locals => {:friend_idea_query_item => query_result} %>
           <% end %>
         <% else %>
-        <!-- SEARCH result display -->
-          <% @idea_search_res.each do |idea_result| %>
-            <% idea_owner = User.find(idea_result.creator) %>
-            <tr>
-              <td><%= link_to image_tag(idea_owner.profile_pic.url(:stream)),
-                              user_path(idea_owner.id),
-                              {:method => 'get'} %></td>
-              <td>
-                <%= link_to idea_result.text,
-                              idea_path(idea_result.id),
-                              {:method => 'get'} %><br/>
-                <% unless @user_idea_ids.include?(idea_result.id.to_s) %>
-                  <%= render :partial => "home/idea_action_add",
-                             :locals => {:idea_id => idea_result.id} %>
-                <% end %>
-              </td>
-              <td>
-                <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea_result.id.to_s%>"><%=idea_result.num_users_joined%></div>
-              </td>
-            </tr>
+        <!-- STREAM VIEW PUBLIC and SEARCH RESULTS display -->
+          <% @search_result_ideas.each do |idea_item| %>
+            <%= render :partial=>"row_item_search_idea", :locals => {:idea_item => idea_item} %>
           <% end %>
-          
         <% end %>
+        
       </table>
+      <!-- TODO: get rid of pagination and go with stream auto load -->  
+      <% if session[:stream_view] != STREAM_VIEW_FRIENDS %>
+        <%= will_paginate @search_result_ideas %>
+      <% end %>
+
     </td>
     <td style="vertical-align: top">
       Blahblah add this

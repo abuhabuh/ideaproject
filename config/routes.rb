@@ -29,6 +29,8 @@ IdeaApp::Application.routes.draw do
         :as => :initial_idea, :via => "POST"
   match "home/authenticated_home", :to => "home#authenticated_home", \
         :as => :authenticated_home, :via => "GET"
+  match "home/next_ideas_batch_js", :via => "home#next_ideas_batch_js", \
+        :as => :next_ideas_batch_js, :via => "GET"
 
   match "users", :to => "users#index", \
         :as => :users, :via => "GET"

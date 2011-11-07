@@ -96,42 +96,17 @@ class User < ActiveRecord::Base
 
   # Returns idea of user's friends
   #   Return parameters have to be same as get_public_ideas
-  def self.get_my_friends_ideas (current_user)
+  def self.get_my_friends_ideas (current_user, ideas_per_page, current_page)
     
     current_user.friendships\
                 .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')\
                 .joins('INNER JOIN ideas ON user_ideas.idea_id = ideas.id')\
                 .group('user_ideas.idea_id, ideas.text, ideas.creator, ideas.id')\
                 .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(user_ideas.idea_id) as user_count')\
-                .order('user_count DESC')
+                .order('user_count DESC')\
+                .offset((current_page.to_i-1) * ideas_per_page.to_i)\
+                .limit(ideas_per_page.to_i)
                 
-#    current_user.friendships\
-#                .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')\
-#                .joins('INNER JOIN ideas ON user_ideas.idea_id = ideas.id')\
-#                .group('user_ideas.idea_id')\
-#                .count(:idea_id)
-
   end
   
-  # Returns all public ideas grouped by idea id with count of all users who
-  #   subscribe to the idea
-  #   Return parameters have to be same as get_my_friends_ideas
-
-  #   TODO: param that specifies how many rows to get at a time
-  def self.get_public_ideas
-
-    # TODO: change this implementation to no longer join users together to get count
-    UserIdea.joins(:idea)\
-            .joins(:user)\
-            .group('ideas.id, ideas.text, ideas.creator')\
-            .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(ideas.id) as user_count')\
-            .order('user_count DESC')
-            
-#    UserIdea.joins(:idea)\
-#            .joins(:user)\
-#            .group('ideas.id, ideas.text, ideas.creator')\
-#            .count(:id)
-            
-  end
-
 end

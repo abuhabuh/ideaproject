@@ -20,7 +20,8 @@ STREAM_VIEW_PUBLIC = "public"
 STREAM_VIEW_FRIENDS = "friends"
 STREAM_VIEW_SEARCH = "search"
 
-# AJAX ID TAGS
+
+# AJAX ID tags
 #   User list view page
 ID_TAG_USER_LIST_USER_ROW = "user_list_row_id_" #append user id
 #   Idea view page
@@ -32,7 +33,12 @@ ID_TAG_AUTH_HOME_USER_IDEAS = "auth_home_user_ideas"
 #   Feedback chat window ID
 ID_TAG_FEEDBACK_CHAT = "feedback_chat_id"
 
-# MESSAGES
+
+# Configurable text for system messages
 USER_ACTION_FRIENDSHIP_ADDED = "Friend has been added."
 USER_ACTION_FRIENDSHIP_ADD_ERROR = "Error adding friend."
 USER_ACTION_FRIENDSHIP_REMOVED = "Friend removed."
+
+
+# Search functionality constants
+AUTH_HOME_IDEAS_PER_PAGE = 10

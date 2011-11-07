@@ -1,0 +1,3 @@
+<% @friends_ideas.each do |query_result| %>
+  <%= render :partial=>"row_item_friend_idea", :locals => {:friend_idea_query_item => query_result} %>
+<% end %>
