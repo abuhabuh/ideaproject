@@ -1,0 +1,24 @@
+<div class='left-nav'>
+  <p>
+    <%= form_tag add_idea_path, :method => 'post' do %>
+      <% if @initial_idea.blank? %>
+        <%= text_field_tag :idea, INPUT_BOX_ADD_IDEA %>
+      <% else %>
+        <%= text_field_tag :idea, @initial_idea %>
+      <% end %>      
+      <%= submit_tag "Add Idea" %>
+    <% end %>
+  </p>
+
+  <div class='left-nav-main-link'><%= link_to 'Browse Community', users_path %></div>
+      
+  <!-- TODO: make *'s images; format this left column better -->
+  <div class='left-nav-main-link'><%= link_to 'My Ideas', users_profile_path%></div>
+  <!-- AJAX call updates this div on idea add -->
+<!--  <div id="<%=ID_TAG_AUTH_HOME_USER_IDEAS%>"> 
+    [erb open brace=] render :partial => "list_my_ideas", :collection => @user_ideas, :as => :idea [erb close brace]
+  </div>
+-->
+  <div class='left-nav-main-link'>My Events (coming soon)</div>
+
+</div>

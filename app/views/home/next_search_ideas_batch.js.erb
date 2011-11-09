@@ -1,3 +1,3 @@
 <% @search_result_ideas.each do |idea_item| %>
-  <%= render :partial=>"row_item_search_idea", :locals => {:idea_item => idea_item} %>
+  <%= render :partial=>"row_item_search_idea", :locals => {:idea_item => idea_item, :pic_display_mode => PIC_VIEW_TYPE_USER} %>
 <% end %>

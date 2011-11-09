@@ -1,85 +1,446 @@
-.container {
-  width: 710px;
+/*************************************
+ * Notes
+ * Color combos: 
+ *  - color matcher: http://www.colorcombos.com/combotester.html?rnd=0&color0=5a3232&color1=be3c14&color2=d8dcce&color3=321e1e&color4=f8fcee&color5=2b3c45
+ *  - colors: http://www.colorhunter.com/tag/pastel/1
+ *  - earth tones: http://www.varian.net/dreamview/dreamcolor/earth-dark.html
+ *  - earth tones: http://www.varian.net/dreamview/dreamcolor/earth.html
+ *************************************/
+
+/*************************************
+ * Color Scheme and Shading
+ *   Text and background color definitions
+ *************************************/
+
+body {
+  color: #1C1814;  
+  background-color: #D8D5C9;
+}
+
+a {
+  color: #503C28;
+}
+
+  /***************************************
+   * Left Nav 
+   ***************************************/
+
+div.left-nav{
+  background-color: #CBBB9B;
+  box-shadow: 10px 10px 20px #201C10;  
+}
+
+.left-nav-main-link {
+  color: white;
+  background-color: #be3c14; /* alt colors: 943E0F be3c14 */
+}
+
+.left-nav-list-item {
+}
+
+div.left-nav div.left-nav-main-link a {
+  color: white;
+}
+
+div.left-nav a:hover {
+}
+
+  /*************************************
+   * Content
+   *************************************/
+.content{
+  background-color: #CBBB9B;
+  box-shadow: 10px 10px 20px #201C10;
+}
+
+.content-title{
+  background-color: #943E0F;
+  color: white;
+}
+
+.content-header{
+  background-color: #B58963;
+}
+
+  /*************************************
+   * Link Definitions
+   *************************************/
+.add-idea-link{
+  color: white;
+  background-color: #be3c14;
+}
+
+.add-idea-link a{
+  color: white;
+}
+
+
+
+/*************************************
+ *************************************
+ *
+ * Parent Elements Positioning and Layout 
+ *
+ *************************************
+ *************************************/
+ 
+html {
+  height: 100%; /* to allow 100% height inheritance */
 }
 
 body {
-  background: #cff;
+  font-family: "Helvetica Neue",
+               Arial,
+               Helvetica,
+               sans-serif;             
+  font-size: 14px;
+  
+  height: 100%;
 }
 
-header {
-  padding-top: 20px;
+/* Centering container to center all page content */
+.center-container{
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  
+  height: 100%;
+  
+  border-style:solid;
+  border-width: 0px;
 }
 
-header img {
-  padding: 1em;
-  background: #fff;
+/* Main container for all pages
+   TODO: setup div as % with a minimum div width of 900 
+   Called in application.html.erb
+ */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  
+  width: 900px;
+  height: 100%;
+  
+  border-style:solid;
+  border-width: 0px;
+  
+  float: left;
 }
 
-section {
-  margin-top: 1em;
-  font-size: 120%;
-  padding: 20px;
-  background: #fff;
+header{
+  margin-bottom: 20px;
 }
 
-section h1 {
-  font-size: 200%;
+/* Main header nav div for logo and session / profile mgmt */
+#main-header-nav{
+  padding: 4px 8px;
 }
 
-/* Links */
+div.left-nav {
+  float: left;
+  width: 20%;
+  min-height: 300px;
+  
+  /* top, right, bottom, left */
+  padding: 10px;
+  
+  border-style:solid;
+  border-width: 0px;
+}
 
-a {
-  color: #09c;
+div.content{
+  float: left;
+
+  width: 50%;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  
+  border-style: dotted;
+  border-width: 0px;
+}
+
+div.right-nav {
+  float: left;
+
+  width: 18%;
+  padding: 2px 5px 2px 20px;
+  
+  border-style:solid;
+  border-width: 0px;
+}
+
+
+
+
+/*************************************
+ *************************************
+ *
+ * Site Component Definitions for pages, elements, etc
+ *
+ *************************************
+ *************************************/
+ 
+  /*************************************
+   * General elements - used across different pages
+   *************************************/
+
+.minor-link {
+  font-size: 12px;
+}
+
+.minor-text {
+  font-size: 12px;
+}
+
+.content-section{
+  float: left;
+  
+  width: 100%;
+  
+  margin-bottom: 20px;
+}
+
+/* Title for content areas */
+.content-title{
+  float: left;
+  
+  width: 100%;
+  padding: 5px 0px;
+  
+  font-size: 14;
+}
+
+
+/* Header text for a content section */
+.content-header{
+  float: left;
+
+  width: 100%;
+
+  padding: 5px 0px;
+
+  border-width: 0px;
+  border-style: solid;
+}
+
+  /*************************************
+   * Left Nav
+   *************************************/
+
+.left-nav-main-link {
+  font-size: 12px;
+
+  padding: 5px;
+  margin: 8px 0px;
+}
+
+.left-nav-list-item {
+  font-size: 12px;
+  padding: 2px 4px;
+}
+
+div.left-nav div.left-nav-main-link a {
   text-decoration: none;
 }
 
-a:hover {
-  color: #069;
+div.left-nav a:hover {
   text-decoration: underline;
 }
 
-a:visited {
-  color: #069;
+
+
+  /*************************************
+   * Auth Home Content Stream
+   *************************************/
+
+/* Idea stream content: content area for list of ideas */
+.idea-stream-content-view-selector{
+  float: left;
+  
+  width: 100%;
+  
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 12px;
 }
 
-/* Navigation */
+.idea-stream-header-row{
+  float: left;
+  font-size: 14px;
 
-nav {
+  width: 100%;
+  padding: 10px 0px;
+
+  border-width: 0px;
+  border-style: solid;  
+}
+
+.idea-stream-content-row{
+  float: left;
+  font-size: 12px;
+
+  width: 100%;
+  padding: 10px 0px;
+
+  border-width: 0px;
+  border-style: solid;  
+}
+
+/* Idea-row: individual cells in an idea row for data */
+.idea-row-picture{
+  float: left;
+  width: 15%;
+}
+
+.idea-row-text{
+  float: left;
+  width: 60%;
+}
+
+.idea-text{ /* marks the actual text in the idea-row block item (makes it bigger) */
+  font-size: 14px;
+}
+
+.idea-row-misc{
+  float: left;
+  width: 25%;
+}
+
+  /*************************************
+   * User Profile Page
+   *************************************/
+.user-stream-header-row{
+  float: left;
+  font-size: 14px;
+
+  width: 100%;
+  padding: 10px 0px;
+
+  border-width: 0px;
+  border-style: solid;  
+}
+
+.user-stream-content-row{
+  float: left;
+  font-size: 12px;
+
+  width: 100%;
+  padding: 10px 0px;
+
+  border-width: 0px;
+  border-style: solid;  
+}
+
+.user-row-picture{
+  float: left;
+  width: 15%;
+}
+
+.user-row-text{
+  float: left;
+  
+  width: 50%;
+  padding: 0px 0px 0px 10px;
+}
+
+.user-row-misc{
+  float: left;
+  width: 25%;
+}
+
+  /*************************************
+   * Idea View Page
+   *************************************/
+.idea-image-main{
+
+}
+
+.idea-action-link{
+
+}
+
+.idea-user-item{
+  float: left;
+  width: 100%;
+  
+  font-size: 12px;
+  
+  margin: 5px;  
+}
+
+
+/*************************************
+ *************************************
+ *
+ * Link Definitions
+ *
+ *************************************
+ *************************************/
+
+.add-idea-link{
+  float: left;
+  
+  margin: 5px 0px;
+  padding: 2px;
+  
+  text-decoration: none;
+  
+  /* bevel'd button */
+  /*box-shadow: -2px -2px 2px rgba(0,0,0,.25) inset, 2px 2px 2px white inset;*/
+}
+
+.add-idea-link a {
+  text-decoration: none;
+}
+
+
+/*************************************
+ *************************************
+ *
+ * Navigation Definitions 
+ *
+ *************************************
+ *************************************/
+
+nav.main-authentication {
   float: right;
-}
 
-nav {
   background-color: white;
-  padding: 0 0.7em;
   white-space: nowrap;
 }
 
-nav ul {
+nav.main-authentication ul {
   margin: 0;
   padding: 0;
 }
 
-nav ul li {
+nav.main-authentication ul li {
   list-style-type: none;
   display: inline-block;
-  padding: 0.2em 0;
 }
 
-nav ul li a {
+nav.main-authentication ul li a {
   padding: 0 5px;
   font-weight: bold;
 }
 
-nav ul li a:visited {
+nav.main-authentication ul li a:visited {
   color: #09c;
 }
 
-nav ul li a:hover {
+nav.main-authentication ul li a:hover {
   text-decoration: underline;
 }
 
 
-/* Round corners */
+/*************************************
+ *************************************
+ *
+ * Rounded Corners & other special stuff
+ *
+ *************************************
+ *************************************/
 
 .round {
   -moz-border-radius:    10px;
@@ -87,30 +448,39 @@ nav ul li a:hover {
   border-radius:         10px;
 }
 
-
-/* Footer */
-
-footer {
-  text-align: center;
-  margin-top: 10px;
-  width: 710px;
-  margin-left: auto;
-  margin-right: auto;
+p.notice{
+  background-color: #CFC447;
+  padding: 3px;
 }
 
-footer nav {
-  float: none;
+p.alert{
+  background-color: #943E0F;
+  padding: 3px;
 }
 
+/*************************************
+ *************************************
+ *
+ * Div Popup
+ *
+ *************************************
+ *************************************/
 
-/* Page layout divs*/
-
-div.left-side-bar-float {
-  float: left;
-  width: 20%;
+#blanket {
+  background-color:#111;
+  opacity: 0.65;
+  filter:alpha(opacity=65);
+  position:absolute;
+  z-index: 9001;
+  top:0px;
+  left:0px;
+  width:100%;
 }
 
-div.center-main-float {
-  float: left;
-  width: 70%;
+#popUpDiv {
+  position:absolute;
+  background-color:#eeeeee;
+  width:300px;
+  height:300px;
+  z-index: 9002;
 }

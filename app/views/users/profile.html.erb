@@ -1,51 +1,59 @@
-<%= image_tag current_user.profile_pic.url(:thumb) %><br />
-<%= link_to 'edit profile', edit_user_registration_path, :method => :get %><br/>
-<br/>
-<b>User Name</b>: <%= current_user.user_name %><br />
-<b>Email</b>: <%= current_user.email %><br />
-<b>Name</b>: <%=current_user.first_name%> <%=current_user.last_name%><br />
-<b>Description</b>: <%= current_user.description %><br/>
-<b>Interests</b>: <%= current_user.interests %><br/>
+<div class='left-nav'>
+  <%= image_tag current_user.profile_pic.url(:thumb) %><br />
+  <%= link_to 'edit profile', edit_user_registration_path, :method => :get %><br/>
+  <br/>
+  <b>User Name</b>: <%= current_user.user_name %><br />
+  <b>Email</b>: <%= current_user.email %><br />
+  <b>Name</b>: <%=current_user.first_name%> <%=current_user.last_name%><br />
+  <b>Description</b>: <%= current_user.description %><br/>
+  <b>Interests</b>: <%= current_user.interests %><br/>
+</div>
 
-<br/>
-<br/>
+<div class='content'>
 
-<b>Ideas:</b>
+  <div class='content-section'>
+    <div class='content-header'>
+      My Ideas:
+    </div>
 
-<table>
-  <tr>
-    <th>Idea Description</th>
-    <th></th>
-  </tr>
+    <div class='idea-stream-header-row'>
+      <div class='idea-row-picture'>&nbsp</div>
+      <div class='idea-row-text'>Idea Description</div>
+      <div class='idea-row-misc'>Action</div>
+    </div>
 
-  <% current_user.user_ideas.each do |user_idea_link| %>
-    <tr>
-      <td><%= link_to user_idea_link.idea.text, idea_path(user_idea_link.idea),
-                {:method => 'get'} %></td>
-      <td><%= link_to 'remove', user_idea_link, {:method => :delete} %></td>
-    </tr>
-  <% end %>
-</table>
+    <% current_user.user_ideas.each do |user_idea_link| %>
+      <div class='idea-stream-content-row'>
+        <% idea = user_idea_link.idea %>
+        <div class='idea-row-picture'>
+          <%= link_to image_tag(idea.photo.url(:stream)),
+                                idea_path(idea.id),
+                                {:method => 'get'} %>
+        </div>
+        <div class='idea-row-text'>
+          <%= link_to user_idea_link.idea.text, idea_path(user_idea_link.idea),
+                      {:method => 'get'} %>
+        </div>
+        <div class='idea-row-misc'>
+          <%= link_to 'remove', user_idea_link, {:method => :delete} %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-<br/>
+  <div class='content-section'>
+    <div class='content-header'>
+      My Friends:
+    </div>
 
-<b>Friends:</b>
+    <div class='user-stream-header-row'>
+      <div class='user-row-picture'>Picture</div>
+      <div class='user-row-text'>Name</div>
+      <div class='user-row-misc'>Action</div>
+    </div>
 
-<table>
-  <tr>
-    <th>Friend Name</th>
-    <th>Email</th>
-    <th></th>
-  </tr>
+    <!-- renders the partial for each obj in @users collection -->
+    <%= render :partial => "list_users", :collection => current_user.friends, :as => :user %>
 
-  <% current_user.friendships.each do |friendship| %>
-    <tr>
-      <td><%= link_to friendship.friend.user_name, user_path(friendship.friend),
-                {:method => 'get'} %></td>
-      <td><%= friendship.friend.email %></td>
-      <td><%= link_to 'defriend', friendship, :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
-
-<br />
+  </div>
+</div>

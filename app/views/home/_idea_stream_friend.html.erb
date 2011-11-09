@@ -1,0 +1,7 @@
+    <div id='AJAX_page_num_store' style="display:none"><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
+    <div id='AJAX_main_stream_content'> 
+      <% @friends_ideas.each do |query_result| %>
+        <!-- user_count in query_result stands for # of FRIENDS sharing -->
+        <%= render :partial=>"home/row_item_friend_idea", :locals => {:friend_idea_query_item => query_result, :pic_display_mode => pic_display_mode} %>
+      <% end %>
+    </div>

@@ -1,26 +1,27 @@
 <header>
-  <table>
-    <tr>
-      <td>
-	<%= link_to content_tag(:b, 'JustAnIdea'), root_url%>
-      </td>
-      <td>
-	<nav class="round">
-	  <ul>
-	    
-	    <% if user_signed_in? %>
-	      <li> Hello <%= link_to current_user.user_name, users_profile_path %> </li>
-	      <li> <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete%> </li>
-	    <% else %>
-	      <li> <%= link_to 'Sign In', new_user_session_path %> </li>
-	      <li> <%= link_to 'Sign Up', new_user_registration_path %> </li>
-	    <% end %>
-	  </ul>
-	</nav>
-      </td>
-    </tr>
-  </table>
 
+  <div id="main-header-nav">
+    <%= link_to content_tag(:b, 'JustAnIdea'), root_url%>
+
+  	<nav class="main-authentication">
+	    <ul>
+	      
+	      <% if user_signed_in? %>
+	        <li> Hello <%= link_to current_user.user_name, users_profile_path %> </li>
+	        <li> <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete%> </li>
+	      <% else %>
+	        <li> <%= link_to 'Sign In', new_user_session_path %> </li>
+	        <li> <%= link_to 'Sign Up', new_user_registration_path %> </li>
+	      <% end %>
+	    </ul>
+	  </nav>
+
+    <br />
+    <% if user_signed_in? %>
+      <span class="minor-link"><%=link_to "Feedback? Chat us up!", feedback_path, {:target => "_blank"} %></span>
+    <% end %>
+
+  </div>
   <!-- AJAX picks up DIV ids to insert proper notices -->
   <div id='flash_notice_div'>
     <% if flash[:notice] %>

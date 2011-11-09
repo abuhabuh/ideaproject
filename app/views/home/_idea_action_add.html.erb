@@ -1,5 +1,5 @@
-              <div id="<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + idea_id.to_s%>">
-                <%= link_to '<join idea>',
+              <div id="<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + idea_id.to_s%>" class="add-idea-link">
+                <%= link_to BUTTON_JOIN_IDEA,
                     add_idea_id_path(:idea_id => idea_id),
                                      {:method => 'post',
                                       :remote => true,

@@ -77,10 +77,10 @@ class HomeController < ApplicationController
       format.js {
         if session[:stream_view] == STREAM_VIEW_FRIENDS
           @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-          render "next_friends_ideas_batch.js.erb"
+          render "next_friends_ideas_batch.js.erb" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
         else
           @search_result_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-          render "next_search_ideas_batch.js.erb"
+          render "next_search_ideas_batch.js.erb" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
         end
       }
     end

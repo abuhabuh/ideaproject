@@ -1,7 +1,9 @@
 # CONSTANTS FOR IDEA PROJECT
 
 
+##########################################
 # Pusher chat config
+##########################################
 Pusher.app_id = '10463'
 Pusher.key = '8c4eff4efff8afc004d2'
 Pusher.secret = '8d035ff5acc21edf0fcb'
@@ -15,13 +17,21 @@ end
 PUSHER_CHANNEL_FEEDBACK_CHAT = "presence-feedback_chat"
 
 
+##########################################
 # Stream View Constants
-STREAM_VIEW_PUBLIC = "public"
-STREAM_VIEW_FRIENDS = "friends"
-STREAM_VIEW_SEARCH = "search"
+##########################################
+STREAM_VIEW_PUBLIC = 'public'
+STREAM_VIEW_FRIENDS = 'friends'
+STREAM_VIEW_SEARCH = 'search'
+
+PIC_VIEW_TYPE_IDEA = 'idea_pic'
+PIC_VIEW_TYPE_USER = 'user_pic'
 
 
+
+##########################################
 # AJAX ID tags
+##########################################
 #   User list view page
 ID_TAG_USER_LIST_USER_ROW = "user_list_row_id_" #append user id
 #   Idea view page
@@ -34,11 +44,18 @@ ID_TAG_AUTH_HOME_USER_IDEAS = "auth_home_user_ideas"
 ID_TAG_FEEDBACK_CHAT = "feedback_chat_id"
 
 
+##########################################
 # Configurable text for system messages
+##########################################
 USER_ACTION_FRIENDSHIP_ADDED = "Friend has been added."
 USER_ACTION_FRIENDSHIP_ADD_ERROR = "Error adding friend."
 USER_ACTION_FRIENDSHIP_REMOVED = "Friend removed."
+INPUT_BOX_ADD_IDEA = "What do you want to do?"
+INPUT_BOX_SEARCH_IDEAS = "Enter text to search"
+BUTTON_JOIN_IDEA = "Join Idea!"
 
 
+##########################################
 # Search functionality constants
+##########################################
 AUTH_HOME_IDEAS_PER_PAGE = 10

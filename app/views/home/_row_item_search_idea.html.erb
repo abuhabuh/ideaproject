@@ -1,19 +1,36 @@
             <% idea_owner = User.find(idea_item.creator) %>
-            <tr>
-              <td><%= link_to image_tag(idea_owner.profile_pic.url(:stream)),
-                              user_path(idea_owner.id),
-                              {:method => 'get'} %></td>
-              <td>
-                <%= link_to idea_item.text,
+            <div class='idea-stream-content-row'>
+              <div class='idea-row-picture'>
+                <% if pic_display_mode == PIC_VIEW_TYPE_USER %>
+                  <%= link_to image_tag(idea_owner.profile_pic.url(:stream)),
+                                user_path(idea_owner.id),
+                                {:method => 'get'} %>
+                <% elsif pic_display_mode == PIC_VIEW_TYPE_IDEA %>
+                  <%= link_to image_tag(idea_item.photo.url(:stream)),
+                                idea_path(idea_item.id),
+                                {:method => 'get'} %>
+                <% end %>
+              </div>
+              <div class='idea-row-text'>
+                <%= idea_owner.user_name%>:<br/>
+                &nbsp;&nbsp;<span class='idea-text'><%= link_to idea_item.text,
                               idea_path(idea_item.id),
-                              {:method => 'get'} %><br/>
+                              {:method => 'get'} %></span><br/>
                 <% unless @user_idea_ids.include?(idea_item.id.to_s) %>
                   <%= render :partial => "home/idea_action_add",
                              :locals => {:idea_id => idea_item.id} %>
                 <% end %>
-              </td>
-              <td>
-                <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea_item.id.to_s%>"><%=idea_item.num_users_joined%></div>
-              </td>
-            </tr>
-
+              </div>
+              <div class='idea-row-misc'>
+                <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea_item.id.to_s%>">
+                  <%=idea_item.num_users_joined%> users sharing
+                </div>
+                <div>
+                  <%= current_user.friendships
+                                       .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')
+                                       .where('user_ideas.idea_id = ?', idea_item.id)
+                                       .count %> friends sharing
+                </div>
+                  
+              </div>
+            </div>

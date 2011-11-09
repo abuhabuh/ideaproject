@@ -4,123 +4,99 @@
 
     // TODO: can set autofocus with HTML5 as well so don't need this javascript to run for HTML5 browsers -->
     $(document).ready(function(){
+
+      did_scroll_down = false; // initialize variable for scroll bottom interval function
+
       $("#idea").focus();
-    });
+      $("#idea").select();
 
-    // Windows scroll detection function
-    $(window).scroll(function() {
-      current_scroll_position = $(window).scrollTop();
-      if (current_scroll_position > last_scroll_position){
-        did_scroll = true;
-      }else{
-        did_scroll = false;
-      }
-      last_scroll_position = current_scroll_position;      
-    });
+      $("#idea").focus(function(){
+        $("#idea").select();
+      });
+      
+      $("#search").focus(function(){
+        $("#search").select();
+      });
 
-    setInterval(function() {
-      if ( did_scroll ) {
-        did_scroll = false;
-        
-        if  ( ($(document).height() - $(window).height()) - $(window).scrollTop() < 50 ){
-          var page_num = parseInt($("#page_num_store").html()) + 1
-
-          $.ajax({
-              url: "next_ideas_batch_js", 
-              data: {page : page_num}, 
-              dataType: 'html',
-              success: function(returned_html){
-                $("#main_stream_table").append(returned_html);
-                if ($.trim(returned_html).length != 0){
-                  $("#page_num_store").html(String(page_num)); // TODO: check this works
-                }
-              },
-              error: function(msg){ // remove this for live deploy
-                alert(msg);
-              }
-            });
-
+      // Auto loading ideas on scroll bottom functions
+      // Detect scroll event down
+      $(window).scroll(function() {
+        current_scroll_position = $(window).scrollTop();
+        if (current_scroll_position > last_scroll_position){
+          did_scroll_down = true;
+        }else{
+          did_scroll_down = false;
         }
-      }
-    }, 1000); // 1 second delay for function gives ajax to return and make page longer before next at_bottom check 
+        last_scroll_position = current_scroll_position;      
+      });
+      // Load next functions
+      setInterval(function() {
+        if ( did_scroll_down ) {
+          did_scroll_down = false;
+          
+          if  ( ($(document).height() - $(window).height()) - $(window).scrollTop() < 50 ){
+            var page_num = parseInt($("#AJAX_page_num_store").html()) + 1;
+            $.ajax({
+                url: "next_ideas_batch_js", 
+                data: {page : page_num}, 
+                dataType: 'html',
+                success: function(returned_html){
+                  $("#AJAX_main_stream_content").append(returned_html); // tag is rendered in _idea_stream_*.html.erb partial
+                  if ($.trim(returned_html).length != 0){
+                    $("#AJAX_page_num_store").html(String(page_num)); // TODO: check this works
+                  }
+                },
+                error: function(msg){ // remove this for live deploy
+                  alert(msg);
+                }
+              });
 
-    // Function to load in next NUM_IDEAS_STREAM_DISPLAY number of Ideas to display on the stream
+          }
+        }
+      }, 1000); // 1 second delay for function gives ajax to return and make page longer before next at_bottom check 
 
+    });
 
   </script>
 <% end %>
 
+
+
+
 <!-- Main Body for side menu, stream, and suggestion block -->
-<!--  style="display:none" -->
-<div id='page_num_store' ><%=session[:page]%></div>
 
-<table>
-  <tr>
-    <th>
-      Left Nav
-    </th>
-    <th>
-      Main Stream
-    </th>
-    <th>
-      Suggestions
-    </th>
-  </tr>
+<%= render :partial=>"left_nav"%>
 
-  <tr>
-    <td style="vertical-align: top">
+<div class='content'>
 
-      Add a New Idea:
-      <%= form_tag add_idea_path, :method => 'post' do %>
-        <%= text_field_tag :idea, @initial_idea %>
-        <%= submit_tag "Add Idea" %>
-      <% end %>
-
-      <br />
-
-      <%= link_to 'Browse Community', users_path %> <br/>
-
-      <br/>
-      
-      <!-- TODO: make *'s images; format this left column better -->
-      My Ideas
-      <div id="<%=ID_TAG_AUTH_HOME_USER_IDEAS%>">
-        <%= render :partial => "list_my_ideas", :collection => @user_ideas, :as => :idea %>
-      </div>
-      
-      <br/>
-      <br/>
-      My Events
-      <br/>
-      (coming soon)
-      
-    </td>
-    <td style="vertical-align: top">
-      
-      <!-- Method has to be get for will_paginate compatibility -->
-      <%= form_tag authenticated_home_path, :method => :get do %>
-        <p>
-          <%= text_field_tag :search, params[:search] %>
-          <%= submit_tag "Search", :name => nil %>
-        
-          <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
-        </p>
-      <% end %>
-
+  <%= form_tag authenticated_home_path, :method => :get do %>
+    <% if params[:search].blank? %>
+      <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
+    <% else %>
+      <%= text_field_tag :search, params[:search] %>
+    <% end %>        
+    <%= submit_tag "Search", :name => nil %>
+    
+    <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
+  <% end %>
+  
+  <div class='content-section'>
+    <div class='idea-stream-content-view-selector'>
+      View: 
       <% case session[:stream_view] %>
         <% when STREAM_VIEW_PUBLIC %>
-          Ideas: Public | <%= link_to 'Friends', \
+          Public | <%= link_to 'Friends', \
                               authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), \
                               {:method => 'get', \
                                :title => "See friends' ideas"}%> <br/>
         <% when STREAM_VIEW_FRIENDS %>  
-          Ideas: <%= link_to 'Public', \
+          <%= link_to 'Public', \
                      authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), \
                      {:method => 'get', \
                       :title => "See public ideas"}%>
             | Friends <br/>
         <% when STREAM_VIEW_SEARCH %>
-          Ideas: <%= link_to 'Public', \
+          <%= link_to 'Public', \
                      authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), \
                      {:method => 'get', \
                       :title => "See public ideas"}%> | <%= link_to 'Friends', \
@@ -128,42 +104,26 @@
                      {:method => 'get', \
                      :title => "See friends' ideas"}%> | Search <br />
       <% end %>
-      
-      <table id='main_stream_table'>
-        <tr>
-          <th>Creator</th>
-          <th>Idea Text</th>
-          <% case session[:stream_view] %>
-            <% when STREAM_VIEW_PUBLIC %>
-              <th>Users Sharing</th>
-            <% when STREAM_VIEW_SEARCH %>
-              <th>Users Sharing</th>
-            <% when STREAM_VIEW_FRIENDS %>
-              <th>Friends Sharing</th>
-          <% end %>
-        </tr>
-        
-        <!-- STREAM FRIENDS result display -->
-        <% if session[:stream_view] == STREAM_VIEW_FRIENDS %>
-          <% @friends_ideas.each do |query_result| %>
-            <%= render :partial=>"row_item_friend_idea", :locals => {:friend_idea_query_item => query_result} %>
-          <% end %>
-        <% else %>
-        <!-- STREAM VIEW PUBLIC and SEARCH RESULTS display -->
-          <% @search_result_ideas.each do |idea_item| %>
-            <%= render :partial=>"row_item_search_idea", :locals => {:idea_item => idea_item} %>
-          <% end %>
-        <% end %>
-        
-      </table>
-      <!-- TODO: get rid of pagination and go with stream auto load -->  
-      <% if session[:stream_view] != STREAM_VIEW_FRIENDS %>
-        <%= will_paginate @search_result_ideas %>
-      <% end %>
+    </div>
+    
+    <div class='idea-stream-header-row'>
+      <div class='idea-row-picture'>Owner</div>
+      <div class='idea-row-text'>Idea Description</div>
+      <div class='idea-row-misc'>More Info</div>
+    </div>
+    
+    <!-- STREAM FRIENDS result display -->
+    <% if session[:stream_view] == STREAM_VIEW_FRIENDS %>
+        <%= render :partial=>"idea_stream_friend", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER}%>
+    <% else %>
+    <!-- STREAM VIEW PUBLIC and SEARCH RESULTS display -->
+        <%= render :partial=>"idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER}%>
+    <% end %>      
+  </div>
+</div>
 
-    </td>
-    <td style="vertical-align: top">
+<div class='right-nav'>
+  <p>
       Blahblah add this
-    </td>
-  </tr>
-</table>
+  </p>
+</div>

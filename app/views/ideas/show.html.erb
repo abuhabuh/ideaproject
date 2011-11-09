@@ -45,97 +45,92 @@
 <% end %>
 
 
-<table>
-  <tr>
-    <!-- Left users list block -->
-    <td>
-      <p>
-        <%= image_tag @idea.photo.url(:thumb)%>
-        <br/>
-        
-        <% if @curr_user_idea_link.nil? %>
-          <!-- TODO: NEED TO MAKE NEW PARTIAL THAT DOESN'T DIRECT TO HOME CONTROLLER AJAX -->
-          <%= render :partial => 'home/idea_action_add', :locals => {:idea_id => @idea.id} %>
-        <% else %>
-          <%= link_to 'Make an Event! (events coming soon)', '#' %>
-        <% end %>
-      </p>
-      
-      People Sharing: 
-      <% @idea.users.each do |user| %>
-        <%= link_to image_tag(user.profile_pic.url(:stream)),
-                            user_path(user.id),
-                            {:method => 'get'} %><br/>
-        <%= link_to user.user_name, user_path(user.id), {:method => 'get'} %><br/>
-        <br/>        
-      <% end %>
-    </td>
-    
-    <!-- Right main content block -->
-    <td>
-      <p>
-        <b>Text:</b>
-        <%= @idea.text %><br/>
-        <%= link_to 'edit idea', edit_idea_path(@idea), {:method => 'get'}%>
-      </p>
-      
-      <br/>
-      <br/>
-      
-      <div>
-      
-        <table>
-					<tr>
-						<td>
-							<b>Chat Board </b><br/>
-							Talk about the idea! Create an event when you're ready to plan time, place, etc.<br/>
-							<!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
-							<div id = <%=ID_TAG_IDEA_CHAT+"#{@idea.id}"%>
-									 style="border : solid 2px #adadad; background : #ffffff;
-													color : #000000; padding : 4px; height : 220px;
-													overflow : auto;" >
-								<% @idea_chat_msgs.each do |msg| %>
-									<!-- TODO: break this out to a render call for each chat text? efficiency? -->
-									<%= msg.user.user_name %>: <%= msg.text %> <br/>
-								<% end %>
-							</div>
-						</td>
-						<td>
-							<u>Online:</u><br />
-							<ul>
-								<div id = 'people_chatting'></div>
-							</ul>
-						</td>
-					</tr>
-				</table>	
-      
-        <% @chat_message = ChatMessage.new %>
-        <%= form_for @chat_message, :remote => true do |f| %>
-          <!-- TODO: fix this table hack layout with CSS and div (and all other formatted table hacks) -->
-          <table>
-            <tr>
-              <td>
-                <div class="message">
-                  <%= f.text_field :text, :size=>"70" %>
-                </div>
-                <div class="idea_id">
-                  <%= f.hidden_field :idea_id, :value => @idea.id %>
-                </div>
-                <div class="user_id">
-                  <%= f.hidden_field :user_id, :value => current_user.id %>
-                </div>
-              </td>
-              <td>
-                <div class="actions">
-                  <%= f.submit "Send" %>
-                </div>
-              </td>
-            </tr>
-          </table>
-        <% end %>
-      
-      </div>
-    </td>
-  </tr>
-</table>
+<div class='left-nav'>
+  <div class='idea-image-main'>
+    <%= image_tag @idea.photo.url(:thumb)%>
+  </div>
+  <div class='idea-action-link'>
+    <% if @curr_user_idea_link.nil? %>
+      <!-- TODO: NEED TO MAKE NEW PARTIAL THAT DOESN'T DIRECT TO HOME CONTROLLER AJAX -->
+      <%= render :partial => 'home/idea_action_add', :locals => {:idea_id => @idea.id} %>
+    <% else %>
+      <%= link_to 'Make an Event! (events coming soon)', '#' %>
+    <% end %>
+  </div>
+
+  <br />
   
+  <div class='content-section'>
+    <!-- if no friends, then default public view, else friends view -->
+    <div class='content-header'>
+        People Sharing
+    </div>
+
+    <% @idea.users.each do |user| %>
+      <div class='idea-user-item'>
+        <%= link_to image_tag(user.profile_pic.url(:stream)),
+                          user_path(user.id),
+                          {:method => 'get'} %><br/>
+        <%= link_to user.user_name, user_path(user.id), {:method => 'get'} %>
+      </div>
+    <% end %>
+  </div>
+</div>
+    
+
+<div class='content'>
+
+  <div class='content-title'>
+        <%= @idea.text %>
+  </div>
+  <span class='minor-link'><%= link_to 'edit idea', edit_idea_path(@idea), {:method => 'get'}%></span>
+  
+  <!-- just taking up some space... -->
+  <div class='content-section'> &nbsp; </div>
+  <div class='content-section'> &nbsp; </div>
+  
+  <div class='content-section'>
+    <div class='content-header'>Chat Board</div>
+    <span class='minor-text'>Talk about the idea! Create an event when you're ready to plan time, place, etc.</span>
+    
+	  <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
+	  <div id=<%=ID_TAG_IDEA_CHAT+"#{@idea.id}"%> style="border : solid 2px #adadad; background : #ffffff;
+												                               color : #000000; padding : 4px; height : 220px;
+												                               overflow : auto;">
+		  <% @idea_chat_msgs.each do |msg| %>
+			  <!-- TODO: break this out to a render call for each chat text? efficiency? -->
+			  <%= msg.user.user_name %>: <%= msg.text %> <br/>
+		  <% end %>
+	  </div>
+	  <u>Online:</u><br />
+    <ul>
+		  <div id = 'people_chatting'></div>
+	  </ul>
+      
+    <!-- Message input send form -->
+    <% @chat_message = ChatMessage.new %>
+    <%= form_for @chat_message, :remote => true do |f| %>
+      <!-- TODO: fix this table hack layout with CSS and div (and all other formatted table hacks) -->
+      <table>
+        <tr>
+          <td>
+            <div class="message">
+              <%= f.text_field :text, :size=>"50" %>
+            </div>
+            <div class="idea_id">
+              <%= f.hidden_field :idea_id, :value => @idea.id %>
+            </div>
+            <div class="user_id">
+              <%= f.hidden_field :user_id, :value => current_user.id %>
+            </div>
+          </td>
+          <td>
+            <div class="actions">
+              <%= f.submit "Send" %>
+            </div>
+          </td>
+        </tr>
+      </table>
+    <% end %>      
+  </div>
+</div>  

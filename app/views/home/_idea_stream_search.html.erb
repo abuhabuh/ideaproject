@@ -1,0 +1,18 @@
+    <!-- Using this partial: 
+         
+         INPUTS: 
+         @search_result_ideas must be initialized as a collection of ideas that will be displayed
+         @user_idea_ids must be initialized
+         
+         AJAX_page_num_store is used for paginated ajax call to load rest of ideas if there is a limit placed
+         AJAX_main_stream_content is tag used by AJAX calls to append additional ideas 
+    
+    -->
+
+    <div id='AJAX_page_num_store' style="display:none"><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
+    <div id='AJAX_main_stream_content'> 
+      <% @search_result_ideas.each do |idea_item| %>
+        <!-- user_count in query_result stands for # of TOTAL PEOPLE sharing -->
+        <%= render :partial=>"home/row_item_search_idea", :locals => {:idea_item => idea_item, :pic_display_mode => pic_display_mode} %>
+      <% end %>
+    </div>

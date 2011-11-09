@@ -1,43 +1,53 @@
-<table>
-  <tr>
-    <td style="vertical-align: top; width: 35%">
-      
-      <%= image_tag @user.profile_pic.url(:thumb) %><br/>
-      <%= @user.user_name %>
-      <% if @friendship.nil? %>
-        <!-- TODO - split string "show" in :prev_page => 'show' into a global var
-             Make this ajax -->
-        <%= link_to '(add friend)', friendships_path(:friend_id => @user.id, :prev_page => 'show'), 
-                  :method => :post, :remote => false %>
-      <% else %>
-        <%= link_to '(defriend)', friendship_path(@friendship.id),
-                  :method => :delete, :remote => false %>
-      <% end %>
-      <br/>
-      <br/>
-      Name: <%= @user.first_name %> <%= @user.last_name %><br/>
-      Location: <%= @user.location %><br/>
-      Birthday: <%= @user.dob %><br/>
-      <br/>
-      About Me: <%= @user.description %><br/>
-      <br/>
-      Interests: <%= @user.interests %><br/>
-    </td>
-    <!-- TODO fix non-css formatting hack -->
-    <td style="vertical-align: top; width: 65%">
-      <b>Ideas: </b>
-      
-      <table>
-        <% @user.ideas.each do |idea| %>
-        <tr>
-          <td><%= link_to image_tag(idea.photo.url(:stream)), idea_path(idea.id),
-                            {:method => 'get'} %></td>
-          <td><%= link_to idea.text, idea_path(idea.id),
-                            {:method => 'get'} %></td>
-        </tr>
-        <% end %>
-      </table>
-      
-    </td>
-  </tr>
-</table>
+<div class='left-nav'>      
+  <%= image_tag @user.profile_pic.url(:thumb) %><br/>
+  <%= @user.user_name %>
+  <% if @friendship.nil? %>
+    <!-- TODO - split string "show" in :prev_page => 'show' into a global var
+         Make this ajax -->
+    <%= link_to '(add friend)', friendships_path(:friend_id => @user.id, :prev_page => 'show'), 
+              :method => :post, :remote => false %>
+  <% else %>
+    <%= link_to '(defriend)', friendship_path(@friendship.id),
+              :method => :delete, :remote => false %>
+  <% end %>
+  <br/>
+  <br/>
+  Name: <%= @user.first_name %> <%= @user.last_name %><br/>
+  Location: <%= @user.location %><br/>
+  Birthday: <%= @user.dob %><br/>
+  <br/>
+  About Me: <%= @user.description %><br/>
+  <br/>
+  Interests: <%= @user.interests %><br/>
+</div>
+
+<div class='content'>
+
+  <div class='content-section'>
+    <div class='content-header'>Ideas</div>
+
+    <div class='idea-stream-header-row'>
+      <div class='idea-row-picture'>&nbsp</div>
+      <div class='idea-row-text'>Idea Description</div>
+      <div class='idea-row-misc'>Action</div>
+    </div>
+    
+    <%= render :partial=>"home/idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_IDEA} %>
+  </div>
+  
+  <div class='content-section'>
+    <div class='content-header'>
+      Friends:
+    </div>
+
+    <div class='user-stream-header-row'>
+      <div class='user-row-picture'>Picture</div>
+      <div class='user-row-text'>Name</div>
+      <div class='user-row-misc'>Action</div>
+    </div>
+
+    <!-- renders the partial for each obj in @users collection -->
+    <%= render :partial => "list_users", :collection => @user.friends, :as => :user %>
+  </div>
+
+</div>

@@ -1,17 +1,24 @@
-<tr id = <%= "'" + ID_TAG_USER_LIST_USER_ROW + user.id.to_s + "'" %> >
-  <td><%= link_to image_tag(user.profile_pic.url(:stream)),
-                            user_path(user.id),
-                            {:method => 'get'} %></td>
-  <td><%= user.user_name %></td>
-  <!-- Figuring out if user is friends with current user is kinda hacky
-        Built relation and used 'first' to force execution to return object-->
-  <% friendship_link = current_user.friendships.where("friendships.friend_id = #{user.id}").first %>
-  <% if friendship_link != nil %>
-    <td><%= link_to 'Defriend', friendship_path(friendship_link.id),
-            :method => :delete, :remote => true %></td>
-  <% else %>
-    <!-- TODO - split string "index" in :prev_page => 'index' into a global var -->
-    <td><%= link_to 'Add Friend', friendships_path(:friend_id => user.id, :prev_page => 'index'), 
-            :method => :post, :remote => true %></td>
-  <% end %>
-</tr>
+<div class='user-stream-content-row' id=<%= "'" + ID_TAG_USER_LIST_USER_ROW + user.id.to_s + "'" %> >
+
+  <div class='user-row-picture'>
+    <%= link_to image_tag(user.profile_pic.url(:stream)),
+                          user_path(user.id),
+                          {:method => 'get'} %>
+  </div>
+  <div class='user-row-text'>
+    <%= user.user_name %>
+  </div>
+  <div class='user-row-misc'>
+    <!-- Figuring out if user is friends with current user is kinda hacky
+          Built relation and used 'first' to force execution to return object-->
+    <% friendship_link = current_user.friendships.where("friendships.friend_id = #{user.id}").first %>
+    <% if friendship_link != nil %>
+      <%= link_to 'Defriend', friendship_path(friendship_link.id),
+              :method => :delete, :remote => true %>
+    <% else %>
+      <!-- TODO - split string "index" in :prev_page => 'index' into a global var -->
+      <%= link_to 'Add Friend', friendships_path(:friend_id => user.id, :prev_page => 'index'), 
+              :method => :post, :remote => true %>
+    <% end %>
+  </div>
+</div>

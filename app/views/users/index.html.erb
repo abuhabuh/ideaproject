@@ -1,17 +1,25 @@
-<h1>Listing users</h1>
+<%= render :partial=>"home/left_nav"%>
 
-<table>
-  <tr>
-    <th>User</th>
-    <th>Name</th>
-    <th></th>
-  </tr>
+<div class='content'>
 
-  <!-- renders the partial for each obj in @users collection -->
-  <%= render :partial => "list_users", :collection => @users, :as => :user %>
+  <!-- TODO: also allow view users from facebook, g+ etc, also allow view groups -->
+  <div class='content-title'> Search Users </div>
 
-</table>
+  <div class='content-section'>
+    <div class='content-header'>
+      Results:
+    </div>
 
+    <div class='user-stream-header-row'>
+      <div class='user-row-picture'>Picture</div>
+      <div class='user-row-text'>Name</div>
+      <div class='user-row-misc'>Action</div>
+    </div>
 
+    <!-- renders the partial for each obj in @users collection -->
+    <%= render :partial => "list_users", :collection => @users, :as => :user %>
 
-<br />
+  </div>
+
+</div>
+
