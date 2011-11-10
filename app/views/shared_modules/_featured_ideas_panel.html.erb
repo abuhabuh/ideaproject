@@ -1,0 +1,35 @@
+<!-- Usage
+    
+    INPUT:
+    - @user_idea_ids - array of user idea ids (int) that the user has joined
+    
+    NOTES:
+    - @user_idea_ids is set in home_controller so as long as this function is called within that context
+      we're ok...TODO: fix this - refactor   
+-->
+
+<div class='featured-ideas-container'>
+
+  <% @featured_ideas.each do |idea| %>
+
+    <div class='featured-ideas-item'>
+      <div class='featured-ideas-item-image'>
+        <%= link_to image_tag(idea.photo.url(:featured)),
+                      idea_path(idea.id),
+                      {:method => 'get'} %>
+      </div>
+      <div class='featured-ideas-item-text'>
+        <%= link_to idea.text,
+                      idea_path(idea.id),
+                      {:method => 'get'} %>
+      </div>
+
+      <% unless @user_idea_ids.include?(idea.id.to_s) %>
+        <%= render :partial => "home/idea_action_add",
+                   :locals => {:idea_id => idea.id} %>
+      <% end %>
+    <div>
+
+  <%end %>
+
+</div>

@@ -3,7 +3,9 @@ $(document).ready(function(){
   // On auth home page, user has joined the idea so update stream, user interested count
   if ($('#<%=ID_TAG_HOME_AUTH_PAGE%>').length ) {
 
-    $("#<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + @idea.id.to_s%>").replaceWith("Idea Added");
+    $(".<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + @idea.id.to_s%>").each(function(index) {
+      $(this).replaceWith("Idea Added");
+    });
 
     // TODO: take care of this...Not showing this right now, this ajax fails
     $("#<%=ID_TAG_AUTH_HOME_USER_IDEAS%>").append("<%= escape_javascript(render :partial => "list_my_ideas",

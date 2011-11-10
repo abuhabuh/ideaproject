@@ -3,7 +3,7 @@
 
   <% if @search_result_ideas.nil? || @search_result_ideas.size == 0 %>
 
-    <div class='unauth-content-text'>
+    <div class='content-text'>
 
       <b>No one has your idea yet! 
         <%= link_to 'Sign up', new_user_session_path %> to submit it and invite your friends.
@@ -12,7 +12,7 @@
     </div>
     
   <% else %>
-    <div class='unauth-content-text'>
+    <div class='content-text'>
     
       <b>You have idea matches below! 
         <%= link_to 'Sign up', new_user_session_path %> to join them or create your own.
@@ -36,7 +36,7 @@
 
   <% end %>
   
-  <div class='unauth-content-text'>
+  <div class='content-text'>
     <p> <%= link_to 'Login', new_user_session_path %> or <%= link_to 'Create an Account', new_user_session_path %> to see more! </p>
   </div>
 

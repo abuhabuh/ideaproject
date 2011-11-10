@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111105145041) do
+ActiveRecord::Schema.define(:version => 20111110183907) do
 
   create_table "admin_messages", :force => true do |t|
     t.string   "text"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20111105145041) do
     t.datetime "photo_updated_at"
     t.integer  "creator"
     t.integer  "num_users_joined"
+    t.integer  "featured",           :default => 0
   end
 
   create_table "user_events", :force => true do |t|

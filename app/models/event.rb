@@ -5,7 +5,9 @@ class Event < ActiveRecord::Base
   
   has_many :idea_events
   has_one :idea, :through => :idea_events
-  
+    
+  # TODO: CRITICAL - CHANGE PHOTO VARIABLE TO ANOTHER VARIABLE NAME TO NOT CONFLICT WITH 
+  #       IDEAS MODEL PHOTO STORE LOCATION
   has_attached_file :photo, {
     :styles => {
       :medium => "300x300#",

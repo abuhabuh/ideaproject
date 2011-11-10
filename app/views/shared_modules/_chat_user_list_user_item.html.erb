@@ -6,19 +6,20 @@
               - status_string: Joined, Viewing, Interested, etc
         -->
         
+        
           
-        <div class='idea-user-item'>
-          <div class='idea-user-item-image'>
-            <%= link_to image_tag(user.profile_pic.url(:stream)),
+        <div class='chat-board-user-item'>
+          <div class='chat-board-user-item-image'>
+            <%= link_to image_tag(user.profile_pic.url(:chat)),
                               user_path(user.id),
                               {:method => 'get'} %>
           </div>
-          <div class='idea-user-item-text'>
+          <div class='chat-board-user-item-text'>
             <%= link_to user.user_name, user_path(user.id), {:method => 'get'} %><br />
             <% if is_online %>
-              <span id="<%=ID_TAG_IDEA_USER + user.id.to_s%>" class='idea-user-item-status-online'><%=status_string%></span>
+              <span id="<%=ID_TAG_IDEA_USER + user.id.to_s%>" class='chat-board-user-item-status-online'><%=status_string%></span>
             <% else %>
-              <span id="<%=ID_TAG_IDEA_USER + user.id.to_s%>" class='idea-user-item-status-offline'><%=status_string%></span>
+              <span id="<%=ID_TAG_IDEA_USER + user.id.to_s%>" class='chat-board-user-item-status-offline'><%=status_string%></span>
             <% end %>            
           </div>
         </div>

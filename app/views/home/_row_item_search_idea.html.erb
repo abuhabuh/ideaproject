@@ -1,3 +1,11 @@
+<!-- Usage
+  
+    NOTES
+    - @user_idea_ids is rendered in home_controller.html.erb by the set_objs_to_render private function
+      which is called across many other functions that need to initialize this variable
+      TODO: hacky...fix this - refactor it out in a better way
+-->
+
 <% if view_only == IDEA_STREAM_VIEW_ONLY_TRUE %>
 
             <% idea_owner = User.find(idea_item.creator) %>

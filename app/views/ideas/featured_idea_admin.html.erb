@@ -1,0 +1,38 @@
+<%= render :partial=>"home/left_nav"%>
+
+<div class='content'>
+
+  <div class='idea-stream-header-row'>
+    <div class='idea-row-picture'>Picture</div>
+    <div class='idea-row-text'>Idea Description</div>
+    <div class='idea-row-misc'>Action</div>
+  </div>
+
+  <% @ideas.each do |idea| %>
+    <div class='idea-stream-content-row'>
+      <div class='idea-row-picture'>
+        <%= image_tag(idea.photo.url(:stream))%>
+      </div>
+      <div class='idea-row-text'>
+        <%= idea.text %> <br/>
+      </div>    
+      <div class='idea-row-misc'>
+
+        <%= form_tag feature_idea_path, :method => 'post' do %>
+          <%= text_field_tag :feature_num, idea.featured, :size => 3 %><br />
+          <%= hidden_field_tag :idea_id, idea.id %>
+          <%= submit_tag "Feature" %>
+        <% end %>
+
+      </div>
+    </div>
+  <% end %>
+
+
+  <div style="float: left">
+    <%= will_paginate(@ideas) %>
+  </div>
+  
+</div>
+
+

@@ -51,14 +51,13 @@ class HomeController < ApplicationController
     # Gets collections of user ideas, friends' ideas
     set_objs_to_render
 
-#    if params[:search] && !params[:search].blank?
-
     @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-#    else
-      # Get stream ideas based on what type of stream we're rendering: Public, 
-      #   Friends, etc. Default is public view.
+
+    # Don't need to get this if we're doing PUBLIC or SEARCH views
     @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-#    end
+
+    # Get featured ideas in order of most featured
+    @featured_ideas = Idea.where("featured != ?", NOT_FEATURED).order("featured DESC")
   end
 
 

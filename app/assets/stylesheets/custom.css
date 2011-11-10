@@ -12,21 +12,33 @@
  *   Text and background color definitions
  *************************************/
 
-body {
-  color: #1C1814;  
-  background-color: #D8D5C9;
-}
+  /***************************************
+   * Shadow Scheme
+   ***************************************/
+.unauth-content-container, .left-nav, .content, .main-header-nav, .right-nav{
+  box-shadow: 10px 10px 20px #201C10; /* COLORS: DARK - 201C10, Light - C5AB84 */
+} 
+
+  /***************************************
+   * General elements
+   ***************************************/
 
 a {
   color: #503C28;
 }
 
+body {
+  color: #1C1814;  
+  background-color: #D8D5C9; /* COLORS: DARK - 694629, Light - D8D5C9 */
+}
+
   /***************************************
-   * Shadow Scheme
+   * Header
    ***************************************/
-.unauth-content-container, .left-nav, .content{
-  box-shadow: 10px 10px 20px #201C10;
-} 
+
+.main-header-nav {
+  background-color: #CBBB9B; /* COLORS: DARK - 694629, Light - D8D5C9 */
+}
 
   /***************************************
    * Unauthenticated main page
@@ -58,6 +70,13 @@ div.left-nav div.left-nav-main-link a {
 div.left-nav a:hover {
 }
 
+  /***************************************
+   * Left Nav 
+   ***************************************/
+div.right-nav{
+  background-color: #CBBB9B;
+}
+
   /*************************************
    * Content
    *************************************/
@@ -72,6 +91,10 @@ div.left-nav a:hover {
 
 .content-header{
   background-color: #B58963;
+}
+
+.idea-stream-content-row{
+  border-color: #D6D5D1;
 }
 
   /*************************************
@@ -102,12 +125,12 @@ div.left-nav a:hover {
   background-color : #CBBB9B;
 }
 
-.idea-user-item-status-offline{
+.chat-board-user-item-status-offline{
   background-color: #954535;
   color: white;
 }
 
-.idea-user-item-status-online{
+.chat-board-user-item-status-online{
   background-color: green;
   color: white;
 }
@@ -135,13 +158,20 @@ body {
   height: 100%;
 }
 
+header{
+  float: left;
+  width: 100%;
+
+  margin-bottom: 20px;
+}
+
 /* Centering container to center all page content */
 .center-container{
-  width: 900px;
+  width: 800px;
   margin-left: auto;
   margin-right: auto;
   
-  height: 100%;
+  height: 100%; /* needs to inherit down to child elements */
   
   border-style:solid;
   border-width: 0px;
@@ -155,8 +185,8 @@ body {
   margin-left: auto;
   margin-right: auto;
   
-  width: 900px;
-  height: 100%;
+  width: 100%;
+  height: 100%; /* needs to inherit down to child elements */
   
   border-style:solid;
   border-width: 0px;
@@ -164,12 +194,13 @@ body {
   float: left;
 }
 
-header{
-  margin-bottom: 20px;
-}
-
 /* Main header nav div for logo and session / profile mgmt */
-#main-header-nav{
+.main-header-nav{
+  float: left;
+
+  width: 99%;
+  height: 100%;
+  
   padding: 4px 8px;
 }
 
@@ -179,7 +210,7 @@ div.left-nav {
   min-height: 300px;
   
   /* top, right, bottom, left */
-  padding: 10px;
+  padding: 1%;
   
   border-style:solid;
   border-width: 0px;
@@ -188,20 +219,24 @@ div.left-nav {
 div.content{
   float: left;
 
-  width: 50%;
-  padding: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 55%;
+  padding: 1%;
+  margin-left: 2%;
   
   border-style: dotted;
   border-width: 0px;
 }
 
+/* TODO: not used right now. 
+  - use for deal stream on main auth page, completed events on ideas page, etc
+  */
 div.right-nav {
   float: left;
 
-  width: 18%;
-  padding: 2px 5px 2px 20px;
+  width: 15%;
+  padding: 1%;
+  
+  margin-left: 2%;
   
   border-style:solid;
   border-width: 0px;
@@ -222,6 +257,14 @@ div.right-nav {
    * General elements - used across different pages
    *************************************/
 
+#flash_notice_div{
+  float: left;
+}
+
+#flash_alert_div{
+  float: left;
+}
+
 .hidden-div {
   display: none;
 }
@@ -234,6 +277,8 @@ div.right-nav {
   font-size: 12px;
 }
 
+/* Demarks a section of content - use this to wrap a content section
+     that contains a content-title and content-header */
 .content-section{
   float: left;
   
@@ -265,6 +310,15 @@ div.right-nav {
   border-style: solid;
 }
 
+/* Text inside content area */
+.content-text{
+  float: left;
+
+  padding: 3px;
+
+  width: 100%;
+}
+
 /* Div container for user list on left nav bar */
 .user-list-container{
   border: solid 2px #B58963;
@@ -286,6 +340,67 @@ div.right-nav {
   overflow: auto;
 }
 
+.chat-board-user-item{
+  float: left;
+  width: 100%;
+  
+  font-size: 12px;
+  
+  margin: 5px 2px;  
+}
+
+.chat-board-user-item-image{
+  float: left;
+  
+  margin-right: 5px;
+}
+
+.chat-board-user-item-text{
+  float: left;
+}
+
+.chat-board-user-item-status-offline{
+  line-height: 20px;
+}
+
+.chat-board-user-item-status-online{
+  line-height: 20px;
+}
+
+/* Div container for featured ideas */
+.featured-ideas-container{
+  float: left;
+  
+  border: solid 2px #adadad;
+
+  height: 100%;
+  padding: 4px 2px; 
+  
+  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.featured-ideas-item{
+  float: left;
+
+  font-size: 12px;  
+}
+
+.featured-ideas-item-image{
+  float: left;
+  width: 100%;
+  
+  margin: 13px 0px 0px 0px;
+}
+
+.featured-ideas-item-text{
+  float: left;
+  width: 100%;
+  
+  margin: 0px 3px;
+}
+
   /*************************************
    * Unauthenticated main page
    *************************************/
@@ -303,12 +418,6 @@ div.right-nav {
   
   border-style: dotted;
   border-width: 0px;
-}
-
-.unauth-content-text{
-  float: left;
-
-  width: 100%;
 }
 
 .unauth-content-ideas-container{
@@ -473,33 +582,6 @@ div.left-nav a:hover {
 
 }
 
-.idea-user-item{
-  float: left;
-  width: 100%;
-  
-  font-size: 12px;
-  
-  margin: 5px 2px;  
-}
-
-.idea-user-item-image{
-  float: left;
-  
-  margin-right: 5px;
-}
-
-.idea-user-item-text{
-  float: left;
-}
-
-.idea-user-item-status-offline{
-  line-height: 20px;
-}
-
-.idea-user-item-status-online{
-  line-height: 20px;
-}
-
 
 /*************************************
  *************************************
@@ -537,7 +619,6 @@ div.left-nav a:hover {
 nav.main-authentication {
   float: right;
 
-  background-color: white;
   white-space: nowrap;
 }
 
@@ -554,10 +635,6 @@ nav.main-authentication ul li {
 nav.main-authentication ul li a {
   padding: 0 5px;
   font-weight: bold;
-}
-
-nav.main-authentication ul li a:visited {
-  color: #09c;
 }
 
 nav.main-authentication ul li a:hover {

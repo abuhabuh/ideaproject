@@ -68,13 +68,13 @@
 		});
 
 		function member_online(user_id) {
-  		$('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).removeClass('idea-user-item-status-offline');
-      $('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).addClass('idea-user-item-status-online');
+  		$('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).removeClass('chat-board-user-item-status-offline');
+      $('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).addClass('chat-board-user-item-status-online');
 		}
 
 		function member_offline(user_id) {
-      $('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).removeClass('idea-user-item-status-online');
-  		$('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).addClass('idea-user-item-status-offline');
+      $('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).removeClass('chat-board-user-item-status-online');
+  		$('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).addClass('chat-board-user-item-status-offline');
 		}
   </script>
 <% end %>

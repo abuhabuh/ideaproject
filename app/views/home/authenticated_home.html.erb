@@ -64,7 +64,6 @@
 <!-- id tag to mark this as the AUTH HOME page for shared AJAX functions -->
 <div class='hidden-div' id='<%=ID_TAG_HOME_AUTH_PAGE%>'></div>
 
-
 <!-- Main Body for side menu, stream, and suggestion block -->
 <%= render :partial=>"left_nav"%>
 
@@ -90,15 +89,13 @@
           <%= link_to 'Friends', 
                       authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
                                               {:method => 'get', 
-                                               :title => "See friends' ideas"}%> | 
-          Featured<br/>
+                                               :title => "See friends' ideas"}%><br/>
 
         <% when STREAM_VIEW_FRIENDS %>  
           <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
                                                         {:method => 'get', 
                                                          :title => "See public ideas"}%> | 
-          Friends | 
-          Featured<br/>
+          Friends<br/>
 
         <% when STREAM_VIEW_SEARCH %>
           <%= link_to 'Public',
@@ -109,7 +106,6 @@
                      authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
                      {:method => 'get',
                      :title => "See friends' ideas"}%> | 
-          Featured | 
           Search <br />
 
       <% end %>
@@ -129,4 +125,17 @@
         <%= render :partial=>"idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER, :view_only => IDEA_STREAM_VIEW_ONLY_FALSE}%>
     <% end %>      
   </div>
+</div>
+
+
+<div class='right-nav'>
+  <div class='content-section'>
+    <div class='content-header'>
+      <div class='content-text'> Featured </div>
+    </div>
+
+    <%= render :partial => 'shared_modules/featured_ideas_panel'%>
+
+  </div>
+
 </div>

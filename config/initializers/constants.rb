@@ -2,6 +2,12 @@
 
 
 ##########################################
+# Featured ranking and grouping constants
+##########################################
+NOT_FEATURED = 0; # not featured is 0 where as everything else is featured and can be ordered by integer
+
+
+##########################################
 # Pusher chat config
 ##########################################
 Pusher.app_id = '10463'
@@ -23,6 +29,7 @@ PUSHER_CHANNEL_FEEDBACK_CHAT = "presence-feedback_chat"
 STREAM_VIEW_PUBLIC = 'public'
 STREAM_VIEW_FRIENDS = 'friends'
 STREAM_VIEW_SEARCH = 'search'
+STREAM_VIEW_FEATURED = 'featured'
 
 # idea stream rendering 
 PIC_VIEW_TYPE_IDEA = 'idea_pic'
@@ -57,6 +64,8 @@ ID_TAG_CHAT_USER_VIEWING_STRING = 'Viewing'
 #     action batch.
 ID_TAG_HOME_AUTH_PAGE = "AJAX_home_auth_page_id"
 ID_TAG_IDEA_VIEW_PAGE = "AJAX_idea_view_page_id"
+
+
 
 ##########################################
 # Configurable text for system messages

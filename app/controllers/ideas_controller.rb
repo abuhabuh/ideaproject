@@ -110,23 +110,28 @@ class IdeasController < ApplicationController
   end
   
   
+  ########################
+  # Temp code to make ideas featured
+  ########################
   
+  # TODO: KEEP THIS? REFACTOR / MOVE IT?
+  # Temporary Featured item maintenance page to list ideas and mark them as featured
+  def featured_idea_admin
+    # In the controller
+    @ideas = Idea.order("featured DESC").paginate(:page => params[:page], :per_page => 10)
+  end
   
+  # TODO: KEEP THIS? REFACTOR / MOVE IT?
+  def feature_idea
+    @idea = Idea.find(params[:idea_id])
+    @idea.featured = params[:feature_num]
+    
+    unless @idea.save
+      puts " TRACE: IdeasController:feature_idea - idea save error"
+    end
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+    redirect_to :back
+  end
   
   
 end

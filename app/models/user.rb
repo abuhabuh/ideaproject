@@ -16,16 +16,18 @@ class User < ActiveRecord::Base
   has_many :friends, :through => :friendships
 
   has_many :chat_messages
-  #TODO: should add has_many :ideas, :through => :chat_messages ????
+
 
   # Setup paperclip photo attachment property
-  has_attached_file :profile_pic, {
-    :styles => {
-      :medium => "300x300#",
-      :thumb => "100x100#",
-      :stream => "50x50#"}
-  }.merge(PAPERCLIP_STORAGE_OPTIONS)
-    
+  has_attached_file :profile_pic,
+                    {:default_url => '/images/users/:style/default.jpg', 
+                     :styles => {
+                        :medium => "300x300#",
+                        :thumb => "100x100#",
+                        :stream => "50x50#",
+                        :chat => "35x35#"}
+                    }.merge(PAPERCLIP_STORAGE_OPTIONS)
+                      
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, \
     :user_name, :first_name, :last_name, :location, :dob, :profile_pic, \

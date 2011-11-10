@@ -49,6 +49,10 @@ IdeaApp::Application.routes.draw do
 
   match "idea/ideas_chat_user_js", :to => "ideas#idea_chat_user_js", \
         :as => :idea_chat_user_js, :via => "GET"
+  match "idea/featured_idea_admin", :to => "ideas#featured_idea_admin", \
+        :as => :featured_idea_admin, :via => "GET"
+  match "idea/feature_idea", :to => "ideas#feature_idea", \
+        :as => :feature_idea, :via => 'POST'
 
 
   # The priority is based upon order of creation:
