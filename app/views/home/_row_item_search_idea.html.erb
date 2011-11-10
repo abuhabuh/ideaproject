@@ -1,3 +1,27 @@
+<% if view_only == IDEA_STREAM_VIEW_ONLY_TRUE %>
+
+            <% idea_owner = User.find(idea_item.creator) %>
+            <div class='idea-stream-content-row'>
+              <div class='idea-row-picture'>
+                <% if pic_display_mode == PIC_VIEW_TYPE_USER %>
+                  <%= image_tag(idea_owner.profile_pic.url(:stream))%>
+                <% elsif pic_display_mode == PIC_VIEW_TYPE_IDEA %>
+                  <%= image_tag(idea_item.photo.url(:stream))%>
+                <% end %>
+              </div>
+              <div class='idea-row-text'>
+                <%= idea_owner.user_name%>:<br/>
+                <span class='idea-text'><%= idea_item.text%></span>
+              </div>
+              <div class='idea-row-misc'>
+                <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea_item.id.to_s%>">
+                  <%=idea_item.num_users_joined%> users sharing
+                </div>
+              </div>
+            </div>
+
+<% else %>
+
             <% idea_owner = User.find(idea_item.creator) %>
             <div class='idea-stream-content-row'>
               <div class='idea-row-picture'>
@@ -13,9 +37,9 @@
               </div>
               <div class='idea-row-text'>
                 <%= idea_owner.user_name%>:<br/>
-                &nbsp;&nbsp;<span class='idea-text'><%= link_to idea_item.text,
+                <span class='idea-text'><%= link_to idea_item.text,
                               idea_path(idea_item.id),
-                              {:method => 'get'} %></span><br/>
+                              {:method => 'get'} %></span>
                 <% unless @user_idea_ids.include?(idea_item.id.to_s) %>
                   <%= render :partial => "home/idea_action_add",
                              :locals => {:idea_id => idea_item.id} %>
@@ -34,3 +58,5 @@
                   
               </div>
             </div>
+               
+<% end %>

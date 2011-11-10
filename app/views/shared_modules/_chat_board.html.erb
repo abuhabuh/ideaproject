@@ -1,0 +1,18 @@
+    <!--
+      Usage
+      
+      INPUTS:
+        - ajax_tag: string tag that identifies the div container for the chat messages
+            this should be the id that the associated AJAX function uses to append new
+            messages
+        - chat_messages: message collection needs to have user object reference and 
+            text object
+    -->
+
+	  <div class='chat-board-container' id="<%=ajax_tag%>">
+		  <% chat_messages.reverse.each do |msg| %>
+			  <!-- TODO: break this out to a render call for each chat text? efficiency? -->
+			  <%= render :partial => 'shared_modules/chat_msg_item', :locals => {:msg => msg} %>
+		  <% end %>
+	  </div>
+

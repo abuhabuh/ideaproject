@@ -1,9 +1,29 @@
 $(document).ready(function(){
 
+  // On auth home page, user has joined the idea so update stream, user interested count
+  if ($('#<%=ID_TAG_HOME_AUTH_PAGE%>').length ) {
+
     $("#<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + @idea.id.to_s%>").replaceWith("Idea Added");
 
+    // TODO: take care of this...Not showing this right now, this ajax fails
     $("#<%=ID_TAG_AUTH_HOME_USER_IDEAS%>").append("<%= escape_javascript(render :partial => "list_my_ideas",
                                        :locals => {:idea => @idea}) %>");
 
     $("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + @idea.id.to_s%>").html(String(parseInt($("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + @idea.id.to_s%>").html())+1)+" users sharing");
+	
+	}
+
+  // On idea view page, user has joined the idea, so update chat bar, user list, picture link text
+  if ($('#<%=ID_TAG_IDEA_VIEW_PAGE%>').length ) {
+
+    // TODO: replace with <create event> and links
+    $("#<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + @idea.id.to_s%>").replaceWith("Idea Added");
+
+    $("#<%=ID_TAG_IDEA_CHAT_INPUT_AREA%>").html("<%= escape_javascript(
+                                                  render :partial => 'shared_modules/chat_input_bar_ideas'
+                                                  )%>");
+
+		$('#<%=ID_TAG_IDEA_USER%>' + String(current_user.id)).html("<%=ID_TAG_CHAT_USER_JOINED_STRING%>");
+	}
+    
 });

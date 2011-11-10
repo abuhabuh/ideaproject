@@ -73,6 +73,15 @@ class UserIdeasController < ApplicationController
   # DELETE /user_ideas/1.json
   def destroy
     @user_idea = UserIdea.find(params[:id])
+
+    # Decrement user_sharing count for main idea object
+    @idea = @user_idea.idea
+    @idea.num_users_joined = @idea.num_users_joined - 1
+    unless @idea.save()
+      # TODO: catch save error
+      puts " TRACE: UserIdeasController:Destroy - @idea save unsuccessful"
+    end
+    
     @user_idea.destroy
 
     respond_to do |format|

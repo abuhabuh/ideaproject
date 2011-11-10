@@ -37,13 +37,13 @@
           if  ( ($(document).height() - $(window).height()) - $(window).scrollTop() < 50 ){
             var page_num = parseInt($("#AJAX_page_num_store").html()) + 1;
             $.ajax({
-                url: "next_ideas_batch_js", 
+                url: "<%=next_ideas_batch_js_path%>", 
                 data: {page : page_num}, 
                 dataType: 'html',
                 success: function(returned_html){
                   $("#AJAX_main_stream_content").append(returned_html); // tag is rendered in _idea_stream_*.html.erb partial
                   if ($.trim(returned_html).length != 0){
-                    $("#AJAX_page_num_store").html(String(page_num)); // TODO: check this works
+                    $("#AJAX_page_num_store").html(String(page_num)); // increment pages processed if results came back
                   }
                 },
                 error: function(msg){ // remove this for live deploy
@@ -61,10 +61,11 @@
 <% end %>
 
 
+<!-- id tag to mark this as the AUTH HOME page for shared AJAX functions -->
+<div class='hidden-div' id='<%=ID_TAG_HOME_AUTH_PAGE%>'></div>
 
 
 <!-- Main Body for side menu, stream, and suggestion block -->
-
 <%= render :partial=>"left_nav"%>
 
 <div class='content'>
@@ -85,45 +86,47 @@
       View: 
       <% case session[:stream_view] %>
         <% when STREAM_VIEW_PUBLIC %>
-          Public | <%= link_to 'Friends', \
-                              authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), \
-                              {:method => 'get', \
-                               :title => "See friends' ideas"}%> <br/>
+          Public | 
+          <%= link_to 'Friends', 
+                      authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
+                                              {:method => 'get', 
+                                               :title => "See friends' ideas"}%> | 
+          Featured<br/>
+
         <% when STREAM_VIEW_FRIENDS %>  
-          <%= link_to 'Public', \
-                     authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), \
-                     {:method => 'get', \
-                      :title => "See public ideas"}%>
-            | Friends <br/>
+          <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
+                                                        {:method => 'get', 
+                                                         :title => "See public ideas"}%> | 
+          Friends | 
+          Featured<br/>
+
         <% when STREAM_VIEW_SEARCH %>
-          <%= link_to 'Public', \
-                     authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), \
-                     {:method => 'get', \
-                      :title => "See public ideas"}%> | <%= link_to 'Friends', \
-                     authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), \
-                     {:method => 'get', \
-                     :title => "See friends' ideas"}%> | Search <br />
+          <%= link_to 'Public',
+                     authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC),
+                     {:method => 'get',
+                      :title => "See public ideas"}%> | 
+          <%= link_to 'Friends',
+                     authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
+                     {:method => 'get',
+                     :title => "See friends' ideas"}%> | 
+          Featured | 
+          Search <br />
+
       <% end %>
     </div>
     
     <div class='idea-stream-header-row'>
       <div class='idea-row-picture'>Owner</div>
       <div class='idea-row-text'>Idea Description</div>
-      <div class='idea-row-misc'>More Info</div>
+      <div class='idea-row-misc'>Details</div>
     </div>
     
     <!-- STREAM FRIENDS result display -->
     <% if session[:stream_view] == STREAM_VIEW_FRIENDS %>
-        <%= render :partial=>"idea_stream_friend", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER}%>
+        <%= render :partial=>"idea_stream_friend", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER, :view_only => IDEA_STREAM_VIEW_ONLY_FALSE}%>
     <% else %>
     <!-- STREAM VIEW PUBLIC and SEARCH RESULTS display -->
-        <%= render :partial=>"idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER}%>
+        <%= render :partial=>"idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER, :view_only => IDEA_STREAM_VIEW_ONLY_FALSE}%>
     <% end %>      
   </div>
-</div>
-
-<div class='right-nav'>
-  <p>
-      Blahblah add this
-  </p>
 </div>

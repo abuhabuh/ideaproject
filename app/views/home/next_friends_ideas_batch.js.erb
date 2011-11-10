@@ -1,3 +1,6 @@
 <% @friends_ideas.each do |query_result| %>
-  <%= render :partial=>"row_item_friend_idea", :locals => {:friend_idea_query_item => query_result, :pic_display_mode => PIC_VIEW_TYPE_USER} %>
+  <%= render :partial=>"row_item_friend_idea", 
+             :locals => {:friend_idea_query_item => query_result, 
+                         :pic_display_mode => PIC_VIEW_TYPE_USER,
+                         :view_only => IDEA_STREAM_VIEW_ONLY_FALSE} %>
 <% end %>

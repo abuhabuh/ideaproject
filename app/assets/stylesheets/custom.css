@@ -22,12 +22,25 @@ a {
 }
 
   /***************************************
+   * Shadow Scheme
+   ***************************************/
+.unauth-content-container, .left-nav, .content{
+  box-shadow: 10px 10px 20px #201C10;
+} 
+
+  /***************************************
+   * Unauthenticated main page
+   ***************************************/
+.unauth-content-container{
+  background-color: #CBBB9B;
+}
+
+  /***************************************
    * Left Nav 
    ***************************************/
 
 div.left-nav{
   background-color: #CBBB9B;
-  box-shadow: 10px 10px 20px #201C10;  
 }
 
 .left-nav-main-link {
@@ -50,7 +63,6 @@ div.left-nav a:hover {
    *************************************/
 .content{
   background-color: #CBBB9B;
-  box-shadow: 10px 10px 20px #201C10;
 }
 
 .content-title{
@@ -74,6 +86,31 @@ div.left-nav a:hover {
   color: white;
 }
 
+  /*************************************
+   * Misc: Containers, etc
+   *************************************/
+.chat-board-container{
+  background-color : #ffffff;
+  color : #000000; 
+}
+
+.chat-message-send-button{
+  float: right;
+}
+
+.user-list-container{
+  background-color : #CBBB9B;
+}
+
+.idea-user-item-status-offline{
+  background-color: #954535;
+  color: white;
+}
+
+.idea-user-item-status-online{
+  background-color: green;
+  color: white;
+}
 
 
 /*************************************
@@ -185,6 +222,10 @@ div.right-nav {
    * General elements - used across different pages
    *************************************/
 
+.hidden-div {
+  display: none;
+}
+
 .minor-link {
   font-size: 12px;
 }
@@ -222,6 +263,62 @@ div.right-nav {
 
   border-width: 0px;
   border-style: solid;
+}
+
+/* Div container for user list on left nav bar */
+.user-list-container{
+  border: solid 2px #B58963;
+
+  height: 300px;
+  padding: 4px; 
+  
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+/* Div container for chat board windows */
+.chat-board-container{
+  border: solid 2px #adadad;
+
+  height: 220px;
+  padding: 4px; 
+  
+  overflow: auto;
+}
+
+  /*************************************
+   * Unauthenticated main page
+   *************************************/
+.unauth-content-container{
+  float: left;
+
+  width: 80%;
+
+  margin-left: 10%;
+  margin-right: 10%;
+
+  padding: 50px 0px;
+
+  text-align: center;
+  
+  border-style: dotted;
+  border-width: 0px;
+}
+
+.unauth-content-text{
+  float: left;
+
+  width: 100%;
+}
+
+.unauth-content-ideas-container{
+  float: left;
+  
+  width: 70%;
+  margin: 20px 15%;
+  
+  border-style: solid;
+  border-width: 1px;
 }
 
   /*************************************
@@ -283,28 +380,44 @@ div.left-nav a:hover {
   width: 100%;
   padding: 10px 0px;
 
-  border-width: 0px;
+  margin: 5px 0px;
+
+  border-width: 1px;
   border-style: solid;  
 }
 
 /* Idea-row: individual cells in an idea row for data */
 .idea-row-picture{
   float: left;
-  width: 15%;
+  
+  margin: 0% 0% 0% 2%;
+  
+  width: 13%;
 }
 
 .idea-row-text{
   float: left;
-  width: 60%;
+  
+  margin: 0% 1%;
+  
+  width: 58%;
 }
 
 .idea-text{ /* marks the actual text in the idea-row block item (makes it bigger) */
+  float: left;
+  width: 100%;
+
+  margin-top: 5px;
+
   font-size: 14px;
 }
 
 .idea-row-misc{
   float: left;
-  width: 25%;
+  
+  margin-left: 1%;
+  
+  width: 24%;
 }
 
   /*************************************
@@ -366,7 +479,25 @@ div.left-nav a:hover {
   
   font-size: 12px;
   
-  margin: 5px;  
+  margin: 5px 2px;  
+}
+
+.idea-user-item-image{
+  float: left;
+  
+  margin-right: 5px;
+}
+
+.idea-user-item-text{
+  float: left;
+}
+
+.idea-user-item-status-offline{
+  line-height: 20px;
+}
+
+.idea-user-item-status-online{
+  line-height: 20px;
 }
 
 

@@ -9,10 +9,13 @@
     
     -->
 
-    <div id='AJAX_page_num_store' style="display:none"><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
+    <div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
     <div id='AJAX_main_stream_content'> 
       <% @search_result_ideas.each do |idea_item| %>
         <!-- user_count in query_result stands for # of TOTAL PEOPLE sharing -->
-        <%= render :partial=>"home/row_item_search_idea", :locals => {:idea_item => idea_item, :pic_display_mode => pic_display_mode} %>
+        <%= render :partial=>"home/row_item_search_idea", 
+                   :locals => {:idea_item => idea_item, 
+                               :pic_display_mode => pic_display_mode,
+                               :view_only => view_only} %>
       <% end %>
     </div>

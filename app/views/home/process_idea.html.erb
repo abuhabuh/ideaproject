@@ -1,31 +1,43 @@
-<% if @search_result_ideas.size == 0 %>
-  <b>No one has your idea yet! <%= link_to 'Sign up', new_user_session_path %> to submit it and invite your friends.</b><br />
-<% else %>
-  <b>You have idea matches below! <%= link_to 'Sign up', new_user_session_path %> to join them or create your own.</b><br />
-  <br />
-  <p>
-    Your Idea: <%= @ideaText %> <br/>
-    Matches: <br />
-    <table>
-      <tr>
-        <th></th>
-        <th>Idea</th>
-        <th>Users Sharing</th>
-      </tr>
-      <% @search_result_ideas.each do |idea_result| %>
-        <% idea_owner = User.find(idea_result.creator) %>
-        <tr>
-          <td><%= image_tag(idea_owner.profile_pic.url(:stream)) %></td>
-          <td><%= idea_result.text %><br/></td>
-          <td><%=idea_result.num_users_joined%></td>
-        </tr>
-      <% end %>
-    </table>
-  </p>
-<% end %>
+<div class='unauth-content-container'>
 
-<br />
-<br />
 
-<p> <%= link_to 'Login', new_user_session_path %> or <%= link_to 'Create an Account', new_user_session_path %> to see more! </p>
+  <% if @search_result_ideas.nil? || @search_result_ideas.size == 0 %>
 
+    <div class='unauth-content-text'>
+
+      <b>No one has your idea yet! 
+        <%= link_to 'Sign up', new_user_session_path %> to submit it and invite your friends.
+      </b>
+      <br />
+    </div>
+    
+  <% else %>
+    <div class='unauth-content-text'>
+    
+      <b>You have idea matches below! 
+        <%= link_to 'Sign up', new_user_session_path %> to join them or create your own.
+      </b>
+      
+      <br />
+      <br />
+      Your Idea: <%= @ideaText %> <br/>
+
+    </div>
+    
+    <div class='unauth-content-ideas-container'>
+      <div class='user-stream-header-row'>
+        <div class='user-row-picture'>Picture</div>
+        <div class='user-row-text'>Name</div>
+        <div class='user-row-misc'>Details</div>
+      </div>
+      
+      <%= render :partial => "idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER, :view_only => IDEA_STREAM_VIEW_ONLY_TRUE} %>
+    </div>
+
+  <% end %>
+  
+  <div class='unauth-content-text'>
+    <p> <%= link_to 'Login', new_user_session_path %> or <%= link_to 'Create an Account', new_user_session_path %> to see more! </p>
+  </div>
+
+</div>

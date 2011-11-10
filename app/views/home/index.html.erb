@@ -6,17 +6,31 @@
 <% end %>
 -->
 
-<div >
-  
-  Welcome to Just an Idea dot com 
-  
-  <br \>
-  <br \>
-  
-  What's an idea you want to do with friends?
-  <%= form_tag initial_idea_path, :method => 'post' do %>
-    <%= text_field_tag :idea %>
-    <%= submit_tag "Submit" %>
-  <% end %>
+<div class='unauth-content-container'>
+
+  <div >
+        
+    What's an idea you want to do with friends?
+    
+    <br />
+    <br />
+    <br />
+    
+    <!-- need to validate field for not empty -->
+    <%= form_tag initial_idea_path, :method => 'post' do %>
+      <%= text_field_tag :idea, "", :size => 40 %><br />
+      <%= submit_tag "Submit" %>
+    <% end %>
+
+  </div>
+
+  <br />
+  <br />
+  <br />
+  <br />
+  <%= image_tag("placeholder_unauth_flow_image.jpg", :alt => "Hello", :size => "120x120") %>
+  <%= image_tag("placeholder_unauth_flow_image.jpg", :alt => "Hello", :size => "120x120") %>
+  <%= image_tag("placeholder_unauth_flow_image.jpg", :alt => "Hello", :size => "120x120") %>
+
 
 </div>

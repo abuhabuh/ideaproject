@@ -24,8 +24,11 @@ STREAM_VIEW_PUBLIC = 'public'
 STREAM_VIEW_FRIENDS = 'friends'
 STREAM_VIEW_SEARCH = 'search'
 
+# idea stream rendering 
 PIC_VIEW_TYPE_IDEA = 'idea_pic'
 PIC_VIEW_TYPE_USER = 'user_pic'
+IDEA_STREAM_VIEW_ONLY_TRUE = 'true'
+IDEA_STREAM_VIEW_ONLY_FALSE = 'false'
 
 
 
@@ -33,16 +36,27 @@ PIC_VIEW_TYPE_USER = 'user_pic'
 # AJAX ID tags
 ##########################################
 #   User list view page
-ID_TAG_USER_LIST_USER_ROW = "user_list_row_id_" #append user id
+ID_TAG_USER_LIST_USER_ROW = "AJAX_user_list_row_id_" #append user id
 #   Idea view page
-ID_TAG_IDEA_CHAT = "idea_view_chat_id_" #append idea id
+ID_TAG_IDEA_CHAT = "AJAX_idea_view_chat_id_" #append idea id
 #   Main authenticated home page
-ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION = "auth_home_stream_idea_action_id_" #append idea id
-ID_TAG_AUTH_HOME_STREAM_NUM_USERS = "auth_home_stream_num_users_" #append idea id
-ID_TAG_AUTH_HOME_USER_IDEAS = "auth_home_user_ideas"
-#   Feedback chat window ID
-ID_TAG_FEEDBACK_CHAT = "feedback_chat_id"
+ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION = "AJAX_auth_home_stream_idea_action_id_" #append idea id
+ID_TAG_AUTH_HOME_STREAM_NUM_USERS = "AJAX_auth_home_stream_num_users_" #append idea id
+ID_TAG_AUTH_HOME_USER_IDEAS = "AJAX_auth_home_user_ideas"
+#   Feedback / Idea chat window ID
+ID_TAG_FEEDBACK_CHAT = "AJAX_feedback_chat_id"
+ID_TAG_IDEA_USER = "AJAX_idea_user_" # Identifies users that are in left_nav user list as online / offline: append user id 
+ID_TAG_IDEA_CHAT_INPUT_AREA = 'AJAX_idea_chat_input_area'
+ID_TAG_IDEA_CHAT_USER_LIST = 'AJAX_idea_chat_user_list'
 
+ID_TAG_CHAT_USER_JOINED_STRING = 'Joined'
+ID_TAG_CHAT_USER_VIEWING_STRING = 'Viewing'
+
+#   Page markers to tell shared AJAX function (like add_idea_id.js.erb which is share across
+#     main auth page and idea view page) which page it is on so it can execute correct 
+#     action batch.
+ID_TAG_HOME_AUTH_PAGE = "AJAX_home_auth_page_id"
+ID_TAG_IDEA_VIEW_PAGE = "AJAX_idea_view_page_id"
 
 ##########################################
 # Configurable text for system messages

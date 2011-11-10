@@ -18,7 +18,11 @@ class IdeasController < ApplicationController
     @idea = Idea.find(params[:id])
     @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
     @idea_chat_msgs = @idea.chat_messages.order("id ASC")
-    
+    @has_idea = false;
+    if current_user.ideas.exists?(@idea.id)
+      @has_idea = true;
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       #format.json { render json: @idea }
@@ -85,4 +89,44 @@ class IdeasController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  
+  # Renders JS return for appending additional user who joined to user chat list in left nav
+  #   This only happens when the additional user is viewing the idea but has not joined the 
+  #     idea. In this case, we ASSUME ONLINE STATUS IS TRUE, since triggered by channel
+  #     event of user joining presence channel
+  def idea_chat_user_js
+    @user = User.find(params[:user_id])
+    @status_string = params[:user_status]
+    @is_online = true
+  
+    respond_to do |format|
+      # JS is the only format that this function should be called as
+      format.js {
+        render "idea_chat_user_js.js.erb" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
+      }
+    end
+
+  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 end

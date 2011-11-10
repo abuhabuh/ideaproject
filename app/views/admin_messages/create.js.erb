@@ -3,7 +3,7 @@
 
     $("#<%=ID_TAG_FEEDBACK_CHAT%>").append
       ("<%= escape_javascript(
-        render :partial => "admin_msg_item", :locals => {:admin_msg => @admin_message}
+        render :partial => "shared_modules/chat_msg_item", :locals => {:msg => @admin_message}
       ) %>");
     
     $("div#<%=ID_TAG_FEEDBACK_CHAT%>").prop({

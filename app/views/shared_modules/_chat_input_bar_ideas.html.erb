@@ -1,0 +1,12 @@
+      <% @chat_message = ChatMessage.new %>
+      <%= form_for @chat_message, :remote => true do |f| %>
+        <!-- TODO: fix this table hack layout with CSS and div (and all other formatted table hacks) -->
+          <%= f.hidden_field :idea_id, :value => @idea.id %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+
+          <%= f.text_field :text, :size=>"40" %>
+ 
+          <div class="chat-message-send-button">
+            <%= f.submit "Send" %>
+          </div>
+       <% end %>

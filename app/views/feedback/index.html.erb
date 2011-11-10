@@ -43,50 +43,33 @@
   </script>
 <% end %>
 
-<table>
-  <tr>
-    <td>
-      <b>Leave us feedback & problems. We're probably online and might even msg you back! </b><br/>
-      <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
-      <div id = <%=ID_TAG_FEEDBACK_CHAT %>
-		       style="border : solid 2px #adadad; background : #ffffff;
-						      color : #000000; padding : 4px; height : 220px;
-						      overflow : auto;" >
-	      <% @feedback_messages.reverse.each do |msg| %>
-		      <!-- TODO: break this out to a render call for each chat text? efficiency? -->
-            <%= render :partial => "admin_messages/admin_msg_item", :locals => {:admin_msg => msg}%>
-	      <% end %>
+
+<%= render :partial => 'home/left_nav' %>
+
+<div class='content'>
+
+  <!-- not using admin_messages/_admin_msg_item.html.erb anymore - ajax implications? -->
+  <div class='content-section'>
+    <div class='content-header'>Give ALL the feedbacks!（╯°□°）╯︵ ┻━┻</div>
+    <span class='minor-text'>Leave us feedback & problems. We're probably online and might even msg you back!</span>
+    
+	  <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
+    <%= render :partial => "shared_modules/chat_board", 
+               :locals => {:chat_messages => @feedback_messages,
+                           :ajax_tag => ID_TAG_FEEDBACK_CHAT} %>
+
+
+    <% @admin_message = AdminMessage.new %>
+    <%= form_for @admin_message, :remote => true do |f| %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+
+      <%= f.text_field :text, :size=>"40" %>
+
+      <div class="chat-message-send-button">
+        <%= f.submit "Send" %>
       </div>
-    </td>
+    <% end %>
 
-		<td>
-			<u>Online:</u><br />
-			<ul>
-				<div id = 'people_chatting'></div>
-			</ul>
-		</td>
-  </tr>
-</table>
-						
-<% @admin_message = AdminMessage.new %>
-<%= form_for @admin_message, :remote => true do |f| %>
-  <!-- TODO: fix this table hack layout with CSS and div (and all other formatted table hacks) -->
-  <table>
-    <tr>
-      <td>
-        <div class="message">
-          <%= f.text_field :text, :size=>"70" %>
-        </div>
-        <div class="user_id">
-          <%= f.hidden_field :user_id, :value => current_user.id %>
-        </div>
-      </td>
-      <td>
-        <div class="actions">
-          <%= f.submit "Send" %>
-        </div>
-      </td>
-    </tr>
-  </table>
-<% end %>
-
+  </div>
+  
+</div>

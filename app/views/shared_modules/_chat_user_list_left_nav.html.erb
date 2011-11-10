@@ -1,0 +1,33 @@
+    <!-- Usage - Prints list of all users who have JOINED the idea on initial idea view page load
+                 If current_user not part of ideas, list him at the end as a 'viewing' user
+                 Init all is_online as false because presence-channel events will make them true
+
+          INPUT
+          - container_id_tag: unique id tag for container used in AJAX queries - must be unique to page, not across application since
+              AJAX requests for chat box updates expected to come from within page only.
+          - users: collection of usr objects that have ALL JOINED the idea
+    -->
+
+    <div class='user-list-container' id="<%=container_id_tag%>">
+      <% includes_current_user = false %>
+      <% users.each do |user| %>
+
+        <% if user.id == current_user.id %>
+          <% includes_current_user = true %>
+        <% end %>
+        
+        <%= render :partial => 'shared_modules/chat_user_list_user_item', 
+                   :locals => {:user => user, 
+                               :is_online => false,
+                               :status_string => ID_TAG_CHAT_USER_JOINED_STRING} %>
+      <% end %>
+      
+      <% unless includes_current_user %>
+        <%= render :partial => 'shared_modules/chat_user_list_user_item', 
+                   :locals => {:user => current_user, 
+                               :is_online => false,
+                               :status_string => ID_TAG_CHAT_USER_VIEWING_STRING} %>
+      <% end %>
+    </div>
+
+

@@ -21,28 +21,67 @@
 				$('#people_chatting').html("");
 				       
 				// this is not working TODO: fix this
-				members.each(function(member){
-					add_member(member.id, member.info.name);
+				members.each(function(member){				
+  				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
+					  member_online(member.id);
+					} else {
+						$.ajax({
+                url: "<%=idea_chat_user_js_path%>", 
+                data: {user_id : member.id, user_status : "<%=ID_TAG_CHAT_USER_VIEWING_STRING%>"}, 
+                dataType: 'html',
+                success: function(returned_html){
+                  $("#<%=ID_TAG_IDEA_CHAT_USER_LIST%>").append(returned_html);
+                },
+                error: function(msg){ // remove this for live deploy
+                  alert(msg);
+                }
+              });
+					}
 				});
 			});
 
 			chat_presence_channel.bind('pusher:member_removed', function(member){
-				$('#member_' + member.id).replaceWith("");
+				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
+				  member_offline(member.id);
+				}
 			});
 
 			chat_presence_channel.bind('pusher:member_added', function(member){
-				add_member(member.id, member.info.name);
+				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
+				  member_online(member.id);
+				} else {
+				  $.ajax({
+                url: "<%=idea_chat_user_js_path%>", 
+                data: {user_id : member.id, user_status : "<%=ID_TAG_CHAT_USER_VIEWING_STRING%>"}, 
+                dataType: 'html',
+                success: function(returned_html){
+                  $("#<%=ID_TAG_IDEA_CHAT_USER_LIST%>").prepend(returned_html);
+                },
+                error: function(msg){ // remove this for live deploy
+                  alert(msg);
+                }
+              });
+				
+				}
 			});
 			
 		});
 
-		function add_member(user_id, name) {
-			var content = '<li id=member_' + user_id + '>' + name + '</li>';
-			$('#people_chatting').append(content);
+		function member_online(user_id) {
+  		$('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).removeClass('idea-user-item-status-offline');
+      $('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).addClass('idea-user-item-status-online');
 		}
 
+		function member_offline(user_id) {
+      $('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).removeClass('idea-user-item-status-online');
+  		$('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).addClass('idea-user-item-status-offline');
+		}
   </script>
 <% end %>
+
+
+<!-- id tag to mark this as the IDEAS VIEW page for shared AJAX functions -->
+<div class='hidden-div' id='<%=ID_TAG_IDEA_VIEW_PAGE%>'></div>
 
 
 <div class='left-nav'>
@@ -66,14 +105,9 @@
         People Sharing
     </div>
 
-    <% @idea.users.each do |user| %>
-      <div class='idea-user-item'>
-        <%= link_to image_tag(user.profile_pic.url(:stream)),
-                          user_path(user.id),
-                          {:method => 'get'} %><br/>
-        <%= link_to user.user_name, user_path(user.id), {:method => 'get'} %>
-      </div>
-    <% end %>
+    <%= render :partial => 'shared_modules/chat_user_list_left_nav', 
+               :locals => {:container_id_tag => ID_TAG_IDEA_CHAT_USER_LIST, :users => @idea.users} %>
+
   </div>
 </div>
     
@@ -90,47 +124,22 @@
   <div class='content-section'> &nbsp; </div>
   
   <div class='content-section'>
-    <div class='content-header'>Chat Board</div>
-    <span class='minor-text'>Talk about the idea! Create an event when you're ready to plan time, place, etc.</span>
+    <div class='content-header'>Public Chat Board</div>
+    <span class='minor-text'>Talk about the idea with anyone interested! Create an event when you're ready to plan time, place, etc.</span>
     
 	  <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
-	  <div id=<%=ID_TAG_IDEA_CHAT+"#{@idea.id}"%> style="border : solid 2px #adadad; background : #ffffff;
-												                               color : #000000; padding : 4px; height : 220px;
-												                               overflow : auto;">
-		  <% @idea_chat_msgs.each do |msg| %>
-			  <!-- TODO: break this out to a render call for each chat text? efficiency? -->
-			  <%= msg.user.user_name %>: <%= msg.text %> <br/>
-		  <% end %>
-	  </div>
-	  <u>Online:</u><br />
-    <ul>
-		  <div id = 'people_chatting'></div>
-	  </ul>
-      
-    <!-- Message input send form -->
-    <% @chat_message = ChatMessage.new %>
-    <%= form_for @chat_message, :remote => true do |f| %>
-      <!-- TODO: fix this table hack layout with CSS and div (and all other formatted table hacks) -->
-      <table>
-        <tr>
-          <td>
-            <div class="message">
-              <%= f.text_field :text, :size=>"50" %>
-            </div>
-            <div class="idea_id">
-              <%= f.hidden_field :idea_id, :value => @idea.id %>
-            </div>
-            <div class="user_id">
-              <%= f.hidden_field :user_id, :value => current_user.id %>
-            </div>
-          </td>
-          <td>
-            <div class="actions">
-              <%= f.submit "Send" %>
-            </div>
-          </td>
-        </tr>
-      </table>
-    <% end %>      
+    <%= render :partial => "shared_modules/chat_board", 
+               :locals => {:chat_messages => @idea_chat_msgs,
+                           :ajax_tag => ID_TAG_IDEA_CHAT+"#{@idea.id}"} %>
+
+    <!-- Message input send form: can't be shared with feedback chat right now because hidden :user_id field
+           is different. Well...it could but I'm lazy...
+    -->
+    <% if @has_idea %>
+      <%= render :partial => 'shared_modules/chat_input_bar_ideas'%>
+    <% else %>
+      <div class='minor-text' id='<%=ID_TAG_IDEA_CHAT_INPUT_AREA%>'>Join the idea to chat!</div>
+    <% end %>
+  
   </div>
 </div>  

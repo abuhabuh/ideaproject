@@ -104,7 +104,7 @@ class HomeController < ApplicationController
       session[:initial_idea] = params[:idea]
       
       @search_result_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-           
+      @user_idea_ids = Array.new # empty array for user ideas since the user is unauthenticated
     else
       # Handle unexpected nil error
       puts " TRACE IdeasController:process_idea - no param for idea"
@@ -207,7 +207,7 @@ class HomeController < ApplicationController
 
     page_number = current_page || 1
     @search = Idea.search do
-      fulltext search_string.to_s {minimum_match 1}
+      fulltext search_string.to_s, :minimum_match => 1
       order_by :num_users_joined, :desc
       paginate :page => page_number, :per_page => ideas_per_page
     end
