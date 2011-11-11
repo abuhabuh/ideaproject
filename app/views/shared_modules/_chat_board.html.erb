@@ -10,7 +10,7 @@
     -->
 
 	  <div class='chat-board-container' id="<%=ajax_tag%>">
-		  <% chat_messages.reverse.each do |msg| %>
+		  <% chat_messages.each do |msg| %>
 			  <!-- TODO: break this out to a render call for each chat text? efficiency? -->
 			  <%= render :partial => 'shared_modules/chat_msg_item', :locals => {:msg => msg} %>
 		  <% end %>

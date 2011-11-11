@@ -1,4 +1,5 @@
 <% content_for :head do %>
+
   <script type="text/javascript">
     last_scroll_position = $(window).scrollTop();
 
@@ -34,14 +35,20 @@
         if ( did_scroll_down ) {
           did_scroll_down = false;
           
-          if  ( ($(document).height() - $(window).height()) - $(window).scrollTop() < 50 ){
+          if  ( ($(document).height() - $(window).height()) - $(window).scrollTop() < 500 ){
             var page_num = parseInt($("#AJAX_page_num_store").html()) + 1;
+            var idea_string = $("#search").val();
+            
+            if (idea_string == $("#search_box_default_text").html()){
+              idea_string = "";
+            }
+
             $.ajax({
                 url: "<%=next_ideas_batch_js_path%>", 
-                data: {page : page_num}, 
+                data: {page: page_num, idea: idea_string}, 
                 dataType: 'html',
                 success: function(returned_html){
-                  $("#AJAX_main_stream_content").append(returned_html); // tag is rendered in _idea_stream_*.html.erb partial
+                  $("#AJAX_main_stream_content").append(returned_html)
                   if ($.trim(returned_html).length != 0){
                     $("#AJAX_page_num_store").html(String(page_num)); // increment pages processed if results came back
                   }
@@ -57,18 +64,19 @@
 
     });
 
+
   </script>
 <% end %>
 
 
 <!-- id tag to mark this as the AUTH HOME page for shared AJAX functions -->
 <div class='hidden-div' id='<%=ID_TAG_HOME_AUTH_PAGE%>'></div>
+<div class='hidden-div' id='search_box_default_text'><%=INPUT_BOX_SEARCH_IDEAS%></div> <!-- TODO: this is kinda hacky: JS above detects for this -->
 
 <!-- Main Body for side menu, stream, and suggestion block -->
-<%= render :partial=>"left_nav"%>
 
-<div class='content'>
 
+<div class='content-search-container'>
   <%= form_tag authenticated_home_path, :method => :get do %>
     <% if params[:search].blank? %>
       <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
@@ -79,63 +87,29 @@
     
     <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
   <% end %>
+</div>
+
+
+<div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
+
+<div id='AJAX_main_stream_content'>    
+  <!-- STREAM FRIENDS result display -->
+  <% if session[:stream_view] == STREAM_VIEW_FRIENDS %>
+
+    <% @friends_ideas.each do |friend_idea| %>
+      <% idea = Idea.find(friend_idea.idea_id) %>
+      <%= render :partial => "shared_modules/magazine_stream_element_search", :locals => {:idea => idea} %>
+    <% end %>
+
+  <% else %>
   
-  <div class='content-section'>
-    <div class='idea-stream-content-view-selector'>
-      View: 
-      <% case session[:stream_view] %>
-        <% when STREAM_VIEW_PUBLIC %>
-          Public | 
-          <%= link_to 'Friends', 
-                      authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
-                                              {:method => 'get', 
-                                               :title => "See friends' ideas"}%><br/>
-
-        <% when STREAM_VIEW_FRIENDS %>  
-          <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
-                                                        {:method => 'get', 
-                                                         :title => "See public ideas"}%> | 
-          Friends<br/>
-
-        <% when STREAM_VIEW_SEARCH %>
-          <%= link_to 'Public',
-                     authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC),
-                     {:method => 'get',
-                      :title => "See public ideas"}%> | 
-          <%= link_to 'Friends',
-                     authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
-                     {:method => 'get',
-                     :title => "See friends' ideas"}%> | 
-          Search <br />
-
-      <% end %>
-    </div>
+  <!-- STREAM VIEW PUBLIC and SEARCH RESULTS display -->
+  
+    <% @search_result_ideas.each do |idea| %>
+      <%= render :partial => "shared_modules/magazine_stream_element_search", :locals => {:idea => idea} %>
+    <% end %>
     
-    <div class='idea-stream-header-row'>
-      <div class='idea-row-picture'>Owner</div>
-      <div class='idea-row-text'>Idea Description</div>
-      <div class='idea-row-misc'>Details</div>
-    </div>
-    
-    <!-- STREAM FRIENDS result display -->
-    <% if session[:stream_view] == STREAM_VIEW_FRIENDS %>
-        <%= render :partial=>"idea_stream_friend", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER, :view_only => IDEA_STREAM_VIEW_ONLY_FALSE}%>
-    <% else %>
-    <!-- STREAM VIEW PUBLIC and SEARCH RESULTS display -->
-        <%= render :partial=>"idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER, :view_only => IDEA_STREAM_VIEW_ONLY_FALSE}%>
-    <% end %>      
-  </div>
+  <% end %>
 </div>
 
 
-<div class='right-nav'>
-  <div class='content-section'>
-    <div class='content-header'>
-      <div class='content-text'> Featured </div>
-    </div>
-
-    <%= render :partial => 'shared_modules/featured_ideas_panel'%>
-
-  </div>
-
-</div>

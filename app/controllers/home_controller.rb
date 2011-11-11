@@ -69,6 +69,10 @@ class HomeController < ApplicationController
   def next_ideas_batch_js
     session[:page] = params[:page] # session[:page] written to hidden div to support ajax
 
+    puts " ************ search text: " + params[:idea].to_s
+    puts " ************ page # : " + params[:page].to_s
+
+
     set_objs_to_render
 
     respond_to do |format|

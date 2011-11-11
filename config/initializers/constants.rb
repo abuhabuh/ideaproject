@@ -76,7 +76,7 @@ USER_ACTION_FRIENDSHIP_REMOVED = "Friend removed."
 INPUT_BOX_ADD_IDEA = "What do you want to do?"
 INPUT_BOX_SEARCH_IDEAS = "Enter text to search"
 BUTTON_JOIN_IDEA = "Join Idea!"
-
+BUTTON_CHAT_IDEA = "Go Chat!"
 
 ##########################################
 # Search functionality constants

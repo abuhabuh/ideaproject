@@ -4,7 +4,9 @@ $(document).ready(function(){
   if ($('#<%=ID_TAG_HOME_AUTH_PAGE%>').length ) {
 
     $(".<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + @idea.id.to_s%>").each(function(index) {
-      $(this).replaceWith("Idea Added");
+      $(this).replaceWith("<%= escape_javascript(
+                                  render :partial => 'home/idea_action_chat', :locals => {:idea_id => @idea.id}
+                               )%>");
     });
 
     // TODO: take care of this...Not showing this right now, this ajax fails
@@ -19,13 +21,16 @@ $(document).ready(function(){
   if ($('#<%=ID_TAG_IDEA_VIEW_PAGE%>').length ) {
 
     // TODO: replace with <create event> and links
-    $("#<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + @idea.id.to_s%>").replaceWith("Idea Added");
-
+    
+    $(".<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + @idea.id.to_s%>").each(function(index) {
+      $(this).replaceWith("Idea Added");
+    });
+    
     $("#<%=ID_TAG_IDEA_CHAT_INPUT_AREA%>").html("<%= escape_javascript(
                                                   render :partial => 'shared_modules/chat_input_bar_ideas'
                                                   )%>");
 
-		$('#<%=ID_TAG_IDEA_USER%>' + String(current_user.id)).html("<%=ID_TAG_CHAT_USER_JOINED_STRING%>");
+		$("#<%=ID_TAG_IDEA_USER  + current_user.id.to_s%>").html("<%=ID_TAG_CHAT_USER_JOINED_STRING%>");
 	}
     
 });

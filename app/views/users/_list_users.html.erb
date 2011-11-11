@@ -6,7 +6,9 @@
                           {:method => 'get'} %>
   </div>
   <div class='user-row-text'>
-    <%= user.user_name %>
+    <%= link_to user.user_name ,
+                user_path(user.id),
+                {:method => 'get'} %>
   </div>
   <div class='user-row-misc'>
     <!-- Figuring out if user is friends with current user is kinda hacky

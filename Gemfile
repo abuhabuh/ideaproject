@@ -33,6 +33,8 @@ gem 'pusher-client'
 gem 'sunspot_rails'
 gem 'will_paginate'
 
+gem 'rest-open-uri'
+
 # TEST GEM INSTALL <BEGIN>
 #group :development do
 #  gem 'rspec-rails', '2.6.1'

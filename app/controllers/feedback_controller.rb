@@ -2,7 +2,7 @@ class FeedbackController < ApplicationController
 
   def index
     # Render only the last 
-    @feedback_messages = AdminMessage.order("id DESC").limit(30)
+    @feedback_messages = AdminMessage.order("id DESC").limit(30).reverse
   end
   
 end

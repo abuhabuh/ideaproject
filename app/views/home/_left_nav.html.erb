@@ -1,14 +1,4 @@
 <div class='left-nav'>
-  <p>
-    <%= form_tag add_idea_path, :method => 'post' do %>
-      <% if @initial_idea.blank? %>
-        <%= text_field_tag :idea, INPUT_BOX_ADD_IDEA, :size => "17" %>
-      <% else %>
-        <%= text_field_tag :idea, @initial_idea %>
-      <% end %>      
-      <%= submit_tag "Add Idea" %>
-    <% end %>
-  </p>
 
   <div class='left-nav-main-link'><%= link_to 'Browse Community', users_path %></div>
       
