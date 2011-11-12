@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111105145041) do
+ActiveRecord::Schema.define(:version => 20111111163859) do
 
   create_table "admin_messages", :force => true do |t|
     t.string   "text"
@@ -82,6 +82,15 @@ ActiveRecord::Schema.define(:version => 20111105145041) do
     t.integer  "num_users_joined"
   end
 
+  create_table "user_auths", :force => true do |t|
+    t.string   "token"
+    t.string   "provider_id"
+    t.string   "provider"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_events", :force => true do |t|
     t.boolean  "admin_flag"
     t.boolean  "invited"
@@ -144,6 +153,8 @@ ActiveRecord::Schema.define(:version => 20111105145041) do
 
   add_foreign_key "idea_events", "events", :name => "idea_events_event_id_fk"
   add_foreign_key "idea_events", "ideas", :name => "idea_events_idea_id_fk"
+
+  add_foreign_key "user_auths", "users", :name => "user_auths_user_id_fk"
 
   add_foreign_key "user_events", "events", :name => "user_events_event_id_fk"
   add_foreign_key "user_events", "users", :name => "user_events_user_id_fk"
