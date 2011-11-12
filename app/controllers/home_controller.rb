@@ -213,7 +213,10 @@ class HomeController < ApplicationController
 
   def search_ideas(search_string, ideas_per_page, current_page)
     
-    page_number = current_page.to_i || 1    
+    page_number = 1    
+    unless current_page.nil? || current_page.blank?
+      page_number = current_page.to_i
+    end
  
     if search_string.nil? || search_string.empty?
       return Idea.limit(ideas_per_page).offset((page_number-1)*ideas_per_page).order("num_users_joined DESC")

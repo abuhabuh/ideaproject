@@ -8,12 +8,14 @@
         var first_name = $(this).val();
         var last_name = $('#user_last_name').val();
         $('#user_user_name').val(first_name+" "+last_name);
+        $('#user_name_display').html(first_name+" "+last_name);
       });
 
       $('#user_last_name').bind('keyup keypress blur', function() {
         var last_name = $(this).val();
         var first_name = $('#user_first_name').val();
         $('#user_user_name').val(first_name+" "+last_name);
+        $('#user_name_display').html(first_name+" "+last_name);
       });
 
 		});
@@ -30,25 +32,37 @@
 
     <div><%= f.label :profile_pic %><br />
     <%= f.file_field :profile_pic %></div>
-    
-    <div><%= f.label :first_name %><br />
-    <%= f.text_field :first_name %></div>  
+    <br />
+    <br />
 
-    <div><%= f.label :last_name %><br />
-    <%= f.text_field :last_name%></div>  
-    
-    User name: <%= f.text_field :user_name, :readonly=>"readonly", :style=>"border: none"%><br/>
+    <fieldset>
+      <legend>Basic Info:</legend>
+
+      <div><%= f.label :email %><br />
+      <%= f.email_field :email %></div>
+
+      <div><%= f.label :first_name %><br />
+      <%= f.text_field :first_name %></div>  
+
+      <div><%= f.label :last_name %><br />
+      <%= f.text_field :last_name%></div>  
+      <br/>
+      User name: <span id='user_name_display'></span><br/>
+      
+      <%= f.hidden_field :user_name%>
+    </fieldset>
     
     <br/>
     
-    <div><%= f.label :email %><br />
-    <%= f.email_field :email %></div>
+    <fieldset>
+      <legend>Password:</legend>
 
-    <div><%= f.label :password %><br />
-    <%= f.password_field :password %></div>
+      <div><%= f.label :password %><br />
+      <%= f.password_field :password %></div>
 
-    <div><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %></div>
+      <div><%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation %></div>
+    </fieldset>
 
     <br />
     

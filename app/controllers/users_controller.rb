@@ -7,6 +7,10 @@ class UsersController < ApplicationController
   
   # GET /users/1
   def show
+    if current_user.id == params[:id].to_i
+      redirect_to users_profile_path
+    end
+
     @user = User.find(params[:id])
     @friendship = current_user.friendships.where("friend_id = ?", @user.id).first
     @search_result_ideas = @user.ideas.order("num_users_joined DESC")

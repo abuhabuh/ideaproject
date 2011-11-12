@@ -52,10 +52,10 @@
                   if ($.trim(returned_html).length != 0){
                     $("#AJAX_page_num_store").html(String(page_num)); // increment pages processed if results came back
                   }
-                },
-                error: function(msg){ // remove this for live deploy
-                  alert(msg);
-                }
+                }//,
+                //error: function(msg){ // remove this for live deploy
+                //  alert(msg);
+                //}
               });
 
           }
@@ -109,6 +109,7 @@
 <div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
 
 <div id='AJAX_main_stream_content'>    
+
   <!-- STREAM FRIENDS result display -->
   <% if session[:stream_view] == STREAM_VIEW_FRIENDS %>
 

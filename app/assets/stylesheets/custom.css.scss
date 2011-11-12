@@ -1,4 +1,10 @@
 /*************************************
+ * IMPORTS
+ *************************************/
+@import "magazine_layout";
+
+
+/*************************************
  * Notes
  * Color combos: 
  *  - color matcher: http://www.colorcombos.com/combotester.html?rnd=0&color0=5a3232&color1=be3c14&color2=d8dcce&color3=321e1e&color4=f8fcee&color5=2b3c45
@@ -803,18 +809,6 @@ p.alert{
   float: left;
 }
 
-.magazine-stream-element-container{
-  box-shadow: 2px 2px 5px #201C10; /* COLORS: DARK - 201C10, Light - C5AB84 */
-}
-
-.magazine-stream-element-container{
-  background-color: #CBBB9B;
-}
-
-.magazine-stream-element-description-block, .magazine-stream-element-chat-msg{
-  background-color: #D6D5D1;
-}
-
 .nav-main-link{
   color: white;
   background-color: #be3c14; /* alt colors: 943E0F be3c14 */
@@ -866,103 +860,5 @@ p.alert{
   float: left;
   
   width: 100%;
-}
-
-.magazine-stream-element-container{
-  float: left;
-
-  width: 28%;
-  height: 380px;
-  
-  padding: 1%;
-  margin: 1.25%;
-
-  font-size: 12px;
-}
-
-.magazine-stream-element-picture{ /* TODO: CENTER THIS */
-  float: left;
-  
-  width: 100%;
-  height: 160px;
-  
-  margin-bottom: 2%;
-  
-  border-style: solid;
-  border-width: 0px;
-}
-
-.magazine-stream-element-picture img{ /* TODO: CENTER THIS */
-  max-height:100%; 
-  max-width:100%;
-  
-  display: block;
-  margin: auto;
-}
-
-.magazine-stream-element-description-block{
-  float: left;
-
-  width: 100%;
-  height: 45px;
-  
-  padding: 2% 0% 0% 0%;
-  margin-bottom: 5%;
-
-  overflow: hidden;
-}
-
-.magazine-stream-element-description-owner-pic{
-  float: left;
-
-  height: 100%;
-
-  margin: 0% 2%;
-}
-
-/* block for statistics and join action */
-.magazine-stream-element-stats-block{
-  float: left;
-  
-  margin-bottom: 5%;
-  width: 100%;
-}
-
-.magazine-stream-element-stats-block-text{
-  float: left;
-
-  width: 50%;
-}
-
-.magazine-stream-element-stats-block-action{
-  float: right;
-
-}
-
-/* chat message styles */
-.magazine-stream-element-chat-msg-block{
-  float: left;
-  
-  width: 100%;
-}
-
-.magazine-stream-element-chat-msg{
-  float: left;
-
-  width: 100%;
-  height: 45px;
-  
-  padding: 2% 0% 0% 0%;
-  margin-bottom: 2%;
-  
-  overflow: hidden;
-}
-
-.magazine-stream-element-chat-msg-pic{
-  float: left;
-
-  height: 100%;
-
-  margin: 0% 2%;
 }
 

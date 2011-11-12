@@ -1,12 +1,6 @@
+<% idea_owner = User.find(idea.creator) %>
+
 <div class='magazine-stream-element-container'>
-
-  <% idea_owner = User.find(idea.creator) %>
-
-  <div class='magazine-stream-element-picture'>
-    <%= link_to image_tag(idea.photo.url(:original)),
-              idea_path(idea.id),
-              {:method => 'get'} %>
-  </div>
 
   <div class='magazine-stream-element-description-block'>
     <div class='magazine-stream-element-description-owner-pic'>
@@ -15,6 +9,12 @@
                     {:method => 'get'} %>
     </div>
     <%=idea_owner.user_name %>: <%=idea.text%>
+  </div>
+
+  <div class='magazine-stream-element-picture'>
+    <%= link_to image_tag(idea.photo.url(:original)),
+              idea_path(idea.id),
+              {:method => 'get'} %>
   </div>
 
   <div class='magazine-stream-element-stats-block'>
@@ -40,7 +40,6 @@
       <% end %>
     </div>
   </div>
-
 
   <div class='magazine-stream-element-chat-msg-block'>
     <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(2).reverse %>
