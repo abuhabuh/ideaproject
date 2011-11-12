@@ -1,5 +1,5 @@
 <header>
-  <table>
+<table>
     <tr>
       <td>
 	<%= link_to content_tag(:b, 'JustAnIdea'), root_url%>
@@ -12,9 +12,7 @@
 	      <li> Hello <%= link_to current_user.first_name.empty? ? current_user.user_name : current_user.first_name, users_profile_path %> </li>
 	      <li> <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete%> </li>
 	    <% else %>
-	      <li><%= link_to image_tag('facebook_login_button.png', options = {:align => 'left'}), user_omniauth_authorize_path(:facebook), :target => '_blank' %></li>
-              <li> <%= link_to 'Sign In', new_user_session_path %> </li>
-	      <li> <%= link_to 'Sign Up', new_user_registration_path %> </li>
+              <li> <%= link_to 'Sign In', new_user_session_path, options = {:rel => 'facebox'} %>
 	    <% end %>
 	  </ul>
 	</nav>

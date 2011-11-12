@@ -45,8 +45,6 @@ IdeaApp::Application.routes.draw do
 	match "pusher/auth", :to => "pusher#auth", \
 				:as => :pusher_auth, :via => "POST"
 
-  match "home/login", :to => "home#login", :as => :login  
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -173,13 +173,7 @@ class HomeController < ApplicationController
       format.js
     end
   end
-
-  def login
-    respond_to do |format|
-      format.js 
-    end
-  end
-
+  
   
   ######################################################
   ## BEGIN PRIVATE METHODS
