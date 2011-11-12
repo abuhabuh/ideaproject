@@ -51,11 +51,6 @@ class IdeasController < ApplicationController
   def create
     @idea = Idea.new(params[:idea])
 
-    # TODO: test this or get rid of this function's view html.erb. I just put this here, never tested it out.
-    unless params[:internet_url_path].empty?
-      @idea.set_photo_from_url(params[:internet_url_path])
-    end 
-
     respond_to do |format|
       if @idea.save
         format.html { redirect_to @idea, notice: 'Idea was successfully created.' }
@@ -72,9 +67,6 @@ class IdeasController < ApplicationController
   def update
     @idea = Idea.find(params[:id])
     
-    unless params[:internet_url_path].empty?
-      @idea.set_photo_from_url(params[:internet_url_path])
-    end
     @idea.text = params[:idea][:text]
 
     respond_to do |format|
