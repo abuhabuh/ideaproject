@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  token: MyString
+  provider_id: MyString
+  provider: MyString
+
+two:
+  token: MyString
+  provider_id: MyString
+  provider: MyString
