@@ -51,6 +51,7 @@ class HomeController < ApplicationController
     # Gets collections of user ideas, friends' ideas
     set_objs_to_render
 
+    puts " GETTING SEARCH RESULTS <auth home> - [" + params[:search].to_s + "]"
     @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
 
     # Don't need to get this if we're doing PUBLIC or SEARCH views
@@ -69,8 +70,8 @@ class HomeController < ApplicationController
   def next_ideas_batch_js
     session[:page] = params[:page] # session[:page] written to hidden div to support ajax
 
-    puts " ************ search text: " + params[:idea].to_s
-    puts " ************ page # : " + params[:page].to_s
+    # puts " ************ search text: " + params[:idea].to_s
+    # puts " ************ page # : " + params[:page].to_s
 
 
     set_objs_to_render
@@ -130,25 +131,29 @@ class HomeController < ApplicationController
       # Handle unexpected nil error
       puts " TRACE HomeController:add_idea - no param for idea"
     end
-       
+    
+    puts " home_controller: add_idea - idea added"
+    
     respond_to do |format|
       format.html {
         set_objs_to_render
 
-        if params[:search] && !params[:search].blank?
-
+        unless session[:stream_view] == STREAM_VIEW_FRIENDS
+          puts " GETTING SEARCH RESULTS <add_idea> - [" + params[:search].to_s + "]"
           @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-          
         else
+          puts " GETTING FRIENDS RESULTS"
           # Get stream ideas based on what type of stream we're 
           #   rendering: Public, Friends, etc. Default is public view.
           @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
           
         end
 
+        flash[:notice] = USER_ACTION_NEW_IDEA_CREATED
+
         redirect_to authenticated_home_path
       }
-      # TODO: make ajax call
+      # TODO: make ajax call - this functionality is not used in the site yet so its not written yet...
       format.js
     end
   end
@@ -170,7 +175,7 @@ class HomeController < ApplicationController
       format.html {
         set_objs_to_render
 
-        if params[:search] && !params[:search].blank?
+        unless session[:stream_view] == STREAM_VIEW_FRIENDS
           
           @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
           
@@ -207,15 +212,21 @@ class HomeController < ApplicationController
   end
 
   def search_ideas(search_string, ideas_per_page, current_page)
-
-    page_number = current_page || 1
-    @search = Idea.search do
-      fulltext search_string.to_s, :minimum_match => 1
-      order_by :num_users_joined, :desc
-      paginate :page => page_number, :per_page => ideas_per_page
-    end
     
-    @search.results
+    page_number = current_page.to_i || 1    
+ 
+    if search_string.nil? || search_string.empty?
+      return Idea.limit(ideas_per_page).offset((page_number-1)*ideas_per_page).order("num_users_joined DESC")
+    else
+    
+      @search = Idea.search do
+        fulltext search_string.to_s, :minimum_match => 1
+        order_by :num_users_joined, :desc
+        paginate :page => page_number, :per_page => ideas_per_page
+      end
+      
+      @search.results
+    end
 
   end
 

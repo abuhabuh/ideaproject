@@ -1,4 +1,4 @@
-
+require 'open-uri'
 
 
 class Idea < ActiveRecord::Base
@@ -30,5 +30,8 @@ class Idea < ActiveRecord::Base
   attr_accessible :text, :photo, :creator, :num_users_joined, :featured
 
 
+  def set_photo_from_url(url)
+    self.photo = open(url)
+  end
 
 end

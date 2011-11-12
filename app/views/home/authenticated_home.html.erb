@@ -77,16 +77,32 @@
 
 
 <div class='content-search-container'>
-  <%= form_tag authenticated_home_path, :method => :get do %>
-    <% if params[:search].blank? %>
-      <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
-    <% else %>
-      <%= text_field_tag :search, params[:search] %>
-    <% end %>        
-    <%= submit_tag "Search", :name => nil %>
-    
-    <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
-  <% end %>
+
+  <div class='content-search-field-and-button'>
+    <%= form_tag authenticated_home_path, :method => :get do %>
+      <% if params[:search].blank? %>
+        <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
+      <% else %>
+        <%= text_field_tag :search, params[:search] %>
+      <% end %>        
+      <%= submit_tag "Search", :name => nil %>
+      
+      <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
+    <% end %>
+  </div>
+  
+    <!-- AJAX picks up DIV ids to insert proper notices -->
+  <div id='flash-notice-div'>
+    <% if flash[:notice] %>
+      <%= render :partial => "layouts/flash_notice" %>
+    <% end %>
+  </div>
+  <div id='flash-alert-div'>
+    <% if flash[:alert] %>
+      <%= render :partial => "layouts/flash_alert" %>
+    <% end %>
+  </div>
+  <!-- or flash.each do |key, msg| -->
 </div>
 
 

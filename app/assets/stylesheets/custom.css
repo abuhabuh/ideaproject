@@ -116,6 +116,15 @@ div.right-nav{
   color: white;
 }
 
+.chat-idea-button{
+  color: black;
+  background-color: #B58963;
+}
+
+.chat-idea-button a{
+  color: black;
+}
+
   /*************************************
    * Misc: Containers, etc
    *************************************/
@@ -335,12 +344,14 @@ nav.main-authentication ul li a:hover {
    * General elements - used across different pages
    *************************************/
 
-#flash_notice_div{
+#flash-notice-div{
   float: left;
+  margin: 0px 20px;
 }
 
-#flash_alert_div{
+#flash-alert-div{
   float: left;
+  margin: 0px 20px;
 }
 
 .hidden-div {
@@ -685,6 +696,21 @@ div.left-nav a:hover {
   text-decoration: none;
 }
 
+.chat-idea-button{
+  float: left;
+  
+  margin: 5px 0px;
+  padding: 2px;
+  
+  text-decoration: none;
+  
+  /* bevel'd button */
+  /*box-shadow: -2px -2px 2px rgba(0,0,0,.25) inset, 2px 2px 2px white inset;*/
+}
+
+.chat-idea-button a {
+  text-decoration: none;
+}
 
 
 /*************************************
@@ -702,13 +728,17 @@ div.left-nav a:hover {
 }
 
 p.notice{
+  float: left;
+  
   background-color: #CFC447;
-  padding: 3px;
+  padding: 0px 3px;
 }
 
 p.alert{
+  float: left;
+
   background-color: #943E0F;
-  padding: 3px;
+  padding: 0px 3px;
 }
 
 /*************************************
@@ -769,7 +799,9 @@ p.alert{
   border-width: 0px;
 }
 
-
+.content-search-field-and-button{
+  float: left;
+}
 
 .magazine-stream-element-container{
   box-shadow: 2px 2px 5px #201C10; /* COLORS: DARK - 201C10, Light - C5AB84 */

@@ -1,4 +1,19 @@
 # PostgreSQL configuration
+#
+#
+#development:
+#  adapter: postgresql
+#  encoding: unicode
+#  host: localhost
+#  database: dev_schema
+#  pool: 5
+#  username: app_dev_db
+#  password: pswd
+#
+#
+#
+#
+
 development:
   adapter: postgresql
   encoding: unicode

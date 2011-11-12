@@ -5,8 +5,10 @@
 
     <div class='content-text'>
 
-      <b>No one has your idea yet! 
-        <%= link_to 'Sign up', new_user_session_path %> to submit it and invite your friends.
+      <b>
+        No one has your idea yet! <br/>
+        <br/>
+        <%= link_to 'Create an account', new_user_registration_path %> or <%= link_to 'Sign In', new_user_session_path %> to submit it and invite your friends.
       </b>
       <br />
     </div>
@@ -15,7 +17,7 @@
     <div class='content-text'>
     
       <b>You have idea matches below! 
-        <%= link_to 'Sign up', new_user_session_path %> to join them or create your own.
+        <%= link_to 'Create an account', new_user_registration_path %> or <%= link_to 'Sign In', new_user_session_path %> to join them or create your own.
       </b>
       
       <br />
@@ -32,12 +34,15 @@
       </div>
       
       <%= render :partial => "idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_USER, :view_only => IDEA_STREAM_VIEW_ONLY_TRUE} %>
+
+      <div class='content-text'>
+        <br/>
+        <br/>
+        <p> <%= link_to 'Create an Account', new_user_registration_path %> or <%= link_to 'Login', new_user_session_path %> to see more! </p>
+      </div>
+
     </div>
 
   <% end %>
   
-  <div class='content-text'>
-    <p> <%= link_to 'Login', new_user_session_path %> or <%= link_to 'Create an Account', new_user_session_path %> to see more! </p>
-  </div>
-
 </div>

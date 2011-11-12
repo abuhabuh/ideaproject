@@ -11,55 +11,57 @@
           <% end %>
         </div>
 
-        <div class='main-header-center-content'>
-          <%= form_tag add_idea_path, :method => 'post' do %>
-            <% if @initial_idea.nil? || @initial_idea.blank? %>
-              <%= text_field_tag :idea, INPUT_BOX_ADD_IDEA, :size => "40" %>
-            <% else %>
-              <%= text_field_tag :idea, @initial_idea %>
-            <% end %>      
-            <%= submit_tag "Add Idea" %>
-          <% end %>
-          
-          <div class='idea-stream-content-view-selector'>
-            View: 
-            <% case session[:stream_view] %>
-              <% when STREAM_VIEW_PUBLIC %>
-                Public | 
-                <%= link_to 'Friends', 
-                            authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
-                                                    {:method => 'get', 
-                                                     :title => "See friends' ideas"}%><br/>
+        <% if user_signed_in? %>
 
-              <% when STREAM_VIEW_FRIENDS %>  
-                <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
-                                                              {:method => 'get', 
-                                                               :title => "See public ideas"}%> | 
-                Friends<br/>
-
-              <% when STREAM_VIEW_SEARCH %>
-                <%= link_to 'Public',
-                           authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC),
-                           {:method => 'get',
-                            :title => "See public ideas"}%> | 
-                <%= link_to 'Friends',
-                           authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
-                           {:method => 'get',
-                           :title => "See friends' ideas"}%> | 
-                Search <br />
-
+          <div class='main-header-center-content'>
+            <%= form_tag add_idea_path, :method => 'post' do %>
+              <% if @initial_idea.nil? || @initial_idea.blank? %>
+                <%= text_field_tag :idea, INPUT_BOX_ADD_IDEA, :size => "40" %>
+              <% else %>
+                <%= text_field_tag :idea, @initial_idea %>
+              <% end %>      
+              <%= submit_tag "Add Idea" %>
             <% end %>
+            
+            <div class='idea-stream-content-view-selector'>
+              View: 
+              <% case session[:stream_view] %>
+                <% when STREAM_VIEW_PUBLIC %>
+                  Public | 
+                  <%= link_to 'Friends', 
+                              authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
+                                                      {:method => 'get', 
+                                                       :title => "See friends' ideas"}%><br/>
+
+                <% when STREAM_VIEW_FRIENDS %>  
+                  <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
+                                                                {:method => 'get', 
+                                                                 :title => "See public ideas"}%> | 
+                  Friends<br/>
+
+                <% when STREAM_VIEW_SEARCH %>
+                  <%= link_to 'Public',
+                             authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC),
+                             {:method => 'get',
+                              :title => "See public ideas"}%> | 
+                  <%= link_to 'Friends',
+                             authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
+                             {:method => 'get',
+                             :title => "See friends' ideas"}%> | 
+                  Search <br />
+
+              <% end %>
+            </div>
+      
+            <div class='nav-main-link round'><%= link_to 'Community', users_path %></div>
+            
+            <div class='nav-main-link round'><%= link_to 'My Ideas', users_profile_path%></div>
+
+            <div class='nav-main-link-unimplemented round'>My Events</div>
+
           </div>
-    
-          <div class='nav-main-link round'><%= link_to 'Community', users_path %></div>
           
-          <div class='nav-main-link round'><%= link_to 'My Ideas', users_profile_path%></div>
-
-          <div class='nav-main-link-unimplemented round'>My Events</div>
-
-    
-        </div>
-
+        <% end %>
 
         <div class='main-header-right-content'>
           <div class='minor-text'>
@@ -79,17 +81,4 @@
     </div>
   </div>
 
-  
-  <!-- AJAX picks up DIV ids to insert proper notices -->
-  <div id='flash_notice_div'>
-    <% if flash[:notice] %>
-      <%= render :partial => "layouts/flash_notice" %>
-    <% end %>
-  </div>
-  <div id='flash_alert_div'>
-    <% if flash[:alert] %>
-      <%= render :partial => "layouts/flash_alert" %>
-    <% end %>
-  </div>
-  <!-- or flash.each do |key, msg| -->
 </header>

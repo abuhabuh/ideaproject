@@ -73,10 +73,12 @@ ID_TAG_IDEA_VIEW_PAGE = "AJAX_idea_view_page_id"
 USER_ACTION_FRIENDSHIP_ADDED = "Friend has been added."
 USER_ACTION_FRIENDSHIP_ADD_ERROR = "Error adding friend."
 USER_ACTION_FRIENDSHIP_REMOVED = "Friend removed."
+USER_ACTION_NEW_IDEA_CREATED = "Your new idea was created and saved."
 INPUT_BOX_ADD_IDEA = "What do you want to do?"
 INPUT_BOX_SEARCH_IDEAS = "Enter text to search"
 BUTTON_JOIN_IDEA = "Join Idea!"
 BUTTON_CHAT_IDEA = "Go Chat!"
+
 
 ##########################################
 # Search functionality constants
