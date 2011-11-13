@@ -44,17 +44,21 @@ IDEA_STREAM_VIEW_ONLY_FALSE = 'false'
 ##########################################
 #   User list view page
 ID_TAG_USER_LIST_USER_ROW = "AJAX_user_list_row_id_" #append user id
-#   Idea view page
-ID_TAG_IDEA_CHAT = "AJAX_idea_view_chat_id_" #append idea id
+
 #   Main authenticated home page
 ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION = "AJAX_auth_home_stream_idea_action_id_" #append idea id
 ID_TAG_AUTH_HOME_STREAM_NUM_USERS = "AJAX_auth_home_stream_num_users_" #append idea id
 ID_TAG_AUTH_HOME_USER_IDEAS = "AJAX_auth_home_user_ideas"
-#   Feedback / Idea chat window ID
+
+#   Idea view page
+ID_TAG_IDEA_CHAT = "AJAX_idea_view_chat_id_" #append idea id
+ID_TAG_IDEA_EDIT_LINK = "AJAX_idea_edit_link" 
+#     Feedback / Idea chat window ID
 ID_TAG_FEEDBACK_CHAT = "AJAX_feedback_chat_id"
 ID_TAG_IDEA_USER = "AJAX_idea_user_" # Identifies users that are in left_nav user list as online / offline: append user id 
 ID_TAG_IDEA_CHAT_INPUT_AREA = 'AJAX_idea_chat_input_area'
 ID_TAG_IDEA_CHAT_USER_LIST = 'AJAX_idea_chat_user_list'
+
 
 ID_TAG_CHAT_USER_JOINED_STRING = 'Joined'
 ID_TAG_CHAT_USER_VIEWING_STRING = 'Viewing'

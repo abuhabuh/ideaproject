@@ -6,20 +6,23 @@
 }
 
 .magazine-stream-element-container{
-  background-color: #CBBB9B;
+  background-color: $magazine-block-bg-color;
 }
 
 /*************************************
  * Color
  *************************************/
 .magazine-stream-element-description-block{
-
+  color: $magazine-block-description-text-color;
 }
 
 .magazine-stream-element-chat-msg{
-  background-color: #D6D5D1;
+  background-color: $magazine-block-chat-msg-bg-color;
 }
 
+.magazine-stream-element-owner-name{
+  color: $magazine-block-owner-name-text-color;
+}
 
 /*************************************
  * Layout
@@ -28,10 +31,10 @@
   float: left;
 
   width: 28%;
-  height: 380px;
+/*  height: 380px;*/
   
   padding: 1%;
-  margin: 1.25%;
+  margin: 15px; /* need to use pixels because masonry tiling does something that kills percentage margins in Chrome */
 
   font-size: 12px;
 }
@@ -40,7 +43,6 @@
   float: left;
   
   width: 100%;
-  height: 160px;
   
   margin-bottom: 2%;
   
@@ -60,13 +62,18 @@
   float: left;
 
   width: 100%;
-  height: 50px;
   
   padding: 2% 0% 0% 0%;
   margin-bottom: 5%;
 
   font-size: 14px;
-  overflow: hidden;
+  font-weight: bold;
+}
+
+.magazine-stream-element-owner-name{
+  font-weight: normal;
+  
+  margin-bottom: 3px;
 }
 
 .magazine-stream-element-description-owner-pic{
@@ -74,7 +81,7 @@
 
   height: 100%;
 
-  margin: 0% 2%;
+  margin: 0px 10px 0px 0px 
 }
 
 /* block for statistics and join action */

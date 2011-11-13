@@ -120,8 +120,9 @@ class User < ActiveRecord::Base
     user = User.joins(:user_auths).where('user_auths.provider' => provider, 'user_auths.provider_id' => data['id']).readonly(false).first
 
     if user.nil?
-      user = User.create!(:email => data["email"], :first_name => data["first_name"], :last_name => data["last_name"], 
-          :password => Devise.friendly_token[0,20], :profile_pic_file_name => access_token['user_info']['image']) 
+      user = User.create!(:email => data["email"], :first_name => data["first_name"], :last_name => data["last_name"],
+          :user_name => data["first_name"], :password => Devise.friendly_token[0,20], 
+          :profile_pic_file_name => access_token['user_info']['image']) 
       UserAuth.create(:token => access_token['credentials']['token'], :provider_id => data['id'], :provider => provider, :user_id => user.id)
       
     end

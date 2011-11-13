@@ -4,11 +4,12 @@
 
   <div class='magazine-stream-element-description-block'>
     <div class='magazine-stream-element-description-owner-pic'>
-      <%= link_to image_tag(idea_owner.profile_pic.url(:chat)),
+      <%= link_to image_tag(idea_owner.profile_pic.url(:chat), :title => "#{idea_owner.user_name}"),
                     user_path(idea_owner.id),
                     {:method => 'get'} %>
     </div>
-    <%=idea_owner.user_name %>: <%=idea.text%>
+    <div class='magazine-stream-element-owner-name'><%=idea_owner.user_name %>:</div>
+    <%=idea.text%>
   </div>
 
   <div class='magazine-stream-element-picture'>
@@ -42,13 +43,13 @@
   </div>
 
   <div class='magazine-stream-element-chat-msg-block'>
-    <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(2).reverse %>
+    <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(4).reverse %>
 
     <% messages.each do |message| %>
       <div class='magazine-stream-element-chat-msg'>
         <div class='magazine-stream-element-chat-msg-pic'>
           <% msg_owner = User.find(message.user_id) %>
-          <%= link_to image_tag(msg_owner.profile_pic.url(:chat)),
+          <%= link_to image_tag(msg_owner.profile_pic.url(:chat), :title => "#{msg_owner.user_name}"),
                     user_path(msg_owner.id),
                     {:method => 'get'} %>
         </div>

@@ -1,10 +1,16 @@
 <% content_for :head do %>
 
+  <script src="/assets/external/jquery.masonry.min.js"></script>
+  <script src="/assets/external/jquery.imagesloaded.js"></script>
+  
   <script type="text/javascript">
     last_scroll_position = $(window).scrollTop();
 
     // TODO: can set autofocus with HTML5 as well so don't need this javascript to run for HTML5 browsers -->
-    $(document).ready(function(){
+    //$(document).ready(function(){
+
+    $(function(){
+
 
       did_scroll_down = false; // initialize variable for scroll bottom interval function
 
@@ -18,6 +24,16 @@
       $("#search").focus(function(){
         $("#search").select();
       });
+
+      // set Masonry variable and initialize tiling
+      var $container = $('#AJAX_main_stream_content');
+      $container.imagesLoaded(function(){
+        $container.masonry({
+          itemSelector: '.magazine-stream-element-container',
+          isAnimated: false
+        });
+      });
+
 
       // Auto loading ideas on scroll bottom functions
       // Detect scroll event down
@@ -35,7 +51,7 @@
         if ( did_scroll_down ) {
           did_scroll_down = false;
           
-          if  ( ($(document).height() - $(window).height()) - $(window).scrollTop() < 500 ){
+          if  ( ($(document).height() - $(window).height()) - $(window).scrollTop() < 700 ){
             var page_num = parseInt($("#AJAX_page_num_store").html()) + 1;
             var idea_string = $("#search").val();
             
@@ -48,7 +64,13 @@
                 data: {page: page_num, idea: idea_string}, 
                 dataType: 'html',
                 success: function(returned_html){
-                  $("#AJAX_main_stream_content").append(returned_html)
+
+                  var $newElems = $( returned_html );
+                  // ensure that images load before adding to masonry layout
+                  $newElems.imagesLoaded(function(){
+                    $container.append($newElems).masonry( 'appended', $newElems, false); // boolean arg sets animation
+                  });
+                  
                   if ($.trim(returned_html).length != 0){
                     $("#AJAX_page_num_store").html(String(page_num)); // increment pages processed if results came back
                   }

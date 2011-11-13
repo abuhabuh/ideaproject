@@ -1,10 +1,4 @@
 /*************************************
- * IMPORTS
- *************************************/
-@import "magazine_layout";
-
-
-/*************************************
  * Notes
  * Color combos: 
  *  - color matcher: http://www.colorcombos.com/combotester.html?rnd=0&color0=5a3232&color1=be3c14&color2=d8dcce&color3=321e1e&color4=f8fcee&color5=2b3c45
@@ -16,7 +10,21 @@
 /*************************************
  * Color Scheme and Shading
  *   Text and background color definitions
+ *   Define colors before any imports
  *************************************/
+
+$main-background-color: #F0F4F0;
+
+$magazine-block-bg-color: #D0C19D;
+$magazine-block-chat-msg-bg-color: #D6D5D1;
+$magazine-block-description-text-color: #513F24;
+$magazine-block-owner-name-text-color: black;
+
+/*************************************
+ * IMPORTS
+ *************************************/
+@import "magazine_layout";
+
 
   /***************************************
    * Shadow Scheme
@@ -38,7 +46,7 @@ a {
 
 body {
   color: #1C1814;  
-  background-color: #D8D5C9; /* COLORS: DARK - 694629, Light - D8D5C9 */
+  background-color: $main-background-color; /* COLORS: DARK - 694629, Light - D8D5C9 */
 }
 
   /***************************************

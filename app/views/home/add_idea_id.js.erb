@@ -31,6 +31,9 @@ $(document).ready(function(){
                                                   )%>");
 
 		$("#<%=ID_TAG_IDEA_USER  + current_user.id.to_s%>").html("<%=ID_TAG_CHAT_USER_JOINED_STRING%>");
+		
+  	$("#<%=ID_TAG_IDEA_EDIT_LINK%>").html("<%= escape_javascript(link_to 'edit idea', edit_idea_path(@idea), {:method => 'get'})%>");
+		
 	}
     
 });
