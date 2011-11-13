@@ -1,0 +1,13 @@
+<% if current_user.profile_pic_file_size.nil? %>
+  <% if makelink == true %>
+    <%= link_to image_tag(current_user.profile_pic_file_name), path, {:class => 'profile-pic-element-picture', :method => 'get'} %><br />
+  <% else %>
+    <%= image_tag current_user.profile_pic_file_name, :class => 'profile-pic-element-picture' %><br />
+  <% end %>
+<% else %>
+  <% if makelink == true %>
+    <%= link_to image_tag(current_user.profile_pic.url(:thumb)), path,  {:class => 'profile-pic-element-picture', :method => 'get'} %><br />
+  <% else %>
+    <%= image_tag current_user.profile_pic.url(:thumb), :class => 'profile-pic-element-picture' %><br />
+  <% end %>
+<% end %> 

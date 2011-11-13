@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
     puts "controller is class::::::::::: #{self.class}"
     #is_a?(Devise) ? "login" : "application"
     # or turn layout off for every devise controller:
-    devise_controller? ? "login" : "application"
+    #devise_controller? ? "login" : "application"
+    return "application"
   end
 end

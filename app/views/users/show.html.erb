@@ -1,5 +1,5 @@
 <div class='left-nav'>      
-  <%= image_tag @user.profile_pic.url(:thumb) %><br/>
+  <%= render :partial => '/users/profile_pic', :locals => {:current_user => @user, :makelink => false} %>
   <%= @user.user_name %>
   <% if @friendship.nil? %>
     <!-- TODO - split string "show" in :prev_page => 'show' into a global var
