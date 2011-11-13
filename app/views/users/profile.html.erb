@@ -1,5 +1,10 @@
 <div class='left-nav'>
-  <%= image_tag current_user.profile_pic.url(:thumb) %><br />
+  <% if current_user.profile_pic_file_size.nil? %>
+    <%= image_tag current_user.profile_pic_file_name %>
+  <% else %>
+    <%= image_tag current_user.profile_pic.url(:thumb) %><br />
+  <% end %>  
+  
   <%= link_to 'edit profile', edit_user_registration_path, :method => :get %><br/>
   <br/>
   <b>User Name</b>: <%= current_user.user_name %><br />
@@ -57,3 +62,4 @@
 
   </div>
 </div>
+

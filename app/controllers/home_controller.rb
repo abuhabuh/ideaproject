@@ -190,9 +190,7 @@ class HomeController < ApplicationController
       format.js
     end
   end
-
-
-
+  
   
   ######################################################
   ## BEGIN PRIVATE METHODS

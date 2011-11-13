@@ -30,7 +30,7 @@ IdeaApp::Application.configure do
   config.assets.debug = true
   
   # Set paperclip config to find identify command from ImageMagick
-  Paperclip.options[:command_path] = '/usr/bin'
+  Paperclip.options[:command_path] = ''
   Paperclip.options[:swallow_stderr] = false
   PAPERCLIP_STORAGE_OPTIONS = {} # Use local file system for storage
   

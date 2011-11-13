@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- title is function from app/helpers/ApplicationHelper -->
+    <script>
+      jQuery(document).ready(function($) {
+        $('a[rel*=facebox]').facebox()
+      });
+    </script>
+
+   <%= stylesheet_link_tag('facebox') %>  
+    <%= yield :head %>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

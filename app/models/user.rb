@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :timeoutable
+         :timeoutable, :omniauthable
 
   # Associations
   has_many :user_ideas
@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   has_many :chat_messages
 
 
+  has_many :user_auths
+
   # Setup paperclip photo attachment property
   has_attached_file :profile_pic,
                     {:default_url => '/images/users/:style/default.jpg', 
@@ -31,7 +33,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, \
     :user_name, :first_name, :last_name, :location, :dob, :profile_pic, \
-    :description, :interests
+    :description, :interests, :profile_pic_file_name
 
   # Create new idea object for user
   def create_idea (idea_string)
@@ -81,6 +83,7 @@ class User < ActiveRecord::Base
 
   # Returns user's ideas as relation that can be operated on or queried
   def self.get_my_ideas (current_user)
+    puts "user view: #{current_user.to_yaml}"
     current_user.ideas
   end
   
@@ -111,4 +114,19 @@ class User < ActiveRecord::Base
                 
   end
   
+  def self.find_for_facebook_oauth(access_token, signed_in_resource=nil, provider)
+    data = access_token['extra']['user_hash']
+
+    user = User.joins(:user_auths).where('user_auths.provider' => provider, 'user_auths.provider_id' => data['id']).readonly(false).first
+
+    if user.nil?
+      user = User.create!(:email => data["email"], :first_name => data["first_name"], :last_name => data["last_name"], 
+          :password => Devise.friendly_token[0,20], :profile_pic_file_name => access_token['user_info']['image']) 
+      UserAuth.create(:token => access_token['credentials']['token'], :provider_id => data['id'], :provider => provider, :user_id => user.id)
+      
+    end
+    return user;
+  end
+
+
 end
