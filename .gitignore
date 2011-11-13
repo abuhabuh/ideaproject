@@ -9,3 +9,5 @@ tmp/
 public/system/profile_pics/
 public/system/photos/
 solr/data
+*~
+*.swp
