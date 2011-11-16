@@ -12,7 +12,7 @@
                 <% end %>
               </div>
               <div class='idea-row-text'>
-                <%=idea_owner.user_name%>:<br/>
+                <%=idea_owner.first_name + " " + idea_owner.last_name%>:<br/>
                 <span class='idea-text'><%= link_to friend_idea_query_item.idea_text,
                               idea_path(friend_idea_query_item.idea_id),
                               {:method => 'get'} %></span>

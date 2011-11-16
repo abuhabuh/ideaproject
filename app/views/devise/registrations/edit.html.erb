@@ -3,8 +3,12 @@
   <script type="text/javascript">
 
 		$(document).ready(function(){
-
+      
+      alert("loading js");
+      
       $('#user_first_name').bind('keyup keypress blur', function() {
+        alert("first name keyup");
+
         var first_name = $(this).val();
         var last_name = $('#user_last_name').val();
         $('#user_user_name').val(first_name+" "+last_name);
@@ -24,7 +28,7 @@
 
 <% end %>
 
-<div class='content'>
+<div class='content-container'>
 
   <h2>Edit <%= resource_name.to_s.humanize %></h2>
 

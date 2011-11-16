@@ -1,0 +1,25 @@
+<h1>Listing idea_deals</h1>
+
+<table>
+  <tr>
+    <th>Idea</th>
+    <th>Deal</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @idea_deals.each do |idea_deal| %>
+  <tr>
+    <td><%= idea_deal.idea %></td>
+    <td><%= idea_deal.deal %></td>
+    <td><%= link_to 'Show', idea_deal %></td>
+    <td><%= link_to 'Edit', edit_idea_deal_path(idea_deal) %></td>
+    <td><%= link_to 'Destroy', idea_deal, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Idea deal', new_idea_deal_path %>

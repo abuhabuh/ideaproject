@@ -1,0 +1,12 @@
+<% deal = Deal.find(@idea_deal.deal_id) %>
+
+$(document).ready( function (){
+
+  $('.<%=ID_TAG_DEAL_ITEM_ACTION_BUTTON + @idea_deal.deal_id.to_s%>').html('Added');
+
+  $('#<%=ID_TAG_IDEA_DEALS_LIST_CONTAINER%>').append("<%=escape_javascript(
+        render :partial => 'deals/deal_element', :locals => {:deal => deal}
+  )%>");
+
+});
+

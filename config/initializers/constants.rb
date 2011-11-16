@@ -59,7 +59,6 @@ ID_TAG_IDEA_USER = "AJAX_idea_user_" # Identifies users that are in left_nav use
 ID_TAG_IDEA_CHAT_INPUT_AREA = 'AJAX_idea_chat_input_area'
 ID_TAG_IDEA_CHAT_USER_LIST = 'AJAX_idea_chat_user_list'
 
-
 ID_TAG_CHAT_USER_JOINED_STRING = 'Joined'
 ID_TAG_CHAT_USER_VIEWING_STRING = 'Viewing'
 
@@ -69,6 +68,10 @@ ID_TAG_CHAT_USER_VIEWING_STRING = 'Viewing'
 ID_TAG_HOME_AUTH_PAGE = "AJAX_home_auth_page_id"
 ID_TAG_IDEA_VIEW_PAGE = "AJAX_idea_view_page_id"
 
+#   Deal markers
+ID_TAG_IDEA_DEALS_LIST_CONTAINER = 'AJAX_idea_deals_list_container'
+ID_TAG_DEAL_ITEM = 'AJAX_deal_item_' #append deal id
+ID_TAG_DEAL_ITEM_ACTION_BUTTON = 'AJAX_deal_item_action_button_' #append deal id
 
 
 ##########################################
@@ -88,3 +91,4 @@ BUTTON_CHAT_IDEA = "Go Chat!"
 # Search functionality constants
 ##########################################
 AUTH_HOME_IDEAS_PER_PAGE = 10
+DEALS_PER_PAGE = 8

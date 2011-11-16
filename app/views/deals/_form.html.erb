@@ -1,0 +1,96 @@
+<!--
+  USAGE
+    - This form submits remotely via AJAX to deal controller
+  INPUT
+    - idea_id: id of the idea that this deal is to be associated with. If this is specified, then controller
+      will create a idea_deal as well as a deal object so that the deal will be associated with an idea. 
+      This does not have to be specified, and the deal can just be created without association to an idea.
+
+      - CREATE DEAL WITHOUT ID: pass in idea_id of 0
+
+
+    # TODO: Cannot submit a file with AJAX so we are not allowing file uploads for deals right now
+    #         and only allowing URL file retrievals. 
+    #       Can follow tutorial using iframes and return_to_parent to do this in the future
+    #         - http://khamsouk.souvanlasy.com/articles/ajax-file-uploads-in-rails-using-attachment_fu-and-responds_to_parent
+    #
+-->
+
+<%= form_for @deal, :html => { :multipart => true } do |f| %>
+  <% if @deal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@deal.errors.count, "error") %> prohibited this deal from being saved:</h2>
+
+      <ul>
+      <% @deal.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% unless idea_id == 0 %>
+    <%= hidden_field_tag :idea_id, idea_id %>
+  <% end %>
+
+  <div class="photo">
+    <%= f.label :deal_photo, "Enter Image URL Link: "%><br />
+    <%=text_field_tag :internet_url_path, "" %><br/>
+  </div>  
+  <br/>
+  <fieldset>
+    <legend>Basic Info:</legend>
+
+    <div class="field">
+      <%= f.label :title, "Deal Title" %><br />
+      <%= f.text_field :title %>
+    </div>
+    <div class="field">
+      <%= f.label :price %><br />
+      <%= f.text_field :price %>
+    </div>
+    <div class="field">
+      <%= f.label :description %><br />
+      <%= f.text_field :description %>
+    </div>
+    <div class="field">
+      <%= f.label :purchase_link, "Purchase URL Link"%><br />
+      <%= f.text_field :purchase_link %>
+    </div>
+  </fieldset>
+  <br/>
+  
+  <div class="field">
+    <%= f.label :vendor_name %><br />
+    <%= f.text_field :vendor_name%><br/>
+  </div>
+  <div class="field">
+    <%= f.label :location, "Vendor Location" %><br />
+    <%= f.text_field :location%><br/>
+  </div>  
+  
+  <div class="field">
+    <%= f.label :original_price %><br />
+    <%= f.text_field :original_price %>
+  </div>
+
+  <div class="field">
+    <%= f.label :percent_off %><br />
+    <%= f.text_field :percent_off %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :start_date %><br />
+    <%= f.date_select :start_date %>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %><br />
+    <%= f.date_select :end_date %>
+  </div>
+  
+  <br/>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

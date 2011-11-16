@@ -6,7 +6,7 @@
                           {:method => 'get'} %>
   </div>
   <div class='user-row-text'>
-    <%= link_to user.user_name ,
+    <%= link_to (user.first_name + " " + user.last_name) ,
                 user_path(user.id),
                 {:method => 'get'} %>
   </div>

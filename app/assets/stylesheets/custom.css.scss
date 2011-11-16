@@ -12,106 +12,103 @@
  *   Text and background color definitions
  *   Define colors before any imports
  *************************************/
-
-$main-background-color: #F0F4F0;
-
-$magazine-block-bg-color: #D0C19D;
-$magazine-block-chat-msg-bg-color: #D6D5D1;
-$magazine-block-description-text-color: #513F24;
-$magazine-block-owner-name-text-color: black;
+@import "color_definitions";
 
 /*************************************
  * IMPORTS
  *************************************/
 @import "magazine_layout";
-
+@import "deals_layout";
+@import "tabs_layout";
 
   /***************************************
    * Shadow Scheme
    ***************************************/
-.unauth-content-container, .left-nav, .right-nav{
-  box-shadow: 2px 2px 5px #201C10; /* COLORS: DARK - 201C10, Light - C5AB84 */
+.content-container, .unauth-content-container, .left-nav, .right-nav{
+  box-shadow: 2px 2px 5px #201C10; 
 } 
 
 .main-header-full-width-container{
-  box-shadow: 10px 10px 20px #201C10; /* COLORS: DARK - 201C10, Light - C5AB84 */
+  box-shadow: 10px 10px 20px #201C10;
 }
+
   /***************************************
    * General elements
    ***************************************/
 
 a {
-  color: #503C28;
+  color: $default-a-link-color;
 }
 
 body {
-  color: #1C1814;  
-  background-color: $main-background-color; /* COLORS: DARK - 694629, Light - D8D5C9 */
+  color: $default-text-color;  
+  background-color: $main-background-color;
 }
 
   /***************************************
    * Header
    ***************************************/
-
 .main-header-full-width-container{
-  background-color: #BA966B; /* COLORS: DARK - 694629, Light - D8D5C9 */
+  background-color: $main-header-full-width-color;
 }
 
   /***************************************
    * Unauthenticated main page
    ***************************************/
+
 .unauth-content-container{
-  background-color: #CBBB9B;
+  background-color: $main-content-container-color;
 }
 
   /***************************************
    * Left Nav 
    ***************************************/
 
-div.left-nav{
-  background-color: #CBBB9B;
+.left-nav{
+  background-color: $left-nav-container-color;
 }
 
 .left-nav-main-link {
   color: white;
-  background-color: #be3c14; /* alt colors: 943E0F be3c14 */
+  background-color: #be3c14; 
 }
 
 .left-nav-list-item {
 }
 
-div.left-nav div.left-nav-main-link a {
+.left-nav .left-nav-main-link a {
   color: white;
 }
 
-div.left-nav a:hover {
+.left-nav a:hover {
 }
 
   /***************************************
    * Left Nav 
    ***************************************/
-div.right-nav{
-  background-color: #CBBB9B;
+.right-nav{
+  background-color: $right-nav-container-color;
 }
 
   /*************************************
    * Content
    *************************************/
-.content-search-container{
-  background-color: #CBBB9B;
+
+.stream-search-bar-container{
+  background-color: $main-content-container-color;
 }
 
-.content{
-  background-color: #CBBB9B;
+.content-container{
+  background-color: $main-content-container-color;
 }
 
 .content-title{
-  background-color: #943E0F;
+  background-color: $main-content-title-color;
   color: white;
 }
 
 .content-header{
-  background-color: #B58963;
+  background-color: $main-content-header-color;
 }
 
 .idea-stream-content-row{
@@ -121,21 +118,22 @@ div.right-nav{
   /*************************************
    * Link Definitions
    *************************************/
-.add-idea-link{
+   
+.button-styling-major{
   color: white;
   background-color: #be3c14;
 }
 
-.add-idea-link a{
+.button-styling-major a{
   color: white;
 }
 
-.chat-idea-button{
+.button-styling-minor{
   color: black;
   background-color: #B58963;
 }
 
-.chat-idea-button a{
+.button-styling-minor a{
   color: black;
 }
 
@@ -145,10 +143,6 @@ div.right-nav{
 .chat-board-container{
   background-color : #ffffff;
   color : #000000; 
-}
-
-.chat-message-send-button{
-  float: right;
 }
 
 .user-list-container{
@@ -173,9 +167,10 @@ div.right-nav{
  *
  *************************************
  *************************************/
- 
+
+/* to allow 100% height inheritance */
 html {
-  height: 100%; /* to allow 100% height inheritance */
+  height: 100%; 
 }
 
 body {
@@ -199,13 +194,14 @@ header{
 }
 
 /* Centering container to center all page content */
+
 .center-container{
   width: 900px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 85px;
   
-  height: 100%; /* needs to inherit down to child elements */
+  height: 100%; 
   
   border-style:solid;
   border-width: 0px;
@@ -241,6 +237,7 @@ header{
   
   z-index: 5;
 }
+
 /* centers header content into middle of page to coorespond with center-container div class */
 .header-center-container{
   width: 900px;
@@ -253,19 +250,18 @@ header{
   border-width: 0px;
 }
 
-div.left-nav {
+.left-nav {
   float: left;
   width: 20%;
   min-height: 300px;
   
-  /* top, right, bottom, left */
   padding: 1%;
   
   border-style:solid;
   border-width: 0px;
 }
 
-div.content{ /* TODO: rename to something else */
+.content-container{ 
   float: left;
 
   width: 55%;
@@ -277,10 +273,7 @@ div.content{ /* TODO: rename to something else */
   border-width: 0px;
 }
 
-/* TODO: not used right now. 
-  - use for deal stream on main auth page, completed events on ideas page, etc
-  */
-div.right-nav {
+.right-nav {
   float: left;
 
   width: 15%;
@@ -291,7 +284,6 @@ div.right-nav {
   border-style:solid;
   border-width: 0px;
 }
-
 
 
 
@@ -437,7 +429,7 @@ nav.main-authentication ul li a:hover {
 .chat-board-container{
   border: solid 2px #adadad;
 
-  height: 220px;
+  height: 200px;
   padding: 4px; 
   
   overflow: auto;
@@ -549,11 +541,11 @@ nav.main-authentication ul li a:hover {
   padding: 2px 4px;
 }
 
-div.left-nav div.left-nav-main-link a {
+.left-nav .left-nav-main-link a {
   text-decoration: none;
 }
 
-div.left-nav a:hover {
+.left-nav a:hover {
   text-decoration: underline;
 }
 
@@ -694,9 +686,23 @@ div.left-nav a:hover {
  *************************************
  *************************************/
 
-.add-idea-link{
-  float: left;
+.button-float-right{
+  float: right;
+  margin-left: 10px;
   
+  border-style: solid;
+  border-width: 0px;
+}
+
+.button-float-left{
+  float: left;
+  margin-right: 10px;
+  
+  border-style: solid;
+  border-width: 0px;
+}
+
+.button-styling-major .button-styling-minor{
   margin: 5px 0px;
   padding: 2px;
   
@@ -706,24 +712,14 @@ div.left-nav a:hover {
   /*box-shadow: -2px -2px 2px rgba(0,0,0,.25) inset, 2px 2px 2px white inset;*/
 }
 
-.add-idea-link a {
+.button-styling-major a {
   text-decoration: none;
+  font-size: 12px;
 }
 
-.chat-idea-button{
-  float: left;
-  
-  margin: 5px 0px;
-  padding: 2px;
-  
+.button-styling-minor a {
   text-decoration: none;
-  
-  /* bevel'd button */
-  /*box-shadow: -2px -2px 2px rgba(0,0,0,.25) inset, 2px 2px 2px white inset;*/
-}
-
-.chat-idea-button a {
-  text-decoration: none;
+  font-size: 12px;  
 }
 
 
@@ -802,7 +798,7 @@ p.alert{
 
 
 
-.content-search-container{
+.stream-search-bar-container{
   float: left;
 
   width: 100%;
@@ -813,7 +809,7 @@ p.alert{
   border-width: 0px;
 }
 
-.content-search-field-and-button{
+.stream-search-field-and-button{
   float: left;
 }
 

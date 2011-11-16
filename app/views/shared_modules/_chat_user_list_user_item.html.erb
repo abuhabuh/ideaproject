@@ -15,7 +15,7 @@
                               {:method => 'get'} %>
           </div>
           <div class='chat-board-user-item-text'>
-            <%= link_to user.user_name, user_path(user.id), {:method => 'get'} %><br />
+            <%= link_to user.first_name, user_path(user.id), {:method => 'get'} %><br />
             <% if is_online %>
               <span id="<%=ID_TAG_IDEA_USER + user.id.to_s%>" class='chat-board-user-item-status-online'><%=status_string%></span>
             <% else %>

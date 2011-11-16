@@ -12,6 +12,9 @@ class Idea < ActiveRecord::Base
   has_many :chat_messages
   # TODO: should add has_many :users, :through => :chat_messages ????
 
+  has_many :idea_deals
+  has_many :deals, :through => :idea_deals
+
   has_attached_file :photo, {:default_url => '/images/ideas/:style/idea_default.jpg', 
                              :styles => {
                                :medium => "450x300#",

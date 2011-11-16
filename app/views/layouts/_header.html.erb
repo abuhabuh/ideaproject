@@ -79,4 +79,17 @@
     </div>
   </div>
 
+  <!-- AJAX picks up DIV ids to insert proper notices -->
+  <div id='flash-notice-div'>
+    <% if flash[:notice] %>
+      <%= render :partial => "layouts/flash_notice" %>
+    <% end %>
+  </div>
+  <div id='flash-alert-div'>
+    <% if flash[:alert] %>
+      <%= render :partial => "layouts/flash_alert" %>
+    <% end %>
+  </div>
+  <!-- or flash.each do |key, msg| -->
+
 </header>

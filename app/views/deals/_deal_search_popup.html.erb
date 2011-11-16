@@ -1,0 +1,45 @@
+<!-- USAGE
+    INPUTS
+    - idea_id - id of the idea this search popup is rendering on
+-->
+
+<!-- TODO: need to validate field for not empty -->
+
+<div class='deal-search-input-bar-section'>
+  <%= form_tag deals_path, :class => 'deals_search_form', :method => 'get' do %>
+    <%= text_field_tag :search_text, "", :size => 30 %>
+    <%= hidden_field_tag :idea_id, idea_id %>
+    <div class="button-float-right">
+      <%= submit_tag "Search" %>
+    </div>
+  <% end %>
+</div>
+
+<div class='deal-search-title-container'>
+  <div class='deal-search-result-creator'>
+    Created By
+  </div>
+  <div class='deal-search-result-title'>
+    Deal
+  </div>
+  <div class='deal-search-result-vendor'>
+    Vendor
+  </div>
+  <div class='deal-search-result-price'>
+    Price
+  </div>
+</div>
+
+
+<div class='deal-search-results-section'>
+
+</div>
+
+<div class='deals_search_previous_link hidden-div'> 
+  prev
+</div>
+
+<div class='deals_search_next_link hidden-div'> 
+  next
+</div>
+

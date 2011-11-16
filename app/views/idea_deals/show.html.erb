@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Idea:</b>
+  <%= @idea_deal.idea %>
+</p>
+
+<p>
+  <b>Deal:</b>
+  <%= @idea_deal.deal %>
+</p>
+
+
+<%= link_to 'Edit', edit_idea_deal_path(@idea_deal) %> |
+<%= link_to 'Back', idea_deals_path %>

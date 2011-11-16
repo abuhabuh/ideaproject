@@ -1,18 +1,18 @@
 IdeaApp::Application.routes.draw do
  
+  resources :vendors
+
+  resources :idea_deals
+
+  resources :deals
+
   resources :admin_messages
 
   resources :chat_messages
 
-  resources :idea_events
-
   resources :friendships
 
-  resources :user_events
-
   resources :user_ideas
-
-  resources :events
 
   resources :ideas
 
@@ -53,7 +53,6 @@ IdeaApp::Application.routes.draw do
         :as => :featured_idea_admin, :via => "GET"
   match "idea/feature_idea", :to => "ideas#feature_idea", \
         :as => :feature_idea, :via => 'POST'
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

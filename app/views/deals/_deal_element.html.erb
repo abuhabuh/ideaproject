@@ -1,0 +1,51 @@
+<!-- USAGE
+
+    INPUT
+    - deal: the deal object we want to render
+
+    attr_accessible :title, :description, :purchase_link, :price, :start_date, :end_date, :deal_photo
+-->
+
+<div class='deal-element-container'>
+
+  <div class='hidden-div' id='<%=ID_TAG_DEAL_ITEM + deal.id.to_s%>'>
+    <%=deal.id.to_s%>
+  </div>
+
+  <div class='deal-element-left-section'>
+    <div class='deal-element-title'>
+      <%= deal.title %>      
+    </div>
+    <div class='deal-element-left-section-text'>
+      <% creator_name = User.find(deal.user_id).user_name %>
+      Added by: <%= link_to creator_name, user_path(deal.user_id), {:method => 'get'} %> <br/>
+      Vendor: <%= deal.vendor_name %> <br/>
+    </div>
+    <div class='deal-element-make-event-button'>
+      <div class='button-float-left button-styling-major'>
+        <a href='#'>Make into Event</a>
+      </div>
+    </div>
+  </div>
+
+  <div class='deal-element-right-section'>
+    <div class='deal-element-photo'>
+      <%= image_tag(deal.deal_photo.url(:medium)) %>
+    </div>
+
+    <div class='deal-element-right-section-text'>
+      <%= number_to_currency(deal.price, :unit => "$") %>
+      <br/>
+      <% unless deal.percent_off.nil? %>
+        <%= number_to_percentage(deal.percent_off, :precision => 0)%> off
+      <% end %>
+      <br/>
+      xx% Approve
+    </div>
+  </div>
+
+</div>
+
+
+
+

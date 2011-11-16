@@ -18,7 +18,7 @@
                 <% end %>
               </div>
               <div class='idea-row-text'>
-                <%= idea_owner.user_name%>:<br/>
+                <%=idea_owner.first_name + " " + idea_owner.last_name%>:<br/>
                 <span class='idea-text'><%= idea_item.text%></span>
               </div>
               <div class='idea-row-misc'>
@@ -44,7 +44,7 @@
                 <% end %>
               </div>
               <div class='idea-row-text'>
-                <%= idea_owner.user_name%>:<br/>
+                <%=idea_owner.first_name + " " + idea_owner.last_name%>:<br/>
                 <span class='idea-text'><%= link_to idea_item.text,
                               idea_path(idea_item.id),
                               {:method => 'get'} %></span>

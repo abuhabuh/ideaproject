@@ -19,6 +19,7 @@ class IdeasController < ApplicationController
     @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
     @idea_chat_msgs = @idea.chat_messages.order("id ASC")
     @has_idea = false;
+    @idea_deals = @idea.deals
     if current_user.ideas.exists?(@idea.id)
       @has_idea = true;
     end
@@ -74,6 +75,8 @@ class IdeasController < ApplicationController
     
     unless params[:internet_url_path].empty?
       @idea.set_photo_from_url(params[:internet_url_path])
+    else
+      @idea.photo = params[:idea][:photo]
     end
     @idea.text = params[:idea][:text]
 
@@ -112,6 +115,7 @@ class IdeasController < ApplicationController
   
     respond_to do |format|
       # JS is the only format that this function should be called as
+      # TODO: Calling function should be passing JS argument instead of HTML argument?
       format.js {
         render "idea_chat_user_js.js.erb" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
       }

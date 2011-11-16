@@ -1,0 +1,2 @@
+module IdeaDealsHelper
+end

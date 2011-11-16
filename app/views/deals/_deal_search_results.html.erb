@@ -1,0 +1,35 @@
+<% if @deals.count == 0 %>
+  No results found :(
+  <div class='deals_search_results_current_page hidden-div'><%=current_page%></div>
+  <div class='deals_search_results_max_page hidden-div'><%=num_total_pages%></div>
+<% else %>
+
+  <% @deals.each do |deal| %>
+
+    <div class='deal-search-result-container'>
+      <div class='deal-search-result-creator'>
+        <%= User.find(deal.user_id).user_name %>
+      </div>
+      <div class='deal-search-result-title'>
+        <%=deal.title%>&nbsp;
+      </div>
+      <div class='deal-search-result-vendor'>
+        <%=deal.vendor_name%>&nbsp;
+      </div>
+      <div class='deal-search-result-price'>
+        <%= number_to_currency(deal.price, :unit => "$") %>&nbsp;
+      </div>
+      <div class='deal-search-result-action <%=ID_TAG_DEAL_ITEM_ACTION_BUTTON + deal.id.to_s%>'>
+        <% unless @idea_deal_ids.include?(deal.id) %>
+          <a href='#'>Add Deal</a>
+        <% else %>
+          Added
+        <% end %>
+        <div class='deal_id_from_search hidden-div'><%=deal.id.to_s%></div>
+      </div>
+    </div>  
+  <% end %>
+  <div class='deals_search_results_current_page hidden-div'><%=current_page%></div>
+  <div class='deals_search_results_max_page hidden-div'><%=num_total_pages%></div>
+<% end %>    
+

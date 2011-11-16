@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111111163859) do
+ActiveRecord::Schema.define(:version => 20111114181600) do
 
   create_table "admin_messages", :force => true do |t|
     t.string   "text"
@@ -33,20 +33,27 @@ ActiveRecord::Schema.define(:version => 20111111163859) do
   add_index "chat_messages", ["idea_id"], :name => "index_chat_messages_on_idea_id"
   add_index "chat_messages", ["user_id"], :name => "index_chat_messages_on_user_id"
 
-  create_table "events", :force => true do |t|
-    t.string   "name"
+  create_table "deals", :force => true do |t|
+    t.string   "title"
     t.string   "description"
-    t.date     "date"
+    t.string   "vendor_name"
     t.string   "location"
+    t.string   "purchase_link"
+    t.decimal  "price",                   :precision => 9, :scale => 2
+    t.decimal  "original_price",          :precision => 9, :scale => 2
+    t.decimal  "percent_off",             :precision => 4, :scale => 2
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-    t.integer  "creator"
-    t.integer  "num_users_joined"
+    t.string   "deal_photo_file_name"
+    t.string   "deal_photo_content_type"
+    t.integer  "deal_photo_file_size"
+    t.datetime "deal_photo_updated_at"
   end
+
+  add_index "deals", ["user_id"], :name => "index_deals_on_user_id"
 
   create_table "friendships", :force => true do |t|
     t.integer  "user_id"
@@ -59,16 +66,15 @@ ActiveRecord::Schema.define(:version => 20111111163859) do
   add_index "friendships", ["user_id", "friend_id"], :name => "index_friendships_on_user_id_and_friend_id", :unique => true
   add_index "friendships", ["user_id"], :name => "index_friendships_on_user_id"
 
-  create_table "idea_events", :force => true do |t|
-    t.string   "progress"
+  create_table "idea_deals", :force => true do |t|
     t.integer  "idea_id"
-    t.integer  "event_id"
+    t.integer  "deal_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "idea_events", ["event_id"], :name => "index_idea_events_on_event_id"
-  add_index "idea_events", ["idea_id"], :name => "index_idea_events_on_idea_id"
+  add_index "idea_deals", ["deal_id"], :name => "index_idea_deals_on_deal_id"
+  add_index "idea_deals", ["idea_id"], :name => "index_idea_deals_on_idea_id"
 
   create_table "ideas", :force => true do |t|
     t.string   "text"
@@ -91,18 +97,6 @@ ActiveRecord::Schema.define(:version => 20111111163859) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "user_events", :force => true do |t|
-    t.boolean  "admin_flag"
-    t.boolean  "invited"
-    t.integer  "user_id"
-    t.integer  "event_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_events", ["event_id"], :name => "index_user_events_on_event_id"
-  add_index "user_events", ["user_id"], :name => "index_user_events_on_user_id"
 
   create_table "user_ideas", :force => true do |t|
     t.boolean  "invited"
@@ -149,16 +143,15 @@ ActiveRecord::Schema.define(:version => 20111111163859) do
   add_foreign_key "chat_messages", "ideas", :name => "chat_messages_idea_id_fk"
   add_foreign_key "chat_messages", "users", :name => "chat_messages_user_id_fk"
 
+  add_foreign_key "deals", "users", :name => "deals_user_id_fk"
+
   add_foreign_key "friendships", "users", :name => "friendships_friend_id_fk", :column => "friend_id"
   add_foreign_key "friendships", "users", :name => "friendships_user_id_fk"
 
-  add_foreign_key "idea_events", "events", :name => "idea_events_event_id_fk"
-  add_foreign_key "idea_events", "ideas", :name => "idea_events_idea_id_fk"
+  add_foreign_key "idea_deals", "deals", :name => "idea_deals_deal_id_fk"
+  add_foreign_key "idea_deals", "ideas", :name => "idea_deals_idea_id_fk"
 
   add_foreign_key "user_auths", "users", :name => "user_auths_user_id_fk"
-
-  add_foreign_key "user_events", "events", :name => "user_events_event_id_fk"
-  add_foreign_key "user_events", "users", :name => "user_events_user_id_fk"
 
   add_foreign_key "user_ideas", "ideas", :name => "user_ideas_idea_id_fk"
   add_foreign_key "user_ideas", "users", :name => "user_ideas_user_id_fk"

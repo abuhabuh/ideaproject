@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  description: MyString
+  link: MyString
+  price: 9.99
+  start_date: 2011-11-13
+  end_date: 2011-11-13
+
+two:
+  title: MyString
+  description: MyString
+  link: MyString
+  price: 9.99
+  start_date: 2011-11-13
+  end_date: 2011-11-13

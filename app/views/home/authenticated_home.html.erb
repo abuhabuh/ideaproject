@@ -62,7 +62,7 @@
             $.ajax({
                 url: "<%=next_ideas_batch_js_path%>", 
                 data: {page: page_num, idea: idea_string}, 
-                dataType: 'html',
+                dataType: 'html', // TODO: fix this
                 success: function(returned_html){
 
                   var $newElems = $( returned_html );
@@ -75,7 +75,7 @@
                     $("#AJAX_page_num_store").html(String(page_num)); // increment pages processed if results came back
                   }
                 }//,
-                //error: function(msg){ // remove this for live deploy
+                //error: function(msg){ // TODO: remove this for live deploy
                 //  alert(msg);
                 //}
               });
@@ -98,9 +98,9 @@
 <!-- Main Body for side menu, stream, and suggestion block -->
 
 
-<div class='content-search-container'>
+<div class='stream-search-bar-container'>
 
-  <div class='content-search-field-and-button'>
+  <div class='stream-search-field-and-button'>
     <%= form_tag authenticated_home_path, :method => :get do %>
       <% if params[:search].blank? %>
         <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
@@ -113,18 +113,6 @@
     <% end %>
   </div>
   
-    <!-- AJAX picks up DIV ids to insert proper notices -->
-  <div id='flash-notice-div'>
-    <% if flash[:notice] %>
-      <%= render :partial => "layouts/flash_notice" %>
-    <% end %>
-  </div>
-  <div id='flash-alert-div'>
-    <% if flash[:alert] %>
-      <%= render :partial => "layouts/flash_alert" %>
-    <% end %>
-  </div>
-  <!-- or flash.each do |key, msg| -->
 </div>
 
 

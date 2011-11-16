@@ -1,0 +1,196 @@
+@import "color_definitions";
+
+
+/******************************
+ * Deals view list definitions
+ ******************************/
+.deals-list-container{ 
+  float: left;
+  
+  width: 100%;
+  height: 200px;
+  
+  margin: 10px 0px;
+ 
+  border-style: solid;
+  border-width: 1px;
+  border-color: #AA7047;
+  
+  overflow: auto;
+}
+
+.deal-element-container{
+  float: left;
+  
+  background-color: #DAD5C1;
+  
+  width: 220px;
+  
+  margin-right: 10px;
+  margin-bottom: 15px;
+  padding: 3px;
+  
+  font-size: 12px;
+  
+  border-style: solid;
+  border-width: 0px;
+}
+
+.deal-element-left-section{
+  float: left;
+
+  margin-right: 1%;
+
+  width: 59%;
+}
+
+  .deal-element-title{
+    float: left;
+    
+    width: 100%;
+  }
+
+  .deal-element-left-section-text{
+    float: left;
+    width: 63%;
+  }
+
+  .deal-element-left-section-text a{
+    text-decoration: none;
+  }
+
+.deal-element-right-section{
+  float: right;
+  
+  margin-left: 1%;
+  
+  width: 38%;
+}
+
+  .deal-element-photo{
+    float: right;
+
+    width: 100%;
+    height: 50px;
+    
+    /* top right bottom left*/
+    margin: 1% 1% 1% 0%;
+  }
+
+  .deal-element-photo img{
+    float: right;
+    
+    max-height:100%; 
+    max-width:100%;
+  }
+
+  .deal-element-right-section-text{
+    float: right;
+
+    text-align: right;
+
+    width: 100%;  
+  }
+
+.deal-element-make-event-button{
+  float: left;
+
+  width: 100%;
+
+  margin-top: 5px;
+}
+
+
+/******************************
+ * Add Deal Menu Bar definitions
+ ******************************/
+.add-deal-menu-bar-container{
+  float: left;
+  width: 100%;
+  
+  margin-bottom: 10px;
+}
+
+.add-deal-menu-bar-item{
+  float: left;
+
+  width: 42%;
+  margin: 0% 4%;
+  
+  text-align: center;
+}
+
+
+/******************************
+ * Deals search definitions
+ ******************************/
+.deal-search-input-bar-section{
+  float: left;
+
+  width: 100%;
+}
+
+.deal-search-title-container{
+  float: left;
+ 
+  margin: 10px 0px;
+  
+  font-size: 12px;
+
+  background-color: $main-content-header-color;
+
+  width: 100%;
+}
+
+.deal-search-results-section{
+  float: left;
+  
+  margin: 5px 0px;
+  
+  font-size: 12px;
+    
+  width: 100%;
+}
+
+  .deal-search-result-container{ /* search result row */
+    float: left;
+   
+    margin: 5px 0px;
+    
+    width: 100%;
+  }
+
+    .deal-search-result-creator{
+      float: left;
+      width: 20%;
+    }
+
+    .deal-search-result-title{
+      float: left;
+      width: 25%;
+    }
+
+    .deal-search-result-vendor{
+      float: left;
+      width: 20%;
+    }
+
+    .deal-search-result-price{
+      float: left;
+      width: 20%;
+    }
+
+    .deal-search-result-action{
+      float: left;
+      width: 15%;
+    }
+
+.deals_search_previous_link{
+  float: left;
+  margin-top: 10px;
+}
+
+.deals_search_next_link{
+  float: right;
+  margin-top: 10px;
+}

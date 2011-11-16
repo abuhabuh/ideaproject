@@ -44,7 +44,7 @@
 <% end %>
 
 
-<div class='content'>
+<div class='content-container'>
 
   <!-- not using admin_messages/_admin_msg_item.html.erb anymore - ajax implications? -->
   <div class='content-section'>
@@ -63,7 +63,7 @@
 
       <%= f.text_field :text, :size=>"40" %>
 
-      <div class="chat-message-send-button">
+      <div class="button-float-right">
         <%= f.submit "Send" %>
       </div>
     <% end %>
