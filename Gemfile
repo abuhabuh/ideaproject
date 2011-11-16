@@ -89,4 +89,5 @@ end
 group :production do
   #gem 'omniauth-facebook','1.0.0.rc1'
   gem 'omniauth'
+  gem "omniauth-facebook"
 end
