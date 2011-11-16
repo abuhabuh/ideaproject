@@ -66,30 +66,6 @@
  *
  */
 
-jQuery(document).ready(function($) {
-  $('a[rel*=facebox]').facebox()
-  //find_hidden($);  
-});
-
-function find_hidden($){
-      $('.infinite-find')
-        .unbind('click')
-        .bind('click', function() {
-          var glink = $(this).attr('href');
-          //if glink match #, then we say it's div, otherwise, it's an external page.
-          //of course, you may make this smarter as you need.
-          if(glink.match(/^#/)){
-                jQuery.facebox({div: glink});
-          }else{
-            $.facebox({ajax: glink});
-            //$(this).facebox()
-          }
-          find_hidden();
-          return false;
-        });
-    }
-
-
 (function($) {
   $.facebox = function(data, klass) {
     $.facebox.loading(data.settings || [])
