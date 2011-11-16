@@ -34,9 +34,8 @@ gem 'sunspot_rails'
 gem 'will_paginate'
 
 # Facebook auth gem
-#gem 'omniauth-facebook','1.0.0.rc1'
-#gem 'omniauth'
-gem "oa-oauth", :require => "omniauth/oauth"
+#   - moved to environment specific section at bottom of gemfile
+
 
 # TEST GEM INSTALL <BEGIN>
 #group :development do
@@ -81,4 +80,13 @@ gem 'jquery-rails'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+end
+
+group :development do
+  gem "oa-oauth", :require => "omniauth/oauth"
+end
+
+group :production do
+  #gem 'omniauth-facebook','1.0.0.rc1'
+  gem 'omniauth'
 end
