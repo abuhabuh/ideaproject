@@ -115,9 +115,17 @@ class User < ActiveRecord::Base
   end
   
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil, provider)
+    puts "!!!!!!!!!!!! in find_for facebook"
+
     data = access_token['extra']['user_hash']
 
     user = User.joins(:user_auths).where('user_auths.provider' => provider, 'user_auths.provider_id' => data['id']).readonly(false).first
+
+  
+    puts "!!!!!!!!!!! user hash: "
+    puts "email: " + data["email"]
+    puts "firsrt_name:" + data["first_name"]
+
 
     if user.nil?
       user = User.create!(:email => data["email"], :first_name => data["first_name"], :last_name => data["last_name"],
