@@ -126,14 +126,24 @@ class User < ActiveRecord::Base
       user = User.create!(:email => primary_user_data["email"], 
                           :first_name => primary_user_data["first_name"], 
                           :last_name => primary_user_data["last_name"],
-                          :user_name => primary_user_data["first_name"], :password => Devise.friendly_token[0,20], 
-                          :profile_pic_file_name => primary_user_data['image']) 
+                          :user_name => primary_user_data["first_name"], 
+                          :password => Devise.friendly_token[0,20], 
+                          :profile_pic_file_name => primary_user_data['image'].sub('=square', '=normal')
+                          ) 
       UserAuth.create(:token => access_token['credentials']['token'], 
                       :provider_id => primary_user_data['id'], 
                       :provider => provider, 
-                      :user_id => user.id)
+                      :user_id => user.id
+                      )
     end
     return user;
   end
+
+  # overriding Devise password functionality
+  def update_with_password(params={})
+    params.delete(:current_password)
+    self.update_without_password(params)
+  end	
+
 
 end

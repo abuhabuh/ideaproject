@@ -1,9 +1,7 @@
 <div class='user-stream-content-row' id=<%= "'" + ID_TAG_USER_LIST_USER_ROW + user.id.to_s + "'" %> >
 
   <div class='user-row-picture'>
-    <%= link_to image_tag(user.profile_pic.url(:stream)),
-                          user_path(user.id),
-                          {:method => 'get'} %>
+    <%= render :partial => '/users/profile_pic', :locals => {:current_user => user, :path => user_path(user.id), :makelink => true} %>
   </div>
   <div class='user-row-text'>
     <%= link_to (user.first_name + " " + user.last_name) ,

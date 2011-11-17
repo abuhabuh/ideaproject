@@ -16,7 +16,7 @@ IdeaApp::Application.routes.draw do
 
   resources :ideas
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks"}
 
   get "home/index"
   root :to => "home#index"

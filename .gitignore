@@ -8,3 +8,5 @@ doc/
 tmp/
 public/system/
 solr/data
+*~
+*.swp

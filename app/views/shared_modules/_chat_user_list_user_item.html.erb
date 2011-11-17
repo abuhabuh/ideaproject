@@ -10,9 +10,8 @@
           
         <div class='chat-board-user-item'>
           <div class='chat-board-user-item-image'>
-            <%= link_to image_tag(user.profile_pic.url(:chat)),
-                              user_path(user.id),
-                              {:method => 'get'} %>
+            <%= render :partial => '/users/profile_pic', :locals => {:current_user => user, :path => user_path(user.id), :makelink => true} %>
+
           </div>
           <div class='chat-board-user-item-text'>
             <%= link_to user.first_name, user_path(user.id), {:method => 'get'} %><br />

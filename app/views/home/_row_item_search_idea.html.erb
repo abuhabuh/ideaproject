@@ -12,7 +12,8 @@
             <div class='idea-stream-content-row'>
               <div class='idea-row-picture'>
                 <% if pic_display_mode == PIC_VIEW_TYPE_USER %>
-                  <%= image_tag(idea_owner.profile_pic.url(:stream))%>
+                  <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :makelink => false} %>
+
                 <% elsif pic_display_mode == PIC_VIEW_TYPE_IDEA %>
                   <%= image_tag(idea_item.photo.url(:stream))%>
                 <% end %>
@@ -34,9 +35,7 @@
             <div class='idea-stream-content-row'>
               <div class='idea-row-picture'>
                 <% if pic_display_mode == PIC_VIEW_TYPE_USER %>
-                  <%= link_to image_tag(idea_owner.profile_pic.url(:stream)),
-                                user_path(idea_owner.id),
-                                {:method => 'get'} %>
+                  <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :path => user_path(idea_owner.id), :makelink => true} %>
                 <% elsif pic_display_mode == PIC_VIEW_TYPE_IDEA %>
                   <%= link_to image_tag(idea_item.photo.url(:stream)),
                                 idea_path(idea_item.id),
