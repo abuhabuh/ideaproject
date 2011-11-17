@@ -16,6 +16,7 @@ class DealsController < ApplicationController
     current_page = params[:search_page_num].to_i || 1 # input should always be the right number but || 1 is safety
     search_object = search_deals(params[:search_text], current_page, DEALS_PER_PAGE) # TODO: results per page
     num_total_pages = 1 # init variable to default
+    
     if search_object.total % DEALS_PER_PAGE > 0
       num_total_pages = search_object.total/DEALS_PER_PAGE + 1
     else

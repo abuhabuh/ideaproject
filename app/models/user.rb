@@ -115,15 +115,7 @@ class User < ActiveRecord::Base
   end
   
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil, provider)
-    puts "!!!!!!!!!!!! in find_for facebook"
-
     primary_user_data = access_token['info']
-
-    puts "!!!!!!!!!!! user hash: "
-    puts "email: " + primary_user_data["email"]
-    puts "firsrt_name:" + primary_user_data["first_name"]
-    puts "  xx provider: " + provider
-    puts "  provider id: " + access_token['uid']
 
     user = User.joins(:user_auths) # TODO: Why is this a User.joins(:user_auths) and not just a UserAuth.where(...)
                .where('user_auths.provider' => provider, 'user_auths.provider_id' => access_token['uid'])
@@ -140,10 +132,8 @@ class User < ActiveRecord::Base
                       :provider_id => primary_user_data['id'], 
                       :provider => provider, 
                       :user_id => user.id)
-      
     end
     return user;
   end
-
 
 end
