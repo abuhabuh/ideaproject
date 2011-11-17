@@ -168,9 +168,9 @@
 					  member_online(member.id);
 					} else {
 						$.ajax({
-                url: "<%=idea_chat_user_js_path%>", 
+                url: "<%=idea_chat_user_path%>", 
                 data: {user_id : member.id, user_status : "<%=ID_TAG_CHAT_USER_VIEWING_STRING%>"}, 
-                dataType: 'script',
+                dataType: 'html',
                 success: function(returned_html){ // TODO: fix this
                   $("#<%=ID_TAG_IDEA_CHAT_USER_LIST%>").append(returned_html);
                 },
@@ -193,10 +193,10 @@
 				  member_online(member.id);
 				} else {
 				  $.ajax({
-                url: "<%=idea_chat_user_js_path%>", 
+                url: "<%=idea_chat_user_path%>", 
                 data: {user_id : member.id, user_status : "<%=ID_TAG_CHAT_USER_VIEWING_STRING%>"}, 
                 dataType: 'html',
-                success: function(returned_html){ // TODO: fix this
+                success: function(returned_html){
                   $("#<%=ID_TAG_IDEA_CHAT_USER_LIST%>").prepend(returned_html);
                 },
                 error: function(msg){ // remove this for live deploy

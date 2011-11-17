@@ -43,7 +43,7 @@ class UserIdeasController < ApplicationController
     @user_idea = UserIdea.new(params[:user_idea])
 
     respond_to do |format|
-      if @user_idea.save
+      if @user_idea.save!
         format.html { redirect_to @user_idea, notice: 'User idea was successfully created.' }
         format.json { render json: @user_idea, status: :created, location: @user_idea }
       else
@@ -77,7 +77,7 @@ class UserIdeasController < ApplicationController
     # Decrement user_sharing count for main idea object
     @idea = @user_idea.idea
     @idea.num_users_joined = @idea.num_users_joined - 1
-    unless @idea.save()
+    unless @idea.save!
       # TODO: catch save error
       puts " TRACE: UserIdeasController:Destroy - @idea save unsuccessful"
     end

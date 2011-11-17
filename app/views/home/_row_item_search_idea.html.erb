@@ -50,6 +50,9 @@
                 <% unless @user_idea_ids.include?(idea_item.id.to_s) %>
                   <%= render :partial => "home/idea_action_add",
                              :locals => {:idea_id => idea_item.id} %>
+                <% else %>
+                  <%= render :partial => "home/idea_action_chat",
+                             :locals => {:idea_id => idea_item.id} %>
                 <% end %>
               </div>
               <div class='idea-row-misc'>

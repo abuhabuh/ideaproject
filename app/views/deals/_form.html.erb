@@ -42,27 +42,27 @@
     <legend>Basic Info:</legend>
 
     <div class="field">
-      <%= f.label :title, "Deal Title" %><br />
+      <%= f.label :title, "Deal Title*" %><br />
       <%= f.text_field :title %>
     </div>
     <div class="field">
-      <%= f.label :price %><br />
+      <%= f.label :price, "Price*" %><br />
       <%= f.text_field :price %>
     </div>
     <div class="field">
-      <%= f.label :description %><br />
+      <%= f.label :description, "Description*" %><br />
       <%= f.text_field :description %>
     </div>
     <div class="field">
-      <%= f.label :purchase_link, "Purchase URL Link"%><br />
-      <%= f.text_field :purchase_link %>
+      <%= f.label :vendor_name, "Vendor Name*" %><br />
+      <%= f.text_field :vendor_name%><br/>
     </div>
   </fieldset>
   <br/>
   
   <div class="field">
-    <%= f.label :vendor_name %><br />
-    <%= f.text_field :vendor_name%><br/>
+    <%= f.label :purchase_link, "Purchase URL Link"%><br />
+    <%= f.text_field :purchase_link %>
   </div>
   <div class="field">
     <%= f.label :location, "Vendor Location" %><br />

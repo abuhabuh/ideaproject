@@ -18,6 +18,9 @@
                 <% unless @user_idea_ids.include?(friend_idea_query_item.idea_id.to_s) %>
                   <%= render :partial => "home/idea_action_add",
                              :locals => {:idea_id => friend_idea_query_item.idea_id} %>
+                <% else %>
+                  <%= render :partial => "home/idea_action_chat",
+                             :locals => {:idea_id => friend_idea_query_item.id} %>
                 <% end %>
               </div>
               <div class='idea-row-misc'>

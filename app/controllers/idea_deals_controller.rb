@@ -52,7 +52,7 @@ class IdeaDealsController < ApplicationController
     end
 
     respond_to do |format|
-      if @idea_deal.save
+      if @idea_deal.save!
         format.html { redirect_to @idea_deal, notice: 'Idea deal was successfully created.' }
         #format.json { render json: @idea_deal, status: :created, location: @idea_deal }
         format.js

@@ -46,7 +46,7 @@ class FriendshipsController < ApplicationController
     @prev_page = params[:prev_page]
         
     # AJAX call will remove these notices
-    @friendship_save_successful = @friendship.save
+    @friendship_save_successful = @friendship.save!
     if @friendship_save_successful
       flash[:notice] = USER_ACTION_FRIENDSHIP_ADDED
     else

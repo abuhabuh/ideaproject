@@ -50,8 +50,7 @@ class HomeController < ApplicationController
     
     # Gets collections of user ideas, friends' ideas
     set_objs_to_render
-
-    puts " GETTING SEARCH RESULTS <auth home> - [" + params[:search].to_s + "]"
+    
     @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
 
     # Don't need to get this if we're doing PUBLIC or SEARCH views
@@ -62,29 +61,25 @@ class HomeController < ApplicationController
   end
 
 
-  # Renders JS for appending additional stream content to auth home stream
+  # Renders HTML return content for appending additional stream content to auth home stream
   # - works for friends ideas and search ideas
   # - need to have :page parameter is passed in and :stream_view is in session
-  # TODO: Call from jquery.ajax() data type is HTML, but still JS call so these js files that are rendered
-  #   are returning HTML. Make sure this is right
   def next_ideas_batch_js
     session[:page] = params[:page] # session[:page] written to hidden div to support ajax
 
-    # puts " ************ search text: " + params[:idea].to_s
-    # puts " ************ page # : " + params[:page].to_s
-
+    #puts " ************ search text: " + params[:idea].to_s
+    #puts " ************ page # : " + params[:page].to_s
 
     set_objs_to_render
 
     respond_to do |format|
-      # JS is the only format that this function should be called as
-      format.js {
+      format.html {
         if session[:stream_view] == STREAM_VIEW_FRIENDS
           @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-          render "next_friends_ideas_batch.js.erb" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
+          render :partial => "next_friends_ideas_batch" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
         else
           @search_result_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-          render "next_search_ideas_batch.js.erb" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
+          render :partial => "next_search_ideas_batch" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
         end
       }
     end
@@ -210,7 +205,11 @@ class HomeController < ApplicationController
   end
 
   def search_ideas(search_string, ideas_per_page, current_page)
-    
+    if search_string == INPUT_BOX_SEARCH_IDEAS
+      puts " blank out text"
+      search_string = ""
+    end
+
     page_number = 1    
     unless current_page.nil? || current_page.blank?
       page_number = current_page.to_i

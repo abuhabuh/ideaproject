@@ -2,7 +2,6 @@ require 'open-uri'
 
 
 class Idea < ActiveRecord::Base
-  
   has_many :user_ideas
   has_many :users, :through => :user_ideas
 
@@ -31,6 +30,7 @@ class Idea < ActiveRecord::Base
   end
   
   attr_accessible :text, :photo, :creator, :num_users_joined, :featured
+  validates_presence_of :text, :creator, :featured
 
 
   def set_photo_from_url(url)

@@ -1,9 +1,8 @@
 class UserIdea < ActiveRecord::Base
-
-  attr_accessible :text, :user_id, :idea_id
-
   belongs_to :user
   belongs_to :idea
 
-
+  attr_accessible :invited, :user_id, :idea_id
+  validates_presence_of :user_id, :idea_id
+  validates_inclusion_of :invited, :in => [true, false]
 end

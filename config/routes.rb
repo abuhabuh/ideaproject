@@ -1,7 +1,5 @@
 IdeaApp::Application.routes.draw do
  
-  resources :vendors
-
   resources :idea_deals
 
   resources :deals
@@ -47,8 +45,8 @@ IdeaApp::Application.routes.draw do
 	match "pusher/auth", :to => "pusher#auth", \
 				:as => :pusher_auth, :via => "POST"
 
-  match "idea/ideas_chat_user_js", :to => "ideas#idea_chat_user_js", \
-        :as => :idea_chat_user_js, :via => "GET"
+  match "idea/ideas_chat_user", :to => "ideas#idea_chat_user", \
+        :as => :idea_chat_user, :via => "GET"
   match "idea/featured_idea_admin", :to => "ideas#featured_idea_admin", \
         :as => :featured_idea_admin, :via => "GET"
   match "idea/feature_idea", :to => "ideas#feature_idea", \

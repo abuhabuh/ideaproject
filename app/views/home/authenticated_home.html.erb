@@ -30,10 +30,9 @@
       $container.imagesLoaded(function(){
         $container.masonry({
           itemSelector: '.magazine-stream-element-container',
-          isAnimated: false
+          isAnimated: false // sets animation
         });
       });
-
 
       // Auto loading ideas on scroll bottom functions
       // Detect scroll event down
@@ -55,14 +54,10 @@
             var page_num = parseInt($("#AJAX_page_num_store").html()) + 1;
             var idea_string = $("#search").val();
             
-            if (idea_string == $("#search_box_default_text").html()){
-              idea_string = "";
-            }
-
             $.ajax({
                 url: "<%=next_ideas_batch_js_path%>", 
                 data: {page: page_num, idea: idea_string}, 
-                dataType: 'html', // TODO: fix this
+                dataType: 'html',
                 success: function(returned_html){
 
                   var $newElems = $( returned_html );
@@ -93,11 +88,10 @@
 
 <!-- id tag to mark this as the AUTH HOME page for shared AJAX functions -->
 <div class='hidden-div' id='<%=ID_TAG_HOME_AUTH_PAGE%>'></div>
-<div class='hidden-div' id='search_box_default_text'><%=INPUT_BOX_SEARCH_IDEAS%></div> <!-- TODO: this is kinda hacky: JS above detects for this -->
+<div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
+
 
 <!-- Main Body for side menu, stream, and suggestion block -->
-
-
 <div class='stream-search-bar-container'>
 
   <div class='stream-search-field-and-button'>
@@ -116,7 +110,6 @@
 </div>
 
 
-<div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
 
 <div id='AJAX_main_stream_content'>    
 

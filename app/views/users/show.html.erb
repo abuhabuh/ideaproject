@@ -1,3 +1,6 @@
+<!-- id tag to mark this as the USER VIEW page for shared AJAX functions -->
+<div class='hidden-div' id='<%=ID_TAG_USER_VIEW_PAGE%>'></div>
+
 <div class='left-nav'>      
   <%= render :partial => '/users/profile_pic', :locals => {:current_user => @user, :makelink => false} %>
   <%= @user.user_name %>

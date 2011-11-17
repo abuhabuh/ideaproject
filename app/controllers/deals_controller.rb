@@ -1,6 +1,6 @@
 class DealsController < ApplicationController
-  # GET /deals
-  # GET /deals.json
+
+  # Returns HTML partial to AJAX calls. Purely designed for this purpose right now.
   def index
   
     idea = Idea.find(params[:idea_id])
@@ -31,7 +31,6 @@ class DealsController < ApplicationController
                            :locals => {:current_page => current_page, 
                                        :num_total_pages => num_total_pages}
                   }
-      #format.json { render json: @deals }
     end
     
   end
@@ -87,14 +86,13 @@ class DealsController < ApplicationController
     end
 
     respond_to do |format|
-      if @deal.save
-
+      if @deal.save!
         unless params[:idea_id] == 0
           @idea_deal = IdeaDeal.new
           @idea_deal.idea_id = params[:idea_id]
           @idea_deal.deal_id = @deal.id
           
-          unless @idea_deal.save 
+          unless @idea_deal.save!
             puts " TRACE: DealsController:create - save error on idea deal object"
           end
         end
@@ -104,6 +102,8 @@ class DealsController < ApplicationController
                                                                                   #render json  objects for everything
         format.js
       else
+        puts " TRACE: DealsController:create - save error on deal object"
+
         format.html { render action: "new" }
         # format.json { render json: @deal.errors, status: :unprocessable_entity }
       end

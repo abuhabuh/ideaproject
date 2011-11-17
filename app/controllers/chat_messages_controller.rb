@@ -43,7 +43,7 @@ class ChatMessagesController < ApplicationController
     @chat_message = ChatMessage.new(params[:chat_message])
     
     respond_to do |format|
-      if @chat_message.save
+      if @chat_message.save!
         format.html { redirect_to :back }
         #format.json { render json: @chat_message, status: :created, location: @chat_message }
         format.js

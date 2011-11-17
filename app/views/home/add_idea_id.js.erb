@@ -35,5 +35,15 @@ $(document).ready(function(){
   	$("#<%=ID_TAG_IDEA_EDIT_LINK%>").html("<%= escape_javascript(link_to 'edit idea', edit_idea_path(@idea), {:method => 'get'})%>");
 		
 	}
+	
+	// On user view page, mark the Idea buttons as idea added
+  if ($('#<%=ID_TAG_USER_VIEW_PAGE%>').length ) {
+    $(".<%=ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION + @idea.id.to_s%>").each(function(index) {
+      $(this).replaceWith("<%= escape_javascript(
+                                  render :partial => 'home/idea_action_chat', :locals => {:idea_id => @idea.id}
+                               )%>");
+    });
+	}
+
     
 });

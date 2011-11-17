@@ -58,7 +58,10 @@ class IdeasController < ApplicationController
     end 
 
     respond_to do |format|
-      if @idea.save
+      if @idea.save!
+      
+        UserIdea.create(:user_id => current_user.id, :idea_id => @idea.id, :invited => false) # TODO: catch database write error
+      
         format.html { redirect_to @idea, notice: 'Idea was successfully created.' }
         format.json { render json: @idea, status: :created, location: @idea }
       else
@@ -81,7 +84,7 @@ class IdeasController < ApplicationController
     @idea.text = params[:idea][:text]
 
     respond_to do |format|
-      if @idea.save
+      if @idea.save!
         format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
         format.json { head :ok }
       else
@@ -104,20 +107,18 @@ class IdeasController < ApplicationController
   end
   
   
-  # Renders JS return for appending additional user who joined to user chat list in left nav
+  # Returns HTML partial for appending additional user who joined to user chat list in left nav
   #   This only happens when the additional user is viewing the idea but has not joined the 
   #     idea. In this case, we ASSUME ONLINE STATUS IS TRUE, since triggered by channel
   #     event of user joining presence channel
-  def idea_chat_user_js
+  def idea_chat_user
     @user = User.find(params[:user_id])
     @status_string = params[:user_status]
     @is_online = true
   
     respond_to do |format|
-      # JS is the only format that this function should be called as
-      # TODO: Calling function should be passing JS argument instead of HTML argument?
-      format.js {
-        render "idea_chat_user_js.js.erb" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
+      format.html {
+        render :partial => "idea_chat_user" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
       }
     end
 
@@ -140,7 +141,7 @@ class IdeasController < ApplicationController
     @idea = Idea.find(params[:idea_id])
     @idea.featured = params[:feature_num]
     
-    unless @idea.save
+    unless @idea.save!
       puts " TRACE: IdeasController:feature_idea - idea save error"
     end
   

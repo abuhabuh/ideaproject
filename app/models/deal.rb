@@ -1,7 +1,6 @@
 require 'open-uri'
 
 class Deal < ActiveRecord::Base
-
   has_many :idea_deals
   has_many :ideas, :through => :idea_deals
 
@@ -28,6 +27,7 @@ class Deal < ActiveRecord::Base
   attr_accessible :title, :description, :vendor_name, :location, :purchase_link, 
                   :price, :original_price, :percent_off, :start_date, :end_date, 
                   :deal_photo, :user_id
+  validates_presence_of :title, :description, :vendor_name, :price
 
   def set_photo_from_url(url)
     self.deal_photo = open(url)

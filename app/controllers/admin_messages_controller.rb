@@ -43,7 +43,7 @@ class AdminMessagesController < ApplicationController
     @admin_message = AdminMessage.new(params[:admin_message])
 
     respond_to do |format|
-      if @admin_message.save
+      if @admin_message.save!
         format.html { redirect_to :back }
         #format.json { render json: @admin_message, status: :created, location: @admin_message }
         format.js

@@ -67,6 +67,7 @@ ID_TAG_CHAT_USER_VIEWING_STRING = 'Viewing'
 #     action batch.
 ID_TAG_HOME_AUTH_PAGE = "AJAX_home_auth_page_id"
 ID_TAG_IDEA_VIEW_PAGE = "AJAX_idea_view_page_id"
+ID_TAG_USER_VIEW_PAGE = "AJAX_user_view_page_id"
 
 #   Deal markers
 ID_TAG_IDEA_DEALS_LIST_CONTAINER = 'AJAX_idea_deals_list_container'
