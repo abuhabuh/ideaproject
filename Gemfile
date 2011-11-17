@@ -82,11 +82,11 @@ group :test do
   gem 'turn', :require => false
 end
 
-group :development do
-  gem "oa-oauth", :require => "omniauth/oauth"
-end
+#group :development do
+#  gem "oa-oauth", :require => "omniauth/oauth"
+#end
 
-group :production do
-  gem 'omniauth-facebook','1.0.0.rc1'
-  gem 'omniauth'
-end
+#group :production do
+gem 'omniauth-facebook' #,'1.0.0.rc1'
+gem 'omniauth'
+#end

@@ -2,8 +2,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     
     puts "****** in facebook function"
+    puts "******   provider: " + request.env["omniauth.auth"]["provider"]
     
-    @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user, "facebook")
+    
+    @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user, request.env["omniauth.auth"]["provider"])
     
     puts "****** user found or created. user first name: " + @user.first_name
     

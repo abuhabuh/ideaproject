@@ -117,21 +117,29 @@ class User < ActiveRecord::Base
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil, provider)
     puts "!!!!!!!!!!!! in find_for facebook"
 
-    data = access_token['extra']['user_hash']
+    primary_user_data = access_token['info']
 
-    user = User.joins(:user_auths).where('user_auths.provider' => provider, 'user_auths.provider_id' => data['id']).readonly(false).first
-
-  
     puts "!!!!!!!!!!! user hash: "
-    puts "email: " + data["email"]
-    puts "firsrt_name:" + data["first_name"]
+    puts "email: " + primary_user_data["email"]
+    puts "firsrt_name:" + primary_user_data["first_name"]
+    puts "  xx provider: " + provider
+    puts "  provider id: " + access_token['uid']
 
+    user = User.joins(:user_auths) # TODO: Why is this a User.joins(:user_auths) and not just a UserAuth.where(...)
+               .where('user_auths.provider' => provider, 'user_auths.provider_id' => access_token['uid'])
+               .readonly(false)
+               .first
 
     if user.nil?
-      user = User.create!(:email => data["email"], :first_name => data["first_name"], :last_name => data["last_name"],
-          :user_name => data["first_name"], :password => Devise.friendly_token[0,20], 
-          :profile_pic_file_name => access_token['user_info']['image']) 
-      UserAuth.create(:token => access_token['credentials']['token'], :provider_id => data['id'], :provider => provider, :user_id => user.id)
+      user = User.create!(:email => primary_user_data["email"], 
+                          :first_name => primary_user_data["first_name"], 
+                          :last_name => primary_user_data["last_name"],
+                          :user_name => primary_user_data["first_name"], :password => Devise.friendly_token[0,20], 
+                          :profile_pic_file_name => primary_user_data['image']) 
+      UserAuth.create(:token => access_token['credentials']['token'], 
+                      :provider_id => primary_user_data['id'], 
+                      :provider => provider, 
+                      :user_id => user.id)
       
     end
     return user;
