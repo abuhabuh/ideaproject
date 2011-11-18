@@ -17,7 +17,7 @@
 /*************************************
  * IMPORTS
  *************************************/
-@import "magazine_layout";
+@import "block_layout";
 @import "deals_layout";
 @import "tabs_layout";
 
@@ -28,7 +28,7 @@
   box-shadow: 2px 2px 5px #201C10; 
 } 
 
-.main-header-full-width-container{
+.main-header-full-width-container-menu, .main-header-full-width-container-no-menu{
   box-shadow: 10px 10px 20px #201C10;
 }
 
@@ -48,7 +48,7 @@ body {
   /***************************************
    * Header
    ***************************************/
-.main-header-full-width-container{
+.main-header-full-width-container-menu, .main-header-full-width-container-no-menu{
   background-color: $main-header-full-width-color;
 }
 
@@ -195,11 +195,22 @@ header{
 
 /* Centering container to center all page content */
 
-.center-container{
+.center-container-more-top-margin{
   width: 900px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 85px;
+  margin-top: 95px;
+  
+  height: 100%; 
+  
+  border-style:solid;
+  border-width: 0px;
+}
+.center-container-less-top-margin{
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 75px;
   
   height: 100%; 
   
@@ -225,11 +236,23 @@ header{
 }
 
 /* Main header nav div for logo and session / profile mgmt */
-.main-header-full-width-container{
+.main-header-full-width-container-menu {
   float: left;
-  width: 100%;
   
-  height: 85px;
+  width: 100%;
+  height: 95px;
+  
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  
+  z-index: 5;
+}
+.main-header-full-width-container-no-menu {
+  float: left;
+  
+  width: 100%;
+  height: 70px;
   
   position: fixed;
   top: 0px;
@@ -831,11 +854,11 @@ p.alert{
   text-decoration: none;
 }
 
-.main-header-full-width-container{
+.main-header-full-width-container-menu, .main-header-full-width-container-no-menu{
   z-index: 2;
 }
 
-.magazine-stream-element-container{
+.block-stream-element-container{
   z-index: 1;
 }
 
@@ -852,18 +875,18 @@ p.alert{
   font-size: 12px;
 
   padding: 2px 5px;
-  margin: 2px 10px;
+  margin: 5px 10px 10px 10px;
 }
 
 /*************************************
  *************************************
  *
- * Magazine Stream Element
+ * block Stream Element
  *
  *************************************
  *************************************/
 
-#AJAX_main_stream_content{ /* TODO: rename to magazine-stream-container or something relevant, but this will need to be referenced by JQUERY function */
+#AJAX_main_stream_content{ /* TODO: rename to block-stream-container or something relevant, but this will need to be referenced by JQUERY function */
   float: left;
   
   width: 100%;

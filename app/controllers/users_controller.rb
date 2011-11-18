@@ -23,7 +23,17 @@ class UsersController < ApplicationController
   end
 
   def facebook_callback
-    put "CALLBACK HERE!" 
+    put "CALLBACK HERE!" #TODO: put is a command?
+  end
+
+  def set_view_layout
+    current_user.auth_page_layout = params[:layout]
+    
+    unless current_user.save
+      puts " TRACE: UserController:set_view_layout - error saving current_user" #TODO: do real error handling
+    end
+    
+    redirect_to :back
   end
 
 end

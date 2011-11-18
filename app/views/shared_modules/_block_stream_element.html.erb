@@ -1,23 +1,23 @@
 <% idea_owner = User.find(idea.creator) %>
 
-<div class='magazine-stream-element-container'>
+<div class='block-stream-element-container'>
 
-  <div class='magazine-stream-element-description-block'>
-    <div class='magazine-stream-element-description-owner-pic'>
+  <div class='block-stream-element-description-block'>
+    <div class='block-stream-element-description-owner-pic'>
       <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :path => user_path(idea_owner.id), :makelink => true} %>
     </div>
-    <span class='magazine-stream-element-owner-name'><%=idea_owner.first_name %>:</span> &nbsp;<%=idea.text%>
+    <span class='block-stream-element-owner-name'><%=idea_owner.first_name %>:</span> &nbsp;<%=link_to idea.text, idea_path(idea.id), {:method => 'get'}%>
     
   </div>
 
-  <div class='magazine-stream-element-picture'>
+  <div class='block-stream-element-picture'>
     <%= link_to image_tag(idea.photo.url(:original)),
               idea_path(idea.id),
               {:method => 'get'} %>
   </div>
 
-  <div class='magazine-stream-element-stats-block'>
-    <div class='magazine-stream-element-stats-block-text'>
+  <div class='block-stream-element-stats-block'>
+    <div class='block-stream-element-stats-block-text'>
       <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea.id.to_s%>">
         <%=idea.num_users_joined%> users sharing
       </div>
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class='magazine-stream-element-stats-block-action'>
+    <div class='block-stream-element-stats-block-action'>
       <% unless @user_idea_ids.include?(idea.id.to_s) %>
         <%= render :partial => "home/idea_action_add",
                    :locals => {:idea_id => idea.id} %>
@@ -40,12 +40,12 @@
     </div>
   </div>
 
-  <div class='magazine-stream-element-chat-msg-block'>
+  <div class='block-stream-element-chat-msg-block'>
     <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(4).reverse %>
 
     <% messages.each do |message| %>
-      <div class='magazine-stream-element-chat-msg'>
-        <div class='magazine-stream-element-chat-msg-pic'>
+      <div class='block-stream-element-chat-msg'>
+        <div class='block-stream-element-chat-msg-pic'>
           <% msg_owner = User.find(message.user_id) %>
           <%= render :partial => '/users/profile_pic', :locals => {:current_user => msg_owner, :path => user_path(msg_owner.id), :makelink => true} %>
         </div>

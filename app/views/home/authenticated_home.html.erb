@@ -25,14 +25,18 @@
         $("#search").select();
       });
 
-      // set Masonry variable and initialize tiling
       var $container = $('#AJAX_main_stream_content');
-      $container.imagesLoaded(function(){
-        $container.masonry({
-          itemSelector: '.magazine-stream-element-container',
-          isAnimated: false // sets animation
+      // turn off masonry for stream view - masonry class div does not sit in content-container
+      //   so css styling is off
+      <% unless current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+        // set Masonry variable and initialize tiling
+        $container.imagesLoaded(function(){
+          $container.masonry({
+            itemSelector: '.block-stream-element-container',
+            isAnimated: false // sets animation
+          });
         });
-      });
+      <% end %>
 
       // Auto loading ideas on scroll bottom functions
       // Detect scroll event down
@@ -63,7 +67,12 @@
                   var $newElems = $( returned_html );
                   // ensure that images load before adding to masonry layout
                   $newElems.imagesLoaded(function(){
-                    $container.append($newElems).masonry( 'appended', $newElems, false); // boolean arg sets animation
+                    // do not use masonry for stream view
+                    <% unless current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+                      $container.append($newElems).masonry( 'appended', $newElems, false); // boolean arg sets animation
+                    <% else %>
+                      $container.append($newElems);
+                    <% end %>
                   });
                   
                   if ($.trim(returned_html).length != 0){
@@ -91,45 +100,51 @@
 <div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
 
 
-<!-- Main Body for side menu, stream, and suggestion block -->
-<div class='stream-search-bar-container'>
+<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+  <%= render :partial => 'home/left_nav' %>
+  
+  <!-- Using side bar menu so need to limit search and stream to right side -->
+  <div class='content-container'>  
+<% end %>
 
-  <div class='stream-search-field-and-button'>
-    <%= form_tag authenticated_home_path, :method => :get do %>
-      <% if params[:search].blank? %>
-        <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
-      <% else %>
-        <%= text_field_tag :search, params[:search] %>
-      <% end %>        
-      <%= submit_tag "Search", :name => nil %>
+    <!-- Main Body for side menu, stream, and suggestion block -->
+    <div class='stream-search-bar-container'>
+
+      <div class='stream-search-field-and-button'>
+        <%= form_tag authenticated_home_path, :method => :get do %>
+          <% if params[:search].blank? %>
+            <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
+          <% else %>
+            <%= text_field_tag :search, params[:search] %>
+          <% end %>        
+          <%= submit_tag "Search", :name => nil %>
+          
+          <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
+        <% end %>
+      </div>
       
-      <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
-    <% end %>
+    </div>
+
+    <div id='AJAX_main_stream_content'>    
+      <!-- Determine what kind of layout to render -->
+      <% case current_user.auth_page_layout %>
+      <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
+        <% @stream_ideas.each do |idea| %>
+          <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea} %>
+        <% end %>
+
+      <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
+        <% @stream_ideas.each do |idea| %>
+          <%= render :partial=>"home/row_item_search_idea", 
+                     :locals => {:idea_item => idea,
+                                 :pic_display_mode => PIC_VIEW_TYPE_USER,
+                                 :view_only => IDEA_STREAM_VIEW_ONLY_FALSE} %>
+        <% end %>
+
+      <% end %>
+    </div>
+
+<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+  <!-- Using side bar menu so need to limit search and stream to right side -->
   </div>
-  
-</div>
-
-
-
-<div id='AJAX_main_stream_content'>    
-
-  <!-- STREAM FRIENDS result display -->
-  <% if session[:stream_view] == STREAM_VIEW_FRIENDS %>
-
-    <% @friends_ideas.each do |friend_idea| %>
-      <% idea = Idea.find(friend_idea.idea_id) %>
-      <%= render :partial => "shared_modules/magazine_stream_element_search", :locals => {:idea => idea} %>
-    <% end %>
-
-  <% else %>
-  
-  <!-- STREAM VIEW PUBLIC and SEARCH RESULTS display -->
-  
-    <% @search_result_ideas.each do |idea| %>
-      <%= render :partial => "shared_modules/magazine_stream_element_search", :locals => {:idea => idea} %>
-    <% end %>
-    
-  <% end %>
-</div>
-
-
+<% end %>

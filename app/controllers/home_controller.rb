@@ -48,13 +48,15 @@ class HomeController < ApplicationController
     # Determine what we're sorting on
     # TODO: IMPLEMENT THIS
     
-    # Gets collections of user ideas, friends' ideas
+    # Gets collections of user's ideas, friends' ideas
     set_objs_to_render
     
-    @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-
-    # Don't need to get this if we're doing PUBLIC or SEARCH views
-    @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+    if session[:stream_view] == STREAM_VIEW_FRIENDS    
+      # Don't need to get this if we're doing PUBLIC or SEARCH views
+      @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+    else
+      @stream_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+    end
 
     # Get featured ideas in order of most featured
     @featured_ideas = Idea.where("featured != ?", NOT_FEATURED).order("featured DESC")
@@ -75,12 +77,12 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.html {
         if session[:stream_view] == STREAM_VIEW_FRIENDS
-          @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-          render :partial => "next_friends_ideas_batch" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
+          @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
         else
-          @search_result_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-          render :partial => "next_search_ideas_batch" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
+          @stream_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
         end
+
+        render :partial => "next_search_ideas_batch" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
       }
     end
 
@@ -102,7 +104,7 @@ class HomeController < ApplicationController
       #   authenticates
       session[:initial_idea] = params[:idea]
       
-      @search_result_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+      @stream_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
       @user_idea_ids = Array.new # empty array for user ideas since the user is unauthenticated
     else
       # Handle unexpected nil error
@@ -135,12 +137,12 @@ class HomeController < ApplicationController
 
         unless session[:stream_view] == STREAM_VIEW_FRIENDS
           puts " GETTING SEARCH RESULTS <add_idea> - [" + params[:search].to_s + "]"
-          @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+          @stream_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
         else
           puts " GETTING FRIENDS RESULTS"
           # Get stream ideas based on what type of stream we're 
           #   rendering: Public, Friends, etc. Default is public view.
-          @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+          @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
           
         end
 
@@ -171,13 +173,11 @@ class HomeController < ApplicationController
         set_objs_to_render
 
         unless session[:stream_view] == STREAM_VIEW_FRIENDS
-          
-          @search_result_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-          
+          @stream_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
         else
           # Get stream ideas based on what type of stream we're 
           #   rendering: Public, Friends, etc. Default is public view.
-          @friends_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+          @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
         end
 
         redirect_to authenticated_home_path

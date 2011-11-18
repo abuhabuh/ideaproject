@@ -3,33 +3,33 @@
 /*************************************
  * Shadow and effects
  *************************************/
-.magazine-stream-element-container{
+.block-stream-element-container{
   box-shadow: 2px 2px 5px #201C10; /* COLORS: DARK - 201C10, Light - C5AB84 */
 }
 
-.magazine-stream-element-container{
-  background-color: $magazine-block-bg-color;
+.block-stream-element-container{
+  background-color: $block-block-bg-color;
 }
 
 /*************************************
  * Color
  *************************************/
-.magazine-stream-element-description-block{
-  color: $magazine-block-description-text-color;
+.block-stream-element-description-block{
+  color: $block-block-description-text-color;
 }
 
-.magazine-stream-element-chat-msg{
-  background-color: $magazine-block-chat-msg-bg-color;
+.block-stream-element-chat-msg{
+  background-color: $block-block-chat-msg-bg-color;
 }
 
-.magazine-stream-element-owner-name{
-  color: $magazine-block-owner-name-text-color;
+.block-stream-element-owner-name{
+  color: $block-block-owner-name-text-color;
 }
 
 /*************************************
  * Layout
  *************************************/
-.magazine-stream-element-container{
+.block-stream-element-container{
   float: left;
 
   width: 28%;
@@ -41,7 +41,7 @@
   font-size: 12px;
 }
 
-.magazine-stream-element-picture{ /* TODO: CENTER THIS */
+.block-stream-element-picture{ /* TODO: CENTER THIS */
   float: left;
   
   width: 100%;
@@ -52,7 +52,7 @@
   border-width: 0px;
 }
 
-.magazine-stream-element-picture img{
+.block-stream-element-picture img{
   max-height:100%; 
   max-width:100%;
   
@@ -60,7 +60,7 @@
   margin: auto;
 }
 
-.magazine-stream-element-description-block{
+.block-stream-element-description-block{
   float: left;
 
   width: 100%;
@@ -73,13 +73,13 @@
   font-weight: bold;
 }
 
-.magazine-stream-element-owner-name{
+.block-stream-element-owner-name{
   font-weight: normal;
   
   margin-bottom: 3px;
 }
 
-.magazine-stream-element-description-owner-pic{
+.block-stream-element-description-owner-pic{
   float: left;
 
   height: 35px;
@@ -89,32 +89,32 @@
 }
 
 /* block for statistics and join action */
-.magazine-stream-element-stats-block{
+.block-stream-element-stats-block{
   float: left;
   
   margin-bottom: 5%;
   width: 100%;
 }
 
-.magazine-stream-element-stats-block-text{
+.block-stream-element-stats-block-text{
   float: left;
 
   width: 50%;
 }
 
-.magazine-stream-element-stats-block-action{
+.block-stream-element-stats-block-action{
   float: right;
 
 }
 
 /* chat message styles */
-.magazine-stream-element-chat-msg-block{
+.block-stream-element-chat-msg-block{
   float: left;
   
   width: 100%;
 }
 
-.magazine-stream-element-chat-msg{
+.block-stream-element-chat-msg{
   float: left;
 
   width: 100%;
@@ -126,7 +126,7 @@
   overflow: hidden;
 }
 
-.magazine-stream-element-chat-msg-pic{
+.block-stream-element-chat-msg-pic{
   float: left;
 
   height: 35px;

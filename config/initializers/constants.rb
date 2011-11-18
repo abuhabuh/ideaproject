@@ -34,8 +34,8 @@ STREAM_VIEW_FEATURED = 'featured'
 # idea stream rendering 
 PIC_VIEW_TYPE_IDEA = 'idea_pic'
 PIC_VIEW_TYPE_USER = 'user_pic'
-IDEA_STREAM_VIEW_ONLY_TRUE = 'true'
-IDEA_STREAM_VIEW_ONLY_FALSE = 'false'
+IDEA_STREAM_VIEW_ONLY_TRUE = true
+IDEA_STREAM_VIEW_ONLY_FALSE = false
 
 
 
@@ -93,3 +93,14 @@ BUTTON_CHAT_IDEA = "Go Chat!"
 ##########################################
 AUTH_HOME_IDEAS_PER_PAGE = 10
 DEALS_PER_PAGE = 8
+
+
+##########################################
+# Page Layout Constants
+##########################################
+PAGE_LAYOUT_AUTH_HOME_BLOCK = 0
+PAGE_LAYOUT_AUTH_HOME_MAGAZINE = 1
+PAGE_LAYOUT_AUTH_HOME_STREAM = 2
+
+
+

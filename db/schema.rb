@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111114181600) do
+ActiveRecord::Schema.define(:version => 20111118045526) do
 
   create_table "admin_messages", :force => true do |t|
     t.string   "text"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20111114181600) do
     t.datetime "profile_pic_updated_at"
     t.string   "description"
     t.string   "interests"
+    t.integer  "auth_page_layout",                        :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

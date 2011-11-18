@@ -19,37 +19,39 @@ IdeaApp::Application.routes.draw do
   get "home/index"
   root :to => "home#index"
 
-  match "home/add_idea", :to => "home#add_idea", \
+  match "home/add_idea", :to => "home#add_idea",
         :as => :add_idea, :via => "POST"
-  match "home/add_idea_id", :to => "home#add_idea_id", \
+  match "home/add_idea_id", :to => "home#add_idea_id",
         :as => :add_idea_id, :via => "POST"
-  match "home/process_idea", :to => "home#process_idea", \
+  match "home/process_idea", :to => "home#process_idea",
         :as => :initial_idea, :via => "POST"
-  match "home/authenticated_home", :to => "home#authenticated_home", \
+  match "home/authenticated_home", :to => "home#authenticated_home",
         :as => :authenticated_home, :via => "GET"
-  match "home/next_ideas_batch_js", :to => "home#next_ideas_batch_js", \
+  match "home/next_ideas_batch_js", :to => "home#next_ideas_batch_js",
         :as => :next_ideas_batch_js, :via => "GET"
 
-  match "users", :to => "users#index", \
+  match "users", :to => "users#index",
         :as => :users, :via => "GET"
-  match "users/:id", :to => "users#show", \
+  match "users/:id", :to => "users#show",
         :as => :user, :via => "GET"
-  match "user/profile", :to => "users#profile", \
+  match "user/profile", :to => "users#profile",
         :as => :users_profile, :via => "GET"
+  match "user/set_view_layout", :to => "users#set_view_layout",
+        :as => :user_set_view_layout, :via => "POST"
 
   # route for feedback chat client
-  match "feedback/index", :to => "feedback#index",\
+  match "feedback/index", :to => "feedback#index",
         :as => :feedback, :via => "GET"
 
 	# route for pusher private / presence channel authentication
-	match "pusher/auth", :to => "pusher#auth", \
+	match "pusher/auth", :to => "pusher#auth",
 				:as => :pusher_auth, :via => "POST"
 
-  match "idea/ideas_chat_user", :to => "ideas#idea_chat_user", \
+  match "idea/ideas_chat_user", :to => "ideas#idea_chat_user",
         :as => :idea_chat_user, :via => "GET"
-  match "idea/featured_idea_admin", :to => "ideas#featured_idea_admin", \
+  match "idea/featured_idea_admin", :to => "ideas#featured_idea_admin",
         :as => :featured_idea_admin, :via => "GET"
-  match "idea/feature_idea", :to => "ideas#feature_idea", \
+  match "idea/feature_idea", :to => "ideas#feature_idea",
         :as => :feature_idea, :via => 'POST'
 
   # The priority is based upon order of creation:

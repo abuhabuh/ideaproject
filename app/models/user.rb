@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, \
     :user_name, :first_name, :last_name, :location, :dob, :profile_pic, \
-    :description, :interests, :profile_pic_file_name
+    :description, :interests, :profile_pic_file_name, :auth_page_layout
   validates_presence_of :email, :first_name, :last_name
 
   # Create new idea object for user
@@ -106,15 +106,21 @@ class User < ActiveRecord::Base
   #   Return parameters have to be same as get_public_ideas
   def self.get_my_friends_ideas (current_user, ideas_per_page, current_page)
     
-    current_user.friendships\
-                .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')\
-                .joins('INNER JOIN ideas ON user_ideas.idea_id = ideas.id')\
-                .group('user_ideas.idea_id, ideas.text, ideas.creator, ideas.id')\
-                .select('ideas.text as idea_text, ideas.id as idea_id, ideas.creator as idea_creator, count(user_ideas.idea_id) as user_count')\
-                .order('user_count DESC')\
-                .offset((current_page.to_i-1) * ideas_per_page.to_i)\
-                .limit(ideas_per_page.to_i)
-                
+    search_results = current_user.friendships\
+                                 .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')\
+                                 .joins('INNER JOIN ideas ON user_ideas.idea_id = ideas.id')\
+                                 .group('user_ideas.idea_id, ideas.id')\
+                                 .select('ideas.id, count(user_ideas.idea_id) as user_count')\
+                                 .order('user_count DESC')\
+                                 .offset((current_page.to_i-1) * ideas_per_page.to_i)\
+                                 .limit(ideas_per_page.to_i)
+ 
+    ideas = Array.new
+    search_results.each do |result|
+      ideas << Idea.find(result.id)
+    end
+    
+    return ideas
   end
   
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil, provider)

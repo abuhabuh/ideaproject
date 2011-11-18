@@ -1,5 +1,14 @@
 <header>
-  <div class='main-header-full-width-container'>
+
+<% unless user_signed_in? %>
+  <div class='main-header-full-width-container-no-menu'>
+<% else %>
+  <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+  <div class='main-header-full-width-container-no-menu'>
+  <% else %>
+  <div class='main-header-full-width-container-menu'>
+  <% end %>
+<% end %>
     <div class='header-center-container'>
       
         <div class="main-header-left-content">
@@ -51,12 +60,14 @@
 
               <% end %>
             </div>
-      
-            <div class='nav-main-link round'><%= link_to 'Community', users_path %></div>
             
-            <div class='nav-main-link round'><%= link_to 'My Ideas', users_profile_path%></div>
+            <% unless current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+              <div class='nav-main-link round'><%= link_to 'Community', users_path %></div>
+              
+              <div class='nav-main-link round'><%= link_to 'My Ideas', users_profile_path%></div>
 
-            <div class='nav-main-link-unimplemented round'>My Events</div>
+              <div class='nav-main-link-unimplemented round'>My Events</div>
+            <% end %>
 
           </div>
           
@@ -72,6 +83,10 @@
               <%= link_to 'Sign In', new_user_session_path, options = {:rel => 'facebox'} %><br/>
 	          <% end %>
             </b>
+            <br/>
+            Layout:<br/>
+            <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
+            <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> | Magazine
           </div>
         </div>
 

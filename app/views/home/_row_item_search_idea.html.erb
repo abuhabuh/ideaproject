@@ -4,6 +4,9 @@
     - @user_idea_ids is rendered in home_controller.html.erb by the set_objs_to_render private function
       which is called across many other functions that need to initialize this variable
       TODO: hacky...fix this - refactor it out in a better way
+    - view_only is a boolean specifying if elements should be rendered as view only (no active links)
+      mainly for process_idea page
+    - idea_item is the idea object that is being rendered
 -->
 
 <% if view_only == IDEA_STREAM_VIEW_ONLY_TRUE %>

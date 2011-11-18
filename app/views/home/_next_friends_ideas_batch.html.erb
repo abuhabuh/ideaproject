@@ -1,6 +1,0 @@
-<% @friends_ideas.each do |friend_idea| %>
-  <% idea_item = Idea.find(friend_idea.idea_id) %>
-  
-  <%= render :partial => "shared_modules/magazine_stream_element_search", :locals => {:idea => idea_item} %>
-
-<% end %>
