@@ -79,14 +79,14 @@
             <% if user_signed_in? %>
               Hello <%= link_to current_user.first_name.empty? ? current_user.user_name : current_user.first_name, users_profile_path %><br/>
               <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete%>
+              <br/>
+              Layout:<br/>
+              <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
+              <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> | Magazine
 	          <% else %>
               <%= link_to 'Sign In', new_user_session_path, options = {:rel => 'facebox'} %><br/>
 	          <% end %>
             </b>
-            <br/>
-            Layout:<br/>
-            <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
-            <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> | Magazine
           </div>
         </div>
 
