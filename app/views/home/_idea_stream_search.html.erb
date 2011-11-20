@@ -11,7 +11,7 @@
 
     <div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
     <div id='AJAX_main_stream_content'> 
-      <% @search_result_ideas.each do |idea_item| %>
+      <% @stream_ideas.each do |idea_item| %>
         <!-- user_count in query_result stands for # of TOTAL PEOPLE sharing -->
         <%= render :partial=>"home/row_item_search_idea", 
                    :locals => {:idea_item => idea_item, 
