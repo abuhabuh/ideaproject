@@ -1,0 +1,36 @@
+<!-- USAGE
+    INPUTS
+    - @user_event_ids - array of event ids for events user has joined
+-->
+
+<div class='event-list-right-nav-item-container'>
+
+  <div class='event-list-right-nav-item-name minor-text'>
+    <%= event.name %>
+  </div>
+  
+  <div class='event-list-right-nav-item-pic'>
+    <% event.event_pictures.each do |event_picture| %>  <!-- TODO: change this to get first picture -->
+      <%= link_to image_tag(Picture.find(event_picture.picture_id).picture.url(:thumb)), '#' %>
+    <% end %>
+  </div>
+
+  <div class='event-list-right-nav-item-info minor-text'>
+    <%= event.num_users_joined %> users joined <br/>
+    
+    <%= current_user.friendships
+                    .joins('INNER JOIN user_events ON friendships.friend_id = user_events.user_id')
+                    .where('user_events.event_id = ?', event.id)
+                    .count %> friends sharing
+    
+    <div class='minor-text'>
+      <% unless @user_event_ids.include?(event.id) %>
+        <%= link_to 'Join', user_events_path(:user_id => current_user.id, :event_id => event.id), :method => 'post' %>
+      <% else %>
+        <%= link_to 'View', event %>
+      <% end %>
+    </div>
+
+  </div>
+  
+</div>

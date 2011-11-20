@@ -1,5 +1,15 @@
 IdeaApp::Application.routes.draw do
  
+  resources :event_pictures
+
+  resources :pictures
+
+  resources :user_events
+
+  resources :idea_events
+
+  resources :events
+
   resources :idea_deals
 
   resources :deals

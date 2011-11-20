@@ -245,7 +245,7 @@
       <!-- TODO: NEED TO MAKE NEW PARTIAL THAT DOESN'T DIRECT TO HOME CONTROLLER AJAX -->
       <%= render :partial => 'home/idea_action_add', :locals => {:idea_id => @idea.id} %>
     <% else %>
-      <%= link_to 'Make an Event! (events coming soon)', '#' %>
+      <%= link_to 'Make an Event!', new_event_path(:idea_id => @idea.id), :method => :get %>
     <% end %>
   </div>
 
@@ -329,9 +329,10 @@
 <div class='right-nav'>
 
   <div class='content-section'>
-  
-      <div class='content-header'>Events</div>
-      
+    <div class='content-header'>Events</div>
+
+    <%= render :partial => 'events/event_list_right_nav', :locals => {:idea_events => @idea_events} %> <!-- TODO: events objects duplicated - not optimized -->
+    
   </div>
 
 </div>

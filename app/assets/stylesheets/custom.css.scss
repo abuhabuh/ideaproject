@@ -19,12 +19,17 @@
  *************************************/
 @import "block_layout";
 @import "deals_layout";
-@import "tabs_layout";
+@import "tabs_layout"; /* TODO: NOT USING THIS YET. USE IT to make tabs for user profile page so user can manage stuff*/
+@import "events_layout";
 
   /***************************************
    * Shadow Scheme
    ***************************************/
-.content-container, .unauth-content-container, .left-nav, .right-nav{
+.event-list-right-nav-item-container{
+  box-shadow: 2px 2px 2px #201C10; 
+}
+   
+.content-container, .unauth-content-container, .left-nav, .right-nav {
   box-shadow: 2px 2px 5px #201C10; 
 } 
 

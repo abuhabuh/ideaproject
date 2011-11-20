@@ -16,12 +16,21 @@ class IdeasController < ApplicationController
   def show
     #TODO - nil sanity checks on variables
     @idea = Idea.find(params[:id])
-    @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
     @idea_chat_msgs = @idea.chat_messages.order("id ASC")
-    @has_idea = false;
     @idea_deals = @idea.deals
+    @idea_events = @idea.events
+    
+    @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
+
+    @has_idea = false;
     if current_user.ideas.exists?(@idea.id)
       @has_idea = true;
+    end
+
+    # Get array of event ids for user's events
+    @user_event_ids = Array.new
+    current_user.events.each do |event|
+      @user_event_ids << event.id
     end
 
     respond_to do |format|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111118045526) do
+ActiveRecord::Schema.define(:version => 20111120014655) do
 
   create_table "admin_messages", :force => true do |t|
     t.string   "text"
@@ -55,6 +55,29 @@ ActiveRecord::Schema.define(:version => 20111118045526) do
 
   add_index "deals", ["user_id"], :name => "index_deals_on_user_id"
 
+  create_table "event_pictures", :force => true do |t|
+    t.integer  "picture_id"
+    t.integer  "event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "event_pictures", ["event_id"], :name => "index_event_pictures_on_event_id"
+  add_index "event_pictures", ["picture_id"], :name => "index_event_pictures_on_picture_id"
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "location"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "visibility"
+    t.integer  "status"
+    t.integer  "num_users_joined"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "friendships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "friend_id"
@@ -76,6 +99,16 @@ ActiveRecord::Schema.define(:version => 20111118045526) do
   add_index "idea_deals", ["deal_id"], :name => "index_idea_deals_on_deal_id"
   add_index "idea_deals", ["idea_id"], :name => "index_idea_deals_on_idea_id"
 
+  create_table "idea_events", :force => true do |t|
+    t.integer  "idea_id"
+    t.integer  "event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "idea_events", ["event_id"], :name => "index_idea_events_on_event_id"
+  add_index "idea_events", ["idea_id"], :name => "index_idea_events_on_idea_id"
+
   create_table "ideas", :force => true do |t|
     t.string   "text"
     t.datetime "created_at"
@@ -89,6 +122,16 @@ ActiveRecord::Schema.define(:version => 20111118045526) do
     t.integer  "featured",           :default => 0
   end
 
+  create_table "pictures", :force => true do |t|
+    t.string   "description"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_auths", :force => true do |t|
     t.string   "token"
     t.string   "provider_id"
@@ -97,6 +140,17 @@ ActiveRecord::Schema.define(:version => 20111118045526) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "user_events", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_events", ["event_id"], :name => "index_user_events_on_event_id"
+  add_index "user_events", ["user_id"], :name => "index_user_events_on_user_id"
 
   create_table "user_ideas", :force => true do |t|
     t.boolean  "invited"
@@ -152,7 +206,13 @@ ActiveRecord::Schema.define(:version => 20111118045526) do
   add_foreign_key "idea_deals", "deals", :name => "idea_deals_deal_id_fk"
   add_foreign_key "idea_deals", "ideas", :name => "idea_deals_idea_id_fk"
 
+  add_foreign_key "idea_events", "events", :name => "idea_events_event_id_fk"
+  add_foreign_key "idea_events", "ideas", :name => "idea_events_idea_id_fk"
+
   add_foreign_key "user_auths", "users", :name => "user_auths_user_id_fk"
+
+  add_foreign_key "user_events", "events", :name => "user_events_event_id_fk"
+  add_foreign_key "user_events", "users", :name => "user_events_user_id_fk"
 
   add_foreign_key "user_ideas", "ideas", :name => "user_ideas_idea_id_fk"
   add_foreign_key "user_ideas", "users", :name => "user_ideas_user_id_fk"

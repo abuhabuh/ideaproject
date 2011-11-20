@@ -1,0 +1,128 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+		$(document).ready(function(){
+      /* Open facebox on <a> link click */
+      $('a[rel*=facebox]').facebox()
+    });
+  </script>
+<% end %>
+
+<div id='FACEBOX_calendar_popup' class='hidden-div'> 
+  <%= image_tag "misc/calendar-popup.png"%>
+</div>
+
+
+<p id="notice"><%= notice %></p>
+
+<!-- TODO: change all IDEA CSS class tags to event css tags -->
+
+<div class='left-nav'>
+  <div class='idea-image-main'>
+    <%= image_tag Picture.find(@event.event_pictures.first.picture_id).picture.url(:thumb)%>
+  </div>
+
+  <br />
+  
+  <div class='content-section'>
+    <!-- if no friends, then default public view, else friends view -->
+    <div class='content-header'>
+        People Sharing
+    </div>
+
+    <%= render :partial => 'shared_modules/chat_user_list_left_nav', 
+               :locals => {:container_id_tag => ID_TAG_IDEA_CHAT_USER_LIST, :users => @event.users} %>
+
+  </div>
+</div>
+    
+
+<div class='content-container'>
+
+  <div class='content-title'>
+    Name: <%= @event.name %>
+  </div>
+
+  <div class='content-section'>
+    <span class='minor-link'>
+      <%= link_to 'back to idea', idea_path(@event.idea.id), {:method => 'get'}%>
+    </span>
+  </div>
+
+  <div class='content-section'>
+    <p>
+      <b>Description:</b>
+      <%= @event.description %>
+    </p>
+
+    <p>
+      <b>Location:</b> <span class='minor-text'>[<a href='#'>add option</a>]</span><br/>
+      &nbsp;&nbsp;&nbsp;<span class='minor-text'>[<a href='#'>like</a> | <a href='#'>dislike</a>]</span> <%= @event.location %><br/>
+      &nbsp;&nbsp;&nbsp;<span class='minor-text'>[<a href='#'>like</a> | <a href='#'>dislike</a>]</span> Virginia Beach, Virginia<br/>    
+      &nbsp;&nbsp;&nbsp;<span class='minor-text'>[<a href='#'>like</a> | <a href='#'>dislike</a>]</span> Ocean City, Maryland<br/>
+    </p>
+
+    <p>
+      <b>Time Range:</b> <span class='minor-text'>[<a href='#'>add option</a>]</span><br/>
+      &nbsp;&nbsp;&nbsp;<span class='minor-text'>[<a href='#'>like</a> | <a href='#'>dislike</a>]</span> <%= @event.start_date %> to <%= @event.end_date %><br/>
+      &nbsp;&nbsp;&nbsp;<span class='minor-text'>[<a href='#'>like</a> | <a href='#'>dislike</a>]</span> 2011-05-21 to 2011-05-24<br/>
+      &nbsp;&nbsp;&nbsp;<span class='minor-text'>[<a href='#'>like</a> | <a href='#'>dislike</a>]</span> 2011-05-21 to 2011-05-24<br/>
+    </p>
+  </div>
+
+  <div class='content-section'></div>
+  <div class='content-section'></div>
+  <div class='content-section'></div>
+  <div class='content-section'></div>
+  <div class='content-section'></div>
+  <div class='content-section'></div>
+  <div class='content-section'></div>
+  <div class='content-section'></div>
+
+  <%= link_to 'Edit', edit_event_path(@event) %> |
+  <%= link_to 'Back', events_path %>
+
+</div>
+
+
+<div class='right-nav'>
+
+  <div class='content-section'>
+    <div class='content-header'>Tools</div>
+
+    <!-- TODO: CSS THIS STUFF -->    
+    <div class='tmp-icon-container'>  
+      <div class='tmp-icon'>
+        <a href='#FACEBOX_calendar_popup' rel='facebox'><%=image_tag "misc/calendar.png"%></a>
+        
+        <a href='#FACEBOX_calendar_popup' rel='facebox'><span class='minor-text'>[calendar]</span></a>
+
+        <br/>
+      </div>
+    </div>
+    <div class='tmp-icon-container'>  
+      <div class='tmp-icon'>
+        <%=image_tag "misc/poll.jpg"%>
+        <span class='minor-text'>[polls]</span><br/>
+      </div>
+    </div>    
+    <div class='tmp-icon-container'>  
+      <div class='tmp-icon'>
+        <%=image_tag "misc/list.jpg"%>
+        <span class='minor-text'>[todo list]</span><br/>
+      </div>
+    </div>
+    <div class='tmp-icon-container'>  
+      <div class='tmp-icon'>
+        <%=image_tag "misc/milestone.jpg"%>
+        <span class='minor-text'>[milestones]</span><br/>
+      </div>
+    </div>
+    <div class='tmp-icon-container'>  
+      <div class='tmp-icon'>
+        <%=image_tag "misc/deal.gif"%>
+        <span class='minor-text'>[deals]</span><br/>
+      </div>
+    </div>
+  </div>
+
+</div>

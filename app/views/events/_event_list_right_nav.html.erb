@@ -1,0 +1,9 @@
+<div class='event-list-right-nav-container'>
+
+  <% idea_events.each do |idea_event| %>
+  
+    <%= render :partial => 'events/event_list_right_nav_item', :locals => {:event => idea_event} %>  
+  
+  <% end %>
+
+</div>
