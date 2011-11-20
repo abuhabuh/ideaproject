@@ -1,0 +1,12 @@
+<%= form_for(Post.new, :url => new_forum_topic_path) do |f| %>
+  <div>
+    <%= f.text_area(:content, :size => "40x5") %> <br/>
+    <%= f.hidden_field(:idea_id, :value => @idea.id)  %><br/>
+    <% if !post_id.nil? %>
+      <%= f.hidden_field(:post_id, :value => post_id)  %><br/>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

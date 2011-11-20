@@ -20,6 +20,7 @@
 @import "block_layout";
 @import "deals_layout";
 @import "tabs_layout";
+@import "forum";
 
   /***************************************
    * Shadow Scheme
@@ -900,6 +901,7 @@ p.alert{
 *********************************
 *********************************/
 .profile-pic-element-picture img{ /* TODO: CENTER THIS */
+ 
   max-height:100%; 
   max-width:100%;
   

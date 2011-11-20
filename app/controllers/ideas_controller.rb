@@ -20,6 +20,14 @@ class IdeasController < ApplicationController
     @idea_chat_msgs = @idea.chat_messages.order("id ASC")
     @has_idea = false;
     @idea_deals = @idea.deals
+    @forum_posts = Post.where(:idea_id => @idea.id, :post_id => nil);
+
+
+    puts "***********************"
+    @forum_posts.each do |p| 
+      puts "content: #{p.content}"
+    end
+
     if current_user.ideas.exists?(@idea.id)
       @has_idea = true;
     end
@@ -148,5 +156,15 @@ class IdeasController < ApplicationController
     redirect_to :back
   end
   
-  
+  def new_forum_topic
+    puts "Made it here!!!!!!!!!!"
+    @post = Post.new(params[:post])
+
+    @post.user_id = current_user.id
+    
+    @post.save
+    
+     redirect_to Idea.find_by_id(@post.idea_id)
+  end
+   
 end

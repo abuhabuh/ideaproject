@@ -53,6 +53,8 @@ IdeaApp::Application.routes.draw do
         :as => :featured_idea_admin, :via => "GET"
   match "idea/feature_idea", :to => "ideas#feature_idea",
         :as => :feature_idea, :via => 'POST'
+  match "idea/new_forum_topic", :to => "ideas#new_forum_topic", :as => :new_forum_topic
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

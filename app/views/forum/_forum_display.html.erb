@@ -1,0 +1,20 @@
+<% posts.each do |p| %>
+
+  <div class="parent-post">
+      <div class="profile-pic-div">
+      <%= render :partial => '/users/profile_pic', :locals => {:current_user => User.find_by_id(p.user_id), :path => user_path(p.user_id), :makelink => true} %>
+    </div>
+  
+    <div class="forum-post-right"><div><%= "#{p.content}" %></div>
+      <div class="forum_reply" id="<%= p.id %>"><%= link_to "Reply", "#" %></div>
+      <div class="hidden-div" id="<%= p.id %>_reply" >
+        <%= render :partial => 'forum/forum_post', :locals => {:post_id => p.id} %>
+      </div>
+      <% @child_posts = Post.where(:idea_id => @idea.id, :post_id => p.id) %>
+      <% if !@child_posts.nil? %>
+        <%= render :partial => 'forum/forum_display', :locals => {:posts => @child_posts} %>
+      <% end %>
+    </div>
+ 
+  </div>
+ <% end %>

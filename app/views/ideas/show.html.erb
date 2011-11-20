@@ -123,6 +123,12 @@
     
     
 		$(document).ready(function(){
+  $(".forum_reply").click(function() {
+    var id = $(this).attr("id");
+    id = "#" + id + "_reply";
+    $(id).toggle();
+  });
+
 		  // Setup tabbing
 		  $(function() {
       	// setup ul.tabs to work as tabs for each div directly under div.panes
@@ -219,7 +225,8 @@
       $('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).removeClass('chat-board-user-item-status-online');
   		$('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).addClass('chat-board-user-item-status-offline');
 		}
-  </script>
+ 
+    </script>
 <% end %>
 
 
@@ -277,6 +284,20 @@
   
   <!-- just taking up some space... -->
   <div class='content-section'> &nbsp; </div>
+
+  <div class='content-section'>
+    <div class='content-header'>Idea Discussion</div>
+    <span class='minor-text'>Post information you want to share with the group</span>
+
+    <div><%= link_to "Post New Topic", "#", :onclick => "$('#new_topic').toggle();" %></div>
+    <div id="new_topic" class="hidden-div">
+      <%= render :partial => 'forum/forum_post', :locals => {:post_id => nil} %>
+    </div>
+    <div>
+      <%= render :partial => 'forum/forum_display', :locals => {:posts => @forum_posts} %>
+    </div>
+
+  </div>
 
   <div class='content-section'>
     <div class='content-header'>Public Chat Board</div>
