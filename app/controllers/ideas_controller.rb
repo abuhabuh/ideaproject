@@ -33,6 +33,13 @@ class IdeasController < ApplicationController
       @user_event_ids << event.id
     end
 
+    # Get array of user's friends' ids
+    friend_ids = Array.new
+    current_user.friends.each do |friend|
+      friend_ids << friend.id
+    end
+    @friend_ids_str = friend_ids.join(',')
+
     respond_to do |format|
       format.html # show.html.erb
       #format.json { render json: @idea }
@@ -127,10 +134,54 @@ class IdeasController < ApplicationController
   
     respond_to do |format|
       format.html {
-        render :partial => "idea_chat_user" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
+        render :partial => "idea_chat_user", :locals => {:idea_id => params[:idea_id]}
       }
     end
+  end
+  
+  
+  # Returns HTML render of chat_user_list_left_nav.html.erb to be inserted into idea show page
+  #   Take argument specifying whether or not to display friends only
+  def idea_chat_user_list
+  
+    idea = Idea.find(params[:idea_id])
+    friends_only = params[:friends_only] == 'true'
+    friend_ids_str = params[:friend_ids_str]
+    
+    respond_to do |format|
+      format.html {
+        render :partial => 'shared_modules/chat_user_list_left_nav', 
+               :locals => {:container_id_tag => ID_TAG_IDEA_CHAT_USER_LIST, 
+                           :users => idea.users, 
+                           :chat_type => CHAT_TYPE_IDEA,
+                           :topic_id => idea.id,
+                           :friends_only => friends_only,
+                           :friend_ids => friend_ids_str}
+      }
+    end
+    
+  end
+  
+  
+  # Renders HTML PARTIAL for idea preview AJAX call
+  # - used in auth home to load preview content for idea
+  def idea_preview
+    @idea = Idea.find(params[:idea_id])
+    @idea_chat_msgs = @idea.chat_messages.order("id DESC").limit(IDEA_LAYOUT_PREVIEW_NUM_CHATS).reverse
 
+    @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
+
+    @has_idea = false;
+    if current_user.ideas.exists?(@idea.id)
+      @has_idea = true;
+    end
+
+    respond_to do |format|
+      format.html {
+        render :partial => "idea_preview"
+      }
+    end
+  
   end
   
   

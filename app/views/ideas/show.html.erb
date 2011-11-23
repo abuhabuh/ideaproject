@@ -3,6 +3,11 @@
   <script src="/assets/external/jquery.tools.min.js"></script>
 
   <script type="text/javascript">
+   
+    // Keep array of user's friends' ids in js memory
+    var friend_ids_str = "<%= @friend_ids_str %>";
+    var friend_ids_array = friend_ids_str.split(',');
+    var public_view = true;
     
     // Functions that are bound to the facebox deals search buttons: search, prev, next
     //   Each function calls the master submitDealsSearchFirst function
@@ -123,13 +128,14 @@
     
     
 		$(document).ready(function(){
+
 		  // Setup tabbing
 		  $(function() {
       	// setup ul.tabs to work as tabs for each div directly under div.panes
 	      $("ul.tabs").tabs("div.panes > div");
       });
 		
-      /* Bind view deals on-click function */
+      // Bind view deals on-click function
       $('#JQUERY-view-deals-link').bind('click', function() {
         if ($('#JQUERY-deals-section').css('display') == "none"){
           $('#JQUERY-deals-section').show('slow');
@@ -142,10 +148,12 @@
         }
       });
 
-      /* Open facebox on <a> link click */
+      // Open facebox on <a> link click
+      $.facebox.settings.closeImage = '/assets/closelabel.png'
+      $.facebox.settings.loadingImage = '/assets/loading.gif'
       $('a[rel*=facebox]').facebox()
-
-		  /* <BEGIN> Pusher chat functions */		
+      
+		  // <BEGIN> Pusher chat functions
       $("div#<%=ID_TAG_IDEA_CHAT+@idea.id.to_s%>").prop({
         scrollTop: $("div#<%=ID_TAG_IDEA_CHAT+@idea.id.to_s%>").prop("scrollHeight")
       });
@@ -161,25 +169,17 @@
 			
 			chat_presence_channel.bind('pusher:subscription_succeeded', function(members){
 				$('#people_chatting').html("");
-				       
-				// this is not working TODO: fix this
+
 				members.each(function(member){				
   				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
 					  member_online(member.id);
 					} else {
-						$.ajax({
-                url: "<%=idea_chat_user_path%>", 
-                data: {user_id : member.id, user_status : "<%=ID_TAG_CHAT_USER_VIEWING_STRING%>"}, 
-                dataType: 'html',
-                success: function(returned_html){ // TODO: fix this
-                  $("#<%=ID_TAG_IDEA_CHAT_USER_LIST%>").append(returned_html);
-                },
-                error: function(msg){ // TODO: remove this for live deploy
-                  alert(msg);
-                }
-              });
+            if (render_user(member.id)){
+              add_user_to_list(member.id);
+            }
 					}
 				});
+				
 			});
 
 			chat_presence_channel.bind('pusher:member_removed', function(member){
@@ -191,24 +191,104 @@
 			chat_presence_channel.bind('pusher:member_added', function(member){
 				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
 				  member_online(member.id);
-				} else {
-				  $.ajax({
-                url: "<%=idea_chat_user_path%>", 
-                data: {user_id : member.id, user_status : "<%=ID_TAG_CHAT_USER_VIEWING_STRING%>"}, 
-                dataType: 'html',
-                success: function(returned_html){
-                  $("#<%=ID_TAG_IDEA_CHAT_USER_LIST%>").prepend(returned_html);
-                },
-                error: function(msg){ // remove this for live deploy
-                  alert(msg);
-                }
-              });
-				
+				} else {				
+          if (render_user(member.id)) {
+            add_user_to_list(member.id);
+				  }
 				}
 			});
-  	  /* <END> Pusher chat functions */
+  	  // <END> Pusher chat functions
 			
+	    // Function for re-rendering user chat list	(want to load this after pusher presence channel is established)
+		  function render_user_list(public_view_boolean){
+		    $.ajax({
+          url: "<%=idea_chat_user_list_path%>", 
+          data: {idea_id : <%=@idea.id%>, friends_only : !public_view_boolean, friend_ids_str : friend_ids_str}, 
+          dataType: 'html',
+          success: function(returned_html){
+            $("#<%=ID_TAG_IDEA_CHAT_USER_LIST%>").replaceWith(returned_html);
+            public_view = public_view_boolean;
+   
+            // set chat channel members to online
+		        chat_presence_channel.members.each(function(member){
+      				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
+					      member_online(member.id);
+					    }else{
+  		          if (render_user(member.id)){
+  		            add_user_to_list(member.id);
+  		          }
+  		        }
+		        });
+		  
+		        // set highlighting
+            $('#user_filter_public').css('text-decoration', 'none');
+            $('#user_filter_friends').css('text-decoration', 'none');
+            $('#user_filter_public').unbind('click');
+            $('#user_filter_friends').unbind('click');
+
+            if (public_view){
+              $('#user_filter_friends').css('text-decoration', 'underline');
+			        $('#user_filter_friends').click(function(){
+			          render_user_list(false);
+			        });
+			   			$('#user_filter_friends').mouseover(function () {
+              	$(this).css('cursor', 'pointer');
+              });
+			   			$('#user_filter_public').mouseover(function () {
+              	$(this).css('cursor', 'auto');
+              });
+            }else{
+              $('#user_filter_public').css('text-decoration', 'underline');
+			        $('#user_filter_public').click(function(){
+          			render_user_list(true);
+			        });
+			   			$('#user_filter_friends').mouseover(function () {
+              	$(this).css('cursor', 'auto');
+              });
+			   			$('#user_filter_public').mouseover(function () {
+              	$(this).css('cursor', 'pointer');
+              });
+            }
+          },
+          error: function(msg){ // remove this for live deploy
+            alert(msg);
+          }
+        });
+		  }
+			
+			// bind public and friend user list filters to functions
+			$('#user_filter_friends').mouseover(function () {
+      	$(this).css('cursor', 'pointer');
+      });
+      $('#user_filter_friends').css('text-decoration', 'underline');
+			$('#user_filter_friends').click(function(){
+			  render_user_list(false);
+			});
 		});
+
+
+    // Take in member id and see if user should be rendered based on public view / friend view and user's friend list
+    function render_user(member_id){
+      if (!public_view &&
+          $.inArray(String(member_id), friend_ids_array) == -1){
+        return false;
+      }
+      return true;
+    }
+
+    function add_user_to_list(member_id){
+      $.ajax({
+          url: "<%=idea_chat_user_path%>", 
+          data: {user_id : member_id, user_status : "<%=ID_TAG_CHAT_USER_VIEWING_STRING%>", idea_id : <%=@idea.id%>}, 
+          dataType: 'html',
+          success: function(returned_html){
+            $("#<%=ID_TAG_IDEA_CHAT_USER_LIST%>").prepend(returned_html);
+          },
+          error: function(msg){ // remove this for live deploy
+            alert(msg);
+          }
+        });
+    }
 
 		function member_online(user_id) {
   		$('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).removeClass('chat-board-user-item-status-offline');
@@ -236,51 +316,79 @@
 </div>
 
 
-<div class='left-nav'>
-  <div class='idea-image-main'>
-    <%= image_tag @idea.photo.url(:thumb)%>
-  </div>
-  <div class='idea-action-link'>
-    <% if @curr_user_idea_link.nil? %>
-      <!-- TODO: NEED TO MAKE NEW PARTIAL THAT DOESN'T DIRECT TO HOME CONTROLLER AJAX -->
-      <%= render :partial => 'home/idea_action_add', :locals => {:idea_id => @idea.id} %>
-    <% else %>
-      <%= link_to 'Make an Event!', new_event_path(:idea_id => @idea.id), :method => :get %>
-    <% end %>
+<div class='left-nav-wide'>
+
+  <div class='idea-view-pic-and-info'>
+    <div class='idea-view-pic'>
+      <%= image_tag @idea.photo.url(:thumb)%>
+    </div>
+    <div class='idea-view-info minor-text'>
+      <% unless @curr_user_idea_link.nil? %>
+        You want to do this: <br/>
+        &nbsp;&nbsp;<%= UserIdea.time_goal_string(@curr_user_idea_link.time_goal) %>
+      <% else %>
+        <!-- TODO: NEED TO MAKE NEW PARTIAL THAT DOESN'T DIRECT TO HOME CONTROLLER AJAX -->
+        You're getting left out! <br/>
+        <br/>
+        <%= render :partial => 'shared_modules/button_add_idea', :locals => {:idea_id => @idea.id, :float => 'left'} %>
+      <% end %>
+    </div>
   </div>
 
-  <br />
-  
   <div class='content-section'>
     <!-- if no friends, then default public view, else friends view -->
     <div class='content-header'>
         People Sharing
+        <span class='minor-text' style='float: right;'> 
+          <span id='user_filter_public'>public</span> | <span id='user_filter_friends'>friends</span>
+        </span>
     </div>
-
+    
+    <div class='user-list-header-row'>
+      <div class='user-list-header-row-image'>
+        User:
+      </div>
+      <div class='chat-board-user-item-text'>
+        Name:
+      </div>
+      <div class='chat-board-user-item-time-goal'>
+        Do It:
+      </div>
+      <div class='chat-board-user-item-select'>
+        Select:
+      </div>
+    </div>
+  
     <%= render :partial => 'shared_modules/chat_user_list_left_nav', 
-               :locals => {:container_id_tag => ID_TAG_IDEA_CHAT_USER_LIST, :users => @idea.users} %>
+               :locals => {:container_id_tag => ID_TAG_IDEA_CHAT_USER_LIST, 
+                           :users => @idea.users, 
+                           :chat_type => CHAT_TYPE_IDEA,
+                           :topic_id => @idea.id,
+                           :friends_only => false,
+                           :friend_ids => @friend_ids_str} %>
 
   </div>
 </div>
     
 
-<div class='content-container'>
+<div class='idea-content-container'>
 
   <div class='content-title'>
-        <%= @idea.text %>
+    <%= @idea.text %>
+    <span id="<%=ID_TAG_IDEA_EDIT_LINK%>" class='minor-link'>
+      <% unless @curr_user_idea_link.nil? %>
+        <%= link_to 'edit idea', edit_idea_path(@idea), {:method => 'get'}%>
+        <br/>
+      <% end %>
+    </span>
   </div>
-  <span id="<%=ID_TAG_IDEA_EDIT_LINK%>" class='minor-link'>
-    <% unless @curr_user_idea_link.nil? %>
-      <%= link_to 'edit idea', edit_idea_path(@idea), {:method => 'get'}%>
-    <% end %>
-  </span>
+  <span class='minor-text'>Talk about the idea with anyone interested! Find out who you'd like to do it with! It's just an idea. No commitment...yet :) </span>
   
   <!-- just taking up some space... -->
   <div class='content-section'> &nbsp; </div>
 
   <div class='content-section'>
-    <div class='content-header'>Public Chat Board</div>
-    <span class='minor-text'>Talk about the idea with anyone interested! Create an event when you're ready to plan time, place, etc.</span>
+    <div class='content-header'>Public Discussion Board</div>
     
 	  <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
     <%= render :partial => "shared_modules/chat_board", 
@@ -322,17 +430,6 @@
         <% end %>    
       </div>
     </div>
-  </div>
-
-</div>  
-
-<div class='right-nav'>
-
-  <div class='content-section'>
-    <div class='content-header'>Events</div>
-
-    <%= render :partial => 'events/event_list_right_nav', :locals => {:idea_events => @idea_events} %> <!-- TODO: events objects duplicated - not optimized -->
-    
   </div>
 
 </div>

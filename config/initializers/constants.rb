@@ -8,7 +8,7 @@ NOT_FEATURED = 0; # not featured is 0 where as everything else is featured and c
 
 
 ##########################################
-# Pusher chat config
+# Pusher chat config & Chat constants
 ##########################################
 Pusher.app_id = '10463'
 Pusher.key = '8c4eff4efff8afc004d2'
@@ -21,6 +21,8 @@ elsif Rails.env.production?
   PUSHER_CHANNEL_PREFIX_IDEA = 'presence-idea_prod_'
 end
 PUSHER_CHANNEL_FEEDBACK_CHAT = "presence-feedback_chat"
+CHAT_TYPE_IDEA = 0
+CHAT_TYPE_EVENT = 1
 
 
 ##########################################
@@ -38,6 +40,10 @@ IDEA_STREAM_VIEW_ONLY_TRUE = true
 IDEA_STREAM_VIEW_ONLY_FALSE = false
 
 
+##########################################
+# JS ID tags
+##########################################
+AUTH_HOME_IDEA_ACTION_PREVIEW = 'JS-idea-row-action-preview'
 
 ##########################################
 # AJAX ID tags
@@ -49,6 +55,7 @@ ID_TAG_USER_LIST_USER_ROW = "AJAX_user_list_row_id_" #append user id
 ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION = "AJAX_auth_home_stream_idea_action_id_" #append idea id
 ID_TAG_AUTH_HOME_STREAM_NUM_USERS = "AJAX_auth_home_stream_num_users_" #append idea id
 ID_TAG_AUTH_HOME_USER_IDEAS = "AJAX_auth_home_user_ideas"
+ID_TAG_AUTH_HOME_IDEA_PREVIEW_GOAL = "AJAX_auth_home_idea_preview_goal"
 
 #   Idea view page
 ID_TAG_IDEA_CHAT = "AJAX_idea_view_chat_id_" #append idea id
@@ -89,10 +96,12 @@ BUTTON_CHAT_IDEA = "Go Chat!"
 
 
 ##########################################
-# Search functionality constants
+# DATABASE / SOLR Search functionality constants
 ##########################################
 AUTH_HOME_IDEAS_PER_PAGE = 10
 DEALS_PER_PAGE = 8
+IDEA_LAYOUT_BLOCK_NUM_CHATS = 4
+IDEA_LAYOUT_PREVIEW_NUM_CHATS = 6
 
 
 ##########################################
@@ -102,6 +111,17 @@ PAGE_LAYOUT_AUTH_HOME_BLOCK = 0
 PAGE_LAYOUT_AUTH_HOME_MAGAZINE = 1
 PAGE_LAYOUT_AUTH_HOME_STREAM = 2
 
+##########################################
+# Ideas Constants
+##########################################
+IDEA_TIMEGOAL_THIS_WEEK = 0
+IDEA_TIMEGOAL_THIS_WEEK_STR = 'this week'
+IDEA_TIMEGOAL_THIS_MONTH = 1
+IDEA_TIMEGOAL_THIS_MONTH_STR = 'this month'
+IDEA_TIMEGOAL_THIS_YEAR = 2
+IDEA_TIMEGOAL_THIS_YEAR_STR = 'this year'
+IDEA_TIMEGOAL_ANYTIME = 3
+IDEA_TIMEGOAL_ANYTIME_STR = 'anytime'
 
 ##########################################
 # Events Constants

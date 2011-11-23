@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111120014655) do
+ActiveRecord::Schema.define(:version => 20111122070458) do
 
   create_table "admin_messages", :force => true do |t|
     t.string   "text"
@@ -152,12 +152,24 @@ ActiveRecord::Schema.define(:version => 20111120014655) do
   add_index "user_events", ["event_id"], :name => "index_user_events_on_event_id"
   add_index "user_events", ["user_id"], :name => "index_user_events_on_user_id"
 
+  create_table "user_idea_times", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "idea_id"
+    t.datetime "time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_idea_times", ["idea_id"], :name => "index_user_idea_times_on_idea_id"
+  add_index "user_idea_times", ["user_id"], :name => "index_user_idea_times_on_user_id"
+
   create_table "user_ideas", :force => true do |t|
     t.boolean  "invited"
     t.integer  "user_id"
     t.integer  "idea_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "time_goal",  :default => 3
   end
 
   add_index "user_ideas", ["idea_id"], :name => "index_user_ideas_on_idea_id"

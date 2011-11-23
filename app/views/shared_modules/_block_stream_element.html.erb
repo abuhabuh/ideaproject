@@ -31,17 +31,17 @@
 
     <div class='block-stream-element-stats-block-action'>
       <% unless @user_idea_ids.include?(idea.id.to_s) %>
-        <%= render :partial => "home/idea_action_add",
-                   :locals => {:idea_id => idea.id} %>
+        <%= render :partial => "shared_modules/button_add_idea",
+                   :locals => {:idea_id => idea.id, :float => 'right'} %>
       <% else %>
-        <%= render :partial => "home/idea_action_chat",
-                   :locals => {:idea_id => idea.id} %>
+        <%= render :partial => "shared_modules/button_chat_idea",
+                   :locals => {:idea_id => idea.id, :float => 'right'} %>
       <% end %>
     </div>
   </div>
 
   <div class='block-stream-element-chat-msg-block'>
-    <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(4).reverse %>
+    <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(IDEA_LAYOUT_BLOCK_NUM_CHATS).reverse %>
 
     <% messages.each do |message| %>
       <div class='block-stream-element-chat-msg'>

@@ -1,0 +1,27 @@
+<h1>Listing user_idea_times</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Idea</th>
+    <th>Time</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @user_idea_times.each do |user_idea_time| %>
+  <tr>
+    <td><%= user_idea_time.user %></td>
+    <td><%= user_idea_time.idea %></td>
+    <td><%= user_idea_time.time %></td>
+    <td><%= link_to 'Show', user_idea_time %></td>
+    <td><%= link_to 'Edit', edit_user_idea_time_path(user_idea_time) %></td>
+    <td><%= link_to 'Destroy', user_idea_time, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User idea time', new_user_idea_time_path %>

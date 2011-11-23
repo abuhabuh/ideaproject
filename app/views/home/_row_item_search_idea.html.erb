@@ -23,7 +23,7 @@
               </div>
               <div class='idea-row-text'>
                 <%=idea_owner.first_name + " " + idea_owner.last_name%>:<br/>
-                <span class='idea-text'><%= idea_item.text%></span>
+                <span class='idea-text'><%=idea_item.text%></span>
               </div>
               <div class='idea-row-misc'>
                 <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea_item.id.to_s%>">
@@ -47,28 +47,40 @@
               </div>
               <div class='idea-row-text'>
                 <%=idea_owner.first_name + " " + idea_owner.last_name%>:<br/>
-                <span class='idea-text'><%= link_to idea_item.text,
-                              idea_path(idea_item.id),
-                              {:method => 'get'} %></span>
-                <% unless @user_idea_ids.include?(idea_item.id.to_s) %>
-                  <%= render :partial => "home/idea_action_add",
-                             :locals => {:idea_id => idea_item.id} %>
-                <% else %>
-                  <%= render :partial => "home/idea_action_chat",
-                             :locals => {:idea_id => idea_item.id} %>
-                <% end %>
+                <span class='idea-text'>
+                  <%=  link_to idea_item.text, idea_path(idea_item), {:method => 'get'} %>
+                </span>
               </div>
               <div class='idea-row-misc'>
+                Sharing:<br/>
                 <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea_item.id.to_s%>">
-                  <%=idea_item.num_users_joined%> users sharing
+                  &nbsp;&nbsp;<%=idea_item.num_users_joined%> users
                 </div>
                 <div>
-                  <%= current_user.friendships
+                  &nbsp;&nbsp;<%= current_user.friendships
                                        .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')
                                        .where('user_ideas.idea_id = ?', idea_item.id)
-                                       .count %> friends sharing
+                                       .count %> friends
                 </div>
                   
+              </div>
+              <div class='idea-row-action'>
+                <div class='JS_idea_row_action_preview idea-row-action-preview'>
+                  Preview
+                  <div class='idea-id-identifier hidden-div'><%=idea_item.id%></div>
+                </div>
+                <br />
+                <br />
+                <% unless @user_idea_ids.include?(idea_item.id.to_s) %>
+                  <div class='JS_idea_row_action_join idea-row-action-join'>
+                    Jump In!
+                    <div class='idea-id-identifier hidden-div'><%=idea_item.id%></div>
+                  </div>
+                <% else %>
+                  <div class='idea-row-action-join-confirm'>
+                    Sharing idea!
+                  </div>
+                <% end %>
               </div>
             </div>
                

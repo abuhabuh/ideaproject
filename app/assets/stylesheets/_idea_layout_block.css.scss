@@ -7,13 +7,13 @@
   box-shadow: 2px 2px 5px #201C10; /* COLORS: DARK - 201C10, Light - C5AB84 */
 }
 
+/*************************************
+ * Color
+ *************************************/
 .block-stream-element-container{
   background-color: $block-block-bg-color;
 }
 
-/*************************************
- * Color
- *************************************/
 .block-stream-element-description-block{
   color: $block-block-description-text-color;
 }
@@ -86,6 +86,11 @@
   width: 35px;
 
   margin: 0px 10px 0px 0px 
+}
+
+.block-stream-element-description-owner-pic img{
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /* block for statistics and join action */

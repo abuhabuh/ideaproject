@@ -33,7 +33,7 @@ class UsersController < ApplicationController
       puts " TRACE: UserController:set_view_layout - error saving current_user" #TODO: do real error handling
     end
     
-    redirect_to :back
+    redirect_to root_url
   end
 
 end

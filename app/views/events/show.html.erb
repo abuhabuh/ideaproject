@@ -30,7 +30,10 @@
     </div>
 
     <%= render :partial => 'shared_modules/chat_user_list_left_nav', 
-               :locals => {:container_id_tag => ID_TAG_IDEA_CHAT_USER_LIST, :users => @event.users} %>
+               :locals => {:container_id_tag => ID_TAG_IDEA_CHAT_USER_LIST, 
+                           :users => @event.users, 
+                           :chat_type => CHAT_TYPE_EVENT,
+                           :topic_id => @event.id} %>
 
   </div>
 </div>

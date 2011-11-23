@@ -1,0 +1,8 @@
+// Replace "pick time" div with new javascript
+$(document).ready(function(){
+
+  $("#<%=ID_TAG_AUTH_HOME_IDEA_PREVIEW_GOAL%>").html("<%= escape_javascript(
+      render :partial => 'ideas/idea_preview_time_goal', :locals => {:user_idea => @user_idea}
+      )%>");
+
+});

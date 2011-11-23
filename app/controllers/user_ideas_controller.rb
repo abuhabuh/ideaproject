@@ -37,15 +37,22 @@ class UserIdeasController < ApplicationController
     @user_idea = UserIdea.find(params[:id])
   end
 
+  # Modified function to only render simple confirm message to AJAX call
+  #   should ONLY be used for AJAX calls
   # POST /user_ideas
   # POST /user_ideas.json
   def create
-    @user_idea = UserIdea.new(params[:user_idea])
+    @user_idea = UserIdea.new
+    @user_idea.user_id = params[:user_id]
+    @user_idea.idea_id = params[:idea_id]
+    @user_idea.time_goal = IDEA_TIMEGOAL_ANYTIME
+    @user_idea.invited = false
 
     respond_to do |format|
       if @user_idea.save!
-        format.html { redirect_to @user_idea, notice: 'User idea was successfully created.' }
-        format.json { render json: @user_idea, status: :created, location: @user_idea }
+        format.html { render :partial => 'user_ideas/create_ajax_confirm' }
+        
+        #format.json { render json: @user_idea, status: :created, location: @user_idea }
       else
         format.html { render action: "new" }
         format.json { render json: @user_idea.errors, status: :unprocessable_entity }
@@ -61,7 +68,8 @@ class UserIdeasController < ApplicationController
     respond_to do |format|
       if @user_idea.update_attributes(params[:user_idea])
         format.html { redirect_to @user_idea, notice: 'User idea was successfully updated.' }
-        format.json { head :ok }
+        #format.json { head :ok }
+        format.js
       else
         format.html { render action: "edit" }
         format.json { render json: @user_idea.errors, status: :unprocessable_entity }

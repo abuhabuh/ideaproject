@@ -24,14 +24,14 @@ class HomeController < ApplicationController
     # Case1: users have inputed an idea and have just authenticated
     #        or logged in. They should have an idea string in the session
     # Case2: users have not inputed an idea so just render main page
-    @initial_idea = nil
-    if session[:initial_idea] && !session[:initial_idea].blank?
+    @initial_idea_string = nil
+    if session[:initial_idea_string] && !session[:initial_idea_string].blank?
       # Pass idea to view
-      @initial_idea = session[:initial_idea]
+      @initial_idea_string = session[:initial_idea_string]
       
       # Delete idea from session
-      session.delete(:initial_idea)
-      if session[:initial_idea]
+      session.delete(:initial_idea_string)
+      if session[:initial_idea_string]
         puts " TRACE HomeController:index - error deleting session param"
       else
         puts " TRACE HomeController:index - deleted session param"
@@ -60,6 +60,19 @@ class HomeController < ApplicationController
 
     # Get featured ideas in order of most featured
     @featured_ideas = Idea.where("featured != ?", NOT_FEATURED).order("featured DESC")
+
+    if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM
+      # Load first idea variables for default preview display
+      @idea = @stream_ideas[0]
+      unless @idea.nil?
+        @idea_chat_msgs = @idea.chat_messages.order("id DESC").limit(IDEA_LAYOUT_PREVIEW_NUM_CHATS).reverse
+        @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
+        @has_idea = false;
+        if current_user.ideas.exists?(@idea.id)
+          @has_idea = true;
+        end
+      end
+    end
   end
 
 
@@ -102,7 +115,7 @@ class HomeController < ApplicationController
       
       # Add string to session to save for when user
       #   authenticates
-      session[:initial_idea] = params[:idea]
+      session[:initial_idea_string] = params[:idea]
       
       @stream_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
       @user_idea_ids = Array.new # empty array for user ideas since the user is unauthenticated

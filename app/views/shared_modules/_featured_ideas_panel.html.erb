@@ -25,8 +25,8 @@
       </div>
 
       <% unless @user_idea_ids.include?(idea.id.to_s) %>
-        <%= render :partial => "home/idea_action_add",
-                   :locals => {:idea_id => idea.id} %>
+        <%= render :partial => "shared_modules/button_add_idea",
+                   :locals => {:idea_id => idea.id, :float => 'right'} %>
       <% end %>
     <div>
 

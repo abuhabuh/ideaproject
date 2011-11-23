@@ -1,0 +1,57 @@
+      <div class='idea-preview-options-text-selection minor-text'>
+        <% if user_idea.time_goal == IDEA_TIMEGOAL_THIS_WEEK %>
+          <b><%=IDEA_TIMEGOAL_THIS_WEEK_STR%></b>
+        <% else %>
+          <%= link_to 'this week', 
+                      user_idea_path(:id => user_idea.id, 
+                                     :user_idea => {:user_id => user_idea.user_id, 
+                                                    :idea_id => user_idea.idea_id,
+                                                    :time_goal => IDEA_TIMEGOAL_THIS_WEEK
+                                                   }
+                                    ), 
+                      :method => :put, :remote => true %>
+        <% end %>
+      </div>
+      <div class='idea-preview-options-text-selection minor-text'>
+        <% if user_idea.time_goal == IDEA_TIMEGOAL_THIS_MONTH %>
+          <b><%=IDEA_TIMEGOAL_THIS_MONTH_STR%></b>
+        <% else %>
+          <%= link_to 'this month', 
+                      user_idea_path(:id => user_idea.id, 
+                                     :user_idea => {:user_id => user_idea.user_id, 
+                                                    :idea_id => user_idea.idea_id,
+                                                    :time_goal => IDEA_TIMEGOAL_THIS_MONTH
+                                                   }
+                                    ), 
+                      :method => :put, :remote => true %>
+        <% end %>
+      </div>
+      <div class='idea-preview-options-text-selection minor-text'>
+        <% if user_idea.time_goal == IDEA_TIMEGOAL_THIS_YEAR %>
+          <b><%=IDEA_TIMEGOAL_THIS_YEAR_STR%></b>
+        <% else %>
+          <%= link_to 'this year', 
+                      user_idea_path(:id => user_idea.id, 
+                                     :user_idea => {:user_id => user_idea.user_id, 
+                                                    :idea_id => user_idea.idea_id,
+                                                    :time_goal => IDEA_TIMEGOAL_THIS_YEAR
+                                                   }
+                                    ), 
+                      :method => :put, :remote => true %>
+        <% end %>
+      </div>
+      <div class='idea-preview-options-text-selection minor-text'>
+        <% if user_idea.time_goal == IDEA_TIMEGOAL_ANYTIME %>
+          <b><%=IDEA_TIMEGOAL_ANYTIME_STR%></b>
+        <% else %>
+          <%= link_to 'anytime', 
+                      user_idea_path(:id => user_idea.id, 
+                                     :user_idea => {:user_id => user_idea.user_id, 
+                                                    :idea_id => user_idea.idea_id,
+                                                    :time_goal => IDEA_TIMEGOAL_ANYTIME
+                                                   }
+                                    ), 
+                      :method => :put, :remote => true %>
+        <% end %>
+      </div>
+

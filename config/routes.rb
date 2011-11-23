@@ -1,5 +1,7 @@
 IdeaApp::Application.routes.draw do
  
+  resources :user_idea_times
+
   resources :event_pictures
 
   resources :pictures
@@ -63,6 +65,10 @@ IdeaApp::Application.routes.draw do
         :as => :featured_idea_admin, :via => "GET"
   match "idea/feature_idea", :to => "ideas#feature_idea",
         :as => :feature_idea, :via => 'POST'
+  match "idea/idea_preview", :to => "ideas#idea_preview",
+        :as => :idea_preview, :via => 'GET'
+  match "idea/idea_chat_user_list", :to => "ideas#idea_chat_user_list",
+        :as => :idea_chat_user_list, :via => 'GET'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
