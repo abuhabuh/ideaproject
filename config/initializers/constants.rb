@@ -1,10 +1,15 @@
 # CONSTANTS FOR IDEA PROJECT
 
+##########################################
+# Commitment Constants
+##########################################
+NUM_COMMITS_PER_MONTH = 4
+
 
 ##########################################
 # Featured ranking and grouping constants
 ##########################################
-NOT_FEATURED = 0; # not featured is 0 where as everything else is featured and can be ordered by integer
+NOT_FEATURED = 0 # not featured is 0, featured db column is integer and all values can be ordered by importance
 
 
 ##########################################
@@ -36,20 +41,21 @@ STREAM_VIEW_FEATURED = 'featured'
 # idea stream rendering 
 PIC_VIEW_TYPE_IDEA = 'idea_pic'
 PIC_VIEW_TYPE_USER = 'user_pic'
-IDEA_STREAM_VIEW_ONLY_TRUE = true
-IDEA_STREAM_VIEW_ONLY_FALSE = false
-
+IDEA_STREAM_VIEW_ONLY = 0
+IDEA_STREAM_ALL_ACTIVE = 1
+IDEA_STREAM_NO_PREVIEW = 2
 
 ##########################################
 # JS ID tags
 ##########################################
-AUTH_HOME_IDEA_ACTION_PREVIEW = 'JS-idea-row-action-preview'
+AUTH_HOME_IDEA_ACTION_PREVIEW = 'JS_idea_rowaction_preview'
 
 ##########################################
 # AJAX ID tags
 ##########################################
 #   User list view page
 ID_TAG_USER_LIST_USER_ROW = "AJAX_user_list_row_id_" #append user id
+ID_USER_PICTURE_LIST_CONTAINER = 'AJAX_user_picture_list_container' # identifies user picture list container (used in 'kick em' functionality)
 
 #   Main authenticated home page
 ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION = "AJAX_auth_home_stream_idea_action_id_" #append idea id
@@ -63,11 +69,14 @@ ID_TAG_IDEA_EDIT_LINK = "AJAX_idea_edit_link"
 #     Feedback / Idea chat window ID
 ID_TAG_FEEDBACK_CHAT = "AJAX_feedback_chat_id"
 ID_TAG_IDEA_USER = "AJAX_idea_user_" # Identifies users that are in left_nav user list as online / offline: append user id 
+#     Commitment status tag
+ID_TAG_IDEA_VIEW_COMMITMENT_STATUS = 'AJAX_idea_view_commitment_status'
+#     Chat tags
 ID_TAG_IDEA_CHAT_INPUT_AREA = 'AJAX_idea_chat_input_area'
 ID_TAG_IDEA_CHAT_USER_LIST = 'AJAX_idea_chat_user_list'
-
 ID_TAG_CHAT_USER_JOINED_STRING = 'Joined'
 ID_TAG_CHAT_USER_VIEWING_STRING = 'Viewing'
+ID_TAG_CHAT_USER_COMMITTED_STRING = 'Committed'
 
 #   Page markers to tell shared AJAX function (like add_idea_id.js.erb which is share across
 #     main auth page and idea view page) which page it is on so it can execute correct 
@@ -102,6 +111,7 @@ AUTH_HOME_IDEAS_PER_PAGE = 10
 DEALS_PER_PAGE = 8
 IDEA_LAYOUT_BLOCK_NUM_CHATS = 4
 IDEA_LAYOUT_PREVIEW_NUM_CHATS = 6
+IDEA_KICK_USERS_NUM_PER_PAGE = 3
 
 
 ##########################################

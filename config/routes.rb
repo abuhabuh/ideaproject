@@ -1,5 +1,7 @@
 IdeaApp::Application.routes.draw do
  
+  resources :idea_commitments
+
   resources :user_idea_times
 
   resources :event_pictures
@@ -69,6 +71,8 @@ IdeaApp::Application.routes.draw do
         :as => :idea_preview, :via => 'GET'
   match "idea/idea_chat_user_list", :to => "ideas#idea_chat_user_list",
         :as => :idea_chat_user_list, :via => 'GET'
+  match "idea/idea_kick_user_list", :to => "ideas#idea_kick_user_list",
+        :as => :idea_kick_user_list, :via => 'GET'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -82,6 +82,14 @@
       width: 100%;
       padding: 15px 0px;
       background-color: $button-styling-minor-color;
+
+      text-align: center;
+      font-weight: bold;
+
+      border-top: #ccc 2px solid;
+      border-right: #777 2px solid;
+      border-bottom: #777 2px solid;
+      border-left: #ccc 2px solid;
     }
     .idea-row-action-join{
       float: left;
@@ -89,12 +97,22 @@
       padding: 15px 0px;
       width: 100%;
       background-color: $button-styling-major-color;
+
+      text-align: center;
+      font-weight: bold;
+
+      border-top: #ccc 2px solid;
+      border-right: #777 2px solid;
+      border-bottom: #777 2px solid;
+      border-left: #ccc 2px solid;
     }
     .idea-row-action-join-confirm{
       float: left;
       margin-top: 5px;
       padding: 15px 0px;
       width: 100%;
+
+      text-align: center;
     }
   
 /**************

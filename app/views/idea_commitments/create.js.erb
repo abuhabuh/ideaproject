@@ -1,0 +1,9 @@
+$(document).ready(function(){
+  $('#<%=ID_TAG_IDEA_VIEW_COMMITMENT_STATUS%>').html("&nbsp;&nbsp;<%=ID_TAG_CHAT_USER_COMMITTED_STRING%>");
+  
+  $('#<%=ID_TAG_IDEA_USER + current_user.id.to_s%>').html("<%=ID_TAG_CHAT_USER_COMMITTED_STRING%>");
+
+  $('.idea-view-action-commit').html("<%= escape_javascript(
+                                          render :partial => 'ideas/make_event_button'
+                                     )%>");
+});

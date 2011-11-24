@@ -37,7 +37,7 @@ class UserIdeasController < ApplicationController
     @user_idea = UserIdea.find(params[:id])
   end
 
-  # Modified function to only render simple confirm message to AJAX call
+  # Modified function to only render simple HTML confirm message to AJAX call
   #   should ONLY be used for AJAX calls
   # POST /user_ideas
   # POST /user_ideas.json
@@ -47,6 +47,8 @@ class UserIdeasController < ApplicationController
     @user_idea.idea_id = params[:idea_id]
     @user_idea.time_goal = IDEA_TIMEGOAL_ANYTIME
     @user_idea.invited = false
+    @user_idea.want_it_count = 0;
+    @user_idea.prod_count = 0;
 
     respond_to do |format|
       if @user_idea.save!
@@ -60,15 +62,18 @@ class UserIdeasController < ApplicationController
     end
   end
 
+  # Couple different areas of the site call this function including: idea-preview from home-auth-page
+  #   and kick-em from idea-view-page so params[:source] identifies calling page and js script 
+  #   accordingly
   # PUT /user_ideas/1
   # PUT /user_ideas/1.json
   def update
     @user_idea = UserIdea.find(params[:id])
-
+    @source = params[:source]
+    
     respond_to do |format|
       if @user_idea.update_attributes(params[:user_idea])
-        format.html { redirect_to @user_idea, notice: 'User idea was successfully updated.' }
-        #format.json { head :ok }
+        format.html { render :partial => 'user_ideas/update_response' }
         format.js
       else
         format.html { render action: "edit" }

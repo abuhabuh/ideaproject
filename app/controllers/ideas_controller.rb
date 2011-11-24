@@ -19,6 +19,7 @@ class IdeasController < ApplicationController
     @idea_chat_msgs = @idea.chat_messages.order("id ASC")
     @idea_deals = @idea.deals
     @idea_events = @idea.events
+    @idea_users = @idea.users.order("want_it_count DESC, first_name ASC, last_name ASC");
     
     @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
 
@@ -39,6 +40,21 @@ class IdeasController < ApplicationController
       friend_ids << friend.id
     end
     @friend_ids_str = friend_ids.join(',')
+
+    # Get data to render kick em functionality
+    @num_total_pages = @idea_users.size / IDEA_KICK_USERS_NUM_PER_PAGE
+    if @idea_users.size % IDEA_KICK_USERS_NUM_PER_PAGE > 0
+      @num_total_pages += 1
+    end
+    if @num_total_pages > 1
+      @kickem_users_list = @idea_users[0...IDEA_KICK_USERS_NUM_PER_PAGE]
+    else
+      @kickem_users_list = @idea_users
+    end
+
+    # Get user commitment status
+    @is_committed = current_user.idea_commitments.exists?(:idea_id => @idea.id)
+    @can_commit = IdeaCommitment.can_commit(current_user.id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -160,6 +176,43 @@ class IdeasController < ApplicationController
       }
     end
     
+  end
+  
+  
+  # Renders JS for list of users that belong to this idea for displaying in 'kick user' 
+  #   facebox window
+  # AJAX call only
+  # idea_kick_user_list_path
+  def idea_kick_user_list
+    idea = Idea.find(params[:idea_id])
+
+    current_page = params[:current_page].to_i
+    idea_users = idea.users.order("want_it_count DESC, first_name ASC, last_name ASC");
+    
+    num_total_pages = idea_users.size / IDEA_KICK_USERS_NUM_PER_PAGE
+    if idea_users.size % IDEA_KICK_USERS_NUM_PER_PAGE > 0
+      num_total_pages += 1
+    end
+
+    if current_page > num_total_pages # incase users dropped between client call and server execution
+      current_page = num_total_pages
+    end
+    
+    start_index = (current_page-1) * IDEA_KICK_USERS_NUM_PER_PAGE
+    if num_total_pages > 1
+      @kickem_users_list = idea_users[start_index...(start_index + IDEA_KICK_USERS_NUM_PER_PAGE)] # don't pass copy of this heavy object
+    else
+      @kickem_users_list = idea_users
+    end
+    
+    respond_to do |format|
+      format.js{
+        render :partial => 'shared_modules/user_picture_list.js.erb',
+               :locals => {:current_page => current_page,
+                           :num_total_pages => num_total_pages,
+                           :idea_id => params[:idea_id] }
+      }
+    end
   end
   
   

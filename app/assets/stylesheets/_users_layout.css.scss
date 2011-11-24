@@ -1,0 +1,46 @@
+@import "color_definitions";
+
+
+
+/*************************************
+ * Layout - user picture list
+ *************************************/
+.user-list-block-item{
+  float: left;
+  width: 25%;
+  margin: 2%;
+  padding: 2%;
+  background-color: $secondary-color-content;
+}
+  .user-list-block-item-picture{
+    float: left;
+    width: 90px;
+    height: 90px;
+    margin: 2%;
+  }
+    .user-list-block-item-picture img{
+      max-width: 100%;
+      max-height: 100%;
+    }
+  .user-list-block-item-name{
+    float: left;
+    width: 100%;
+    margin-top: 5px;
+  }
+  .user-list-block-item-action{
+    float: left;
+    width: 100%;
+    margin-top: 5px;
+  }
+  
+.user-list-bottom-nav{
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+}
+  .user-list-bottom-nav-prev{
+    float: left;
+  }
+  .user-list-bottom-nav-next{
+    float: right;
+  }

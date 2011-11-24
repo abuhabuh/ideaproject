@@ -44,7 +44,13 @@
       var top_pos_str = Math.round(idea_pos.top-182).toString()+"px"
       $('#AJAX_right_preview_box_id').css({"position":"relative","top":top_pos_str});
       
-      $(this).html("FUCK YEA");
+      $(this).html("You joined!");
+      $(this).removeClass("JS_idea_row_action_join");
+      $(this).removeClass("idea-row-action-join");
+      $(this).addClass("idea-row-action-join-confirm");
+      $('.JS_idea_row_action_preview').mouseover(function () {
+  	    $(this).css('cursor', 'pointer');
+      });
     }
 
     $(function(){
@@ -199,7 +205,7 @@
         <%= render :partial=>'home/row_item_search_idea', 
                    :locals => {:idea_item => idea,
                                :pic_display_mode => PIC_VIEW_TYPE_USER,
-                               :view_only => IDEA_STREAM_VIEW_ONLY_FALSE} %>
+                               :view_type => IDEA_STREAM_ALL_ACTIVE} %>
       <% end %>
 
     <% end %>

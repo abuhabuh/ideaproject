@@ -1,8 +1,22 @@
 // Replace "pick time" div with new javascript
 $(document).ready(function(){
 
-  $("#<%=ID_TAG_AUTH_HOME_IDEA_PREVIEW_GOAL%>").html("<%= escape_javascript(
-      render :partial => 'ideas/idea_preview_time_goal', :locals => {:user_idea => @user_idea}
-      )%>");
+  <% if @source == 'idea_preview' %>
 
+    $("#<%=ID_TAG_AUTH_HOME_IDEA_PREVIEW_GOAL%>").html("<%= escape_javascript(
+        render :partial => 'ideas/idea_preview_time_goal', :locals => {:user_idea => @user_idea}
+        )%>");
+
+  <% elsif @source == 'kick_em' %>
+
+    $('#<%=ID_TAG_USER_LIST_USER_ROW+@user_idea.user_id.to_s%>')
+        .find('.chat-board-user-item-prod-count') // find any sub items with right class
+        .slice(0,1) // take first occurance
+        .html(String(<%=@user_idea.prod_count%>)); // update
+    
+	  $(document).trigger('close.facebox');
+
+    alert ("Wow what a kick!");
+    
+  <% end %>
 });

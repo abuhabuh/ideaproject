@@ -1,0 +1,81 @@
+<!-- USAGE
+    INPUT
+    - current_page: current page of users being displayed
+    - num_per_page: number of users to display per page
+    - kickem_users: array of users to display
+    - num_total_pages: total number of pages in query
+    - idea_id: id of idea that users correspond to
+-->
+<!-- TODO: kicking is a little broken - the original div that's
+          uncloned has prod_count => ## where ## is original 
+          value set on page load. So if user just keeps loading 
+          the first facebox page and kicking someone, the kick 
+          count will never go up cuz its always setting to same ##-->
+          
+<div class="<%=ID_USER_PICTURE_LIST_CONTAINER%>">
+  <div style='float: left; width: 100%; margin:5px;'>
+    &nbsp;
+  </div>
+  
+  <% if kickem_users.size <= 0 %>
+    <div style='float:left; width: 100%;'>
+      No one to kick!...but yourself.
+    </div>
+  <% else %>
+    <% kickem_users.each do |user| %>
+
+      <div class='user-list-block-item'>
+        <div class='user-list-block-item-picture'>
+          <%= render :partial => '/users/profile_pic', :locals => {:current_user => user, :path => user_path(user.id), :makelink => false} %>
+        </div>
+        <div class='user-list-block-item-name minor-text'>
+          <%= user.first_name + " " + user.last_name %>
+        </div>
+        <div class='user-list-block-item-action'>
+          <% user_idea = user.user_ideas.where("idea_id = ?", idea_id).first %>
+          <%= link_to "Kick em!",
+                      user_idea_path(:id => user_idea.id, 
+                                     :user_idea => {:prod_count => user_idea.prod_count + 1}, 
+                                     :source => 'kick_em'
+                                    ),
+                      :method => :put, :remote => true %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+
+  <div class='user-list-bottom-nav'>
+    <% if num_total_pages > 1 %>
+      <div class='user-list-bottom-nav-prev'>
+        <% if current_page > 1 %>
+          <div class='users_search_previous_link' style='text-decoration:underline;'>
+            <%= link_to 'prev', idea_kick_user_list_path(:idea_id => idea_id, 
+                                                         :current_page => (current_page - 1)),
+                                :method => :get,
+                                :remote => true %>
+          </div>
+        <% else %>
+          <div class='users_search_previous_link'>
+            prev
+          </div>
+        <% end %>
+      </div>
+
+      <div class='user-list-bottom-nav-next'>
+        <% if current_page == num_total_pages %>
+          <div class='users_search_next_link'> 
+            next
+          </div>
+        <% else %>
+          <div class='users_search_next_link'> 
+            <%= link_to 'next', idea_kick_user_list_path(:idea_id => idea_id, 
+                                                         :current_page => (current_page + 1)),
+                                :method => :get,
+                                :remote => true %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>  
+</div>

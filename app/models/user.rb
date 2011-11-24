@@ -17,8 +17,9 @@ class User < ActiveRecord::Base
 
   has_many :chat_messages
 
-
   has_many :user_auths
+
+  has_many :idea_commitments
 
   # Setup paperclip photo attachment property
   has_attached_file :profile_pic,

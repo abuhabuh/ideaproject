@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111122070458) do
+ActiveRecord::Schema.define(:version => 20111124032803) do
 
   create_table "admin_messages", :force => true do |t|
     t.string   "text"
@@ -88,6 +88,16 @@ ActiveRecord::Schema.define(:version => 20111122070458) do
   add_index "friendships", ["friend_id"], :name => "index_friendships_on_friend_id"
   add_index "friendships", ["user_id", "friend_id"], :name => "index_friendships_on_user_id_and_friend_id", :unique => true
   add_index "friendships", ["user_id"], :name => "index_friendships_on_user_id"
+
+  create_table "idea_commitments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "idea_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "idea_commitments", ["idea_id"], :name => "index_idea_commitments_on_idea_id"
+  add_index "idea_commitments", ["user_id"], :name => "index_idea_commitments_on_user_id"
 
   create_table "idea_deals", :force => true do |t|
     t.integer  "idea_id"
@@ -169,7 +179,9 @@ ActiveRecord::Schema.define(:version => 20111122070458) do
     t.integer  "idea_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "time_goal",  :default => 3
+    t.integer  "time_goal",     :default => 3
+    t.integer  "want_it_count", :default => 0
+    t.integer  "prod_count",    :default => 0
   end
 
   add_index "user_ideas", ["idea_id"], :name => "index_user_ideas_on_idea_id"
@@ -214,6 +226,9 @@ ActiveRecord::Schema.define(:version => 20111122070458) do
 
   add_foreign_key "friendships", "users", :name => "friendships_friend_id_fk", :column => "friend_id"
   add_foreign_key "friendships", "users", :name => "friendships_user_id_fk"
+
+  add_foreign_key "idea_commitments", "ideas", :name => "idea_commitments_idea_id_fk"
+  add_foreign_key "idea_commitments", "users", :name => "idea_commitments_user_id_fk"
 
   add_foreign_key "idea_deals", "deals", :name => "idea_deals_deal_id_fk"
   add_foreign_key "idea_deals", "ideas", :name => "idea_deals_idea_id_fk"

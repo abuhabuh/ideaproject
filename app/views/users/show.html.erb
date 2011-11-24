@@ -1,3 +1,41 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    function joinIdea(){
+      var idea_id = $('.idea-id-identifier', this).html();
+
+      $.ajax({url: "<%=user_ideas_path%>",
+              type: "POST",
+              data: {user_id: <%=current_user.id%>, idea_id: idea_id},
+              success: function(return_html){                
+                $.ajax({url: "<%=idea_preview_path%>",
+                        data: {idea_id: idea_id},
+                        success: function(return_html){
+                          $('#AJAX_right_preview_box_id').html(return_html);
+                        },
+                        dataType: 'html'});
+              },
+              dataType: 'html'});
+      
+      $(this).html("You joined!");
+      $(this).removeClass("JS_idea_row_action_join");
+      $(this).removeClass("idea-row-action-join");
+      $(this).addClass("idea-row-action-join-confirm");
+      $('.JS_idea_row_action_preview').mouseover(function () {
+  	    $(this).css('cursor', 'pointer');
+      });
+    }
+  
+    $(document).ready(function(){
+      $('.JS_idea_row_action_join').click(joinIdea);
+      $('.JS_idea_row_action_join').mouseover(function () {
+  	    $(this).css('cursor', 'pointer');
+      });        
+    });
+
+  </script>
+<% end %>
+
+
 <!-- id tag to mark this as the USER VIEW page for shared AJAX functions -->
 <div class='hidden-div' id='<%=ID_TAG_USER_VIEW_PAGE%>'></div>
 
@@ -35,7 +73,7 @@
       <div class='idea-row-misc'>Action</div>
     </div>
     
-    <%= render :partial=>"home/idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_IDEA, :view_only => IDEA_STREAM_VIEW_ONLY_FALSE} %>
+    <%= render :partial=>"home/idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_IDEA, :view_type => IDEA_STREAM_NO_PREVIEW} %>
   </div>
   
   <div class='content-section'>

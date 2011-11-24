@@ -183,17 +183,7 @@ class HomeController < ApplicationController
     
     respond_to do |format|
       format.html {
-        set_objs_to_render
-
-        unless session[:stream_view] == STREAM_VIEW_FRIENDS
-          @stream_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-        else
-          # Get stream ideas based on what type of stream we're 
-          #   rendering: Public, Friends, etc. Default is public view.
-          @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-        end
-
-        redirect_to authenticated_home_path
+        redirect_to :back
       }
       format.js
     end

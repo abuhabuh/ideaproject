@@ -4,12 +4,11 @@
     - @user_idea_ids is rendered in home_controller.html.erb by the set_objs_to_render private function
       which is called across many other functions that need to initialize this variable
       TODO: hacky...fix this - refactor it out in a better way
-    - view_only is a boolean specifying if elements should be rendered as view only (no active links)
-      mainly for process_idea page
+    - view_type is an enumerable type specifying what parts of idea stream elements to render 
     - idea_item is the idea object that is being rendered
 -->
 
-<% if view_only == IDEA_STREAM_VIEW_ONLY_TRUE %>
+<% if view_type == IDEA_STREAM_VIEW_ONLY %>
 
             <% idea_owner = User.find(idea_item.creator) %>
             <div class='idea-stream-content-row'>
@@ -65,20 +64,18 @@
                   
               </div>
               <div class='idea-row-action'>
-                <div class='JS_idea_row_action_preview idea-row-action-preview'>
-                  Preview
-                  <div class='idea-id-identifier hidden-div'><%=idea_item.id%></div>
-                </div>
-                <br />
-                <br />
+                <% unless view_type == IDEA_STREAM_NO_PREVIEW %>
+                  <div class='JS_idea_row_action_preview idea-row-action-preview'>
+                    Preview
+                    <div class='idea-id-identifier hidden-div'><%=idea_item.id%></div>
+                  </div>
+                  <br />
+                  <br />
+                <% end %>
                 <% unless @user_idea_ids.include?(idea_item.id.to_s) %>
                   <div class='JS_idea_row_action_join idea-row-action-join'>
                     Jump In!
                     <div class='idea-id-identifier hidden-div'><%=idea_item.id%></div>
-                  </div>
-                <% else %>
-                  <div class='idea-row-action-join-confirm'>
-                    Sharing idea!
                   </div>
                 <% end %>
               </div>

@@ -7,7 +7,8 @@
                                      :user_idea => {:user_id => user_idea.user_id, 
                                                     :idea_id => user_idea.idea_id,
                                                     :time_goal => IDEA_TIMEGOAL_THIS_WEEK
-                                                   }
+                                                   },
+                                     :source => 'idea_preview'
                                     ), 
                       :method => :put, :remote => true %>
         <% end %>
@@ -21,7 +22,8 @@
                                      :user_idea => {:user_id => user_idea.user_id, 
                                                     :idea_id => user_idea.idea_id,
                                                     :time_goal => IDEA_TIMEGOAL_THIS_MONTH
-                                                   }
+                                                   },
+                                     :source => 'idea_preview'
                                     ), 
                       :method => :put, :remote => true %>
         <% end %>
@@ -35,7 +37,8 @@
                                      :user_idea => {:user_id => user_idea.user_id, 
                                                     :idea_id => user_idea.idea_id,
                                                     :time_goal => IDEA_TIMEGOAL_THIS_YEAR
-                                                   }
+                                                   },
+                                     :source => 'idea_preview'
                                     ), 
                       :method => :put, :remote => true %>
         <% end %>
@@ -49,7 +52,8 @@
                                      :user_idea => {:user_id => user_idea.user_id, 
                                                     :idea_id => user_idea.idea_id,
                                                     :time_goal => IDEA_TIMEGOAL_ANYTIME
-                                                   }
+                                                   },
+                                     :source => 'idea_preview'
                                     ), 
                       :method => :put, :remote => true %>
         <% end %>

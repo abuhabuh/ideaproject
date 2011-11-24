@@ -43,8 +43,9 @@
 .user-list-container{
   float: left;
 
+  width: 100%;
   height: 300px;
-  padding: 4px; 
+  padding: 4px 0px;
   
   border: solid 2px #B58963;
   overflow: auto;
@@ -86,7 +87,7 @@
   .chat-board-user-item-text{
     float: left;
     margin-left: 10px;
-    width: 40%;
+    width: 30%;
   }
 
     .chat-board-user-item-status-offline{
@@ -96,12 +97,14 @@
       line-height: 20px;
     }
 
-  .chat-board-user-item-time-goal{
+  .chat-board-user-item-want-count{
     float: left;
-    width: 20%;
+    width: 25%;
+    text-align: center;
   }
   
-  .chat-board-user-item-select{
+  .chat-board-user-item-prod-count{
     float: left;
-    width: 15%;
+    width: 20%;
+    text-align: center;
   }
