@@ -1,6 +1,10 @@
 <% idea_owner = User.find(idea.creator) %>
 
+<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+<div class='block-stream-element-container-normal'>
+<% else %>
 <div class='block-stream-element-container'>
+<% end %>
 
   <div class='block-stream-element-description-block'>
     <div class='block-stream-element-description-owner-pic'>
@@ -10,11 +14,21 @@
     
   </div>
 
-  <div class='block-stream-element-picture'>
-    <%= link_to image_tag(idea.photo.url(:original)),
-              idea_path(idea.id),
-              {:method => 'get'} %>
-  </div>
+  <hr/>
+
+  <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+    <div class='block-stream-element-picture-normal'>
+      <%= link_to image_tag(idea.photo.url(:medium)),
+                idea_path(idea.id),
+                {:method => 'get'} %>
+    </div>
+  <% else %>
+    <div class='block-stream-element-picture'>
+      <%= link_to image_tag(idea.photo.url(:original)),
+                idea_path(idea.id),
+                {:method => 'get'} %>
+    </div>
+  <% end %>
 
   <div class='block-stream-element-stats-block'>
     <div class='block-stream-element-stats-block-text'>
@@ -39,10 +53,14 @@
       <% end %>
     </div>
   </div>
-
+  <hr/>
   <div class='block-stream-element-chat-msg-block'>
-    <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(IDEA_LAYOUT_BLOCK_NUM_CHATS).reverse %>
-
+    <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+      <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(IDEA_LAYOUT_BLOCK_NUM_CHATS-2).reverse %>
+    <% else %>
+      <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(IDEA_LAYOUT_BLOCK_NUM_CHATS).reverse %>
+    <% end %>
+    
     <% messages.each do |message| %>
       <div class='block-stream-element-chat-msg'>
         <div class='block-stream-element-chat-msg-pic'>

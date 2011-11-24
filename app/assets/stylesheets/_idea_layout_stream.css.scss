@@ -77,34 +77,27 @@
     float: left;
     width: 14%;
   }
-    .idea-row-action-preview{
+  
+    @mixin button-styling {
       float: left;
       width: 100%;
       padding: 15px 0px;
-      background-color: $button-styling-minor-color;
-
+      
+      font-family: Helvetica, Arial, sans-serif;
       text-align: center;
       font-weight: bold;
-
-      border-top: #ccc 2px solid;
-      border-right: #777 2px solid;
-      border-bottom: #777 2px solid;
-      border-left: #ccc 2px solid;
+      
+      box-shadow: 2px 2px 2px #FFEBCD inset, -2px -2px 2px #201C10 inset;
+    }
+    .idea-row-action-preview{
+      @include button-styling;
+      
+      background-color: $button-styling-minor-color;
     }
     .idea-row-action-join{
-      float: left;
-      margin-top: 5px;
-      padding: 15px 0px;
-      width: 100%;
+      @include button-styling;
+      
       background-color: $button-styling-major-color;
-
-      text-align: center;
-      font-weight: bold;
-
-      border-top: #ccc 2px solid;
-      border-right: #777 2px solid;
-      border-bottom: #777 2px solid;
-      border-left: #ccc 2px solid;
     }
     .idea-row-action-join-confirm{
       float: left;
@@ -116,7 +109,7 @@
     }
   
 /**************
- * Idea Preview 
+ * Idea Preview Panel 
  **************/
   
 .idea-preview-container{

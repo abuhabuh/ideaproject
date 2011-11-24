@@ -34,6 +34,8 @@ $button-height: 20px;
 
   @mixin button-styling {
     float: left;
+    
+    font-family: Helvetica, Arial, sans-serif;
 
     width: $button-width;
     height: $button-height;
@@ -42,11 +44,9 @@ $button-height: 20px;
     
     text-align: center;
     font-weight: bold;
-
-    border-top: #ccc 2px solid;
-    border-right: #777 2px solid;
-    border-bottom: #777 2px solid;
-    border-left: #ccc 2px solid;    
+    text-shadow: -1px -1px 2px #777777;
+  
+    box-shadow: 2px 2px 5px #FFEBCD inset, -2px -2px 5px #201C10 inset;
   }
   .idea-view-action-want-it, .idea-view-action-commit, .idea-view-action-nudge{
     float: left;
@@ -54,6 +54,9 @@ $button-height: 20px;
     height: 100%;
     margin: 0% 1%;
   }
+    .idea-view-action-nudge a{
+      text-decoration: none;
+    }
     .idea-view-action-want-it-button{
       @include button-styling;
       font-size: 26px;
@@ -62,6 +65,8 @@ $button-height: 20px;
     }
     .idea-view-action-nudge-button{
       @include button-styling;
+      
+      text-decoration: none;
 
       background-color: $main-content-title-color;
       color: white;

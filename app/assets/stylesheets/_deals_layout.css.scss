@@ -8,7 +8,7 @@
   float: left;
   
   width: 100%;
-  height: 200px;
+  height: 450px;
   
   margin: 10px 0px;
  
@@ -19,86 +19,86 @@
   overflow: auto;
 }
 
-.deal-element-container{
-  float: left;
-  
-  background-color: #DAD5C1;
-  
-  width: 220px;
-  
-  margin-right: 10px;
-  margin-bottom: 15px;
-  padding: 3px;
-  
-  font-size: 12px;
-  
-  border-style: solid;
-  border-width: 0px;
-}
-
-.deal-element-left-section{
-  float: left;
-
-  margin-right: 1%;
-
-  width: 59%;
-}
-
-  .deal-element-title{
+  .deal-element-container{
     float: left;
     
-    width: 100%;
-  }
-
-  .deal-element-left-section-text{
-    float: left;
-    width: 63%;
-  }
-
-  .deal-element-left-section-text a{
-    text-decoration: none;
-  }
-
-.deal-element-right-section{
-  float: right;
-  
-  margin-left: 1%;
-  
-  width: 38%;
-}
-
-  .deal-element-photo{
-    float: right;
-
-    width: 100%;
-    height: 50px;
+    background-color: #DAD5C1;
     
-    /* top right bottom left*/
-    margin: 1% 1% 1% 0%;
-  }
-
-  .deal-element-photo img{
-    float: right;
+    width: 96%;
     
-    max-height:100%; 
-    max-width:100%;
+    margin: 6px;
+    margin-right: 2%;
+    font-size: 12px;
+    
+    border-style: solid;
+    border-width: 0px;
   }
 
-  .deal-element-right-section-text{
-    float: right;
+    .deal-element-left-section{
+      float: left;
 
-    text-align: right;
+      margin-right: 2%;
 
-    width: 100%;  
-  }
+      width: 18%;
+      padding: 1%;
+    }
+      .deal-element-pic{
+        float: right;
 
-.deal-element-make-event-button{
-  float: left;
-
-  width: 100%;
-
-  margin-top: 5px;
-}
+        width: 100%;
+        height: 50px;
+        
+        /* top right bottom left*/
+        margin: 1% 1% 1% 0%;
+      }
+      .deal-element-pic img{
+        float: left;
+        
+        max-height:100%; 
+        max-width:100%;
+      }
+      .deal-element-found-by{
+        float: left;
+        width: 100%;
+      }
+    .deal-element-middle-section{
+      float: left;
+      margin-right: 1%;
+      width: 48%;
+      padding: 1%;
+    }
+      .deal-element-title{
+        float: left;
+        
+        width: 100%;
+        
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .deal-element-content{
+        float: left;
+        
+        width: 100%;
+      }
+    .deal-element-right-section{
+      float: left;
+      width: 23%;
+      
+      padding: 1%;
+    }
+      .deal-element-price{
+        float: right;
+        
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .deal-element-percent-off{
+        float: right;
+      }
+      .deal-element-make-event-button{
+        float: right;
+        margin-top: 5px;
+      }
 
 
 /******************************

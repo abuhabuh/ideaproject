@@ -190,12 +190,47 @@
       <% end %>
     </div>
     
+    <div class='idea-stream-content-view-selector'>
+      View: 
+      <% case session[:stream_view] %>
+        <% when STREAM_VIEW_PUBLIC %>
+          Public | 
+          <%= link_to 'Friends', 
+                      authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
+                                              {:method => 'get', 
+                                               :title => "See friends' ideas"}%><br/>
+
+        <% when STREAM_VIEW_FRIENDS %>  
+          <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
+                                                        {:method => 'get', 
+                                                         :title => "See public ideas"}%> | 
+          Friends<br/>
+
+        <% when STREAM_VIEW_SEARCH %>
+          <%= link_to 'Public',
+                     authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC),
+                     {:method => 'get',
+                      :title => "See public ideas"}%> | 
+          <%= link_to 'Friends',
+                     authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
+                     {:method => 'get',
+                     :title => "See friends' ideas"}%> | 
+          Search <br />
+
+      <% end %>
+    </div>
+
   </div>
 
   <div id='AJAX_main_stream_content'>    
     <!-- Determine what kind of layout to render -->
     <% case current_user.auth_page_layout %>
     <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
+      <% @stream_ideas.each do |idea| %>
+        <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea} %>
+      <% end %>
+
+    <% when PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
       <% @stream_ideas.each do |idea| %>
         <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea} %>
       <% end %>

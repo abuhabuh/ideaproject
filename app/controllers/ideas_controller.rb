@@ -54,7 +54,8 @@ class IdeasController < ApplicationController
 
     # Get user commitment status
     @is_committed = current_user.idea_commitments.exists?(:idea_id => @idea.id)
-    @can_commit = IdeaCommitment.can_commit(current_user.id)
+    @num_commits_outstanding = IdeaCommitment.get_num_commits_outstanding(current_user.id)
+    @can_commit = @num_commits_outstanding < NUM_COMMITS_PER_MONTH
 
     respond_to do |format|
       format.html # show.html.erb

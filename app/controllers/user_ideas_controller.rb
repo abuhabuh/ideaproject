@@ -70,6 +70,8 @@ class UserIdeasController < ApplicationController
   def update
     @user_idea = UserIdea.find(params[:id])
     @source = params[:source]
+    updated_user = User.find(@user_idea.user_id)
+    @user_name = updated_user.first_name
     
     respond_to do |format|
       if @user_idea.update_attributes(params[:user_idea])

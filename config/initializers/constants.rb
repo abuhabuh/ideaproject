@@ -98,7 +98,7 @@ USER_ACTION_FRIENDSHIP_ADDED = "Friend has been added."
 USER_ACTION_FRIENDSHIP_ADD_ERROR = "Error adding friend."
 USER_ACTION_FRIENDSHIP_REMOVED = "Friend removed."
 USER_ACTION_NEW_IDEA_CREATED = "Your new idea was created and saved."
-INPUT_BOX_ADD_IDEA = "What do you want to do?"
+INPUT_BOX_ADD_IDEA = "What do you want to do with friends?"
 INPUT_BOX_SEARCH_IDEAS = "Enter text to search"
 BUTTON_JOIN_IDEA = "Join Idea!"
 BUTTON_CHAT_IDEA = "Go Chat!"
@@ -111,15 +111,16 @@ AUTH_HOME_IDEAS_PER_PAGE = 10
 DEALS_PER_PAGE = 8
 IDEA_LAYOUT_BLOCK_NUM_CHATS = 4
 IDEA_LAYOUT_PREVIEW_NUM_CHATS = 6
-IDEA_KICK_USERS_NUM_PER_PAGE = 3
+IDEA_KICK_USERS_NUM_PER_PAGE = 6
 
 
 ##########################################
 # Page Layout Constants
 ##########################################
 PAGE_LAYOUT_AUTH_HOME_BLOCK = 0
-PAGE_LAYOUT_AUTH_HOME_MAGAZINE = 1
-PAGE_LAYOUT_AUTH_HOME_STREAM = 2
+PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL = 1
+PAGE_LAYOUT_AUTH_HOME_MAGAZINE = 2
+PAGE_LAYOUT_AUTH_HOME_STREAM = 3
 
 ##########################################
 # Ideas Constants

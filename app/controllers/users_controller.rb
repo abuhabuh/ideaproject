@@ -19,11 +19,13 @@ class UsersController < ApplicationController
   
   # GET /users/profile
   def profile
-    
   end
 
   def facebook_callback
-    put "CALLBACK HERE!" #TODO: put is a command?
+  end
+
+  def change_user_password
+    render 'devise/registrations/change_password'
   end
 
   def set_view_layout

@@ -1,3 +1,18 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+		  
+		  // Setup tabbing
+		  $(function() {
+      	// setup ul.tabs to work as tabs for each div directly under div.panes
+	      $("ul.tabs").tabs("div.panes > div");
+      });
+      
+    });
+  </script>
+<% end %>
+
+
 <div class='left-nav'>
  <%= render :partial => '/users/profile_pic', :locals => {:current_user => current_user, :makelink => false} %> 
   <%= link_to 'edit profile', edit_user_registration_path, :method => :get %><br/>

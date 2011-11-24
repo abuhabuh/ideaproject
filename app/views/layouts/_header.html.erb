@@ -32,38 +32,7 @@
               <%= submit_tag "Add Idea" %>
             <% end %>
             
-            <div class='idea-stream-content-view-selector'>
-              View: 
-              <% case session[:stream_view] %>
-                <% when STREAM_VIEW_PUBLIC %>
-                  Public | 
-                  <%= link_to 'Friends', 
-                              authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
-                                                      {:method => 'get', 
-                                                       :title => "See friends' ideas"}%><br/>
-
-                <% when STREAM_VIEW_FRIENDS %>  
-                  <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
-                                                                {:method => 'get', 
-                                                                 :title => "See public ideas"}%> | 
-                  Friends<br/>
-
-                <% when STREAM_VIEW_SEARCH %>
-                  <%= link_to 'Public',
-                             authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC),
-                             {:method => 'get',
-                              :title => "See public ideas"}%> | 
-                  <%= link_to 'Friends',
-                             authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
-                             {:method => 'get',
-                             :title => "See friends' ideas"}%> | 
-                  Search <br />
-
-              <% end %>
-            </div>
-            
-
-            <div class='nav-main-link round'><%= link_to 'Community', users_path %></div>
+            <div class='nav-main-link round'><%= link_to 'Add Friends', users_path %></div>
             
             <div class='nav-main-link round'><%= link_to 'My Ideas', users_profile_path%></div>
 
@@ -80,15 +49,23 @@
               Hello <%= link_to current_user.first_name.empty? ? current_user.user_name : current_user.first_name, users_profile_path %><br/>
               <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete%>
               <br/>
+
               Layout:<br/>
-              <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
-                <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
+              <% case current_user.auth_page_layout %>
+              <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
                 Stream | 
-              <% else %>
-                Block | 
-                <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> |               
+                <%= link_to 'Stagger', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
+                <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL), :method => 'post' %>
+              <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
+                <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> | 
+                Stagger | 
+                <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL), :method => 'post' %>
+              <% when PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+                <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> | 
+                <%= link_to 'Stagger', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
+                Block
               <% end %>
-              <span style='font-weight:lighter;'>Magazine</span>
+
 	          <% else %>
               <%= link_to 'Sign In', new_user_session_path, options = {:rel => 'facebox'} %><br/>
 	          <% end %>

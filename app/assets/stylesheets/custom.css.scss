@@ -153,10 +153,6 @@ body {
   color: $button-styling-minor-text-color;
 }
 
-  /*************************************
-   * Misc: Containers, etc
-   *************************************/
-
 
 /*************************************
  *************************************
@@ -197,7 +193,7 @@ header{
   width: 900px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 95px;
+  margin-top: 80px;
   
   height: 100%; 
   
@@ -208,7 +204,7 @@ header{
   width: 900px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 75px;
+  margin-top: 60px;
   
   height: 100%; 
   
@@ -238,7 +234,7 @@ header{
   float: left;
   
   width: 100%;
-  height: 95px;
+  height: 80px;
   
   position: fixed;
   top: 0px;
@@ -250,7 +246,7 @@ header{
   float: left;
   
   width: 100%;
-  height: 70px;
+  height: 55px;
   
   position: fixed;
   top: 0px;
@@ -563,13 +559,11 @@ nav.main-authentication ul li a:hover {
 
 /* Idea stream content: content area for list of ideas */
 .idea-stream-content-view-selector{
-  float: left;
-  
-  width: 100%;
+  float: right;
   
   margin-top: 2px;
   margin-bottom: 5px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .idea-stream-header-row{
@@ -704,7 +698,7 @@ p.alert{
 /*************************************
  *************************************
  *
- * Div Popup
+ * Div Popup TODO: Not used. delete?
  *
  *************************************
  *************************************/

@@ -84,10 +84,10 @@
             $(".deals_search_previous_link").show();
             $(".deals_search_next_link").show();
           }
-        },
-        error: function(msg){ // TODO: remove this for live deploy
-          alert(msg);
-        }
+        }//,
+        //error: function(msg){ // TODO: remove this for live deploy
+        //  alert(msg);
+        //}
       });
     }
 
@@ -127,12 +127,6 @@
     
     
 		$(document).ready(function(){
-
-		  // Setup tabbing
-		  $(function() {
-      	// setup ul.tabs to work as tabs for each div directly under div.panes
-	      $("ul.tabs").tabs("div.panes > div");
-      });
 		
       // Bind view deals on-click function
       $('#JQUERY-view-deals-link').bind('click', function() {
@@ -249,10 +243,10 @@
               	$(this).css('cursor', 'pointer');
               });
             }
-          },
-          error: function(msg){ // remove this for live deploy
-            alert(msg);
-          }
+          }//,
+          //error: function(msg){ // remove this for live deploy
+          //  alert(msg);
+          //}
         });
 		  }
 			
@@ -282,10 +276,10 @@
           dataType: 'html',
           success: function(returned_html){
             $("#<%=ID_TAG_IDEA_CHAT_USER_LIST%>").prepend(returned_html);
-          },
-          error: function(msg){ // remove this for live deploy
-            alert(msg);
-          }
+          }//,
+          //error: function(msg){ // remove this for live deploy
+          //  alert(msg);
+          //}
         });
     }
 
@@ -326,6 +320,10 @@
         });
 			  $('#JS_commit').click(commit_user_to_idea);
 
+        // make mouse over the help icon for all help links
+        $('.JS_help_link').mouseover(function () {
+          $(this).css('cursor','help');
+        });
 		  });
 
       // send commit create to backend database and update page accordingly
@@ -379,7 +377,15 @@
                          :num_total_pages => @num_total_pages,
                          :idea_id => @idea.id } %>
 </div>
-
+<div id='FACEBOX_commit_help' class='hidden-div'>
+  <%= render :partial => 'shared_modules/help_popup_num_commits' %>
+</div>
+<div id='FACEBOX_want_it_help' class='hidden-div'>
+  <%= render :partial => 'shared_modules/help_popup_want_it' %>
+</div>
+<div id='FACEBOX_kick_help' class='hidden-div'>
+  <%= render :partial => 'shared_modules/help_popup_kick' %>
+</div>
 
 <div class='left-nav-wide'>
 
@@ -389,18 +395,17 @@
     </div>
     <div class='idea-view-info minor-text'>
       <% unless @curr_user_idea_link.nil? %>
-        You want to do this: <br/>
-        &nbsp;&nbsp;<%= UserIdea.time_goal_string(@curr_user_idea_link.time_goal) %>
+        <b>Your Status</b> <br/>
+        &nbsp;&nbsp;<b>Do This:</b> <%= UserIdea.time_goal_string(@curr_user_idea_link.time_goal) %>
         <br/>
-        <br/>
-        Commitment status: <br/>
-        <div id='<%=ID_TAG_IDEA_VIEW_COMMITMENT_STATUS%>'>
+        &nbsp;&nbsp;<b>Committed?:</b>
+        <span id='<%=ID_TAG_IDEA_VIEW_COMMITMENT_STATUS%>'>
           <% if @is_committed %>
-            &nbsp;&nbsp;Committed
+            Yes
           <% else %>
-            &nbsp;&nbsp;Not Committed
+            No
           <% end %>
-        </div>
+        </span>
       <% else %>
         <!-- TODO: NEED TO MAKE NEW PARTIAL THAT DOESN'T DIRECT TO HOME CONTROLLER AJAX -->
         You're getting left out! <br/>
@@ -431,10 +436,14 @@
         Name:
       </div>
       <div class='chat-board-user-item-want-count'>
-        Want Count:
+        <a href='#FACEBOX_want_it_help' rel='facebox'>
+          <span class="JS_help_link">Want Count</span>:
+        </a>
       </div>
       <div class='chat-board-user-item-prod-count'>
-        Times Kicked:
+        <a href='#FACEBOX_kick_help' rel='facebox'>
+          <span class="JS_help_link">Times Kicked</span>:
+        </a>
       </div>
     </div>
   
@@ -461,7 +470,7 @@
       <% end %>
     </span>
   </div>
-  <span class='minor-text'>Talk about the idea with anyone interested! Find out who you'd like to do it with! It's just an idea. No commitment...yet :) </span>
+  <span class='minor-text'>Talk about the idea with anyone interested! Find out who you'd like to do it with and motivate the group! </span>
   
   <% if @has_idea %>
     <!-- just taking up some space... -->
@@ -471,13 +480,18 @@
       <div class='idea-view-action-section' style='text-align: center;'>
 
         <div class='idea-view-action-want-it'>
-          <span class='minor-text'>Who wants it more? Click to take the lead.</span>
+          <span class='minor-text'>
+            <a href='#FACEBOX_want_it_help' rel='facebox'><span class="JS_help_link">Who wants it more</span></a>? Click to take the lead.
+          </span>
           <div id='JS_want_it_counter' class='idea-view-action-want-it-button round'>
             <%= @curr_user_idea_link.want_it_count %>
           </div>
         </div>
         <div class='idea-view-action-nudge'>
-          <span class='minor-text'>Sick of waiting around? Kick someone into action.</span>
+          <span class='minor-text'>
+            <a href='#FACEBOX_kick_help' rel='facebox'><span class="JS_help_link" style="text-decoration: underline;">Sick of waiting around</span></a>? 
+            Kick someone into action.
+          </span>
           <a href='#FACEBOX_kick_someone_container' rel='facebox'>
             <div class='idea-view-action-nudge-button round'>
               Kick em!
@@ -489,13 +503,19 @@
             <%= render :partial => 'ideas/make_event_button' %>
           <% else %>
             <% if @can_commit %>
-              <span class='minor-text'>Motivate others and commit to the idea.</span>
+              <span class='minor-text'>
+                <a href='#FACEBOX_commit_help' rel='facebox'><span class="JS_help_link">You have <%=(NUM_COMMITS_PER_MONTH - @num_commits_outstanding)%> commits</span></a> left. 
+                Commit to motivate others!
+              </span>
               
               <div id='JS_commit' class='idea-view-action-commit-button round'>
                 Commit
               </div>
             <% else %>
-              <span class='minor-text'>Sorry, you're out of commits. Try kicking someone :)</span>
+              <span class='minor-text'>
+                <a href='#FACEBOX_commit_help' rel='facebox'><span class="JS_help_link">Sorry, you're out of commits</span></a>. 
+                Try kicking someone :)
+              </span>
               
               <div class='idea-view-action-commit-button round'>
                 &nbsp;
