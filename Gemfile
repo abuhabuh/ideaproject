@@ -37,6 +37,8 @@ gem 'will_paginate'
 gem 'omniauth-facebook'
 gem 'omniauth'
 
+# Database import / export functionality
+# gem 'taps'
 
 # TEST GEM INSTALL <BEGIN>
 #group :development do

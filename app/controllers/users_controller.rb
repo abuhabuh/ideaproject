@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   
   # GET /users
   def index
-    @users = User.where("id != ?", current_user.id)
+    @users = User.where("id != ?", current_user.id).order("first_name ASC, last_name ASC");
   end
   
   # GET /users/1
