@@ -21,7 +21,7 @@ class Event < ActiveRecord::Base
   has_many :pictures, :through => :event_pictures
 
   attr_accessible :name, :description, :location, :start_date, :end_date, :visibility, :status, :num_users_joined
-  validates_presence_of :name, :visibility, :status
+  validates_presence_of :name, :visibility, :status, :num_users_joined
   
   validates_inclusion_of :visibility, :in => [USER_EVENT_VISIBILITY_PUBLIC, 
                                               USER_EVENT_VISIBILITY_FRIENDS, 

@@ -32,7 +32,7 @@ class Idea < ActiveRecord::Base
   end
   
   attr_accessible :text, :photo, :creator, :num_users_joined, :featured
-  validates_presence_of :text, :creator, :featured
+  validates_presence_of :text, :creator, :num_users_joined, :featured
 
 
   def set_photo_from_url(url)

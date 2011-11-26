@@ -93,7 +93,7 @@ class IdeasController < ApplicationController
     respond_to do |format|
       if @idea.save!
       
-        UserIdea.create(:user_id => current_user.id, :idea_id => @idea.id, :invited => false) # TODO: catch database write error
+        UserIdea.create(:user_id => current_user.id, :idea_id => @idea.id, :status => USER_IDEA_STATUS_SHARING) # TODO: catch database write error
       
         format.html { redirect_to @idea, notice: 'Idea was successfully created.' }
         format.json { render json: @idea, status: :created, location: @idea }

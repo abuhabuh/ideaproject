@@ -18,7 +18,7 @@ development:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: dev_schema
+  database: dev_schema_sandbox
   pool: 5
   username: app_dev_db
   password: pswd

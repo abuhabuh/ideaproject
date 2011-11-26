@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, \
     :user_name, :first_name, :last_name, :location, :dob, :profile_pic, \
     :description, :interests, :profile_pic_file_name, :auth_page_layout
-  validates_presence_of :email, :first_name, :last_name
+  validates_presence_of :email, :first_name, :last_name, :user_name
 
   # Create new idea object for user
   def create_idea (idea_string)
@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
       puts " TRACE User:create_idea - saved idea"
       puts " TRACE User:create_idea - " + idea.inspect
 
-      user_idea = UserIdea.new(:user_id => self[:id], :idea_id => idea.id, :invited => false)
+      user_idea = UserIdea.new(:user_id => self[:id], :idea_id => idea.id, :status => USER_IDEA_STATUS_SHARING)
       user_idea.save!
 
       puts " TRACE User:create_idea - " + user_idea.inspect
@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
       puts " TRACE User:join_idea - idea save error"
     end 
     
-    user_idea = UserIdea.new(:user_id => self[:id], :idea_id => idea_id, :invited => false)
+    user_idea = UserIdea.new(:user_id => self[:id], :idea_id => idea_id, :status => USER_IDEA_STATUS_SHARING)
     if user_idea.save!
       puts " TRACE User:join_idea - user_idea saved successfully"
     else

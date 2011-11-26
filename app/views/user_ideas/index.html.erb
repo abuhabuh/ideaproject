@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th>Invited</th>
+    <th>Status</th>
     <th>User</th>
     <th>Idea</th>
     <th></th>
@@ -12,7 +12,7 @@
 
 <% @user_ideas.each do |user_idea| %>
   <tr>
-    <td><%= user_idea.invited %></td>
+    <td><%= user_idea.status %></td>
     <td><%= user_idea.user %></td>
     <td><%= user_idea.idea %></td>
     <td><%= link_to 'Show', user_idea %></td>

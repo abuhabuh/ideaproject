@@ -11,6 +11,20 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :both
       # t.token_authenticatable
 
+      t.string :first_name, :null => false
+      t.string :last_name, :null => false
+      t.string :user_name, :null => false
+      t.string :location
+      t.date   :dob
+      t.string :description
+      t.string :interests
+      t.integer :auth_page_layout, :null => false, :default => 0
+
+
+      t.string :profile_pic_file_name
+      t.string :profile_pic_content_type
+      t.integer :profile_pic_file_size
+      t.datetime :profile_pic_updated_at
 
       t.timestamps
     end

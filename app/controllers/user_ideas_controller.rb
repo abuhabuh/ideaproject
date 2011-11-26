@@ -46,7 +46,7 @@ class UserIdeasController < ApplicationController
     @user_idea.user_id = params[:user_id]
     @user_idea.idea_id = params[:idea_id]
     @user_idea.time_goal = IDEA_TIMEGOAL_ANYTIME
-    @user_idea.invited = false
+    @user_idea.status = USER_IDEA_STATUS_SHARING
     @user_idea.want_it_count = 0;
     @user_idea.prod_count = 0;
 

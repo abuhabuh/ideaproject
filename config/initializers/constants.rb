@@ -100,7 +100,7 @@ USER_ACTION_FRIENDSHIP_REMOVED = "Friend removed."
 USER_ACTION_NEW_IDEA_CREATED = "Your new idea was created and saved."
 INPUT_BOX_ADD_IDEA = "What do you want to do with friends?"
 INPUT_BOX_SEARCH_IDEAS = "Enter text to search"
-BUTTON_JOIN_IDEA = "Join Idea!"
+BUTTON_JOIN_IDEA = "Add Idea!"
 BUTTON_CHAT_IDEA = "Go Chat!"
 
 
@@ -117,22 +117,27 @@ IDEA_KICK_USERS_NUM_PER_PAGE = 6
 ##########################################
 # Page Layout Constants
 ##########################################
-PAGE_LAYOUT_AUTH_HOME_BLOCK = 0
-PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL = 1
+PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL = 0
+PAGE_LAYOUT_AUTH_HOME_BLOCK = 1
 PAGE_LAYOUT_AUTH_HOME_MAGAZINE = 2
 PAGE_LAYOUT_AUTH_HOME_STREAM = 3
 
 ##########################################
 # Ideas Constants
 ##########################################
+#   Time goal - the time range someone's idea goes for
 IDEA_TIMEGOAL_THIS_WEEK = 0
-IDEA_TIMEGOAL_THIS_WEEK_STR = 'this week'
 IDEA_TIMEGOAL_THIS_MONTH = 1
-IDEA_TIMEGOAL_THIS_MONTH_STR = 'this month'
 IDEA_TIMEGOAL_THIS_YEAR = 2
-IDEA_TIMEGOAL_THIS_YEAR_STR = 'this year'
 IDEA_TIMEGOAL_ANYTIME = 3
+IDEA_TIMEGOAL_THIS_WEEK_STR = 'this week'
+IDEA_TIMEGOAL_THIS_MONTH_STR = 'this month'
+IDEA_TIMEGOAL_THIS_YEAR_STR = 'this year'
 IDEA_TIMEGOAL_ANYTIME_STR = 'anytime'
+#   User's idea status
+USER_IDEA_STATUS_SHARING = 0
+USER_IDEA_STATUS_INVITED = 1
+USER_IDEA_STATUS_LIKE = 2 # TODO: maybe use this? not implemented yet
 
 ##########################################
 # Events Constants
