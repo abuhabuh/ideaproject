@@ -163,8 +163,12 @@ class IdeasController < ApplicationController
     @post.user_id = current_user.id
     
     @post.save
-    
-     redirect_to Idea.find_by_id(@post.idea_id)
-  end
+   
+    respond_to do |format|
+      format.html {render :partial => 'forum/forum_display', :locals => {:posts => [@post], :level => 2, :postCount => 2} }   #{ redirect_to Idea.find_by_id(@post.idea_id) }
+      format.json 
+    end
+ 
+       end
    
 end

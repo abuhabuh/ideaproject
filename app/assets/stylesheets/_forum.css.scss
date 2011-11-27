@@ -1,18 +1,51 @@
 .profile-pic-div {
   float: left;
+  position: relative;
 
   height: 30px;
   width: 30px;
+
+
+  margin-left: -30px;
 }
 
 .parent-post {
-  float: left;
+
+  background-color: #AB9771;
+
+  padding-left: 30px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+
+  
+}
+
+.forum-post-right {
+  position: relative;
+
 
   width: 100%;
 }
 
-.forum-post-right {
+.forum_reply {
   float: left;
+}
 
-  width: 85%;
+.view-children {
+  float: left;
+  margin-left: 50px; 
+
+}
+
+.post-timestamp {
+}
+
+.post-timestamp-text {
+  font-size: 12px;
+  color: #BFB9AC;
+}
+
+.post-empty-border {
+  border: 1px solid; 
+  border-color: #BAA479; 
 }
