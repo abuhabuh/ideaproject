@@ -1,3 +1,11 @@
+<% content_for :head do %>
+  <script>
+    $(document).ready(function() {
+      $('a[rel*=facebox]').facebox()
+    }); 
+  </script>
+<% end %>
+
 <div class='unauth-content-container'>
 
 
@@ -8,7 +16,7 @@
       <b>
         No one has your idea yet! <br/>
         <br/>
-        <%= link_to 'Create an account', new_user_registration_path %> or <%= link_to 'Sign In', new_user_session_path %> to submit it and invite your friends.
+        <%= link_to 'Create an account', new_user_registration_path %> or <%= link_to 'Sign In', new_user_session_path, options = {:rel => 'facebox'} %> to submit it and invite your friends.
       </b>
       <br />
     </div>
@@ -17,7 +25,7 @@
     <div class='content-text'>
     
       <b>You have idea matches below! 
-        <%= link_to 'Create an account', new_user_registration_path %> or <%= link_to 'Sign In', new_user_session_path %> to join them or create your own.
+        <%= link_to 'Create an account', new_user_registration_path %> or <%= link_to 'Sign In', new_user_session_path, options = {:rel => 'facebox'} %> to join them or create your own.
       </b>
       
       <br />
@@ -38,7 +46,7 @@
       <div class='content-text'>
         <br/>
         <br/>
-        <p> <%= link_to 'Create an Account', new_user_registration_path %> or <%= link_to 'Login', new_user_session_path %> to see more! </p>
+        <p> <%= link_to 'Create an Account', new_user_registration_path %> or <%= link_to 'Login', new_user_session_path, options = {:rel => 'facebox'} %> to see more! </p>
       </div>
 
     </div>
