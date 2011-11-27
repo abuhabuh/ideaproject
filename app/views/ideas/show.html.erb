@@ -189,26 +189,26 @@
  
     $(document).ready(function(){
  
-        $(".reply-link-class").click(toggle_reply);
+      $(".reply-link-class").click(toggle_reply);
 
-        $(".view-children-link").click(function() {
-          var id = $(this).attr("id");
-          var post_id = id.match("\\d+");
-          id = "#" + post_id + "_children";
-          $(id).toggle();
-          var link_text = $(this).text();
-          //Change the link text to View/Hide so the user knows they can toggle the post tree
-          if(link_text.search("View") > -1) {
-            link_text = link_text.replace("View", "Hide");
-          } else if(link_text.search("Hide") > -1) {
-            link_text = link_text.replace("Hide", "View");
-          }
-          $(this).text(link_text);
-          return false;
-        });
+      $(".view-children-link").click(function() {
+        var id = $(this).attr("id");
+        var post_id = id.match("\\d+");
+        id = "#" + post_id + "_children";
+        $(id).toggle();
+        var link_text = $(this).text();
+        //Change the link text to View/Hide so the user knows they can toggle the post tree
+        if(link_text.search("View") > -1) {
+          link_text = link_text.replace("View", "Hide");
+        } else if(link_text.search("Hide") > -1) {
+          link_text = link_text.replace("Hide", "View");
+        }
+        $(this).text(link_text);
+        return false;
+      });
 
-        $('.new_post').bind('ajax:success', replyFormAjax);
-    
+      $('.new_post').bind('ajax:success', replyFormAjax);
+  
       $('#JQUERY-view-deals-link').bind('click', function() {
         if ($('#JQUERY-deals-section').css('display') == "none"){
           $('#JQUERY-deals-section').show('slow');
@@ -219,6 +219,20 @@
           $('#JQUERY-view-deals-link').html("Show");
           //$('.chat-board-container').height(230);
         }
+        return false;
+      });
+
+      $('#JQUERY-view-chat-link').bind('click', function() {
+        if ($('#JQUERY-chat-container').css('display') == "none"){
+          $('#JQUERY-chat-container').show('slow');
+          $('#JQUERY-view-chat-link').html("Hide");
+          //$('.chat-board-container').height(100);
+        } else {
+          $('#JQUERY-chat-container').hide('slow');
+          $('#JQUERY-view-chat-link').html("Show");
+          //$('.chat-board-container').height(230);
+        }
+        return false;
       });
 
       // Open facebox on <a> link click
@@ -242,6 +256,12 @@
 			
 			chat_presence_channel.bind('pusher:subscription_succeeded', function(members){
 				$('#people_chatting').html("");
+        
+        if (members.count > 1){
+          $('#JQUERY-chat-window-header').html("Live Chat Window - People are online!");
+          $('#JQUERY-chat-container').show('slow');
+          $('#JQUERY-view-chat-link').html("Hide");
+        }
 
 				members.each(function(member){				
   				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
@@ -264,9 +284,17 @@
 			chat_presence_channel.bind('pusher:member_added', function(member){
 				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
 				  member_online(member.id);
-				} else {				
+
+          $('#JQUERY-chat-window-header').html("Live Chat Window - " + member.info.name + " online!");
+          $('#JQUERY-chat-container').show('slow');
+          $('#JQUERY-view-chat-link').html("Hide");
+				} else {
           if (render_user(member.id)) {
             add_user_to_list(member.id);
+            //" + member.user_info.name + "
+            $('#JQUERY-chat-window-header').html("Live Chat Window - " + member.info.name + " online!");
+            $('#JQUERY-chat-container').show('slow');
+            $('#JQUERY-view-chat-link').html("Hide");
 				  }
 				}
 			});
@@ -380,6 +408,7 @@
 		  //   rendered depending on if user has joined idea
 		  //////////////////////////////////////////////////////////
       var want_it_additional_clicks=false; // this counts batches of clicks; interval function picks this up, sends to DB, and clears counter
+      var want_it_global_counter = <%= @curr_user_idea_link.want_it_count.to_i %>;
 
 		  $(document).ready(function(){			
 			  // bind want it div to click and turn into button
@@ -387,8 +416,8 @@
         	$(this).css('cursor', 'pointer');
         });
 			  $('#JS_want_it_counter').click(function(){
-          var want_it_count = parseInt($(this).html());
-          $(this).html(String(want_it_count + 1));
+          want_it_global_counter += 1;
+          $(this).html(String(want_it_global_counter));
           want_it_additional_clicks = true;
 			  });		
         setInterval(function() {
@@ -417,15 +446,14 @@
         if (want_it_additional_clicks){
           want_it_additional_clicks = false;
 
-          var want_it_count_update = parseInt($('#JS_want_it_counter').html());
           $.ajax({url: "/user_ideas/"+<%=@curr_user_idea_link.id.to_s%>,
                   type: "PUT",
-                  data: {id: "<%=@curr_user_idea_link.id.to_s%>", user_idea: {want_it_count: want_it_count_update}},
+                  data: {id: "<%=@curr_user_idea_link.id.to_s%>", user_idea: {want_it_count: want_it_global_counter}},
                   success: function(return_html){
                     $('#<%=ID_TAG_USER_LIST_USER_ROW+current_user.id.to_s%>')
                       .find('.chat-board-user-item-want-count') // find any sub items with right class
                       .slice(0,1) // take first occurance
-                      .html(String(want_it_count_update)); // update
+                      .html(String(want_it_global_counter)); // update
                   },
                   dataType: 'html'});
         }
@@ -485,13 +513,16 @@
             No
           <% end %>
         </span>
+        <br/>
+        <br/>
+        <%= link_to 'Add / Change Pic', edit_idea_path(@idea), {:method => 'get'}%>
       <% else %>
         <!-- TODO: NEED TO MAKE NEW PARTIAL THAT DOESN'T DIRECT TO HOME CONTROLLER AJAX -->
         You're getting left out! <br/>
         <br/>
         <!-- NOTE: not using AJAX button partial because we want page to refresh. This loads
                    all the crazy AJAX idea interaction button stuff like kick em -->
-        <div class="button-styling-major button-float-left">
+        <div class="button-styling-major button-float-left" style="width:80px;">
           <%= link_to BUTTON_JOIN_IDEA,
               join_idea_from_idea_view_path(:idea_id => @idea.id, :idea_assc_type => IDEA_ASSC_ADD_IDEA),
                                {:method => 'post'} %>
@@ -546,13 +577,18 @@
     <%= @idea.text %>
     <span id="<%=ID_TAG_IDEA_EDIT_LINK%>" class='minor-link'>
       <% unless @curr_user_idea_link.nil? %>
-        <%= link_to 'edit idea', edit_idea_path(@idea), {:method => 'get'}%>
+        <%= link_to 'edit title', edit_idea_path(@idea), {:method => 'get'}%>
         <br/>
       <% end %>
     </span>
   </div>
-  <span class='minor-text'>Talk about the idea with anyone interested! Find out who you'd like to do it with and motivate the group! </span>
-  
+
+  <div class='content-section'>
+    <span class='minor-text'>
+      Talk about the idea with anyone interested! Find out who you'd like to do it with and motivate the group! 
+    </span>
+  </div>
+
   <% if @has_idea %>
     <!-- just taking up some space... -->
     <div class='content-section'>
@@ -562,10 +598,10 @@
 
         <div class='idea-view-action-want-it'>
           <span class='minor-text'>
-            <a href='#FACEBOX_want_it_help' rel='facebox'><span class="JS_help_link">Who wants it more</span></a>? Click to take the lead.
+            <a href='#FACEBOX_want_it_help' rel='facebox'><span class="JS_help_link">Who wants it more</span></a>? Higher the score, the more you want it.
           </span>
           <div id='JS_want_it_counter' class='idea-view-action-want-it-button round'>
-            <%= @curr_user_idea_link.want_it_count %>
+            Click Me
           </div>
         </div>
         <div class='idea-view-action-nudge'>
@@ -611,6 +647,37 @@
   <% end %>
 
   <div class='content-section'>
+    <div class='content-header'>
+      <span id='JQUERY-chat-window-header'>Live Chat Window</span>
+      <span class='idea-view-deals-section-buttons-container'>
+        <span class='idea-view-deals-section-buttons-container-hide'>
+          <span class='button-float-right button-styling-major'>
+            <a href='#' id='JQUERY-view-chat-link'> Show </a>
+          </span>
+        </span>
+      </span>
+    </div>
+
+    <div id='JQUERY-chat-container' class='hidden-div'>
+      <span class='minor-text'>Chat with anyone currently viewing this idea</span>
+
+      <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
+      <%= render :partial => "shared_modules/chat_board", 
+                 :locals => {:chat_messages => @idea_chat_msgs,
+                             :ajax_tag => ID_TAG_IDEA_CHAT+"#{@idea.id}"} %>
+
+      <!-- Message input send form: can't be shared with feedback chat right now because hidden :user_id field
+             is different. Well...it could but I'm lazy...
+      -->
+      <% if @has_idea %>
+        <%= render :partial => 'shared_modules/chat_input_bar_ideas'%>
+      <% else %>
+        <div class='minor-text' id='<%=ID_TAG_IDEA_CHAT_INPUT_AREA%>'>Add the idea to chat!</div>
+      <% end %>
+    </div>  
+  </div>
+
+  <div class='content-section'>
     <div class='content-header'>Idea Discussion</div>
     <span class='minor-text'>Post information you want to share with the group</span>
 
@@ -622,25 +689,6 @@
       <%= render :partial => 'forum/forum_display', :locals => {:posts => @forum_posts, :level => 0, :postCount => 0} %>
     </div>
 
-  </div>
-
-  <div class='content-section'>
-    <div class='content-header'>Public Discussion Board</div>
-    
-	  <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
-    <%= render :partial => "shared_modules/chat_board", 
-               :locals => {:chat_messages => @idea_chat_msgs,
-                           :ajax_tag => ID_TAG_IDEA_CHAT+"#{@idea.id}"} %>
-
-    <!-- Message input send form: can't be shared with feedback chat right now because hidden :user_id field
-           is different. Well...it could but I'm lazy...
-    -->
-    <% if @has_idea %>
-      <%= render :partial => 'shared_modules/chat_input_bar_ideas'%>
-    <% else %>
-      <div class='minor-text' id='<%=ID_TAG_IDEA_CHAT_INPUT_AREA%>'>Add the idea to chat!</div>
-    <% end %>
-  
   </div>
 
   <div class='content-section'> 

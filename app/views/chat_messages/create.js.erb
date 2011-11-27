@@ -3,7 +3,7 @@
 
     $("#<%=ID_TAG_IDEA_CHAT+@chat_message.idea_id.to_s%>").append
       ("<%= escape_javascript(
-        render :partial => "chat_msg_table_row", :locals => {:chat_msg => @chat_message}
+        render :partial => "shared_modules/chat_msg_item", :locals => {:msg => @chat_message}
       ) %>");
     
     $("div#<%=ID_TAG_IDEA_CHAT+@chat_message.idea_id.to_s%>").prop({
