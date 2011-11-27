@@ -1,7 +1,9 @@
 class CreateDeals < ActiveRecord::Migration
-  def change
+  def self.up
     create_table :deals do |t|
-      t.string :title
+      # TODO: not sure which attributes should be required
+
+      t.string :title, :null => false
       t.string :description
       t.string :vendor_name
       t.string :location
@@ -15,11 +17,29 @@ class CreateDeals < ActiveRecord::Migration
       t.date :end_date
 
       t.references :user      
-            
+
+      t.string :deal_photo_file_name
+      t.string :deal_photo_content_type
+      t.integer :deal_photo_file_size
+      t.datetime :deal_photo_updated_at
+
       t.timestamps
     end
     
     add_index :deals, :user_id
+
+    change_table :deals do |t|
+      t.foreign_key :users
+    end
+  end
+
+
+  def self.down
+    change_table :deals do |t|
+      t.remove_foreign_key :users
+    end
+
+    drop_table :deals
   end
 end
 

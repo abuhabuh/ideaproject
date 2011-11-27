@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   
   # GET /users
   def index
-    @users = User.where("id != ?", current_user.id)
+    @users = User.where("id != ?", current_user.id).order("first_name ASC, last_name ASC");
   end
   
   # GET /users/1
@@ -13,17 +13,19 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:id])
     @friendship = current_user.friendships.where("friend_id = ?", @user.id).first
-    @search_result_ideas = @user.ideas.order("num_users_joined DESC")
+    @stream_ideas = @user.ideas.order("num_users_joined DESC")
     @user_idea_ids = User.get_my_idea_ids(current_user)
   end
   
   # GET /users/profile
   def profile
-    
   end
 
   def facebook_callback
-    put "CALLBACK HERE!" #TODO: put is a command?
+  end
+
+  def change_user_password
+    render 'devise/registrations/change_password'
   end
 
   def set_view_layout
@@ -33,7 +35,7 @@ class UsersController < ApplicationController
       puts " TRACE: UserController:set_view_layout - error saving current_user" #TODO: do real error handling
     end
     
-    redirect_to :back
+    redirect_to root_url
   end
 
 end

@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @idea_commitment.user %>
+</p>
+
+<p>
+  <b>Idea:</b>
+  <%= @idea_commitment.idea %>
+</p>
+
+
+<%= link_to 'Edit', edit_idea_commitment_path(@idea_commitment) %> |
+<%= link_to 'Back', idea_commitments_path %>

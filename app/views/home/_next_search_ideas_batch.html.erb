@@ -4,11 +4,14 @@
   <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
     <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea_item} %>
   
+  <% when PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+    <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea_item} %>
+  
   <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
-    <%= render :partial=>"home/row_item_search_idea", 
+    <%= render :partial=>"shared_modules/row_item_search_idea", 
          :locals => {:idea_item => idea_item,
                      :pic_display_mode => PIC_VIEW_TYPE_USER,
-                     :view_only => IDEA_STREAM_VIEW_ONLY_FALSE} %>
+                     :view_type => IDEA_STREAM_ALL_ACTIVE} %>
   <% end %>
 
 <% end %>

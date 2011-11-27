@@ -1,6 +1,3 @@
-<!-- id tag to mark this as the USER VIEW page for shared AJAX functions -->
-<div class='hidden-div' id='<%=ID_TAG_USER_VIEW_PAGE%>'></div>
-
 <div class='left-nav'>      
   <%= render :partial => '/users/profile_pic', :locals => {:current_user => @user, :makelink => false} %>
   <%= @user.user_name %>
@@ -35,7 +32,7 @@
       <div class='idea-row-misc'>Action</div>
     </div>
     
-    <%= render :partial=>"home/idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_IDEA, :view_only => IDEA_STREAM_VIEW_ONLY_FALSE} %>
+    <%= render :partial=>"home/idea_stream_search", :locals => {:pic_display_mode => PIC_VIEW_TYPE_IDEA, :view_type => IDEA_STREAM_NO_PREVIEW} %>
   </div>
   
   <div class='content-section'>

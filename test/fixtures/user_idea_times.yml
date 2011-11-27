@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  idea: 
+  time: 2011-11-21 18:56:22
+
+two:
+  user: 
+  idea: 
+  time: 2011-11-21 18:56:22

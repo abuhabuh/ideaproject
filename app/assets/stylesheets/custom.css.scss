@@ -17,15 +17,24 @@
 /*************************************
  * IMPORTS
  *************************************/
-@import "block_layout";
+@import "idea_layout_show";
+@import "idea_layout_block";
+@import "idea_layout_stream";
 @import "deals_layout";
-@import "tabs_layout";
 @import "forum";
+@import "tabs_layout"; /* TODO: NOT USING THIS YET. USE IT to make tabs for user profile page so user can manage stuff*/
+@import "events_layout";
+@import "chat_messages_layout";
+@import "users_layout";
 
   /***************************************
    * Shadow Scheme
    ***************************************/
-.content-container, .unauth-content-container, .left-nav, .right-nav{
+.event-list-right-nav-item-container{
+  box-shadow: 2px 2px 2px #201C10; 
+}
+   
+.content-container, .idea-content-container, .unauth-content-container, .left-nav, .left-nav-wide, .right-nav, .right-preview-box {
   box-shadow: 2px 2px 5px #201C10; 
 } 
 
@@ -65,7 +74,7 @@ body {
    * Left Nav 
    ***************************************/
 
-.left-nav{
+.left-nav, .left-nav-wide{
   background-color: $left-nav-container-color;
 }
 
@@ -85,10 +94,17 @@ body {
 }
 
   /***************************************
-   * Left Nav 
+   * Right Nav 
    ***************************************/
 .right-nav{
   background-color: $right-nav-container-color;
+}
+
+  /***************************************
+   * Right Preview Box 
+   ***************************************/
+.right-preview-box{
+  background-color: $right-preview-box-color;
 }
 
   /*************************************
@@ -99,7 +115,7 @@ body {
   background-color: $main-content-container-color;
 }
 
-.content-container{
+.content-container, .idea-content-container{
   background-color: $main-content-container-color;
 }
 
@@ -107,57 +123,39 @@ body {
   background-color: $main-content-title-color;
   color: white;
 }
+.content-title a{
+  float: right;
+  color: white;
+}
 
 .content-header{
   background-color: $main-content-header-color;
 }
 
-.idea-stream-content-row{
-  border-color: #D6D5D1;
-}
-
   /*************************************
    * Link Definitions
    *************************************/
+
+.button-styling-major, .button-styling-minor{
+  box-shadow: 2px 2px 5px #FFEBCD inset, -2px -2px 5px #201C10 inset;
+}
    
 .button-styling-major{
-  color: white;
-  background-color: #be3c14;
+  color: $button-styling-major-text-color;
+  background-color: $button-styling-major-color;
 }
 
 .button-styling-major a{
-  color: white;
+  color: $button-styling-major-text-color;
 }
 
 .button-styling-minor{
-  color: black;
-  background-color: #B58963;
+  color: $button-styling-minor-text-color;
+  background-color: $button-styling-minor-color;
 }
 
 .button-styling-minor a{
-  color: black;
-}
-
-  /*************************************
-   * Misc: Containers, etc
-   *************************************/
-.chat-board-container{
-  background-color : #ffffff;
-  color : #000000; 
-}
-
-.user-list-container{
-  background-color : #CBBB9B;
-}
-
-.chat-board-user-item-status-offline{
-  background-color: #954535;
-  color: white;
-}
-
-.chat-board-user-item-status-online{
-  background-color: green;
-  color: white;
+  color: $button-styling-minor-text-color;
 }
 
 
@@ -200,7 +198,7 @@ header{
   width: 900px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 95px;
+  margin-top: 80px;
   
   height: 100%; 
   
@@ -211,7 +209,7 @@ header{
   width: 900px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 75px;
+  margin-top: 60px;
   
   height: 100%; 
   
@@ -241,7 +239,7 @@ header{
   float: left;
   
   width: 100%;
-  height: 95px;
+  height: 80px;
   
   position: fixed;
   top: 0px;
@@ -253,7 +251,7 @@ header{
   float: left;
   
   width: 100%;
-  height: 70px;
+  height: 55px;
   
   position: fixed;
   top: 0px;
@@ -285,10 +283,33 @@ header{
   border-width: 0px;
 }
 
+.left-nav-wide {
+  float: left;
+  width: 29%;
+  min-height: 300px;
+  
+  padding: 1%;
+  
+  border-style:solid;
+  border-width: 0px;
+}
+
 .content-container{ 
   float: left;
 
-  width: 55%;
+  width: 57%;
+  padding: 1%;
+  margin-left: 2%;
+  margin-bottom: 10px;
+  
+  border-style: dotted;
+  border-width: 0px;
+}
+
+.idea-content-container{ 
+  float: left;
+
+  width: 65%;
   padding: 1%;
   margin-left: 2%;
   margin-bottom: 10px;
@@ -309,7 +330,17 @@ header{
   border-width: 0px;
 }
 
+/* floating is default behavior. actual box rendered will have absolute position relative to document */
+.right-preview-box{
+  float: left;
 
+  position: relative;
+  
+  width: 35%;
+  padding: 1%;
+  
+  margin-left: 2%;
+}
 
 /*************************************
  *************************************
@@ -438,56 +469,6 @@ nav.main-authentication ul li a:hover {
   width: 100%;
 }
 
-/* Div container for user list on left nav bar */
-.user-list-container{
-  border: solid 2px #B58963;
-
-  height: 300px;
-  padding: 4px; 
-  
-  overflow: auto;
-  overflow-x: hidden;
-}
-
-/* Div container for chat board windows */
-.chat-board-container{
-  border: solid 2px #adadad;
-
-  height: 200px;
-  padding: 4px; 
-  
-  overflow: auto;
-}
-
-.chat-board-user-item{
-  float: left;
-  width: 100%;
-  
-  font-size: 12px;
-  
-  margin: 5px 2px;  
-}
-
-.chat-board-user-item-image{
-  float: left;
-  
-  margin-right: 5px;
-  height: 35px;
-  width: 35px;
-}
-
-.chat-board-user-item-text{
-  float: left;
-}
-
-.chat-board-user-item-status-offline{
-  line-height: 20px;
-}
-
-.chat-board-user-item-status-online{
-  line-height: 20px;
-}
-
 /* Div container for featured ideas */
 .featured-ideas-container{
   float: left;
@@ -583,13 +564,11 @@ nav.main-authentication ul li a:hover {
 
 /* Idea stream content: content area for list of ideas */
 .idea-stream-content-view-selector{
-  float: left;
-  
-  width: 100%;
+  float: right;
   
   margin-top: 2px;
   margin-bottom: 5px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .idea-stream-header-row{
@@ -601,53 +580,6 @@ nav.main-authentication ul li a:hover {
 
   border-width: 0px;
   border-style: solid;  
-}
-
-.idea-stream-content-row{
-  float: left;
-  font-size: 12px;
-
-  width: 100%;
-  padding: 10px 0px;
-
-  margin: 5px 0px;
-
-  border-width: 1px;
-  border-style: solid;  
-}
-
-/* Idea-row: individual cells in an idea row for data */
-.idea-row-picture{
-  float: left;
-  
-  margin: 0% 0% 0% 2%;
-  
-  width: 13%;
-}
-
-.idea-row-text{
-  float: left;
-  
-  margin: 0% 1%;
-  
-  width: 58%;
-}
-
-.idea-text{ /* marks the actual text in the idea-row block item (makes it bigger) */
-  float: left;
-  width: 100%;
-
-  margin-top: 5px;
-
-  font-size: 14px;
-}
-
-.idea-row-misc{
-  float: left;
-  
-  margin-left: 1%;
-  
-  width: 24%;
 }
 
   /*************************************
@@ -693,16 +625,6 @@ nav.main-authentication ul li a:hover {
   width: 25%;
 }
 
-  /*************************************
-   * Idea View Page
-   *************************************/
-.idea-image-main{
-
-}
-
-.idea-action-link{
-
-}
 
 
 /*************************************
@@ -713,28 +635,21 @@ nav.main-authentication ul li a:hover {
  *************************************
  *************************************/
 
-.button-float-right{
+.button-float-right, .button-float-left{
   float: right;
-  margin-left: 10px;
   
-  border-style: solid;
-  border-width: 0px;
-}
+  width: 100%;
+  height: 100%;
 
-.button-float-left{
-  float: left;
-  margin-right: 10px;
-  
+  padding: 3px;
+
+  text-align: center;
   border-style: solid;
   border-width: 0px;
 }
 
 .button-styling-major .button-styling-minor{
-  margin: 5px 0px;
-  padding: 2px;
-  
   text-decoration: none;
-  
   /* bevel'd button */
   /*box-shadow: -2px -2px 2px rgba(0,0,0,.25) inset, 2px 2px 2px white inset;*/
 }
@@ -781,7 +696,7 @@ p.alert{
 /*************************************
  *************************************
  *
- * Div Popup
+ * Div Popup TODO: Not used. delete?
  *
  *************************************
  *************************************/

@@ -1,0 +1,23 @@
+// INPUTS
+// - idea_id
+$(document).ready(function(){
+
+  <% if idea_assc_type == IDEA_ASSC_ADD_IDEA %>
+
+  	// Replace add idea button with view idea button
+    $(".<%=ID_TAG_AUTH_HOME_STREAM_ADD_IDEA_BUTTON + idea_id.to_s%>").each(function(index) {
+      $(this).replaceWith("<%= escape_javascript(
+                                  render :partial => 'shared_modules/button_chat_idea', :locals => {:idea_id => idea_id, :float => 'right'}
+                               )%>");
+    });
+
+    // update num users sharing counter
+    $("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + idea_id.to_s%>").html(String(parseInt($("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + idea_id.to_s%>").html())+1)+" users sharing");
+
+  <% elsif idea_assc_type == IDEA_ASSC_DONE_IDEA %>
+
+    $(".<%=ID_TAG_AUTH_HOME_STREAM_DONE_IDEA_BUTTON + idea_id.to_s%>").html("<%=DONE_IDEA_SUCCESS_TEXT%>")
+
+  <% end %>
+
+});

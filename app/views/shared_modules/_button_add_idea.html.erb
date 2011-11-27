@@ -1,0 +1,13 @@
+<%= link_to target_path, :method => 'post', :remote => true, :title => 'Add to your idea list' do %>
+
+  <% if float == 'left' %>
+    <div class="<%=ID_TAG_AUTH_HOME_STREAM_ADD_IDEA_BUTTON + idea_id.to_s%> 
+                button-styling-major button-float-left">
+  <% else %>
+    <div class="<%=ID_TAG_AUTH_HOME_STREAM_ADD_IDEA_BUTTON + idea_id.to_s%> 
+                button-styling-major button-float-right">
+  <% end %>
+    <%= BUTTON_JOIN_IDEA %>
+    </div>
+    
+<% end %>

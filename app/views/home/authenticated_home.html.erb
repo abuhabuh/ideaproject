@@ -9,9 +9,21 @@
     // TODO: can set autofocus with HTML5 as well so don't need this javascript to run for HTML5 browsers -->
     //$(document).ready(function(){
 
+    function renderIdeaPreview(){
+      var idea_id = $('.idea-id-identifier', this).html();
+
+      $.ajax({url: "<%=idea_preview_path%>",
+            data: {idea_id: idea_id},
+            success: function(return_html){
+              $('#AJAX_right_preview_box_id').html(return_html);
+            },
+            dataType: 'html'});
+
+      var vertical_scroll = String($(window).scrollTop()) + "px";
+      $('#AJAX_right_preview_box_id').css({"position":"relative","top":vertical_scroll});
+    }
+
     $(function(){
-
-
       did_scroll_down = false; // initialize variable for scroll bottom interval function
 
       $("#idea").focus();
@@ -78,6 +90,14 @@
                   if ($.trim(returned_html).length != 0){
                     $("#AJAX_page_num_store").html(String(page_num)); // increment pages processed if results came back
                   }
+                  
+                  <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
+                    $('.JS_idea_row_action_preview').unbind('click'); // prevents double assignment of click
+                    $('.JS_idea_row_action_preview').click(renderIdeaPreview);
+                    $('.JS_idea_row_action_preview').mouseover(function () {
+                	    $(this).css('cursor', 'pointer');
+                    });
+                  <% end %>
                 }//,
                 //error: function(msg){ // TODO: remove this for live deploy
                 //  alert(msg);
@@ -91,60 +111,109 @@
     });
 
 
+    <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
+      $(document).ready(function(){
+        $('.JS_idea_row_action_preview').click(renderIdeaPreview);
+        $('.JS_idea_row_action_preview').mouseover(function () {
+    	    $(this).css('cursor', 'pointer');
+        });
+      });
+    <% end %>
+
   </script>
 <% end %>
 
 
-<!-- id tag to mark this as the AUTH HOME page for shared AJAX functions -->
-<div class='hidden-div' id='<%=ID_TAG_HOME_AUTH_PAGE%>'></div>
 <div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
 
 
-<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
-  <%= render :partial => 'home/left_nav' %>
-  
-  <!-- Using side bar menu so need to limit search and stream to right side -->
-  <div class='content-container'>  
+<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
+<!-- Using side bar menu so need to limit search and stream to right side -->
+<div class='content-container'>  
 <% end %>
 
-    <!-- Main Body for side menu, stream, and suggestion block -->
-    <div class='stream-search-bar-container'>
+  <!-- Main Body for side menu, stream, and suggestion block -->
+  <div class='stream-search-bar-container'>
 
-      <div class='stream-search-field-and-button'>
-        <%= form_tag authenticated_home_path, :method => :get do %>
-          <% if params[:search].blank? %>
-            <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
-          <% else %>
-            <%= text_field_tag :search, params[:search] %>
-          <% end %>        
-          <%= submit_tag "Search", :name => nil %>
-          
-          <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
-        <% end %>
-      </div>
-      
+    <div class='stream-search-field-and-button'>
+      <%= form_tag authenticated_home_path, :method => :get do %>
+        <% if params[:search].blank? %>
+          <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
+        <% else %>
+          <%= text_field_tag :search, params[:search] %>
+        <% end %>        
+        <%= submit_tag "Search", :name => nil %>
+        
+        <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
+      <% end %>
     </div>
+    
+    <div class='idea-stream-content-view-selector'>
+      View: 
+      <% case session[:stream_view] %>
+        <% when STREAM_VIEW_PUBLIC %>
+          Public | 
+          <%= link_to 'Friends', 
+                      authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
+                                              {:method => 'get', 
+                                               :title => "See friends' ideas"}%><br/>
 
-    <div id='AJAX_main_stream_content'>    
-      <!-- Determine what kind of layout to render -->
-      <% case current_user.auth_page_layout %>
-      <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
-        <% @stream_ideas.each do |idea| %>
-          <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea} %>
-        <% end %>
+        <% when STREAM_VIEW_FRIENDS %>  
+          <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
+                                                        {:method => 'get', 
+                                                         :title => "See public ideas"}%> | 
+          Friends<br/>
 
-      <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
-        <% @stream_ideas.each do |idea| %>
-          <%= render :partial=>"home/row_item_search_idea", 
-                     :locals => {:idea_item => idea,
-                                 :pic_display_mode => PIC_VIEW_TYPE_USER,
-                                 :view_only => IDEA_STREAM_VIEW_ONLY_FALSE} %>
-        <% end %>
+        <% when STREAM_VIEW_SEARCH %>
+          <%= link_to 'Public',
+                     authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC),
+                     {:method => 'get',
+                      :title => "See public ideas"}%> | 
+          <%= link_to 'Friends',
+                     authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
+                     {:method => 'get',
+                     :title => "See friends' ideas"}%> | 
+          Search <br />
 
       <% end %>
     </div>
 
-<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
-  <!-- Using side bar menu so need to limit search and stream to right side -->
   </div>
+
+  <div id='AJAX_main_stream_content'>    
+    <!-- Determine what kind of layout to render -->
+    <% case current_user.auth_page_layout %>
+    <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
+      <% @stream_ideas.each do |idea| %>
+        <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea} %>
+      <% end %>
+
+    <% when PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+      <% @stream_ideas.each do |idea| %>
+        <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea} %>
+      <% end %>
+
+    <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
+      <% @stream_ideas.each do |idea| %>
+        <%= render :partial=>'shared_modules/row_item_search_idea', 
+                   :locals => {:idea_item => idea,
+                               :pic_display_mode => PIC_VIEW_TYPE_USER,
+                               :view_type => IDEA_STREAM_ALL_ACTIVE} %>
+      <% end %>
+
+    <% end %>
+  </div>
+
+<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+<!-- Using side bar menu so need to limit search and stream to right side -->
+</div>
+<div id='AJAX_right_preview_box_id' class='right-preview-box'>
+  <% unless @idea.nil? %>
+    <%= render :partial => 'ideas/idea_preview' %>
+  <% else %>
+    Sorry, no ideas are present for your friends.
+  <% end %>
+
+</div>
+
 <% end %>

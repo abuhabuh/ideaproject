@@ -6,27 +6,46 @@
           - container_id_tag: unique id tag for container used in AJAX queries - must be unique to page, not across application since
               AJAX requests for chat box updates expected to come from within page only.
           - users: collection of usr objects that have ALL JOINED the idea
+          - chat_type: type of chat - idea, event, etc
+          - topic_id: id of containing element - idea_id, event_id, etc #TODO: doesn't work for events yet - need to pass in is_idea / is_event var
+          - friends_only: boolean specifying if should only return friends
+          - friend_ids: comma separated string of friend ids
     -->
-
     <div class='user-list-container' id="<%=container_id_tag%>">
+      
       <% includes_current_user = false %>
-      <% users.each do |user| %>
+      <% friend_ids_arr = friend_ids.split(',') %>
 
-        <% if user.id == current_user.id %>
-          <% includes_current_user = true %>
-        <% end %>
+      <% users.each do |user| %>
         
-        <%= render :partial => 'shared_modules/chat_user_list_user_item', 
-                   :locals => {:user => user, 
-                               :is_online => false,
-                               :status_string => ID_TAG_CHAT_USER_JOINED_STRING} %>
+        <% if user.id == current_user.id || !friends_only || (friends_only && (friend_ids_arr.include?(user.id.to_s))) %>
+          <% if user.id == current_user.id %>
+            <% includes_current_user = true %>
+          <% end %>
+          
+          <% if user.idea_commitments.exists?(:idea_id => topic_id) %>
+            <% status_str = ID_TAG_CHAT_USER_COMMITTED_STRING %>
+          <% else %>
+            <% status_str = ID_TAG_CHAT_USER_JOINED_STRING %>
+          <% end %>
+          
+          <%= render :partial => 'shared_modules/chat_user_list_user_item', 
+                     :locals => {:user => user, 
+                                 :is_online => false,
+                                 :status_string => status_str,
+                                 :chat_type => chat_type,
+                                 :topic_id => topic_id} %>
+        <% end %>
+
       <% end %>
       
       <% unless includes_current_user %>
         <%= render :partial => 'shared_modules/chat_user_list_user_item', 
                    :locals => {:user => current_user, 
                                :is_online => false,
-                               :status_string => ID_TAG_CHAT_USER_VIEWING_STRING} %>
+                               :status_string => ID_TAG_CHAT_USER_VIEWING_STRING,
+                               :chat_type => chat_type,
+                               :topic_id => topic_id} %>
       <% end %>
     </div>
 

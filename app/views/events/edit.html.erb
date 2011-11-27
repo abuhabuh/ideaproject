@@ -1,0 +1,8 @@
+<div class='content-container'>
+  <div><b>Editing event for Idea: <%=@idea.text%></b></div>
+
+  <%= render :partial => 'form', :locals => {:idea_id => @idea.id} %>
+
+  <%= link_to 'Show', @event %> |
+  <%= link_to 'Back', events_path %>
+</div>

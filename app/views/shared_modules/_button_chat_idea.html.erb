@@ -1,0 +1,9 @@
+<% if float == 'left' %>
+              <div class="button-styling-minor button-float-left">
+<% else %>
+              <div class="button-styling-minor button-float-right">
+<% end %>
+                <%= link_to BUTTON_CHAT_IDEA,
+                            idea_path(idea_id),
+                            {:method => 'get'} %>
+              </div>

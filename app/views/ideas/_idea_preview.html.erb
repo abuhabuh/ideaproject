@@ -1,0 +1,47 @@
+<div class='idea-preview-container'>
+
+
+  <div class='idea-preview-picture'>
+    <%= link_to image_tag(@idea.photo.url(:medium)),
+        idea_path(@idea.id),
+        {:method => 'get'} %>
+  </div>
+
+  <div class='idea-preview-notice-text'>
+  </div>
+
+  <div class='idea-preview-title'>
+    <%= link_to @idea.text, idea_path(@idea.id), {:method => 'get'} %>
+  </div>
+
+  <div class='idea-preview-options-text'>
+    <hr/>
+    <div class='idea-preview-options-text-title'>
+      <% if @has_idea %>
+        Pick a time to do this:
+      <% else %>
+        Like this idea? Join it!
+      <% end %>
+    </div>
+
+    <div id="<%=ID_TAG_AUTH_HOME_IDEA_PREVIEW_GOAL%>">
+      <% if @has_idea %>
+        <%= render :partial => 'ideas/idea_preview_time_goal', :locals => {:user_idea => @curr_user_idea_link} %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class='idea-preview-chat-container'>
+    <hr/>
+    <% @idea_chat_msgs.each do |message| %>
+      <div class='idea-preview-chat-msg'>
+        <div class='idea-preview-chat-msg-pic'>
+          <% msg_owner = User.find(message.user_id) %>
+          <%= render :partial => '/users/profile_pic', :locals => {:current_user => msg_owner, :path => user_path(msg_owner.id), :makelink => true} %>
+        </div>
+        <span class='minor-text'><%= msg_owner.first_name %>: <%= message.text %></span>
+      </div>
+    <% end %>
+
+  </div>
+</div>      

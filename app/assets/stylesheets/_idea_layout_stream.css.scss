@@ -1,0 +1,192 @@
+@import "color_definitions";
+
+/*************************************
+ * Shadow and effects
+ *************************************/
+
+
+/*************************************
+ * Color
+ *************************************/
+.idea-stream-content-row{
+  border-color: #D6D5D1;
+}
+
+.idea-preview-chat-msg{
+  background-color: $block-block-chat-msg-bg-color;
+}
+
+.idea-preview-title{
+  color: black;
+}
+.idea-preview-title a{
+  color: black;
+}
+
+/*************************************
+ * Stream Layout Definitions
+ *************************************/
+.idea-stream-content-row{
+  float: left;
+  font-size: 12px;
+
+  width: 100%;
+  padding: 10px 0px;
+
+  margin: 5px 0px;
+
+  border-width: 1px;
+  border-style: solid;  
+}
+
+  /* Idea-row: individual cells in an idea row for data */
+  .idea-row-picture{
+    float: left;
+    
+    margin: 0% 0% 0% 2%;
+    
+    width: 13%;
+  }
+
+  .idea-row-text{
+    float: left;
+    
+    margin: 0% 1%;
+    
+    width: 43%;
+  }
+
+    .idea-text{ /* marks the actual text in the idea-row block item (makes it bigger) */
+      float: left;
+      width: 100%;
+
+      margin-top: 5px;
+
+      font-size: 14px;
+    }
+
+  .idea-row-misc{
+    float: left;
+    
+    margin-left: 1%;
+    
+    width: 21%;
+  }
+
+  .idea-row-button-container{
+    float: left;
+    width: 17%;
+  }
+  
+    @mixin button-styling {
+      float: right;
+      width: 100%;
+
+      margin-bottom: 4px;
+
+      font-family: Helvetica, Arial, sans-serif;
+      text-align: center;
+      font-weight: bold;
+    }
+    .idea-row-action-preview{
+      @include button-styling;
+
+      padding: 3px; /* to conform to padding standards of other buttons */
+
+      background-color: $button-styling-minor-color;
+      box-shadow: 2px 2px 2px #FFEBCD inset, -2px -2px 2px #201C10 inset;
+    }
+    .idea-row-action-join{
+      @include button-styling;
+    }
+      .idea-row-action-join-confirm{
+        float: left;
+        margin-top: 5px;
+        padding: 15px 0px;
+        width: 100%;
+
+        text-align: center;
+      }
+    .idea-row-action-done-it{
+      @include button-styling;
+    }
+  
+/**************
+ * Idea Preview Panel 
+ **************/
+  
+.idea-preview-container{
+  float: left;
+  
+  width: 100%;
+}
+
+/*
+  .idea-preview-intro-content{
+    float: left;
+    width: 100%;
+  }
+*/
+
+  .idea-preview-picture{
+    float: left;
+    width: 100%;
+  }
+  
+  .idea-preview-picture img{
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .idea-preview-notice-text{
+    float: left;
+    width: 100%;
+  }
+
+  .idea-preview-title{
+    float: left;
+    width: 100%;
+  }
+
+  .idea-preview-options-text{
+    float: left;
+    width: 100%;
+  }
+  
+    .idea-preview-options-text-title{
+      float: left;
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    .idea-preview-options-text-selection{
+      float: left;
+      width: 25%;
+      text-align: center;
+    }
+  
+  .idea-preview-chat-container{
+    float: left;
+
+    width: 100%;
+  }
+  
+  .idea-preview-chat-msg{
+    float: left;
+
+    width: 100%;
+    height: 38px;
+    
+    padding: 2% 0% 0% 0%;
+    margin-bottom: 2%;
+    
+    overflow: hidden;
+  }
+  
+  .idea-preview-chat-msg-pic{
+    float: left;
+
+    height: 30px;
+    width: 30px;
+
+    margin: 0% 2%;
+  }

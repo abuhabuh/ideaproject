@@ -1,0 +1,115 @@
+<!-- Usage
+  
+    NOTES
+    - @user_idea_ids is rendered in home_controller.html.erb by the set_objs_to_render private function
+      which is called across many other functions that need to initialize this variable
+      TODO: hacky...fix this - refactor it out in a better way
+    - view_type is an enumerable type specifying what parts of idea stream elements to render 
+    - idea_item is the idea object that is being rendered
+-->
+
+<% if view_type == IDEA_STREAM_VIEW_ONLY %>
+
+            <% idea_owner = User.find(idea_item.creator) %>
+            <div class='idea-stream-content-row'>
+              <div class='idea-row-picture'>
+                <% if pic_display_mode == PIC_VIEW_TYPE_USER %>
+                  <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :makelink => false} %>
+
+                <% elsif pic_display_mode == PIC_VIEW_TYPE_IDEA %>
+                  <%= image_tag(idea_item.photo.url(:stream))%>
+                <% end %>
+              </div>
+              <div class='idea-row-text'>
+                <%=idea_owner.first_name + " " + idea_owner.last_name%>:<br/>
+                <span class='idea-text'><%=idea_item.text%></span>
+              </div>
+              <div class='idea-row-misc'>
+                <span id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea_item.id.to_s%>">
+                  <%=idea_item.num_users_joined%>
+                </span> users sharing
+              </div>
+            </div>
+
+<% else %>
+
+            <% idea_owner = User.find(idea_item.creator) %>
+            <div class='idea-stream-content-row'>
+              <div class='idea-row-picture'>
+                <% if pic_display_mode == PIC_VIEW_TYPE_USER %>
+                  <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :path => user_path(idea_owner.id), :makelink => true} %>
+                <% elsif pic_display_mode == PIC_VIEW_TYPE_IDEA %>
+                  <%= link_to image_tag(idea_item.photo.url(:stream)),
+                                idea_path(idea_item.id),
+                                {:method => 'get'} %>
+                <% end %>
+              </div>
+              <div class='idea-row-text'>
+                <%=idea_owner.first_name + " " + idea_owner.last_name%>:<br/>
+                <span class='idea-text'>
+                  <%=  link_to idea_item.text, idea_path(idea_item), {:method => 'get'} %>
+                </span>
+              </div>
+              <div class='idea-row-misc'>
+                Sharing:<br/>
+                &nbsp;&nbsp;<span id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea_item.id.to_s%>">
+                  <%=idea_item.num_users_joined%>
+                </span> users
+                <div>
+                  &nbsp;&nbsp;<%= current_user.friendships
+                                       .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')
+                                       .where('user_ideas.idea_id = ?', idea_item.id)
+                                       .count %> friends
+                </div>
+                  
+              </div>
+              <div class='idea-row-button-container'>
+                <% unless view_type == IDEA_STREAM_NO_PREVIEW %>
+                  <div class='JS_idea_row_action_preview idea-row-action-preview'>
+                    Preview
+                    <div class='idea-id-identifier hidden-div'><%=idea_item.id%></div>
+                  </div>
+                <% end %>
+
+                <!-- NOTE: not using pre-defined join button here because action needs to render
+                           idea preview block and this is handled by page specific javascript -->
+                <% user_idea_link = current_user.user_ideas.where(:idea_id => idea_item.id).first %>
+                
+                <div class='idea-row-action-join'>
+                  <!-- Join Idea button -->
+                  <% if user_idea_link.nil? || user_idea_link.status != USER_IDEA_STATUS_SHARING %>
+                    
+                    <%= render :partial => "shared_modules/button_add_idea",
+                               :locals => {:target_path => 
+                                              button_associate_idea_stream_path(
+                                                :idea_id => idea_item.id, 
+                                                :idea_assc_type => IDEA_ASSC_ADD_IDEA,
+                                                :view_type => view_type), 
+                                           :idea_id => idea_item.id,
+                                           :float => 'right'} %>
+
+                  <% elsif user_idea_link.status == USER_IDEA_STATUS_SHARING %>
+                    <%= render :partial => "shared_modules/button_chat_idea",
+                               :locals => {:idea_id => idea_item.id, :float => 'right'} %>
+                  <% end %>
+                </div>
+
+                <div class='idea-row-action-done-it'>
+                  <!-- Done Idea already button -->
+                  <% if user_idea_link.nil? || user_idea_link.done_it != true %>
+                    <%= render :partial => "shared_modules/button_done_it",
+                         :locals => {:target_path =>
+                                        button_associate_idea_stream_path(
+                                          :idea_id => idea_item.id, 
+                                          :idea_assc_type => IDEA_ASSC_DONE_IDEA),
+                                     :idea_id => idea_item.id, 
+                                     :float => 'right'} %>
+                  <% elsif user_idea_link.done_it == true %>
+                    <%=DONE_IDEA_SUCCESS_TEXT%>
+                  <% end %>
+                </div>
+                
+              </div>
+            </div>
+               
+<% end %>

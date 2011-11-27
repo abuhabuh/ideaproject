@@ -1,0 +1,20 @@
+// USAGE
+// INPUT
+// - current_page
+// - num_total_pages
+// - idea_id
+
+$(document).ready(function(){
+
+  $('.<%=ID_USER_PICTURE_LIST_CONTAINER%>').replaceWith("<%= escape_javascript(
+        render :partial => 'shared_modules/user_picture_list.html.erb',
+               :locals => {:current_page => current_page,
+                           :num_per_page => IDEA_KICK_USERS_NUM_PER_PAGE, 
+                           :kickem_users => @kickem_users_list,
+                           :num_total_pages => num_total_pages,
+                           :idea_id => idea_id }
+        )%>"
+  );
+
+
+});

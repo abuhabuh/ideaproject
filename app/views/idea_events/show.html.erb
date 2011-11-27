@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Idea:</b>
+  <%= @idea_event.idea %>
+</p>
+
+<p>
+  <b>Event:</b>
+  <%= @idea_event.event %>
+</p>
+
+
+<%= link_to 'Edit', edit_idea_event_path(@idea_event) %> |
+<%= link_to 'Back', idea_events_path %>

@@ -1,0 +1,163 @@
+@import "color_definitions";
+
+/*************************************
+ * Shadow and effects
+ *************************************/
+.block-stream-element-container, .block-stream-element-container-normal{
+  box-shadow: 2px 2px 5px #201C10; /* COLORS: DARK - 201C10, Light - C5AB84 */
+}
+
+/*************************************
+ * Color
+ *************************************/
+.block-stream-element-container, .block-stream-element-container-normal{
+  background-color: $block-block-bg-color;
+}
+
+.block-stream-element-description-block{
+  color: $block-block-description-text-color;
+}
+
+.block-stream-element-chat-msg{
+  background-color: $block-block-chat-msg-bg-color;
+}
+
+.block-stream-element-owner-name{
+  color: $block-block-owner-name-text-color;
+}
+
+/*************************************
+ * Layout
+ *************************************/
+.block-stream-element-container, .block-stream-element-container-normal{
+  float: left;
+
+  width: 28%;
+  
+  padding: 1%;
+  margin: 15px; /* need to use pixels because masonry tiling does something that kills percentage margins in Chrome */
+
+  font-size: 12px;
+}
+.block-stream-element-container-normal{
+  height: 380px; /* limit height to normalize */
+}
+
+  .block-stream-element-picture, .block-stream-element-picture-normal{
+    float: left;
+    
+    width: 100%;
+    
+    margin-bottom: 2%;
+    
+    border-style: solid;
+    border-width: 0px;
+  }
+  .block-stream-element-picture-normal{
+    height: 170px;
+  }
+    .block-stream-element-picture img, .block-stream-element-picture-normal img{
+      max-height:100%; 
+      max-width:100%;
+      
+      display: block;
+      margin: auto;
+    }
+
+  .block-stream-element-buttons-container{
+    float: left;
+    width: 100%;
+    height: 25px;
+  }
+    .block-stream-element-button-done-it{
+      float: left;
+      width: 55%;
+      height: 50%;
+    }
+    .block-stream-element-button-join-idea{
+      float: right;
+      width: 35%;
+      height: 50%;
+    }
+
+  .block-stream-element-description-block{
+    float: left;
+
+    width: 100%;
+    
+    padding: 2% 0% 0% 0%;
+    margin-bottom: 2%;
+
+    line-height:130%;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .block-stream-element-owner-name{
+    font-weight: normal;
+    
+    margin-bottom: 3px;
+  }
+
+  .block-stream-element-description-owner-pic{
+    float: left;
+
+    height: 35px;
+    width: 35px;
+
+    margin: 0px 10px 0px 0px 
+  }
+
+  .block-stream-element-description-owner-pic img{
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  /* block for statistics and join action */
+  .block-stream-element-stats-block{
+    float: left;
+    
+    margin-bottom: 2%;
+    width: 100%;
+  }
+
+  .block-stream-element-stats-block-text{
+    float: left;
+
+    width: 40%;
+  }
+
+  .block-stream-element-stats-block-action{
+    float: right;
+
+  }
+
+  /* chat message styles */
+  .block-stream-element-chat-msg-block{
+    float: left;
+    
+    width: 100%;
+  }
+
+  .block-stream-element-chat-msg{
+    float: left;
+
+    width: 100%;
+    height: 45px;
+    
+    padding: 2% 0% 0% 0%;
+    margin-bottom: 2%;
+    
+    overflow: hidden;
+  }
+
+  .block-stream-element-chat-msg-pic{
+    float: left;
+
+    height: 35px;
+    width: 35px;
+
+    margin: 0% 2%;
+
+  }
+

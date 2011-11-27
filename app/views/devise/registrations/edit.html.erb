@@ -5,8 +5,6 @@
 		$(document).ready(function(){
       
       $('#user_first_name').bind('keyup keypress blur', function() {
-        alert("first name keyup");
-
         var first_name = $(this).val();
         var last_name = $('#user_last_name').val();
         $('#user_user_name').val(first_name+" "+last_name);
@@ -42,8 +40,6 @@
     <fieldset>
       <legend>Basic Info:</legend>
       
-
-      <br/>
       <div><%= f.label :email %><br />
       <%= f.email_field :email %></div>
 
@@ -53,15 +49,13 @@
       <div><%= f.label :last_name %><br />
       <%= f.text_field :last_name %></div>  
       <br/>
-      User name: <span id='user_name_display'></span><br/>
+      User name: <span id='user_name_display'><%=current_user.first_name + " " + current_user.last_name %></span><br/>
       
       <%= f.hidden_field :user_name%>
     </fieldset>
 
     <br/>
-    
-
-    <br />
+    <br/>
 
     <fieldset>
       <legend>Additional Info: </legend>

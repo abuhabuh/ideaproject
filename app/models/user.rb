@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :user_auths
 
   has_many :posts
+  has_many :idea_commitments
 
   # Setup paperclip photo attachment property
   has_attached_file :profile_pic,
@@ -35,7 +36,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, \
     :user_name, :first_name, :last_name, :location, :dob, :profile_pic, \
     :description, :interests, :profile_pic_file_name, :auth_page_layout
-  validates_presence_of :email, :first_name, :last_name
+  validates_presence_of :email, :first_name, :last_name, :user_name
 
   # Create new idea object for user
   def create_idea (idea_string)
@@ -47,7 +48,10 @@ class User < ActiveRecord::Base
       puts " TRACE User:create_idea - saved idea"
       puts " TRACE User:create_idea - " + idea.inspect
 
-      user_idea = UserIdea.new(:user_id => self[:id], :idea_id => idea.id, :invited => false)
+      user_idea = UserIdea.new(:user_id => self[:id], 
+                               :idea_id => idea.id, 
+                               :status => USER_IDEA_STATUS_SHARING,
+                               :done_it => false)
       user_idea.save!
 
       puts " TRACE User:create_idea - " + user_idea.inspect
@@ -62,28 +66,18 @@ class User < ActiveRecord::Base
   end
 
   # Join the user to the idea
-  def join_idea (idea_id)
-    # TODO: check input: is number, is not an idea user already has
-    idea = Idea.find(idea_id)
-    idea.num_users_joined += 1
-    # TODO: catch save exception
-    if idea.save!
-      puts " TRACE User:join_idea - idea saved successfull"
-    else
-      puts " TRACE User:join_idea - idea save error"
-    end 
-    
-    user_idea = UserIdea.new(:user_id => self[:id], :idea_id => idea_id, :invited => false)
-    if user_idea.save!
-      puts " TRACE User:join_idea - user_idea saved successfully"
-    else
-      puts " TRACE User:join_idea - error saving user_idea"
+  # TODO: check input: is number, is not an idea user already has
+  def associate_idea (idea_id, idea_assc_type)
+    case idea_assc_type.to_i
+
+    when IDEA_ASSC_ADD_IDEA
+      Idea.join_idea(self[:id], idea_id)
+
+    when IDEA_ASSC_DONE_IDEA
+      Idea.has_done_idea(self[:id], idea_id)
+
     end
-    
   end
-
-
-
 
   # Returns user's ideas as relation that can be operated on or queried
   def self.get_my_ideas (current_user)

@@ -1,0 +1,110 @@
+@import "color_definitions";
+
+
+/******************************
+ * Colors
+ ******************************/
+.chat-board-container{
+  background-color : $chat-board-container-bg-color;
+  color : $chat-board-container-txt-color; 
+}
+
+.chat-board-user-item-status-offline{
+  background-color: $chat-board-user-item-status-offline-color;
+  color: $chat-board-user-item-status-offline-txt-color;
+}
+
+.chat-board-user-item-status-online{
+  background-color: $chat-board-user-item-status-online-color;
+  color: $chat-board-user-item-status-online-txt-color;
+}
+
+.user-list-container{
+  background-color : $main-content-container-color;
+}
+
+/******************************
+ * Chat window
+ ******************************/
+.chat-board-container{
+  border: solid 2px #adadad;
+
+  height: 200px;
+  padding: 4px; 
+  
+  overflow: auto;
+}
+
+
+/******************************
+ * User list 
+ ******************************/
+
+.user-list-container{
+  float: left;
+
+  width: 100%;
+  height: 300px;
+  padding: 4px 0px;
+  
+  border: solid 2px #B58963;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.user-list-header-row{
+  float: left;
+  width: 100%;
+  
+  padding: 5px;
+  
+  font-size: 12px;
+}
+
+  .user-list-header-row-image{
+    float: left;
+    width: 35px;
+    margin-right: 5px;
+  }
+
+.chat-board-user-item{
+  float: left;
+  width: 100%;
+  
+  font-size: 12px;
+  
+  margin: 5px 2px;  
+}
+
+  .chat-board-user-item-image{
+    float: left;
+    
+    margin-right: 5px;
+    height: 35px;
+    width: 35px;
+  }
+
+  .chat-board-user-item-text{
+    float: left;
+    margin-left: 10px;
+    width: 30%;
+  }
+
+    .chat-board-user-item-status-offline{
+      line-height: 20px;
+    }
+    .chat-board-user-item-status-online{
+      line-height: 20px;
+    }
+
+  .chat-board-user-item-want-count{
+    float: left;
+    width: 25%;
+    text-align: center;
+  }
+  
+  .chat-board-user-item-prod-count{
+    float: left;
+    width: 20%;
+    text-align: center;
+  }

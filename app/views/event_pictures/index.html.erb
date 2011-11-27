@@ -1,0 +1,25 @@
+<h1>Listing event_pictures</h1>
+
+<table>
+  <tr>
+    <th>Picture</th>
+    <th>Event</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @event_pictures.each do |event_picture| %>
+  <tr>
+    <td><%= event_picture.picture %></td>
+    <td><%= event_picture.event %></td>
+    <td><%= link_to 'Show', event_picture %></td>
+    <td><%= link_to 'Edit', edit_event_picture_path(event_picture) %></td>
+    <td><%= link_to 'Destroy', event_picture, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Event picture', new_event_picture_path %>

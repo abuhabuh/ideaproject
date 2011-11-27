@@ -24,14 +24,14 @@ class HomeController < ApplicationController
     # Case1: users have inputed an idea and have just authenticated
     #        or logged in. They should have an idea string in the session
     # Case2: users have not inputed an idea so just render main page
-    @initial_idea = nil
-    if session[:initial_idea] && !session[:initial_idea].blank?
+    @initial_idea_string = nil
+    if session[:initial_idea_string] && !session[:initial_idea_string].blank?
       # Pass idea to view
-      @initial_idea = session[:initial_idea]
+      @initial_idea_string = session[:initial_idea_string]
       
       # Delete idea from session
-      session.delete(:initial_idea)
-      if session[:initial_idea]
+      session.delete(:initial_idea_string)
+      if session[:initial_idea_string]
         puts " TRACE HomeController:index - error deleting session param"
       else
         puts " TRACE HomeController:index - deleted session param"
@@ -48,9 +48,6 @@ class HomeController < ApplicationController
     # Determine what we're sorting on
     # TODO: IMPLEMENT THIS
     
-    # Gets collections of user's ideas, friends' ideas
-    set_objs_to_render
-    
     if session[:stream_view] == STREAM_VIEW_FRIENDS    
       # Don't need to get this if we're doing PUBLIC or SEARCH views
       @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
@@ -60,6 +57,19 @@ class HomeController < ApplicationController
 
     # Get featured ideas in order of most featured
     @featured_ideas = Idea.where("featured != ?", NOT_FEATURED).order("featured DESC")
+
+    if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM
+      # Load first idea variables for default preview display
+      @idea = @stream_ideas[0]
+      unless @idea.nil?
+        @idea_chat_msgs = @idea.chat_messages.order("id DESC").limit(IDEA_LAYOUT_PREVIEW_NUM_CHATS).reverse
+        @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
+        @has_idea = false;
+        if current_user.ideas.exists?(@idea.id)
+          @has_idea = true;
+        end
+      end
+    end
   end
 
 
@@ -68,11 +78,6 @@ class HomeController < ApplicationController
   # - need to have :page parameter is passed in and :stream_view is in session
   def next_ideas_batch_js
     session[:page] = params[:page] # session[:page] written to hidden div to support ajax
-
-    #puts " ************ search text: " + params[:idea].to_s
-    #puts " ************ page # : " + params[:page].to_s
-
-    set_objs_to_render
 
     respond_to do |format|
       format.html {
@@ -102,10 +107,9 @@ class HomeController < ApplicationController
       
       # Add string to session to save for when user
       #   authenticates
-      session[:initial_idea] = params[:idea]
+      session[:initial_idea_string] = params[:idea]
       
       @stream_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-      @user_idea_ids = Array.new # empty array for user ideas since the user is unauthenticated
     else
       # Handle unexpected nil error
       puts " TRACE IdeasController:process_idea - no param for idea"
@@ -133,7 +137,6 @@ class HomeController < ApplicationController
     
     respond_to do |format|
       format.html {
-        set_objs_to_render
 
         unless session[:stream_view] == STREAM_VIEW_FRIENDS
           puts " GETTING SEARCH RESULTS <add_idea> - [" + params[:search].to_s + "]"
@@ -155,37 +158,6 @@ class HomeController < ApplicationController
     end
   end
 
-
-  # Joins user to existing idea
-  # Doesn't create new idea object
-  # TODO make this ajax call
-  def add_idea_id
-    if params[:idea_id] && !params[:idea_id].blank?
-      @idea = Idea.find(params[:idea_id])
-      current_user.join_idea(@idea.id)
-    else
-      # Handle unexpected nil error
-      puts " TRACE HomeController:add_idea_id - no param for idea"
-    end
-    
-    respond_to do |format|
-      format.html {
-        set_objs_to_render
-
-        unless session[:stream_view] == STREAM_VIEW_FRIENDS
-          @stream_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-        else
-          # Get stream ideas based on what type of stream we're 
-          #   rendering: Public, Friends, etc. Default is public view.
-          @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-        end
-
-        redirect_to authenticated_home_path
-      }
-      format.js
-    end
-  end
-  
   
   ######################################################
   ## BEGIN PRIVATE METHODS
@@ -199,14 +171,8 @@ class HomeController < ApplicationController
     User.get_my_friends_ideas(current_user, ideas_per_page, page_number)
   end
   
-  def set_objs_to_render()
-    @user_ideas = User.get_my_ideas(current_user)
-    @user_idea_ids = User.get_my_idea_ids(current_user)
-  end
-
   def search_ideas(search_string, ideas_per_page, current_page)
     if search_string == INPUT_BOX_SEARCH_IDEAS
-      puts " blank out text"
       search_string = ""
     end
 

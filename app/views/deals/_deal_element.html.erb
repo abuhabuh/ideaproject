@@ -13,34 +13,47 @@
   </div>
 
   <div class='deal-element-left-section'>
-    <div class='deal-element-title'>
-      <%= deal.title %>      
+    <div class='deal-element-pic'>
+      <%= image_tag(deal.deal_photo.url(:medium)) %>
     </div>
-    <div class='deal-element-left-section-text'>
+    <div class='deal-element-found-by'>
       <% creator_name = User.find(deal.user_id).user_name %>
-      Added by: <%= link_to creator_name, user_path(deal.user_id), {:method => 'get'} %> <br/>
-      Vendor: <%= deal.vendor_name %> <br/>
-    </div>
-    <div class='deal-element-make-event-button'>
-      <div class='button-float-left button-styling-major'>
-        <a href='#'>Make into Event</a>
-      </div>
+      Found by: <%= link_to creator_name, user_path(deal.user_id), {:method => 'get'} %> <br/>
     </div>
   </div>
 
-  <div class='deal-element-right-section'>
-    <div class='deal-element-photo'>
-      <%= image_tag(deal.deal_photo.url(:medium)) %>
+  <div class='deal-element-middle-section'>
+    <div class='deal-element-title'>
+      <%= deal.title %>
     </div>
-
-    <div class='deal-element-right-section-text'>
-      <%= number_to_currency(deal.price, :unit => "$") %>
-      <br/>
-      <% unless deal.percent_off.nil? %>
-        <%= number_to_percentage(deal.percent_off, :precision => 0)%> off
-      <% end %>
+    <div class='deal-element-content'>
+      Vendor: <%= deal.vendor_name %> <br/>
+        <% if deal.purchase_link.nil? || deal.purchase_link.empty? %>
+          Link to details: N/A <br/>
+        <% else %>
+          <a href="<%= deal.purchase_link %>">Click this link to view details or purchase</a>. <br/>
+        <% end %>
       <br/>
       xx% Approve
+    </div>
+  </div>
+  
+  <div class='deal-element-right-section'>
+    <div class='deal-element-price'>
+      <%= number_to_currency(deal.price, :unit => "$", :precision => 0) %>
+    </div>
+    <div class='deal-element-percent-off'>
+      <% unless deal.percent_off.nil? %>
+        <%= number_to_percentage(deal.percent_off, :precision => 0) %> off
+      <% else %>
+        <br/>
+        <br/>
+      <% end %>
+    </div>
+    <div class='deal-element-make-event-button'>
+      <div class='button-float-right button-styling-major'>
+        <a href='#'>Make into Event</a>
+      </div>
     </div>
   </div>
 
