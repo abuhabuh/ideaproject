@@ -24,7 +24,7 @@
 }
 
 /*************************************
- * Layout
+ * Stream Layout Definitions
  *************************************/
 .idea-stream-content-row{
   float: left;
@@ -70,42 +70,45 @@
     
     margin-left: 1%;
     
-    width: 24%;
+    width: 21%;
   }
 
-  .idea-row-action{
+  .idea-row-button-container{
     float: left;
-    width: 14%;
+    width: 17%;
   }
   
     @mixin button-styling {
-      float: left;
+      float: right;
       width: 100%;
-      padding: 15px 0px;
-      
+
+      margin-bottom: 4px;
+
       font-family: Helvetica, Arial, sans-serif;
       text-align: center;
       font-weight: bold;
-      
-      box-shadow: 2px 2px 2px #FFEBCD inset, -2px -2px 2px #201C10 inset;
     }
     .idea-row-action-preview{
       @include button-styling;
-      
+
+      padding: 3px; /* to conform to padding standards of other buttons */
+
       background-color: $button-styling-minor-color;
+      box-shadow: 2px 2px 2px #FFEBCD inset, -2px -2px 2px #201C10 inset;
     }
     .idea-row-action-join{
       @include button-styling;
-      
-      background-color: $button-styling-major-color;
     }
-    .idea-row-action-join-confirm{
-      float: left;
-      margin-top: 5px;
-      padding: 15px 0px;
-      width: 100%;
+      .idea-row-action-join-confirm{
+        float: left;
+        margin-top: 5px;
+        padding: 15px 0px;
+        width: 100%;
 
-      text-align: center;
+        text-align: center;
+      }
+    .idea-row-action-done-it{
+      @include button-styling;
     }
   
 /**************

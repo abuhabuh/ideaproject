@@ -64,6 +64,22 @@
       margin: auto;
     }
 
+  .block-stream-element-buttons-container{
+    float: left;
+    width: 100%;
+    height: 25px;
+  }
+    .block-stream-element-button-done-it{
+      float: left;
+      width: 55%;
+      height: 50%;
+    }
+    .block-stream-element-button-join-idea{
+      float: right;
+      width: 35%;
+      height: 50%;
+    }
+
   .block-stream-element-description-block{
     float: left;
 
@@ -108,7 +124,7 @@
   .block-stream-element-stats-block-text{
     float: left;
 
-    width: 50%;
+    width: 40%;
   }
 
   .block-stream-element-stats-block-action{

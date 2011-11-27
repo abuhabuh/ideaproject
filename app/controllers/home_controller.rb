@@ -48,9 +48,6 @@ class HomeController < ApplicationController
     # Determine what we're sorting on
     # TODO: IMPLEMENT THIS
     
-    # Gets collections of user's ideas, friends' ideas
-    set_objs_to_render
-    
     if session[:stream_view] == STREAM_VIEW_FRIENDS    
       # Don't need to get this if we're doing PUBLIC or SEARCH views
       @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
@@ -81,11 +78,6 @@ class HomeController < ApplicationController
   # - need to have :page parameter is passed in and :stream_view is in session
   def next_ideas_batch_js
     session[:page] = params[:page] # session[:page] written to hidden div to support ajax
-
-    #puts " ************ search text: " + params[:idea].to_s
-    #puts " ************ page # : " + params[:page].to_s
-
-    set_objs_to_render
 
     respond_to do |format|
       format.html {
@@ -118,7 +110,6 @@ class HomeController < ApplicationController
       session[:initial_idea_string] = params[:idea]
       
       @stream_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
-      @user_idea_ids = Array.new # empty array for user ideas since the user is unauthenticated
     else
       # Handle unexpected nil error
       puts " TRACE IdeasController:process_idea - no param for idea"
@@ -146,7 +137,6 @@ class HomeController < ApplicationController
     
     respond_to do |format|
       format.html {
-        set_objs_to_render
 
         unless session[:stream_view] == STREAM_VIEW_FRIENDS
           puts " GETTING SEARCH RESULTS <add_idea> - [" + params[:search].to_s + "]"
@@ -168,27 +158,6 @@ class HomeController < ApplicationController
     end
   end
 
-
-  # Joins user to existing idea
-  # Doesn't create new idea object
-  # TODO make this ajax call
-  def add_idea_id
-    if params[:idea_id] && !params[:idea_id].blank?
-      @idea = Idea.find(params[:idea_id])
-      current_user.join_idea(@idea.id)
-    else
-      # Handle unexpected nil error
-      puts " TRACE HomeController:add_idea_id - no param for idea"
-    end
-    
-    respond_to do |format|
-      format.html {
-        redirect_to :back
-      }
-      format.js
-    end
-  end
-  
   
   ######################################################
   ## BEGIN PRIVATE METHODS
@@ -202,14 +171,8 @@ class HomeController < ApplicationController
     User.get_my_friends_ideas(current_user, ideas_per_page, page_number)
   end
   
-  def set_objs_to_render()
-    @user_ideas = User.get_my_ideas(current_user)
-    @user_idea_ids = User.get_my_idea_ids(current_user)
-  end
-
   def search_ideas(search_string, ideas_per_page, current_page)
     if search_string == INPUT_BOX_SEARCH_IDEAS
-      puts " blank out text"
       search_string = ""
     end
 

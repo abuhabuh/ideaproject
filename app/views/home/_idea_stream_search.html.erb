@@ -13,7 +13,7 @@
     <div id='AJAX_main_stream_content'> 
       <% @stream_ideas.each do |idea_item| %>
         <!-- user_count in query_result stands for # of TOTAL PEOPLE sharing -->
-        <%= render :partial=>"home/row_item_search_idea", 
+        <%= render :partial=>"shared_modules/row_item_search_idea", 
                    :locals => {:idea_item => idea_item, 
                                :pic_display_mode => pic_display_mode,
                                :view_type => view_type} %>

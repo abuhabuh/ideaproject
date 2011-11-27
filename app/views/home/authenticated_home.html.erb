@@ -19,38 +19,8 @@
             },
             dataType: 'html'});
 
-      var idea_pos = $(this).position();
-      var top_pos_str = Math.round(idea_pos.top-182).toString()+"px"
-      $('#AJAX_right_preview_box_id').css({"position":"relative","top":top_pos_str});
-    }
-
-    function joinIdea(){
-      var idea_id = $('.idea-id-identifier', this).html();
-
-      $.ajax({url: "<%=user_ideas_path%>",
-              type: "POST",
-              data: {user_id: <%=current_user.id%>, idea_id: idea_id},
-              success: function(return_html){                
-                $.ajax({url: "<%=idea_preview_path%>",
-                        data: {idea_id: idea_id},
-                        success: function(return_html){
-                          $('#AJAX_right_preview_box_id').html(return_html);
-                        },
-                        dataType: 'html'});
-              },
-              dataType: 'html'});
-
-      var idea_pos = $(this).position();
-      var top_pos_str = Math.round(idea_pos.top-182).toString()+"px"
-      $('#AJAX_right_preview_box_id').css({"position":"relative","top":top_pos_str});
-      
-      $(this).html("You joined!");
-      $(this).removeClass("JS_idea_row_action_join");
-      $(this).removeClass("idea-row-action-join");
-      $(this).addClass("idea-row-action-join-confirm");
-      $('.JS_idea_row_action_preview').mouseover(function () {
-  	    $(this).css('cursor', 'pointer');
-      });
+      var vertical_scroll = String($(window).scrollTop()) + "px";
+      $('#AJAX_right_preview_box_id').css({"position":"relative","top":vertical_scroll});
     }
 
     $(function(){
@@ -124,14 +94,9 @@
                   <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
                     $('.JS_idea_row_action_preview').unbind('click'); // prevents double assignment of click
                     $('.JS_idea_row_action_preview').click(renderIdeaPreview);
-                    $('.JS_idea_row_action_join').unbind('click');
-                    $('.JS_idea_row_action_join').click(joinIdea);
                     $('.JS_idea_row_action_preview').mouseover(function () {
                 	    $(this).css('cursor', 'pointer');
                     });
-                    $('.JS_idea_row_action_join').mouseover(function () {
-                	    $(this).css('cursor', 'pointer');
-                    });        
                   <% end %>
                 }//,
                 //error: function(msg){ // TODO: remove this for live deploy
@@ -152,11 +117,6 @@
         $('.JS_idea_row_action_preview').mouseover(function () {
     	    $(this).css('cursor', 'pointer');
         });
-        
-        $('.JS_idea_row_action_join').click(joinIdea);
-        $('.JS_idea_row_action_join').mouseover(function () {
-    	    $(this).css('cursor', 'pointer');
-        });        
       });
     <% end %>
 
@@ -164,8 +124,6 @@
 <% end %>
 
 
-<!-- id tag to mark this as the AUTH HOME page for shared AJAX functions -->
-<div class='hidden-div' id='<%=ID_TAG_HOME_AUTH_PAGE%>'></div>
 <div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
 
 
@@ -237,7 +195,7 @@
 
     <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
       <% @stream_ideas.each do |idea| %>
-        <%= render :partial=>'home/row_item_search_idea', 
+        <%= render :partial=>'shared_modules/row_item_search_idea', 
                    :locals => {:idea_item => idea,
                                :pic_display_mode => PIC_VIEW_TYPE_USER,
                                :view_type => IDEA_STREAM_ALL_ACTIVE} %>

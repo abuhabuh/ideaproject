@@ -1,6 +1,29 @@
 @import "color_definitions";
 
 
+
+/******************************
+ * Idea View Deals Section
+ ******************************/
+.idea-view-deals-section-buttons-container{
+  float: right;
+}
+  .idea-view-deals-section-buttons-container-hide{
+    float: right;
+    width: 50px;
+    margin-right: 15px;
+  }
+  .idea-view-deals-section-buttons-container-search{
+    float: right;
+    width: 150px;
+    margin-right: 15px;
+  }
+  .idea-view-deals-section-buttons-container-add{
+    float: right;
+    width: 100px;    
+    margin-right: 15px;
+  }
+
 /******************************
  * Deals view list definitions
  ******************************/

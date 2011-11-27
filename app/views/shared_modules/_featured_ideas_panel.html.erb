@@ -25,8 +25,13 @@
       </div>
 
       <% unless @user_idea_ids.include?(idea.id.to_s) %>
+        <!-- NOTE: untested code for render function. probly gonna blow away this featured stuff anyways -->
         <%= render :partial => "shared_modules/button_add_idea",
-                   :locals => {:idea_id => idea.id, :float => 'right'} %>
+                   :locals => {:target_path => 
+                                  button_associate_idea_stream_path(:idea_id => idea.id, 
+                                                                   :idea_assc_type => IDEA_ASSC_ADD_IDEA), 
+                               :idea_id => idea.id, 
+                               :float => 'right'} %>
       <% end %>
     <div>
 

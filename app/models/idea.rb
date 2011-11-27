@@ -39,4 +39,48 @@ class Idea < ActiveRecord::Base
     self.photo = open(url)
   end
 
+
+
+  ###### CLASS FUNCTIONS ############
+
+
+  ################# UTILITY FUNCTIONS ######################
+
+  def self.join_idea(user_id, idea_id)
+    Idea.add_user_joined(idea_id)
+    user_idea = UserIdea.where(:user_id => user_id, :idea_id => idea_id).first
+    if user_idea.nil?
+      UserIdea.create!(:user_id => user_id,
+                       :idea_id => idea_id,
+                       :time_goal => IDEA_TIMEGOAL_ANYTIME,
+                       :status => USER_IDEA_STATUS_SHARING,
+                       :want_it_count => 0,
+                       :prod_count => 0,
+                       :done_it => false)
+    else
+      user_idea.update_attributes!(:status => USER_IDEA_STATUS_SHARING)
+    end
+  end
+
+  def self.has_done_idea(user_id, idea_id)
+    user_idea = UserIdea.where(:user_id => user_id, :idea_id => idea_id).first
+    if user_idea.nil?
+      UserIdea.create!(:user_id => user_id,
+                       :idea_id => idea_id,
+                       :time_goal => IDEA_TIMEGOAL_ANYTIME,
+                       :status => USER_IDEA_STATUS_DONE_IDEA,
+                       :want_it_count => 0,
+                       :prod_count => 0,
+                       :done_it => true)
+    else
+      user_idea.update_attributes!(:done_it => true)
+    end
+  end
+
+  def self.add_user_joined(idea_id)
+    target_idea = Idea.find(idea_id);
+
+    target_idea.update_attributes!(:num_users_joined => (target_idea.num_users_joined + 1) ) 
+  end
+
 end

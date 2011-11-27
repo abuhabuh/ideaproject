@@ -58,7 +58,8 @@ ID_TAG_USER_LIST_USER_ROW = "AJAX_user_list_row_id_" #append user id
 ID_USER_PICTURE_LIST_CONTAINER = 'AJAX_user_picture_list_container' # identifies user picture list container (used in 'kick em' functionality)
 
 #   Main authenticated home page
-ID_TAG_AUTH_HOME_STREAM_IDEA_ACTION = "AJAX_auth_home_stream_idea_action_id_" #append idea id
+ID_TAG_AUTH_HOME_STREAM_ADD_IDEA_BUTTON = "AJAX_auth_home_stream_add_idea_button_id_" #append idea id
+ID_TAG_AUTH_HOME_STREAM_DONE_IDEA_BUTTON = "AJAX_auth_home_stream_done_idea_button_id_" #append idea id
 ID_TAG_AUTH_HOME_STREAM_NUM_USERS = "AJAX_auth_home_stream_num_users_" #append idea id
 ID_TAG_AUTH_HOME_USER_IDEAS = "AJAX_auth_home_user_ideas"
 ID_TAG_AUTH_HOME_IDEA_PREVIEW_GOAL = "AJAX_auth_home_idea_preview_goal"
@@ -78,13 +79,6 @@ ID_TAG_CHAT_USER_JOINED_STRING = 'Joined'
 ID_TAG_CHAT_USER_VIEWING_STRING = 'Viewing'
 ID_TAG_CHAT_USER_COMMITTED_STRING = 'Committed'
 
-#   Page markers to tell shared AJAX function (like add_idea_id.js.erb which is share across
-#     main auth page and idea view page) which page it is on so it can execute correct 
-#     action batch.
-ID_TAG_HOME_AUTH_PAGE = "AJAX_home_auth_page_id"
-ID_TAG_IDEA_VIEW_PAGE = "AJAX_idea_view_page_id"
-ID_TAG_USER_VIEW_PAGE = "AJAX_user_view_page_id"
-
 #   Deal markers
 ID_TAG_IDEA_DEALS_LIST_CONTAINER = 'AJAX_idea_deals_list_container'
 ID_TAG_DEAL_ITEM = 'AJAX_deal_item_' #append deal id
@@ -102,7 +96,9 @@ INPUT_BOX_ADD_IDEA = "What do you want to do with friends?"
 INPUT_BOX_SEARCH_IDEAS = "Enter text to search"
 BUTTON_JOIN_IDEA = "Add Idea!"
 BUTTON_CHAT_IDEA = "Go Chat!"
-
+BUTTON_DONE_IDEA = "Been there, done that"
+JOIN_IDEA_SUCCESS_TEXT = "Idea Added!"
+DONE_IDEA_SUCCESS_TEXT = "I've done this!"
 
 ##########################################
 # DATABASE / SOLR Search functionality constants
@@ -138,6 +134,11 @@ IDEA_TIMEGOAL_ANYTIME_STR = 'anytime'
 USER_IDEA_STATUS_SHARING = 0
 USER_IDEA_STATUS_INVITED = 1
 USER_IDEA_STATUS_LIKE = 2 # TODO: maybe use this? not implemented yet
+USER_IDEA_STATUS_DONE_IDEA = 3 # Separate column done_it also keeps tabs on if user has done idea 
+#   Idea join type specifying type of idea relationship being established
+IDEA_ASSC_ADD_IDEA = 0
+IDEA_ASSC_DONE_IDEA = 1
+
 
 ##########################################
 # Events Constants

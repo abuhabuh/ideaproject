@@ -35,8 +35,6 @@ IdeaApp::Application.routes.draw do
 
   match "home/add_idea", :to => "home#add_idea",
         :as => :add_idea, :via => "POST"
-  match "home/add_idea_id", :to => "home#add_idea_id",
-        :as => :add_idea_id, :via => "POST"
   match "home/process_idea", :to => "home#process_idea",
         :as => :initial_idea, :via => "POST"
   match "home/authenticated_home", :to => "home#authenticated_home",
@@ -73,6 +71,13 @@ IdeaApp::Application.routes.draw do
         :as => :idea_chat_user_list, :via => 'GET'
   match "idea/idea_kick_user_list", :to => "ideas#idea_kick_user_list",
         :as => :idea_kick_user_list, :via => 'GET'
+  # => Controller actions that handle AJAX button requests from differenet pages
+  match "idea/button_associate_idea_block", :to => "ideas#button_associate_idea_block",
+        :as => :button_associate_idea_block, :via => 'POST'
+  match "idea/button_associate_idea_stream", :to => "ideas#button_associate_idea_stream",
+        :as => :button_associate_idea_stream, :via => 'POST'
+  match "idea/join_idea_from_idea_view", :to => "ideas#join_idea_from_idea_view",
+        :as => :join_idea_from_idea_view, :via => "POST"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

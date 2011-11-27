@@ -358,8 +358,6 @@
 <% end %>
 
 
-<!-- id tag to mark this as the IDEAS VIEW page for shared AJAX functions -->
-<div class='hidden-div' id='<%=ID_TAG_IDEA_VIEW_PAGE%>'></div>
 <!-- Hidden div for facebox rendering for adding deals -->
 <div id='FACEBOX_add_deal_container' class='hidden-div'> 
   <% @deal = Deal.new %>
@@ -410,9 +408,11 @@
         <!-- TODO: NEED TO MAKE NEW PARTIAL THAT DOESN'T DIRECT TO HOME CONTROLLER AJAX -->
         You're getting left out! <br/>
         <br/>
+        <!-- NOTE: not using AJAX button partial because we want page to refresh. This loads
+                   all the crazy AJAX idea interaction button stuff like kick em -->
         <div class="button-styling-major button-float-left">
           <%= link_to BUTTON_JOIN_IDEA,
-              add_idea_id_path(:idea_id => @idea.id),
+              join_idea_from_idea_view_path(:idea_id => @idea.id, :idea_assc_type => IDEA_ASSC_ADD_IDEA),
                                {:method => 'post'} %>
         </div>
       <% end %>
@@ -543,7 +543,7 @@
     <% if @has_idea %>
       <%= render :partial => 'shared_modules/chat_input_bar_ideas'%>
     <% else %>
-      <div class='minor-text' id='<%=ID_TAG_IDEA_CHAT_INPUT_AREA%>'>Join the idea to chat!</div>
+      <div class='minor-text' id='<%=ID_TAG_IDEA_CHAT_INPUT_AREA%>'>Add the idea to chat!</div>
     <% end %>
   
   </div>
@@ -552,15 +552,24 @@
     <div class='content-header'>
       Deals Added by Users
 
-      <span class='button-float-right button-styling-major'>
-        <a href='#' id='JQUERY-view-deals-link'> Hide </a>
-      </span> 
-      <span class='button-float-right button-styling-major'>
-        <a href='#FACEBOX_search_deals_container' rel='facebox'> Search Existing Deals </a>
-      </span> 
-      <span class='button-float-right button-styling-major'>
-        <a href='#FACEBOX_add_deal_container' rel='facebox'>Add New Deal</a>
-      </span> 
+      <span class='idea-view-deals-section-buttons-container'>
+        <span class='idea-view-deals-section-buttons-container-hide'>
+          <span class='button-float-right button-styling-major'>
+            <a href='#' id='JQUERY-view-deals-link'> Hide </a>
+          </span>
+        </span>
+        <span class='idea-view-deals-section-buttons-container-search'>
+          <span class='button-float-right button-styling-major'>
+            <a href='#FACEBOX_search_deals_container' rel='facebox'> Search Existing Deals </a>
+          </span> 
+        </span>
+        <span class='idea-view-deals-section-buttons-container-add'>
+          <span class='button-float-right button-styling-major'>
+            <a href='#FACEBOX_add_deal_container' rel='facebox'>Add New Deal</a>
+          </span> 
+        </span>
+      </span>
+
     </div>
 
     <div id='JQUERY-deals-section'>

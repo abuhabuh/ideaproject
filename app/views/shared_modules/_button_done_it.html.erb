@@ -1,0 +1,23 @@
+<span class='<%=ID_TAG_AUTH_HOME_STREAM_DONE_IDEA_BUTTON + idea_id.to_s%>'>
+<%= link_to button_associate_idea_block_path(:idea_id => idea_id, :idea_assc_type => IDEA_ASSC_DONE_IDEA),
+            :method => 'post',
+            :remote => true,
+            :title => "Mark as an idea you've done before" do %>
+  
+  <% if float == 'left' %>
+    
+    <div class="button-styling-minor button-float-left">
+  
+  <% else %>
+  
+    <div class="<%=ID_TAG_AUTH_HOME_STREAM_DONE_IDEA_BUTTON + idea_id.to_s%> 
+                button-styling-minor button-float-right">
+  
+  <% end %>
+  
+      <%=BUTTON_DONE_IDEA%>
+  
+    </div>
+
+<% end %>
+</span>

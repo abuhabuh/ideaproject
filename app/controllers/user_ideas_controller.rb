@@ -42,16 +42,8 @@ class UserIdeasController < ApplicationController
   # POST /user_ideas
   # POST /user_ideas.json
   def create
-    @user_idea = UserIdea.new
-    @user_idea.user_id = params[:user_id]
-    @user_idea.idea_id = params[:idea_id]
-    @user_idea.time_goal = IDEA_TIMEGOAL_ANYTIME
-    @user_idea.status = USER_IDEA_STATUS_SHARING
-    @user_idea.want_it_count = 0;
-    @user_idea.prod_count = 0;
-
     respond_to do |format|
-      if @user_idea.save!
+      if Idea.join_idea(params[:user_id].to_i, params[:idea_id].to_i)
         format.html { render :partial => 'user_ideas/create_ajax_confirm' }
         
         #format.json { render json: @user_idea, status: :created, location: @user_idea }
@@ -89,13 +81,15 @@ class UserIdeasController < ApplicationController
   def destroy
     @user_idea = UserIdea.find(params[:id])
 
-    # Decrement user_sharing count for main idea object
-    @idea = @user_idea.idea
-    @idea.num_users_joined = @idea.num_users_joined - 1
-    unless @idea.save!
-      # TODO: catch save error
-      puts " TRACE: UserIdeasController:Destroy - @idea save unsuccessful"
-    end
+    # If user was sharing idea, decrement user_sharing count for main idea object
+    if @user_idea.status == USER_IDEA_STATUS_SHARING
+      @idea = @user_idea.idea
+      @idea.num_users_joined = @idea.num_users_joined - 1
+      unless @idea.save!
+        # TODO: catch save error
+        puts " TRACE: UserIdeasController:Destroy - @idea save unsuccessful"
+      end
+    end 
     
     @user_idea.destroy
 
@@ -104,4 +98,6 @@ class UserIdeasController < ApplicationController
       format.json { head :ok }
     end
   end
+
+
 end

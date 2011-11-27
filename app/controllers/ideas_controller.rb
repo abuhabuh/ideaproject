@@ -238,7 +238,74 @@ class IdeasController < ApplicationController
   
   end
   
+  # Joins user to existing idea object and reloads source page
+  # - called from idea view page
+  def join_idea_from_idea_view
+    if params[:idea_id] && !params[:idea_id].blank?
+      @idea = Idea.find(params[:idea_id])
+      @idea_assc_type = params[:idea_assc_type]
+      current_user.associate_idea(@idea.id, params[:idea_assc_type])
+    else
+      # Handle unexpected nil error
+      puts " TRACE HomeController:join_idea_from_idea_view - no param for idea"
+    end
+    
+    respond_to do |format|
+      format.html {
+        redirect_to :back
+      }
+    end
+  end
+
+  ###### Controller functions that handle ajax requests from 'join idea' button
+  # Joins user to existing idea, Doesn't create new idea object 
+
+  def button_associate_idea_block
+    idea_id = params[:idea_id].to_i
+    idea_assc_type = params[:idea_assc_type].to_i
   
+    current_user.associate_idea(idea_id, idea_assc_type)
+  
+    respond_to do |format|
+      format.js {
+        render :partial => '/ideas/button_associate_idea_block', 
+               :locals => {:idea_id => idea_id,
+                           :idea_assc_type => idea_assc_type}
+      }
+    end
+  end
+
+  def button_associate_idea_stream
+    idea_id = params[:idea_id].to_i
+    idea_assc_type = params[:idea_assc_type].to_i
+  
+    current_user.associate_idea(idea_id, idea_assc_type)
+
+    unless params[:view_type].to_i == IDEA_STREAM_NO_PREVIEW
+      # BEGIN variable declarations for idea preview rendering for js response construction
+      @idea = Idea.find(params[:idea_id])
+      @idea_chat_msgs = @idea.chat_messages.order("id DESC").limit(IDEA_LAYOUT_PREVIEW_NUM_CHATS).reverse
+
+      @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
+
+      @has_idea = false;
+      if current_user.ideas.exists?(@idea.id)
+        @has_idea = true;
+      end
+      # END variable declarations for idea preview rendering
+    end
+
+    respond_to do |format|
+      format.js {
+        render :partial => '/ideas/button_associate_idea_stream', 
+               :locals => {:idea_id => idea_id,
+                           :idea_assc_type => idea_assc_type,
+                           :view_type => params[:view_type]}
+      }
+    end
+  end
+
+
   ########################
   # Temp code to make ideas featured
   ########################
