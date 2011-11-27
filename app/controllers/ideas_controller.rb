@@ -18,6 +18,8 @@ class IdeasController < ApplicationController
     @idea = Idea.find(params[:id])
     @idea_chat_msgs = @idea.chat_messages.order("id ASC")
     @idea_deals = @idea.deals
+    @forum_posts = Post.where(:idea_id => @idea.id, :post_id => nil);
+
     @idea_events = @idea.events
     @idea_users = @idea.users.order("want_it_count DESC, first_name ASC, last_name ASC");
     
@@ -329,5 +331,19 @@ class IdeasController < ApplicationController
     redirect_to :back
   end
   
-  
+  def new_forum_topic
+    puts "Made it here!!!!!!!!!!"
+    @post = Post.new(params[:post])
+
+    @post.user_id = current_user.id
+    
+    @post.save
+   
+    respond_to do |format|
+      format.html {render :partial => 'forum/forum_display', :locals => {:posts => [@post], :level => 2, :postCount => 2} }   #{ redirect_to Idea.find_by_id(@post.idea_id) }
+      format.json 
+    end
+ 
+       end
+   
 end

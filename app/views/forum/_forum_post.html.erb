@@ -1,0 +1,12 @@
+<%= form_for(Post.new, :remote => true, :url => new_forum_topic_path) do |f| %>
+  <div id=<%= post_id.to_s() + '_reply_form' %> >
+    <%= f.text_area(:content, :size => "40x5", :id => post_id.to_s() + '_reply_text_area') %> <br/>
+    <%= f.hidden_field(:idea_id, :value => idea_id)  %><br/>
+    <% if !post_id.nil? %>
+      <%= f.hidden_field(:post_id, :value => post_id)  %><br/>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

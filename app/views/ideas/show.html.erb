@@ -125,10 +125,90 @@
     // End deals facebox control bindings
     
     
+    function toggle_reply() {
+      var raw_id = $(this).attr("id");
+      var id = "#" + raw_id + "_reply";
+      $(id).toggle(0, function() {
+        var textarea_id =  "#" + raw_id + "_reply_text_area";
+        var element = $(textarea_id);
+        element.focus();
+      });
+      return false;
+    }
+
+    function clearForm(form) {
+      // iterate over all of the inputs for the form
+      // element that was passed in
+      $(':input', form).each(function() {
+        var type = this.type;
+        var tag = this.tagName.toLowerCase(); // normalize case
+        // it's ok to reset the value attr of text inputs,
+        // password inputs, and textareas
+        if (type == 'text' || type == 'password' || tag == 'textarea')
+          this.value = "";
+          // checkboxes and radios need to have their checked state cleared
+          // but should *not* have their 'value' changed
+        else if (type == 'checkbox' || type == 'radio')
+          this.checked = false;
+          // select elements need to have their 'selectedIndex' property set to -1
+          // (this works for both single and multiple select elements)
+        else if (tag == 'select')
+        this.selectedIndex = -1;
+      });
+   };
+
+    function replyFormAjax(request, returned_html, xhr) {
+          var parentId = $(this).parent().attr("id");
+          if(parentId == "new_topic") {
+          //means it's a brand new top level topic, must handle it differently than a child reply
+            $("#forum-container").prepend(returned_html);
+            $(this).toggle();
+          } else {
+            $(this).parent().toggle();
+            var id = $(this).parent().attr("id").split("_")[0];
+            var child_posts_id = "#" + id + "_children";
+            $(child_posts_id).prepend(returned_html);
+            var view_children_link = "#" + id + "_view_children_link";
+            var link_text = $(view_children_link).text();
+            var child_count = Number(link_text.match("\\d+")) + 1;
+            link_text = "Hide Replies(" + child_count + ")";
+            $(view_children_link).html(link_text);
+            $(child_posts_id).show();
+          }
+          clearForm(this);
+          $(".reply-link-class").unbind('click');
+          $(".reply-link-class").click(toggle_reply);
+
+          $('.new_post').unbind('ajax:success');
+
+          $('.new_post').bind('ajax:success', replyFormAjax);
+ 
+    	};
+
+   
+ 
+    $(document).ready(function(){
+ 
+        $(".reply-link-class").click(toggle_reply);
+
+        $(".view-children-link").click(function() {
+          var id = $(this).attr("id");
+          var post_id = id.match("\\d+");
+          id = "#" + post_id + "_children";
+          $(id).toggle();
+          var link_text = $(this).text();
+          //Change the link text to View/Hide so the user knows they can toggle the post tree
+          if(link_text.search("View") > -1) {
+            link_text = link_text.replace("View", "Hide");
+          } else if(link_text.search("Hide") > -1) {
+            link_text = link_text.replace("Hide", "View");
+          }
+          $(this).text(link_text);
+          return false;
+        });
+
+        $('.new_post').bind('ajax:success', replyFormAjax);
     
-		$(document).ready(function(){
-		
-      // Bind view deals on-click function
       $('#JQUERY-view-deals-link').bind('click', function() {
         if ($('#JQUERY-deals-section').css('display') == "none"){
           $('#JQUERY-deals-section').show('slow');
@@ -292,6 +372,7 @@
       $('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).removeClass('chat-board-user-item-status-online');
   		$('#<%=ID_TAG_IDEA_USER%>' + String(user_id)).addClass('chat-board-user-item-status-offline');
 		}
+ 
 		
 		<% if @has_idea %>
 		  //////////////////////////////////////////////////////////
@@ -528,6 +609,20 @@
     
     </div>
   <% end %>
+
+  <div class='content-section'>
+    <div class='content-header'>Idea Discussion</div>
+    <span class='minor-text'>Post information you want to share with the group</span>
+
+    <div><%= link_to "Post New Topic", "#", :onclick => "$('#new_topic').toggle();" %></div>
+    <div id="new_topic" class="hidden-div">
+      <%= render :partial => 'forum/forum_post', :locals => {:post_id => nil, :idea_id => @idea.id} %>
+    </div>
+    <div id='forum-container'>
+      <%= render :partial => 'forum/forum_display', :locals => {:posts => @forum_posts, :level => 0, :postCount => 0} %>
+    </div>
+
+  </div>
 
   <div class='content-section'>
     <div class='content-header'>Public Discussion Board</div>

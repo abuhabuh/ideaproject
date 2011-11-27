@@ -1,0 +1,43 @@
+<% posts.each do |p| %>
+  <% @child_posts = Post.where(:idea_id => p.idea_id, :post_id => p.id) %>
+    <% if !@child_posts.nil? and level > 0 %>
+    <% end %>
+
+  <div class="post-empty-border">
+  <div id=<%= p.id.to_s() + '_post' %> class="parent-post">
+    <div class="profile-pic-div">
+      <% post_user = User.find_by_id(p.user_id) %>
+      <%= render :partial => '/users/profile_pic', :locals => {:current_user => post_user, :path => user_path(p.user_id), :makelink => true} %>
+    </div>
+  
+    <div id=<%= p.id.to_s() + '_content' %> class="forum-post-right">
+      <div>
+        <b><%= "#{post_user.first_name} #{post_user.last_name}" %></b> <%= "#{p.content}" %>
+      </div>
+      <div class='post-timestamp'>
+        <span class='post-timestamp-text'><%= p.created_at.strftime('%b %d, %Y %l:%M %P') %></span>
+      </div>
+      <div class="forum_reply" id=<%= p.id %>'_reply_link'>
+        <span class='minor-text'><%= link_to "Reply", "#", :class => 'reply-link-class', :id => p.id  %></span>
+      </div>
+      <div id=<%= p.id.to_s() %> class="view-children">
+        <% if !@child_posts.nil? and @child_posts.length > 0 %>
+          <span class='minor-text'><%= link_to "View Replies (#{@child_posts.length.to_s()})", "#", :class => 'view-children-link', :id => p.id.to_s() + '_view_children_link' %></span>
+        <% end %>
+      </div>
+      <div>&nbsp;</div>
+      <div class="hidden-div" id="<%= p.id %>_reply" >
+        <%= render :partial => 'forum/forum_post', :locals => {:post_id => p.id, :idea_id => p.idea_id} %>
+      </div>
+      <div id=<%= p.id.to_s() + '_children' %> class="hidden-div">
+        <% if !@child_posts.nil? %>
+          <%= render :partial => 'forum/forum_display', :locals => {:posts => @child_posts, :level => level+1, :postCount => postCount+1} %>
+        <% end %>
+      </div>
+    </div>
+ 
+  </div>
+  </div>
+  <% if @child_posts.nil? and postCount > 0 %>
+  <% end %>
+ <% end %>

@@ -14,6 +14,7 @@ class Idea < ActiveRecord::Base
   has_many :idea_deals
   has_many :deals, :through => :idea_deals
 
+  has_many :posts
   has_many :idea_commitments;
 
   has_attached_file :photo, {:default_url => '/images/ideas/:style/idea_default.jpg', 

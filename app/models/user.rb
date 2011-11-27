@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
 
   has_many :user_auths
 
+  has_many :posts
   has_many :idea_commitments
 
   # Setup paperclip photo attachment property

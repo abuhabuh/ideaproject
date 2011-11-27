@@ -142,6 +142,21 @@ ActiveRecord::Schema.define(:version => 20111126053134) do
     t.datetime "updated_at"
   end
 
+  create_table "posts", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "idea_id"
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.boolean  "delete_flag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["idea_id"], :name => "index_posts_on_idea_id"
+  add_index "posts", ["post_id"], :name => "index_posts_on_post_id"
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
+
   create_table "user_auths", :force => true do |t|
     t.string   "token",       :null => false
     t.string   "provider_id", :null => false

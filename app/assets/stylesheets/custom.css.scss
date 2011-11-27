@@ -21,6 +21,7 @@
 @import "idea_layout_block";
 @import "idea_layout_stream";
 @import "deals_layout";
+@import "forum";
 @import "tabs_layout"; /* TODO: NOT USING THIS YET. USE IT to make tabs for user profile page so user can manage stuff*/
 @import "events_layout";
 @import "chat_messages_layout";
@@ -815,6 +816,7 @@ p.alert{
 *********************************
 *********************************/
 .profile-pic-element-picture img{ /* TODO: CENTER THIS */
+ 
   max-height:100%; 
   max-width:100%;
   
