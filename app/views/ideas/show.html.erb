@@ -159,12 +159,11 @@
 
     function replyFormAjax(request, returned_html, xhr) {
           var parentId = $(this).parent().attr("id");
+          $(this).parent().toggle();
           if(parentId == "new_topic") {
           //means it's a brand new top level topic, must handle it differently than a child reply
             $("#forum-container").prepend(returned_html);
-            $(this).toggle();
           } else {
-            $(this).parent().toggle();
             var id = $(this).parent().attr("id").split("_")[0];
             var child_posts_id = "#" + id + "_children";
             $(child_posts_id).prepend(returned_html);
@@ -208,6 +207,11 @@
         });
 
         $('.new_post').bind('ajax:success', replyFormAjax);
+
+        $("#new_topic_link").click(function() {
+          $("#new_topic").toggle();
+          return false;
+        });
     
       $('#JQUERY-view-deals-link').bind('click', function() {
         if ($('#JQUERY-deals-section').css('display') == "none"){
@@ -614,10 +618,10 @@
     <div class='content-header'>Idea Discussion</div>
     <span class='minor-text'>Post information you want to share with the group</span>
 
-    <div><%= link_to "Post New Topic", "#", :onclick => "$('#new_topic').toggle();" %></div>
-    <div id="new_topic" class="hidden-div">
+    <div><%= link_to "Post New Topic", "#", :id => "new_topic_link" %></div>
+    <div id="new_topic" <% unless @forum_posts.empty? %> class="hidden-div" <% end %> > 
       <%= render :partial => 'forum/forum_post', :locals => {:post_id => nil, :idea_id => @idea.id} %>
-    </div>
+    </div><br/>
     <div id='forum-container'>
       <%= render :partial => 'forum/forum_display', :locals => {:posts => @forum_posts, :level => 0, :postCount => 0} %>
     </div>

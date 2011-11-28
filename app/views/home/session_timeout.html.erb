@@ -1,0 +1,10 @@
+<% content_for :head do %>
+  <script>
+    $(document).ready(function() {
+      $('a[rel*=facebox]').facebox();
+    });
+  </script>
+<% end %>
+
+Your session has timed out. <%= link_to 'Sign In', new_user_session_path, options = {:rel => 'facebox'} %><br/>
+

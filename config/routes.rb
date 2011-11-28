@@ -41,6 +41,8 @@ IdeaApp::Application.routes.draw do
         :as => :authenticated_home, :via => "GET"
   match "home/next_ideas_batch_js", :to => "home#next_ideas_batch_js",
         :as => :next_ideas_batch_js, :via => "GET"
+  match "home/session_timeout", :to => "home#session_timeout",
+        :as => :session_timeout, :via => "GET"
 
   match "users", :to => "users#index",
         :as => :users, :via => "GET"

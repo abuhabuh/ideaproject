@@ -158,7 +158,8 @@ class HomeController < ApplicationController
     end
   end
 
-  
+  def session_timeout
+  end
   ######################################################
   ## BEGIN PRIVATE METHODS
   ######################################################

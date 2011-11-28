@@ -207,6 +207,9 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
+  config.warden do |manager|
+    manager.failure_app = SessionTimeoutFailureApp
+  end
 
   #Omniauth configuration for facebook
   config.omniauth :facebook, "213537298694619", "daec5863cbee409a8edbea14155065cb", 

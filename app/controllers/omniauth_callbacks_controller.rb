@@ -6,7 +6,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     session["devise.facebook_data"] = request.env["omniauth.auth"] #TODO: Why stick everything in session?
     
     sign_in(@user)
-#    render 'users/facebook_callback'
 
     redirect_to authenticated_home_path
   end
