@@ -59,7 +59,6 @@ $button-height: 20px;
     }
     .idea-view-action-want-it-button{
       @include button-styling;
-      font-size: 26px;
       color: white;
       background-color: $main-content-title-color;
     }
