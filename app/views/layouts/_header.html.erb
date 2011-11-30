@@ -1,95 +1,109 @@
 <header>
 
-<% unless user_signed_in? %>
-  <div class='main-header-full-width-container-no-menu'>
-<% else %>
-  <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
-  <div class='main-header-full-width-container-menu'> <!-- both views will have menu for now -->
-  <% else %>
-  <div class='main-header-full-width-container-menu'>
-  <% end %>
-<% end %>
-    <div class='header-center-container'>
-      
-        <div class="main-header-left-content">
-          <%= link_to content_tag(:b, 'Jump In!'), root_url%>
-          <br />
-          <br />
-          <% if user_signed_in? %>
-            <span class="minor-link"><%=link_to "Feedback? Chat us up!", feedback_path, {:target => "_blank"} %></span>
-          <% end %>
-        </div>
+  <script type="text/javascript">
+    $(document).ready(function(){
 
+      $('#JQUERY-add-ideas-link').bind('click', function() {
+        if ($('#JQUERY-add-ideas-section').css('display') == "none"){
+          $('#JQUERY-add-ideas-section').show(300);
+        } else {
+          $('#JQUERY-add-ideas-section').hide(300);
+        }
+        return false;
+      });
+
+      $('#JQUERY-nav-link').bind('click', function() {
+        if ($('#JQUERY-nav-section').css('display') == "none"){
+          $('#JQUERY-nav-section').show(300);
+        } else {
+          $('#JQUERY-nav-section').hide(300);
+        }
+        return false;
+      });
+
+    });
+  </script>
+
+
+  <div class='main-header-full-width-container'>
+
+    <div class="main-header-left-content-container">
+      <div class="main-header-left-content">
+        <%= link_to content_tag(:b, 'Jump In!'), root_url%>
+        <br/>
         <% if user_signed_in? %>
-
-          <div class='main-header-center-content'>
-            <%= form_tag add_idea_path, :method => 'post' do %>
-              <% if @initial_idea_string.nil? || @initial_idea_string.blank? %>
-                <%= text_field_tag :idea, INPUT_BOX_ADD_IDEA, :size => "40" %>
-              <% else %>
-                <%= text_field_tag :idea, @initial_idea_string %>
-              <% end %>      
-              <%= submit_tag "Add Idea" %>
-            <% end %>
-            
-            <div class='nav-main-link round'><%= link_to 'Add Friends', users_path %></div>
-            
-            <div class='nav-main-link round'><%= link_to 'My Ideas', users_profile_path%></div>
-
-            <div class='nav-main-link-unimplemented round'>My Events</div>
-
-          </div>
-          
+          <span class="minor-link"><%=link_to "Feedback? Chat us up!", feedback_path, {:target => "_blank"} %></span>
         <% end %>
 
-        <div class='main-header-right-content'>
-          <div class='minor-text'>
-            <b>
-            <% if user_signed_in? %>
-              Hello <%= link_to current_user.first_name.empty? ? current_user.user_name : current_user.first_name, users_profile_path %><br/>
-              <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete%>
-              <br/>
+      </div>
+    </div>
 
-              Layout:<br/>
-              <% case current_user.auth_page_layout %>
-              <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
-                Stream | 
-                <%= link_to 'Stagger', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
-                <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL), :method => 'post' %>
-              <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
-                <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> | 
-                Stagger | 
-                <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL), :method => 'post' %>
-              <% when PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
-                <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> | 
-                <%= link_to 'Stagger', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
-                Block
+    <div class='main-header-center-content-container'>
+      <% if user_signed_in? %>
+        <div class='main-header-center-content'>
+            <div class='stream-search-field-and-button'>
+              <%= form_tag authenticated_home_path, :method => :get do %>
+                <% if params[:search].blank? %>
+                  <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS, :size => "37" %>
+                <% else %>
+                  <%= text_field_tag :search, params[:search], :size => "37" %>
+                <% end %>        
+                <%= submit_tag "Search", :name => nil %>
+                
+                <input type="hidden" name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
               <% end %>
+            </div>
+                
+          <div class='idea-stream-content-view-selector'>
+            View Ideas: 
+            <% case session[:stream_view] %>
+              <% when STREAM_VIEW_PUBLIC %>
+                Public | 
+                <%= link_to 'Friends', 
+                            authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
+                                                    {:method => 'get', 
+                                                     :title => "See friends' ideas"}%><br/>
 
-	          <% else %>
-              <%= link_to 'Sign In', new_user_session_path, options = {:rel => 'facebox'} %><br/>
-	          <% end %>
-            </b>
+              <% when STREAM_VIEW_FRIENDS %>  
+                <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
+                                                              {:method => 'get', 
+                                                               :title => "See public ideas"}%> | 
+                Friends<br/>
+
+              <% when STREAM_VIEW_SEARCH %>
+                <%= link_to 'Public',
+                           authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC),
+                           {:method => 'get',
+                            :title => "See public ideas"}%> | 
+                <%= link_to 'Friends',
+                           authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
+                           {:method => 'get',
+                           :title => "See friends' ideas"}%> | 
+                Search <br />
+
+            <% end %>
           </div>
         </div>
-
-      
+      <% end %>
     </div>
-  </div>
 
-  <!-- AJAX picks up DIV ids to insert proper notices -->
-  <div id='flash-notice-div'>
-    <% if flash[:notice] %>
-      <%= render :partial => "layouts/flash_notice" %>
-    <% end %>
+    <div class='main-header-right-content-container'>
+      <div class='main-header-right-content'>
+        <div class='minor-text'>
+          <% if user_signed_in? %>
+            Hello <%= current_user.first_name.empty? ? current_user.user_name : current_user.first_name %> 
+            <br/>
+            <a href='#' id='JQUERY-add-ideas-link'>Add Ideas</a> | 
+            <a href='#' id='JQUERY-nav-link'>Navigation</a> | 
+            <%= link_to 'Logout', destroy_user_session_path, :method => :delete%>
+          <% else %>
+            <%= link_to 'Sign In', new_user_session_path, options = {:rel => 'facebox'} %><br/>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
   </div>
-  <div id='flash-alert-div'>
-    <% if flash[:alert] %>
-      <%= render :partial => "layouts/flash_alert" %>
-    <% end %>
-  </div>
-  <!-- or flash.each do |key, msg| -->
-
 
   <!-- Google analytics tracking code. Do not put anything between this and the header tag -->
   <script type="text/javascript">
@@ -107,3 +121,36 @@
   </script>
 
 </header>
+
+
+<!-- AJAX picks up DIV ids to insert proper notices -->
+<div id='flash-notice-div'>
+  <% if flash[:notice] %>
+    <%= render :partial => "layouts/flash_notice" %>
+  <% end %>
+</div>
+<div id='flash-alert-div'>
+  <% if flash[:alert] %>
+    <%= render :partial => "layouts/flash_alert" %>
+  <% end %>
+</div>
+<!-- or flash.each do |key, msg| -->
+
+
+<div id='JQUERY-nav-section' class='main-header-drop-down-container hidden-div'>
+  <%= link_to 'Home', root_url%> | 
+  <%= link_to 'Find Friends', users_path %> | 
+  <%= link_to 'My Ideas & Profile', users_profile_path%>
+</div>
+
+<div id='JQUERY-add-ideas-section' class='main-header-drop-down-container hidden-div'>
+  <%= form_tag add_idea_path, :method => 'post' do %>
+    <% if @initial_idea_string.nil? || @initial_idea_string.blank? %>
+      <%= text_field_tag :idea, INPUT_BOX_ADD_IDEA, :size => "40" %>
+    <% else %>
+      <%= text_field_tag :idea, @initial_idea_string, :size => "40" %>
+    <% end %>      
+    <%= submit_tag "Add Idea" %>
+  <% end %>
+</div>
+

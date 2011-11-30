@@ -38,10 +38,6 @@
   box-shadow: 2px 2px 5px #201C10; 
 } 
 
-.main-header-full-width-container-menu, .main-header-full-width-container-no-menu{
-  box-shadow: 10px 10px 20px #201C10;
-}
-
   /***************************************
    * General elements
    ***************************************/
@@ -55,10 +51,22 @@ body {
   background-color: $main-background-color;
 }
 
+hr {
+  float: left;
+  width: 100%;
+  margin: 0px;
+}
+
+hr.main-horizontal-rule{
+  width: 96.6%;
+  margin: 0% 1.7%;
+}
+
+
   /***************************************
    * Header
    ***************************************/
-.main-header-full-width-container-menu, .main-header-full-width-container-no-menu{
+.main-header-full-width-container {
   background-color: $main-header-full-width-color;
 }
 
@@ -137,7 +145,7 @@ body {
    *************************************/
 
 .button-styling-major, .button-styling-minor{
-  box-shadow: 2px 2px 5px #FFEBCD inset, -2px -2px 5px #201C10 inset;
+  box-shadow: 2px 2px 2px #FFEBCD inset, -2px -2px 2px #201C10 inset;
 }
    
 .button-styling-major{
@@ -188,28 +196,18 @@ body {
 header{
   float: left;
   width: 100%;
+  height: 100%;
+  max-height: 60px;
 
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 /* Centering container to center all page content */
 
-.center-container-more-top-margin{
+.center-container{
   width: 900px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 80px;
-  
-  height: 100%; 
-  
-  border-style:solid;
-  border-width: 0px;
-}
-.center-container-less-top-margin{
-  width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 60px;
   
   height: 100%; 
   
@@ -235,112 +233,100 @@ header{
 }
 
 /* Main header nav div for logo and session / profile mgmt */
-.main-header-full-width-container-menu {
+.main-header-full-width-container {
   float: left;
   
-  width: 100%;
-  height: 80px;
-  
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  
-  z-index: 5;
+  width: 96.6%;
+  margin: 0% 1.7%;
 }
-.main-header-full-width-container-no-menu {
-  float: left;
-  
-  width: 100%;
-  height: 55px;
-  
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  
-  z-index: 5;
+  /* for some reason, padding isn't working out so have to have these parent containers 
+      that specify placement and size, then sub containers that specify padding */
+  .main-header-left-content-container, .main-header-center-content-container, .main-header-right-content-container{
+    float: left;
+    height: 67px;
+  }
+    .main-header-left-content-container {
+      width: 25%;
+
+      background-color: $main-header-left-section-color;
+    }
+      .main-header-left-content{
+        text-align: left;
+        padding: 5%;
+      }
+    .main-header-center-content-container {
+      width: 50%;
+
+      background-color: $main-header-center-section-color;
+    }
+      .main-header-center-content{
+        text-align: left;
+        padding: 3%;
+      }
+    .main-header-right-content-container {
+      width: 25%;
+
+      background-color: $main-header-right-section-color;
+    }
+      .main-header-right-content{
+        text-align: right;
+        line-height: 150%;
+        padding: 5%;
+      }
+
+  .main-header-drop-down-container {
+    float: right;
+    width: 96.6%;
+    margin: 0% 1.7%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+    font-size: 12px;
+    text-align: right;
+  }
+  .main-header-add-idea-container form {
+    float: right;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.left-nav, .left-nav-wide, .content-container, .idea-content-container, .right-nav, .right-preview-box{
+    float: left;
+    padding: 1%;
+    margin-top: 15px;
 }
+  .left-nav {
+    width: 20%;
+    min-height: 300px;
+  }
+  .left-nav-wide {
+    width: 29%;
+    min-height: 300px;
+  }
+  .content-container{ 
+    width: 57%;
 
-/* centers header content into middle of page to coorespond with center-container div class */
-.header-center-container{
-  width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  
-  height: 100%;
-  
-  border-style: solid;
-  border-width: 0px;
-}
-
-.left-nav {
-  float: left;
-  width: 20%;
-  min-height: 300px;
-  
-  padding: 1%;
-  
-  border-style:solid;
-  border-width: 0px;
-}
-
-.left-nav-wide {
-  float: left;
-  width: 29%;
-  min-height: 300px;
-  
-  padding: 1%;
-  
-  border-style:solid;
-  border-width: 0px;
-}
-
-.content-container{ 
-  float: left;
-
-  width: 57%;
-  padding: 1%;
-  margin-left: 2%;
-  margin-bottom: 10px;
-  
-  border-style: dotted;
-  border-width: 0px;
-}
-
-.idea-content-container{ 
-  float: left;
-
-  width: 65%;
-  padding: 1%;
-  margin-left: 2%;
-  margin-bottom: 10px;
-  
-  border-style: dotted;
-  border-width: 0px;
-}
-
-.right-nav {
-  float: left;
-
-  width: 15%;
-  padding: 1%;
-  
-  margin-left: 2%;
-  
-  border-style:solid;
-  border-width: 0px;
-}
-
-/* floating is default behavior. actual box rendered will have absolute position relative to document */
-.right-preview-box{
-  float: left;
-
-  position: relative;
-  
-  width: 35%;
-  padding: 1%;
-  
-  margin-left: 2%;
-}
+    margin-left: 2%;
+    margin-bottom: 10px;
+  }
+  .idea-content-container{ 
+    width: 65%;
+    margin-left: 2%;
+    margin-bottom: 10px;
+  }
+  .right-nav {
+    width: 15%;
+   
+    margin-left: 2%;
+  }
+  /* floating is default behavior. actual box rendered will have absolute position relative to document */
+  .right-preview-box{
+    position: relative;
+    
+    width: 35%;
+   
+    margin-left: 2%;
+  }
 
 /*************************************
  *************************************
@@ -355,25 +341,7 @@ header{
   /*************************************
    * Main header navigation
    *************************************/
-.main-header-left-content {
-  float: left;
 
-  width: 25%;
-  margin-top: 13px;
-}
-  
-.main-header-center-content {
-  float: left;
-
-  width: 50%;
-  margin-top: 13px;
-}
-
-.main-header-right-content {
-  float: right;
-
-  margin-top: 13px;
-}
 
 nav.main-authentication {
   float: right;
@@ -513,6 +481,7 @@ nav.main-authentication ul li a:hover {
 
   margin-left: 10%;
   margin-right: 10%;
+  margin-top: 20px;
 
   padding: 50px 0px;
 
@@ -564,11 +533,30 @@ nav.main-authentication ul li a:hover {
 
 /* Idea stream content: content area for list of ideas */
 .idea-stream-content-view-selector{
-  float: right;
+  float: left;
   
+  width: 100%;
   margin-top: 2px;
-  margin-bottom: 5px;
-  font-size: 14px;
+
+  font-size: 12px;
+  text-align: center;
+}
+/*
+.stream-search-bar-container{
+  float: left;
+
+  width: 100%;
+  padding: 1% 0%;
+  margin-bottom: 10px;
+  
+  border-style: dotted;
+  border-width: 0px;
+}
+*/
+.stream-search-field-and-button{
+  float: left;
+  width: 100%;
+  padding: 0% 8%;
 }
 
 .idea-stream-header-row{
@@ -636,22 +624,27 @@ nav.main-authentication ul li a:hover {
  *************************************/
 
 .button-float-right, .button-float-left{
-  float: right;
-  
-  width: 100%;
-  height: 100%;
+  width: 96%;
+  height: 96%;
 
-  padding: 3px;
+  padding: 2%;
 
   text-align: center;
   border-style: solid;
   border-width: 0px;
 }
+.button-float-right {
+  float: right;
+} 
+.button-float-left{
+  float: left;
+}
+
 
 .button-styling-major .button-styling-minor{
+  float: left;
+  width: 100%;
   text-decoration: none;
-  /* bevel'd button */
-  /*box-shadow: -2px -2px 2px rgba(0,0,0,.25) inset, 2px 2px 2px white inset;*/
 }
 
 .button-styling-major a {
@@ -739,22 +732,6 @@ p.alert{
 
 
 
-
-.stream-search-bar-container{
-  float: left;
-
-  width: 100%;
-  padding: 1% 0%;
-  margin-bottom: 10px;
-  
-  border-style: dotted;
-  border-width: 0px;
-}
-
-.stream-search-field-and-button{
-  float: left;
-}
-
 .nav-main-link{
   color: white;
   background-color: #be3c14; /* alt colors: 943E0F be3c14 */
@@ -770,7 +747,7 @@ p.alert{
   text-decoration: none;
 }
 
-.main-header-full-width-container-menu, .main-header-full-width-container-no-menu{
+.main-header-full-width-container{
   z-index: 2;
 }
 

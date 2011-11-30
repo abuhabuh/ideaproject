@@ -1,27 +1,54 @@
-$default-text-color: #1C1814; 
-$default-a-link-color: #503C28;
+/* Main theme colors */
+/* BLUE BKGRND / WHITE PANELS */
+/*
+$main-background-color: #000033;
+$primary-color-header: #000033;
+$secondary-color-content-sections: #000033;
+$idea-elements-color: #FFFFFF;
+
+$default-text-color: #FFFFFF;
+$default-a-link-color: #FFFFFF;
+*/
+
+/* WHITE BKGRND / WHITE PANELS */
+
+$main-background-color: #fbfbfb;
+$primary-color-header: #fbfbfb;
+$secondary-color-content-sections: #fbfbfb;
+$idea-elements-color: #FFFFFF;
+
+$default-text-color: #000000;
+$default-a-link-color: #000000;
+
+$pastel-color-1: #FF7A00;
+$pastel-color-2: #D20000;
+$pastel-color-3: #FFB957;
+
 
 /* main layout elements */
-$primary-color-header: #BA966B;
-$secondary-color-content: #CBBB9B;
-$main-background-color: #F0F4F0;
-$main-header-full-width-color: $primary-color-header; /* COLORS: DARK - 694629, Light - D8D5C9 */
+$main-header-full-width-color: $primary-color-header;
+  $main-header-left-section-color: $main-background-color;
+  $main-header-center-section-color: $main-background-color;
+  $main-header-right-section-color: $main-background-color;
 
-$main-content-container-color:  $secondary-color-content;
+$main-content-container-color:  $secondary-color-content-sections;
   $main-content-title-color:    #943E0F;
   $main-content-header-color:   #B58963;
   
-$left-nav-container-color:      $secondary-color-content;
-$right-nav-container-color:     $secondary-color-content;
-$right-preview-box-color:       $secondary-color-content;
+$left-nav-container-color:      $secondary-color-content-sections;
+$right-nav-container-color:     $secondary-color-content-sections;
+$right-preview-box-color:       $secondary-color-content-sections;
+
 
 /* block layout */
-$block-block-bg-color: #D0C19D;
-$block-block-chat-msg-bg-color: #D6D5D1;
-$block-block-description-text-color: #513F24;
-$block-block-owner-name-text-color: black;
+$block-bg-color: $idea-elements-color;
+$block-chat-msg-bg-color: #D6D5D1;
+$block-text-default-color: #000000;
+$block-description-text-color: #000000;
+$block-owner-name-text-color: #000000;
 
-/* chat board */
+
+/* chat board - user list */
 $chat-board-container-bg-color: #FFFFFF;
 $chat-board-container-txt-color: #000000;
 $chat-board-user-item-status-offline-color: #954535;
@@ -29,13 +56,10 @@ $chat-board-user-item-status-offline-txt-color: #FFFFFF;
 $chat-board-user-item-status-online-color: green;
 $chat-board-user-item-status-online-txt-color: #FFFFFF;
 
+
 /* button colors */
 $button-styling-major-color: #be3c14;
 $button-styling-major-text-color: white;
 $button-styling-minor-color: #B58963;
 $button-styling-minor-text-color: black;
-  /* idea view actions */
-$button-idea-view-want-it: red;
-$button-idea-view-nudge: white;
-$button-idea-view-commit: blue;
 

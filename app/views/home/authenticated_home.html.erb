@@ -133,52 +133,7 @@
 <% end %>
 
   <!-- Main Body for side menu, stream, and suggestion block -->
-  <div class='stream-search-bar-container'>
 
-    <div class='stream-search-field-and-button'>
-      <%= form_tag authenticated_home_path, :method => :get do %>
-        <% if params[:search].blank? %>
-          <%= text_field_tag :search, INPUT_BOX_SEARCH_IDEAS %>
-        <% else %>
-          <%= text_field_tag :search, params[:search] %>
-        <% end %>        
-        <%= submit_tag "Search", :name => nil %>
-        
-        <input type="hidden", name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
-      <% end %>
-    </div>
-    
-    <div class='idea-stream-content-view-selector'>
-      View: 
-      <% case session[:stream_view] %>
-        <% when STREAM_VIEW_PUBLIC %>
-          Public | 
-          <%= link_to 'Friends', 
-                      authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS), 
-                                              {:method => 'get', 
-                                               :title => "See friends' ideas"}%><br/>
-
-        <% when STREAM_VIEW_FRIENDS %>  
-          <%= link_to 'Public', authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC), 
-                                                        {:method => 'get', 
-                                                         :title => "See public ideas"}%> | 
-          Friends<br/>
-
-        <% when STREAM_VIEW_SEARCH %>
-          <%= link_to 'Public',
-                     authenticated_home_path(:stream_view => STREAM_VIEW_PUBLIC),
-                     {:method => 'get',
-                      :title => "See public ideas"}%> | 
-          <%= link_to 'Friends',
-                     authenticated_home_path(:stream_view => STREAM_VIEW_FRIENDS),
-                     {:method => 'get',
-                     :title => "See friends' ideas"}%> | 
-          Search <br />
-
-      <% end %>
-    </div>
-
-  </div>
 
   <div id='AJAX_main_stream_content'>    
     <!-- Determine what kind of layout to render -->

@@ -22,6 +22,23 @@
   <b>Name</b>: <%=current_user.first_name%> <%=current_user.last_name%><br />
   <b>Description</b>: <%= current_user.description %><br/>
   <b>Interests</b>: <%= current_user.interests %><br/>
+  <br/>
+  <b>Layout</b>:<br/>
+  <% case current_user.auth_page_layout %>
+  <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
+    Stream | 
+    <%= link_to 'Stagger', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
+    <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL), :method => 'post' %>
+  <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
+    <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> | 
+    Stagger | 
+    <%= link_to 'Block', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL), :method => 'post' %>
+  <% when PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+    <%= link_to 'Stream', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_STREAM), :method => 'post' %> | 
+    <%= link_to 'Stagger', user_set_view_layout_path(:layout => PAGE_LAYOUT_AUTH_HOME_BLOCK), :method => 'post' %> | 
+    Block
+  <% end %>
+
 </div>
 
 <div class='content-container'>
