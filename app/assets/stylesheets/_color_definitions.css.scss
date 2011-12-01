@@ -13,7 +13,7 @@ $default-a-link-color: #FFFFFF;
 /* WHITE BKGRND / WHITE PANELS */
 
 $main-background-color: #fbfbfb;
-$primary-color-header: #fbfbfb;
+$primary-color-header: #19669E; //#0a4e7f;
 $secondary-color-content-sections: #fbfbfb;
 $idea-elements-color: #FFFFFF;
 
@@ -27,9 +27,9 @@ $pastel-color-3: #FFB957;
 
 /* main layout elements */
 $main-header-full-width-color: $primary-color-header;
-  $main-header-left-section-color: $main-background-color;
-  $main-header-center-section-color: $main-background-color;
-  $main-header-right-section-color: $main-background-color;
+  $main-header-left-section-color: $primary-color-header; 
+  $main-header-center-section-color:$primary-color-header;  
+  $main-header-right-section-color: $primary-color-header; 
 
 $main-content-container-color:  $secondary-color-content-sections;
   $main-content-title-color:    #943E0F;
