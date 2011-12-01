@@ -1,28 +1,29 @@
+@import "color_definitions";
+
 .profile-pic-div {
   float: left;
   position: relative;
 
   height: 30px;
   width: 30px;
-
+  padding: 5px;
 
   margin-left: -30px;
 }
 
 .parent-post {
 
-  background-color: #AB9771;
+  background-color: $forum-parent-post-color;
 
   padding-left: 30px;
   padding-right: 3px;
   padding-bottom: 3px;
 
-  
 }
 
 .forum-post-right {
   position: relative;
-
+  padding: 5px;
 
   width: 100%;
 }
@@ -34,7 +35,6 @@
 .view-children {
   float: left;
   margin-left: 50px; 
-
 }
 
 .post-timestamp {
@@ -46,6 +46,12 @@
 }
 
 .post-empty-border {
-  border: 1px solid; 
-  border-color: #BAA479; 
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #BAA479;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #BAA479;
+
+  margin-top: 5px;
 }

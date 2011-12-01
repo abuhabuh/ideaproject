@@ -13,7 +13,7 @@ $button-height: 20px;
 }
   .idea-view-pic{
     float: left;
-    width: 55%;
+    width: 100%;
   }
   .idea-view-pic img{
     max-height: 100%;
@@ -71,10 +71,19 @@ $button-height: 20px;
       color: white;
     }
     .idea-view-action-commit-button{
-      @include button-styling;
+      /* button style change: REMOVED FOR IDEA PAGE CLEANUP */    
+      font-family: Helvetica, Arial, sans-serif;
 
-      background-color: $main-content-title-color;
-      color: white;
+      width: 90px;
+      height: 100%;
+      padding: 0% 2%;
+      
+      text-align: center;
+      font-weight: normal;
+      box-shadow: 1px 1px 1px #FFEBCD inset, -1px -1px 1px #201C10 inset;
+
+      background-color: $button-styling-major-color;
+      color: black;
     }
     .idea-view-action-make-event-button {
       float: left;

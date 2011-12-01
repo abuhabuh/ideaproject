@@ -2,8 +2,8 @@
 /* BLUE BKGRND / WHITE PANELS */
 /*
 $main-background-color: #000033;
-$primary-color-header: #000033;
-$secondary-color-content-sections: #000033;
+$primary-color: #000033;
+$content-sections-color: #000033;
 $idea-elements-color: #FFFFFF;
 
 $default-text-color: #FFFFFF;
@@ -11,37 +11,58 @@ $default-a-link-color: #FFFFFF;
 */
 
 /* WHITE BKGRND / WHITE PANELS */
-
+/*
 $main-background-color: #fbfbfb;
-$primary-color-header: #19669E; //#0a4e7f;
-$secondary-color-content-sections: #fbfbfb;
+$primary-color: #FFB957;
+$content-sections-color: #FFFFFF;
 $idea-elements-color: #FFFFFF;
 
 $default-text-color: #000000;
 $default-a-link-color: #000000;
+*/
 
+/* SANDBOX COLORS EXPERIMENTATION SECTION */
+$main-background-color: #fbfbfb;
+
+$primary-color: #19669E;
+$primary-color-contrast: #19669E;/*028482*/ //#0a4e7f;
+$primary-color-light: #FFB957;
+$secondary-color: #1144AA;
+$secondary-color-light: #6B8FD4;
+
+$content-sections-color: #FFFFFF;
+$idea-elements-color: #FFFFFF;
+
+$default-text-color: #000000;
+$default-a-link-color: #000000;
+$picture-border-color: #CDCDCD;
+$stats-block-background-color: #CDCDCD;
+$stats-block-number-color: $secondary-color;
+
+/* random colors used to experiment with 3 color header - discard if necessary */
 $pastel-color-1: #FF7A00;
 $pastel-color-2: #D20000;
 $pastel-color-3: #FFB957;
 
 
 /* main layout elements */
-$main-header-full-width-color: $primary-color-header;
-  $main-header-left-section-color: $primary-color-header; 
-  $main-header-center-section-color:$primary-color-header;  
-  $main-header-right-section-color: $primary-color-header; 
+$main-header-full-width-color: $primary-color;
+  $main-header-left-section-color:      $primary-color;
+  $main-header-center-section-color:    $primary-color;
+  $main-header-right-section-color:     $primary-color;
 
-$main-content-container-color:  $secondary-color-content-sections;
-  $main-content-title-color:    #943E0F;
-  $main-content-header-color:   #B58963;
-  
-$left-nav-container-color:      $secondary-color-content-sections;
-$right-nav-container-color:     $secondary-color-content-sections;
-$right-preview-box-color:       $secondary-color-content-sections;
+$main-content-container-color:  $content-sections-color;
+  $main-content-title-color:    $secondary-color;
+  $main-content-header-color:   $secondary-color-light;
+
+$left-nav-container-color:      $content-sections-color;
+$right-nav-container-color:     $content-sections-color;
+$right-preview-box-color:       $content-sections-color;
 
 
 /* block layout */
 $block-bg-color: $idea-elements-color;
+$block-header-row-color: $secondary-color-light;
 $block-chat-msg-bg-color: #D6D5D1;
 $block-text-default-color: #000000;
 $block-description-text-color: #000000;
@@ -58,8 +79,11 @@ $chat-board-user-item-status-online-txt-color: #FFFFFF;
 
 
 /* button colors */
-$button-styling-major-color: #be3c14;
-$button-styling-major-text-color: white;
-$button-styling-minor-color: #B58963;
+$button-styling-major-color: $primary-color-contrast;
+$button-styling-major-text-color: black;
+$button-styling-minor-color: $primary-color-light;
 $button-styling-minor-text-color: black;
 
+
+/* forum colors */
+$forum-parent-post-color: #F0F8FF;

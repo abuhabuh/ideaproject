@@ -6,7 +6,12 @@
 .block-stream-element-container, .block-stream-element-container-normal{
   /*box-shadow: 2px 2px 5px #201C10; */
 
-  box-shadow:1px 1px 5px #c3c3c3, -1px -1px 5px #c3c3c3;
+  border-color: #B0B0B0;
+  border-style: solid;
+  border-width: 2px;
+  -moz-border-radius:    5px;
+  -webkit-border-radius: 5px;
+  border-radius:         5px;
 }
 
 /*************************************
@@ -35,19 +40,43 @@
 .block-stream-element-container, .block-stream-element-container-normal{
   float: left;
 
-  width: 30%;
+  width: 29%;
   margin: 15px; /* need to use pixels because masonry tiling does something that kills percentage margins in Chrome */
   padding-bottom: 5px;
 
   font-size: 12px;
 }
 .block-stream-element-container-normal{
-  height: 400px; /* limit height to normalize */
+  height: 335px; /* limit height to normalize */
 }
 .block-stream-element-container-normal .block-stream-element-description-block{
   max-height: 36px; /* limit height to normalize */
   overflow: hidden;
 }
+
+
+  .block-stream-element-picture, .block-stream-element-picture-normal{
+    float: left;
+    
+    width: 96%;
+    
+    padding: 0% 2%;
+    margin: 2% 0%;
+    
+    border-style: solid;
+    border-width: 0px;
+  }
+  .block-stream-element-picture-normal{
+    height: 172px;
+  }
+    .block-stream-element-picture img, .block-stream-element-picture-normal img{
+      max-height:100%; 
+      max-width:100%;
+      
+      display: block;
+      margin: auto;
+    }
+
 
   .block-stream-element-description-block{
     float: left;
@@ -67,8 +96,9 @@
       height: 35px;
       width: 35px;
 
-      margin: 0px 10px 0px 0px;
-      margin-left: 2%;
+      margin-right: 2%;
+      padding: 2px;
+      background-color: $picture-border-color;
     }
     .block-stream-element-description-owner-pic img{
       max-width: 100%;
@@ -80,62 +110,67 @@
     .block-stream-element-description-block a{
       margin-right: 2%;
       color: $block-text-default-color;
-    }
-
-  .block-stream-element-picture, .block-stream-element-picture-normal{
-    float: left;
-    
-    width: 96%;
-    
-    padding: 0% 2%;
-    margin: 2% 0%;
-    
-    border-style: solid;
-    border-width: 0px;
-  }
-  .block-stream-element-picture-normal{
-    height: 170px;
-  }
-    .block-stream-element-picture img, .block-stream-element-picture-normal img{
-      max-height:100%; 
-      max-width:100%;
-      
-      display: block;
-      margin: auto;
+      font-weight: bold;
+      text-decoration: none;
     }
 
 
-  .block-stream-element-buttons-container{
+  .block-stream-element-stats-and-buttons-container{
     float: left;
     width: 96%;
     padding: 0% 2%;
-    height: 30px;
+    margin-top: 2%;
   }
-    .block-stream-element-button-done-it{
+    /* block for statistics and join action */
+    .block-stream-element-stats-block{
       float: left;
-      width: 55%;
-      height: 60%;
+      
+      margin-bottom: 2%;
+      width: 50%;
     }
+      .block-stream-element-stat-row{
+        float: left;
+        width: 100%; 
+        margin: 2% 0%;
+        background-color: $stats-block-background-color;
+      }
+        .block-stream-element-stats-block-number{
+          margin: 0% 5%;
+          
+          float: left;
+          font-size: 26px;
+          font-weight: bold;
+          color: $stats-block-number-color;
+        }
+        .block-stream-element-stats-block-text{
+          float: left;
+
+          margin: 2% 0%;
+        }
     .block-stream-element-button-join-idea{
       float: right;
-      width: 35%;
-      height: 60%;
+      width: 70px;
+      height: 40px;
+
+      font-size: 14px;
+      font-weight: bold;
     }
-
-
-  /* block for statistics and join action */
-  .block-stream-element-stats-block{
-    float: left;
-    
-    margin-bottom: 2%;
-    width: 96%;
-    padding: 0% 2%;
-  }
-    .block-stream-element-stats-block-text{
+      .block-stream-element-button-join-idea .button-styling-major{ /* hack to center button text */
+        color: black;
+        padding: 15px 10px;
+      }
+      .block-stream-element-button-join-idea .button-styling-minor{ /* hack to center button text */
+        color: black;
+        padding: 15px 10px;
+      }
+    .block-stream-element-already-done-it {
       float: left;
+      width: 96%;
+      padding: 0% 2%;
 
-      width: 100%;
+      text-align: right;
     }
+
 
   /* chat message styles */
   .block-stream-element-chat-msg-block{

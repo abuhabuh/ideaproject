@@ -1,5 +1,3 @@
-<!-- think about including these scroll tools for scrolling texts
-  -- javascript files under assets/javascripts/external/ -->
 <% content_for :head do %>
   <script>
     jQuery(document).ready(function($) {
@@ -12,10 +10,8 @@
 
   <div >
         
-    What's an idea you want to do with friends?
+    <h2>Share an idea and find out who else is interested!</h2>
     
-    <br />
-    <br />
     <br />
     
     <!-- need to validate field for not empty -->
@@ -30,9 +26,47 @@
   <br />
   <br />
   <br />
-  <%= image_tag("placeholder_unauth_flow_image.jpg", :alt => "Hello", :size => "120x120") %>
-  <%= image_tag("placeholder_unauth_flow_image.jpg", :alt => "Hello", :size => "120x120") %>
-  <%= image_tag("placeholder_unauth_flow_image.jpg", :alt => "Hello", :size => "120x120") %>
+  <div class="home-description-container">
+    <div style="width:100%; float: left; text-align: center;">
+      <h3>What can you do on Earth Surf?</h3>
+    </div>
+    <div class="home-description-hr">
+      <hr /><br />
+    </div>
+    <div class="home-description">
+      <div>
+        Share and idea or activity you're interested in
+      </div>
+      <div>
+        <%= image_tag("share.jpg", :class => 'home-description-img') %>
+      </div>
+    </div>
+    <div class="home-description">
+      <div>
+        Discover what your friends are doing
+      </div>
+      <div>
+        <%= image_tag("discover.png", :class => 'home-description-img') %>
+      </div>
+    </div>
+    <div class="home-description">
+      <div>
+        Turn an idea into an event and plan it!
+      </div>
+      <div>
+        <%= image_tag("plan.gif", :class => 'home-description-img') %>
+      </div>
+    </div>
+    <div class="home-description">
+      <div>
+        Find vendors and deals to make your dream a reality
+      </div>
+      <div>
+        <%= image_tag("vendors.jpg", :class => 'home-description-img') %>
+      </div>
+    </div>
+  </div>
+
 
 
 </div>

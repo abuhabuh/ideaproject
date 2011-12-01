@@ -6,16 +6,6 @@
 <div class='block-stream-element-container'>
 <% end %>
 
-  <div class='block-stream-element-description-block'>
-    <div class='block-stream-element-description-owner-pic'>
-      <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :path => user_path(idea_owner.id), :makelink => true} %>
-    </div>
-    <span class='block-stream-element-owner-name'><%=idea_owner.first_name %>:</span> &nbsp;<%=link_to idea.text, idea_path(idea.id), {:method => 'get'}%>
-    
-  </div>
-
-  <hr/>
-
   <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
     <div class='block-stream-element-picture-normal'>
       <%= link_to image_tag(idea.photo.url(:medium)),
@@ -63,23 +53,33 @@
     </div>
   </div>
 
+  <hr/>
+
+  <div class='block-stream-element-description-block'>
+    <div class='block-stream-element-description-owner-pic'>
+      <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :path => user_path(idea_owner.id), :makelink => true} %>
+    </div>
+    <span class='block-stream-element-owner-name'><%=idea_owner.first_name %>:</span> &nbsp;<%=link_to idea.text, idea_path(idea.id), {:method => 'get'}%>
+    
+  </div>
+
   <!-- STATS SECTION -->
   <div class='block-stream-element-stats-block'>
     <div class='block-stream-element-stats-block-text'>
-      <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea.id.to_s%>">
-        <%=idea.num_users_joined%> users sharing
+      <div style="float: left;">
+        <span id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea.id.to_s%>"><%=idea.num_users_joined%></span> users sharing
       </div>
-      <div>
+      <div style="float: right;">
         <%= current_user.friendships
                              .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')
                              .where('user_ideas.idea_id = ?', idea.id)
                              .count %> friends sharing
       </div>
     </div>
-
-    <div class='block-stream-element-stats-block-action'>&nbsp;</div>
   </div>
+
   <hr/>
+
   <div class='block-stream-element-chat-msg-block'>
     <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
       <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(IDEA_LAYOUT_BLOCK_NUM_CHATS-2).reverse %>

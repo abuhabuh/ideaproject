@@ -1,9 +1,16 @@
 $(document).ready(function(){
+  /* REMOVED FOR IDEA PAGE CLEANUP
   $('#<%=ID_TAG_IDEA_VIEW_COMMITMENT_STATUS%>').html("Yes");
+  */
   
   $('#<%=ID_TAG_IDEA_USER + current_user.id.to_s%>').html("<%=ID_TAG_CHAT_USER_COMMITTED_STRING%>");
 
+  /* USING THIS FOR IDEA PAGE CLEAUP */
+  $('#JS_commit').replaceWith("\<span class=\"minor-text\"\>You're committed!\<\/span\>")
+
+  /* REMOVED FOR IDEA PAGE CLEANUP
   $('.idea-view-action-commit').html("<%= escape_javascript(
                                           render :partial => 'ideas/make_event_button'
-                                     )%>");
+                                     )%>");*/
+
 });

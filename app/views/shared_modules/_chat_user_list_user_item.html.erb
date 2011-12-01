@@ -20,14 +20,16 @@
               <span id="<%=ID_TAG_IDEA_USER + user.id.to_s%>" class='chat-board-user-item-status-offline'><%=status_string%></span>
             <% end %>            
           </div>
+
+          <!-- REMOVED FOR IDEA PAGE CLEANUP
           <% if chat_type == CHAT_TYPE_IDEA %>
             <div class='chat-board-user-item-want-count'>
               <% if topic_id.nil? %>
-                &nbsp; <!-- user is just observing -->
+                &nbsp; 
               <% else %>
                 <% user_idea = user.user_ideas.where("idea_id = ?", topic_id).first %>
                 <% if user_idea.nil? %>
-                  &nbsp; <!-- user doesn't have idea -->
+                  &nbsp; 
                 <% else %>
                   <%= user_idea.want_it_count %>                  
                 <% end %>
@@ -35,15 +37,17 @@
             </div>
             <div class='chat-board-user-item-prod-count'>
               <% if topic_id.nil? %>
-                &nbsp; <!-- user is just observing -->
+                &nbsp; 
               <% else %>
                 <% user_idea = user.user_ideas.where("idea_id = ?", topic_id).first %>
                 <% if user_idea.nil? %>
-                  &nbsp; <!-- user doesn't have idea -->
+                  &nbsp; 
                 <% else %>
                   <%= user_idea.prod_count %>                  
                 <% end %>
               <% end %>
             </div>
           <% end %>
+          -->
+
         </div>
