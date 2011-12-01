@@ -1,0 +1,133 @@
+<% idea_owner = User.find(idea.creator) %>
+
+<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+<div class='block-stream-element-container-normal'>
+<% else %>
+<div class='block-stream-element-container'>
+<% end %>
+
+  <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+    <div class='block-stream-element-picture-normal'>
+      <%= link_to image_tag(idea.photo.url(:medium)),
+                idea_path(idea.id),
+                {:method => 'get'} %>
+    </div>
+  <% else %>
+    <div class='block-stream-element-picture'>
+      <%= link_to image_tag(idea.photo.url(:original)),
+                idea_path(idea.id),
+                {:method => 'get'} %>
+    </div>
+  <% end %>
+
+  <div class='block-stream-element-description-block'>
+    <div class='block-stream-element-description-owner-pic'>
+      <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :path => user_path(idea_owner.id), :makelink => true} %>
+    </div>
+    <span class='block-stream-element-owner-name'><%=idea_owner.first_name %>:</span> &nbsp;<%=link_to idea.text, idea_path(idea.id), {:method => 'get'}%>
+    
+  </div>
+
+  <hr/>
+
+  <!-- BUTTONS SECTION -->
+  <div class='block-stream-element-stats-and-buttons-container'>
+
+    <!-- STATS SECTION -->
+    <div class='block-stream-element-stats-block'>
+      <div class='block-stream-element-stat-row'>
+        <div class='block-stream-element-stats-block-number'>
+          <div id="<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS+idea.id.to_s%>" style="float: left;">
+            <%=idea.num_users_joined%>
+          </div>
+        </div>
+        <div class='block-stream-element-stats-block-text'>
+          Users sharing
+        </div>
+      </div>
+
+      <div class='block-stream-element-stat-row'>
+        <div class='block-stream-element-stats-block-number'>
+          <%= current_user.friendships
+                               .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')
+                               .where('user_ideas.idea_id = ?', idea.id)
+                               .count %>
+        </div>
+        <div class='block-stream-element-stats-block-text'>
+          Friends sharing
+        </div>
+      </div>
+    </div>
+
+    <% user_idea_link = current_user.user_ideas.where(:idea_id => idea.id).first %>
+    <div class='block-stream-element-button-join-idea'>
+      <% if user_idea_link.nil? || user_idea_link.status != USER_IDEA_STATUS_SHARING %>
+        <%= render :partial => "shared_modules/button_add_idea",
+                   :locals => {:target_path => 
+                                  button_associate_idea_block_path(:idea_id => idea.id, 
+                                                                   :idea_assc_type => IDEA_ASSC_ADD_IDEA), 
+                               :idea_id => idea.id, 
+                               :float => 'right'} %>
+      <% elsif user_idea_link.status == USER_IDEA_STATUS_SHARING %>
+        You've added this idea.
+      <% end %>
+    </div>
+    <div>
+      <!--
+      <% if user_idea_link.nil? || user_idea_link.done_it != true %>
+        <%= render :partial => "shared_modules/button_done_it",
+                   :locals => {:target_path => 
+                                  button_associate_idea_block_path(
+                                    :idea_id => idea.id, 
+                                    :idea_assc_type => IDEA_ASSC_DONE_IDEA),
+                               :idea_id => idea.id, 
+                               :float => 'left'} %>
+      <% else %>
+        <%=DONE_IDEA_SUCCESS_TEXT%>
+      <% end %>
+      -->
+    </div>
+
+  </div>
+
+  <div class='block-stream-element-already-done-it'>
+    <span class="<%=ID_TAG_AUTH_HOME_STREAM_DONE_IDEA_BUTTON + idea.id.to_s%>">
+      <% if user_idea_link.nil? || user_idea_link.done_it != true %>
+        <%= link_to BUTTON_DONE_IDEA, 
+                    button_associate_idea_block_path(
+                      :idea_id => idea.id, 
+                      :idea_assc_type => IDEA_ASSC_DONE_IDEA),
+                      :method => 'post',
+                      :remote => true,
+                      :title => "Mark as an idea you've done before"
+        %>
+      <% else %>
+        <%=DONE_IDEA_SUCCESS_TEXT%>
+      <% end %>
+    </span>
+  </div>
+
+
+  <!--
+  <hr/>
+
+
+  <div class='block-stream-element-chat-msg-block'>
+    <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+      <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(IDEA_LAYOUT_BLOCK_NUM_CHATS-2).reverse %>
+    <% else %>
+      <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(IDEA_LAYOUT_BLOCK_NUM_CHATS).reverse %>
+    <% end %>
+    
+    <% messages.each do |message| %>
+      <div class='block-stream-element-chat-msg'>
+        <div class='block-stream-element-chat-msg-pic'>
+          <% msg_owner = User.find(message.user_id) %>
+          <%= render :partial => '/users/profile_pic', :locals => {:current_user => msg_owner, :path => user_path(msg_owner.id), :makelink => true} %>
+        </div>
+        <%= msg_owner.first_name %>: <%= message.text %>
+      </div>
+    <% end %>
+  </div>
+  -->
+</div>

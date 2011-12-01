@@ -43,11 +43,14 @@
 .user-list-container{
   float: left;
 
-  width: 100%;
+  width: 98%;
   height: 300px;
   padding: 4px 0px;
   
-  border: solid 2px #B58963;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #B58963;
+
   overflow: auto;
   overflow-x: hidden;
 }
@@ -73,7 +76,7 @@
   
   font-size: 12px;
   
-  margin: 5px 2px;  
+  margin: 5px 7px;  
 }
 
   .chat-board-user-item-image{

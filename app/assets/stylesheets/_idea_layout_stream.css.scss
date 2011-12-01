@@ -146,11 +146,17 @@
   .idea-preview-title{
     float: left;
     width: 100%;
+    margin-bottom: 5px;
+  }
+  .idea-preview-title a {
+    text-decoration: none;
+    font-weight: bold;
   }
 
   .idea-preview-options-text{
     float: left;
     width: 100%;
+    margin: 10px 0px;
   }
   
     .idea-preview-options-text-title{

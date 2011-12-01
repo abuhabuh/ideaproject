@@ -135,27 +135,33 @@
   <!-- Main Body for side menu, stream, and suggestion block -->
 
 
-  <div id='AJAX_main_stream_content'>    
-    <!-- Determine what kind of layout to render -->
-    <% case current_user.auth_page_layout %>
-    <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
-      <% @stream_ideas.each do |idea| %>
-        <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea} %>
-      <% end %>
+  <div id='AJAX_main_stream_content'>
+    <% unless @stream_ideas.count == 0 %>
+      <!-- Determine what kind of layout to render -->
+      <% case current_user.auth_page_layout %>
+      <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
+        <% @stream_ideas.each do |idea| %>
+          <%= render :partial => "shared_modules/block_stream_element_v2", :locals => {:idea => idea} %>
+        <% end %>
 
-    <% when PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
-      <% @stream_ideas.each do |idea| %>
-        <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea} %>
-      <% end %>
+      <% when PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+        <% @stream_ideas.each do |idea| %>
+          <%= render :partial => "shared_modules/block_stream_element_v2", :locals => {:idea => idea} %>
+        <% end %>
 
-    <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
-      <% @stream_ideas.each do |idea| %>
-        <%= render :partial=>'shared_modules/row_item_search_idea', 
-                   :locals => {:idea_item => idea,
-                               :pic_display_mode => PIC_VIEW_TYPE_USER,
-                               :view_type => IDEA_STREAM_ALL_ACTIVE} %>
-      <% end %>
+      <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
+        <% @stream_ideas.each do |idea| %>
+          <%= render :partial=>'shared_modules/row_item_search_idea', 
+                     :locals => {:idea_item => idea,
+                                 :pic_display_mode => PIC_VIEW_TYPE_USER,
+                                 :view_type => IDEA_STREAM_ALL_ACTIVE} %>
+        <% end %>
 
+      <% end %>
+    <% else %>
+      <br/>
+      <br/>
+      No ideas to view. Click on the top right link and add one!
     <% end %>
   </div>
 

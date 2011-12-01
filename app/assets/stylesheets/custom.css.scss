@@ -18,7 +18,7 @@
  * IMPORTS
  *************************************/
 @import "idea_layout_show";
-@import "idea_layout_block";
+@import "idea_layout_block_v2";
 @import "idea_layout_stream";
 @import "deals_layout";
 @import "forum";
@@ -35,7 +35,13 @@
 }
    
 .content-container, .idea-content-container, .unauth-content-container, .left-nav, .left-nav-wide, .right-nav, .right-preview-box {
-  box-shadow: 2px 2px 5px #201C10; 
+  border-color: #B0B0B0;
+  border-style: solid;
+  border-width: 1px;
+  -moz-border-radius:    5px;
+  -webkit-border-radius: 5px;
+  border-radius:         5px;
+
 } 
 
   /***************************************
@@ -58,8 +64,7 @@ hr {
 }
 
 hr.main-horizontal-rule{
-  width: 96.6%;
-  margin: 0% 1.7%;
+  width: 100%;
 }
 
 
@@ -132,7 +137,6 @@ hr.main-horizontal-rule{
   color: white;
 }
 .content-title a{
-  float: right;
   color: white;
 }
 
@@ -203,7 +207,6 @@ header{
 }
 
 /* Centering container to center all page content */
-
 .center-container{
   width: 900px;
   margin-left: auto;
@@ -236,8 +239,7 @@ header{
 .main-header-full-width-container {
   float: left;
   
-  width: 96.6%;
-  margin: 0% 1.7%;
+  width: 100%;
 }
   /* for some reason, padding isn't working out so have to have these parent containers 
       that specify placement and size, then sub containers that specify padding */
@@ -300,7 +302,7 @@ header{
     min-height: 300px;
   }
   .left-nav-wide {
-    width: 29%;
+    width: 20%;
     min-height: 300px;
   }
   .content-container{ 
@@ -310,9 +312,10 @@ header{
     margin-bottom: 10px;
   }
   .idea-content-container{ 
-    width: 65%;
+    width: 73%;
     margin-left: 2%;
     margin-bottom: 10px;
+    min-height: 540px;
   }
   .right-nav {
     width: 15%;
@@ -323,7 +326,7 @@ header{
   .right-preview-box{
     position: relative;
     
-    width: 35%;
+    width: 34%;
    
     margin-left: 2%;
   }
@@ -389,10 +392,12 @@ nav.main-authentication ul li a:hover {
 
 .minor-link {
   font-size: 12px;
+  font-weight: normal;
 }
 
 .minor-text {
   font-size: 12px;
+  font-weight: normal;
 }
 
 /* Demarks a section of content - use this to wrap a content section
@@ -409,9 +414,10 @@ nav.main-authentication ul li a:hover {
 .content-title{
   float: left;
   
-  width: 100%;
-  padding: 5px 0px;
-  
+  width: 98%;
+  padding: 1%;
+
+  font-weight: bold;
   font-size: 14;
 }
 
@@ -420,10 +426,10 @@ nav.main-authentication ul li a:hover {
 .content-header{
   float: left;
 
-  width: 100%;
-  padding: 5px 0px;
+  width: 98%;
+  padding: 1%;
 
-  font-weight: bold;
+  font-weight: normal;
   border-width: 0px;
   border-style: solid;
 }
@@ -485,10 +491,7 @@ nav.main-authentication ul li a:hover {
 
   padding: 50px 0px;
 
-  text-align: center;
-  
-  border-style: dotted;
-  border-width: 0px;
+  text-align: center;  
 }
 
 .unauth-content-ideas-container{
@@ -646,17 +649,6 @@ nav.main-authentication ul li a:hover {
   width: 100%;
   text-decoration: none;
 }
-
-.button-styling-major a {
-  text-decoration: none;
-  font-size: 12px;
-}
-
-.button-styling-minor a {
-  text-decoration: none;
-  font-size: 12px;  
-}
-
 
 /*************************************
  *************************************

@@ -2,10 +2,10 @@
 
   <% case current_user.auth_page_layout %>
   <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
-    <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea_item} %>
+    <%= render :partial => "shared_modules/block_stream_element_v2", :locals => {:idea => idea_item} %>
   
   <% when PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
-    <%= render :partial => "shared_modules/block_stream_element", :locals => {:idea => idea_item} %>
+    <%= render :partial => "shared_modules/block_stream_element_v2", :locals => {:idea => idea_item} %>
   
   <% when PAGE_LAYOUT_AUTH_HOME_STREAM %>
     <%= render :partial=>"shared_modules/row_item_search_idea", 

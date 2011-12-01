@@ -230,16 +230,16 @@
       $('#JQUERY-view-chat-link').bind('click', function() {
         if ($('#JQUERY-chat-container').css('display') == "none"){
           $('#JQUERY-chat-container').show('slow');
-          $('#JQUERY-view-chat-link').html("Hide");
+          $('#JQUERY-view-chat-link').html("Hide Chat");
           //$('.chat-board-container').height(100);
         } else {
           $('#JQUERY-chat-container').hide('slow');
-          $('#JQUERY-view-chat-link').html("Show");
+          $('#JQUERY-view-chat-link').html("Chat");
           //$('.chat-board-container').height(230);
         }
         return false;
       });
-
+      
       // Open facebox on <a> link click
       $.facebox.settings.closeImage = '/assets/closelabel.png'
       $.facebox.settings.loadingImage = '/assets/loading.gif'
@@ -261,12 +261,14 @@
 			
 			chat_presence_channel.bind('pusher:subscription_succeeded', function(members){
 				$('#people_chatting').html("");
-        
+
+        /* REMOVED FOR IDEA PAGE CLEANUP
         if (members.count > 1){
           $('#JQUERY-chat-window-header').html("Live Chat Window - People are online!");
           $('#JQUERY-chat-container').show('slow');
           $('#JQUERY-view-chat-link').html("Hide");
         }
+        */
 
 				members.each(function(member){				
   				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
@@ -289,17 +291,21 @@
 			chat_presence_channel.bind('pusher:member_added', function(member){
 				if ($('#<%=ID_TAG_IDEA_USER%>' + String(member.id)).length ) {
 				  member_online(member.id);
-
+          
+          /* REMOVED FOR IDEA PAGE CLEANUP
           $('#JQUERY-chat-window-header').html("Live Chat Window - " + member.info.name + " online!");
           $('#JQUERY-chat-container').show('slow');
           $('#JQUERY-view-chat-link').html("Hide");
+          */
 				} else {
           if (render_user(member.id)) {
             add_user_to_list(member.id);
             //" + member.user_info.name + "
+            /* REMOVED FOR IDEA PAGE CLEANUP
             $('#JQUERY-chat-window-header').html("Live Chat Window - " + member.info.name + " online!");
             $('#JQUERY-chat-container').show('slow');
             $('#JQUERY-view-chat-link').html("Hide");
+            */
 				  }
 				}
 			});
@@ -488,6 +494,7 @@
                          :num_total_pages => @num_total_pages,
                          :idea_id => @idea.id } %>
 </div>
+<!-- Hidden help divs -->
 <div id='FACEBOX_commit_help' class='hidden-div'>
   <%= render :partial => 'shared_modules/help_popup_num_commits' %>
 </div>
@@ -498,12 +505,17 @@
   <%= render :partial => 'shared_modules/help_popup_kick' %>
 </div>
 
+
+<!-- BEGIN LEFT NAV AND CONTENT SECTION -->
+
 <div class='left-nav-wide'>
 
   <div class='idea-view-pic-and-info'>
     <div class='idea-view-pic'>
-      <%= image_tag @idea.photo.url(:thumb)%>
+      <%= image_tag @idea.photo.url(:medium)%>
     </div>
+
+    <!-- REMOVED FOR IDEA PAGE CLEANUP
     <div class='idea-view-info minor-text'>
       <% unless @curr_user_idea_link.nil? %>
         <b>Your Status</b> <br/>
@@ -521,11 +533,8 @@
         <br/>
         <%= link_to 'Add / Change Pic', edit_idea_path(@idea), {:method => 'get'}%>
       <% else %>
-        <!-- TODO: NEED TO MAKE NEW PARTIAL THAT DOESN'T DIRECT TO HOME CONTROLLER AJAX -->
         You're getting left out! <br/>
         <br/>
-        <!-- NOTE: not using AJAX button partial because we want page to refresh. This loads
-                   all the crazy AJAX idea interaction button stuff like kick em -->
         <div class="button-styling-major button-float-left" style="width:80px;">
           <%= link_to BUTTON_JOIN_IDEA,
               join_idea_from_idea_view_path(:idea_id => @idea.id, :idea_assc_type => IDEA_ASSC_ADD_IDEA),
@@ -533,13 +542,22 @@
         </div>
       <% end %>
     </div>
+    -->
+
+    <span class='minor-text'><%= link_to 'Add / Change Pic', edit_idea_path(@idea), {:method => 'get'}%></span>
   </div>
 
   <div class='content-section'>
     <!-- if no friends, then default public view, else friends view -->
     <div class='content-header'>
         People Sharing
-        <span class='minor-text' style='float: right;'> 
+        <span style='float:right;' class='minor-link'>
+          <a href='#' id='JQUERY-view-chat-link'> Chat </a>
+        </span>
+
+        <br/>
+        
+        <span class='minor-text' style='float: left;'> 
           <span id='user_filter_public'>public</span> | <span id='user_filter_friends'>friends</span>
         </span>
     </div>
@@ -551,6 +569,7 @@
       <div class='chat-board-user-item-text'>
         Name:
       </div>
+      <!-- REMOVED FOR IDEA PAGE CLEANUP
       <div class='chat-board-user-item-want-count'>
         <a href='#FACEBOX_want_it_help' rel='facebox'>
           <span class="JS_help_link">Want Count</span>:
@@ -561,6 +580,7 @@
           <span class="JS_help_link">Times Kicked</span>:
         </a>
       </div>
+      -->
     </div>
   
     <%= render :partial => 'shared_modules/chat_user_list_left_nav', 
@@ -573,16 +593,51 @@
 
   </div>
 </div>
-    
+
 
 <div class='idea-content-container'>
 
   <div class='content-title'>
-    <%= @idea.text %>
-    <span id="<%=ID_TAG_IDEA_EDIT_LINK%>" class='minor-link'>
+    <%= @idea.text %>&nbsp;&nbsp;&nbsp;
+
+    <% if @has_idea %>
+      <% if @is_committed %>
+        <span class="minor-text">You're committed!</span>
+      <% else %>
+        <% if @can_commit %>
+          <!--
+          <span class='minor-text'>
+            <a href='#FACEBOX_commit_help' rel='facebox'><span class="JS_help_link">You have <%=(NUM_COMMITS_PER_MONTH - @num_commits_outstanding)%> commits</span></a> left. 
+            Commit to motivate others!
+          </span>
+          -->
+          <span id='JS_commit' class='idea-view-action-commit-button minor-text'>
+            Commit!
+          </span>
+          &nbsp;&nbsp;&nbsp;
+          <a href='#FACEBOX_commit_help' rel='facebox'>
+            <span class='JS_help_link minor-text'>
+            what's committing?
+            </span>
+          </a>
+        <% else %>
+          <span class='minor-text'>
+            <a href='#FACEBOX_commit_help' rel='facebox'><span class="JS_help_link">Out of commits</span></a> :(
+          </span>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <span id="<%=ID_TAG_IDEA_EDIT_LINK%>" class='minor-link' style='float:right;'>
       <% unless @curr_user_idea_link.nil? %>
         <%= link_to 'edit title', edit_idea_path(@idea), {:method => 'get'}%>
         <br/>
+      <% else %>
+        <div class="button-styling-major button-float-right" style="width:80px;">
+          <%= link_to BUTTON_JOIN_IDEA,
+              join_idea_from_idea_view_path(:idea_id => @idea.id, :idea_assc_type => IDEA_ASSC_ADD_IDEA),
+                               {:method => 'post'} %>
+        </div>
       <% end %>
     </span>
   </div>
@@ -593,8 +648,8 @@
     </span>
   </div>
 
+  <!-- REMOVED FOR IDEA PAGE CLEANUP
   <% if @has_idea %>
-    <!-- just taking up some space... -->
     <div class='content-section'>
       <hr>
       
@@ -646,13 +701,14 @@
         </div>
 
       </div>
-    
     </div>
   <% end %>
+  -->
 
-  <div class='content-section'>
+  <div id='JQUERY-chat-container' class='content-section hidden-div'>
     <div class='content-header'>
       <span id='JQUERY-chat-window-header'>Live Chat Window</span>
+      <!-- REMOVED FOR IDEA PAGE CLEANUP - chat toggle placed in left nav
       <span class='idea-view-deals-section-buttons-container'>
         <span class='idea-view-deals-section-buttons-container-hide'>
           <span class='button-float-right button-styling-major'>
@@ -660,19 +716,16 @@
           </span>
         </span>
       </span>
+      -->
     </div>
 
-    <div id='JQUERY-chat-container' class='hidden-div'>
+    <div>
       <span class='minor-text'>Chat with anyone currently viewing this idea</span>
 
-      <!-- idea chat window ID is "idea_chat_<##>" where <##> is unique DB idea id -->
       <%= render :partial => "shared_modules/chat_board", 
                  :locals => {:chat_messages => @idea_chat_msgs,
                              :ajax_tag => ID_TAG_IDEA_CHAT+"#{@idea.id}"} %>
 
-      <!-- Message input send form: can't be shared with feedback chat right now because hidden :user_id field
-             is different. Well...it could but I'm lazy...
-      -->
       <% if @has_idea %>
         <%= render :partial => 'shared_modules/chat_input_bar_ideas'%>
       <% else %>
@@ -685,7 +738,7 @@
     <div class='content-header'>Idea Discussion</div>
     <span class='minor-text'>Post information you want to share with the group</span>
 
-    <div><%= link_to "Post New Topic", "#", :id => "new_topic_link" %></div>
+    <div><br/><%= link_to "Post New Topic", "#", :id => "new_topic_link" %></div>
     <div id="new_topic" <% unless @forum_posts.empty? %> class="hidden-div" <% end %> > 
       <%= render :partial => 'forum/forum_post', :locals => {:post_id => nil, :idea_id => @idea.id} %>
     </div><br/>
@@ -694,8 +747,9 @@
     </div>
 
   </div>
-
-  <div class='content-section'> 
+  
+  <!-- REMOVED FOR IDEA PAGE CLEANUP -->
+  <div class='content-section hidden-div'> 
     <div class='content-header'>
       Deals Added by Users
 

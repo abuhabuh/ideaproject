@@ -12,7 +12,7 @@ $(document).ready(function(){
     });
 
     // update num users sharing counter
-    $("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + idea_id.to_s%>").html(String(parseInt($("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + idea_id.to_s%>").html())+1)+" users sharing");
+    $("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + idea_id.to_s%>").html(String(parseInt($("#<%=ID_TAG_AUTH_HOME_STREAM_NUM_USERS + idea_id.to_s%>").html())+1));
 
   <% elsif idea_assc_type == IDEA_ASSC_DONE_IDEA %>
 
