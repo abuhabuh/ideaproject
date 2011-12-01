@@ -597,41 +597,40 @@
 
 <div class='idea-content-container'>
 
-  <div class='content-title'>
-    <%= @idea.text %>&nbsp;&nbsp;&nbsp;
+  <div class='content-title-container'>
 
-    <% if @has_idea %>
-      <% if @is_committed %>
-        <span class="minor-text">You're committed!</span>
-      <% else %>
-        <% if @can_commit %>
-          <!--
-          <span class='minor-text'>
-            <a href='#FACEBOX_commit_help' rel='facebox'><span class="JS_help_link">You have <%=(NUM_COMMITS_PER_MONTH - @num_commits_outstanding)%> commits</span></a> left. 
-            Commit to motivate others!
-          </span>
-          -->
-          <span id='JS_commit' class='idea-view-action-commit-button minor-text'>
-            Commit!
-          </span>
-          &nbsp;&nbsp;&nbsp;
-          <a href='#FACEBOX_commit_help' rel='facebox'>
-            <span class='JS_help_link minor-text'>
-            what's committing?
-            </span>
-          </a>
-        <% else %>
-          <span class='minor-text'>
-            <a href='#FACEBOX_commit_help' rel='facebox'><span class="JS_help_link">Out of commits</span></a> :(
-          </span>
+    <div class='content-title-text'>
+      <%= @idea.text %>
+      <span id="<%=ID_TAG_IDEA_EDIT_LINK%>" class='minor-link'>
+        <% unless @curr_user_idea_link.nil? %>
+          &nbsp;&nbsp;<%= link_to 'edit title', edit_idea_path(@idea), {:method => 'get'}%>
         <% end %>
-      <% end %>
-    <% end %>
+      </span>
+    </div>
 
-    <span id="<%=ID_TAG_IDEA_EDIT_LINK%>" class='minor-link' style='float:right;'>
-      <% unless @curr_user_idea_link.nil? %>
-        <%= link_to 'edit title', edit_idea_path(@idea), {:method => 'get'}%>
-        <br/>
+    <div class='content-title-action'>
+      <% if @has_idea %>
+        <% if @is_committed %>
+          <span class="minor-text">You're committed!</span>
+        <% else %>
+          <% if @can_commit %>
+            <!--
+            <span class='minor-text'>
+              <a href='#FACEBOX_commit_help' rel='facebox'><span class="JS_help_link">You have <%=(NUM_COMMITS_PER_MONTH - @num_commits_outstanding)%> commits</span></a> left. 
+              Commit to motivate others!
+            </span>
+            -->
+            <a href='#FACEBOX_commit_help' rel='facebox'><span class='JS_help_link minor-text'>what's committing?</span></a>
+            &nbsp;&nbsp;&nbsp;
+            <div id='JS_commit' class='idea-view-action-commit-button minor-text'>
+              <b>Commit!</b> <!-- TODO: this is using JQUERY, the "add idea to list" button uses link_to. Should be consistent -->
+            </div>
+          <% else %>
+            <span class='minor-text'>
+              <a href='#FACEBOX_commit_help' rel='facebox'><span class="JS_help_link">Out of commits</span></a> :(
+            </span>
+          <% end %>
+        <% end %>
       <% else %>
         <div class="button-styling-major button-float-right" style="width:80px;">
           <%= link_to BUTTON_JOIN_IDEA,
@@ -639,7 +638,8 @@
                                {:method => 'post'} %>
         </div>
       <% end %>
-    </span>
+    </div>
+
   </div>
 
   <div class='content-section'>

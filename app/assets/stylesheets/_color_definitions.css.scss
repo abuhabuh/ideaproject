@@ -1,43 +1,28 @@
-/* Main theme colors */
-/* BLUE BKGRND / WHITE PANELS */
-/*
-$main-background-color: #000033;
-$primary-color: #000033;
-$content-sections-color: #000033;
-$idea-elements-color: #FFFFFF;
-
-$default-text-color: #FFFFFF;
-$default-a-link-color: #FFFFFF;
-*/
-
-/* WHITE BKGRND / WHITE PANELS */
-/*
-$main-background-color: #fbfbfb;
-$primary-color: #FFB957;
-$content-sections-color: #FFFFFF;
-$idea-elements-color: #FFFFFF;
-
-$default-text-color: #000000;
-$default-a-link-color: #000000;
-*/
-
-/* SANDBOX COLORS EXPERIMENTATION SECTION */
+/****************************************
+ * Main theme colors 
+ * - These are theme colors that are used throughout the website
+ ****************************************/
 $main-background-color: #fbfbfb;
 
-$primary-color: #19669E;
-$primary-color-contrast: #19669E;/*028482*/ //#0a4e7f;
-$primary-color-light: #FFB957;
-$secondary-color: #1144AA;
+$primary-color: #19669E; /* header color */
+$primary-color-light: #269DF2;
+$primary-color-light-text-contrast: #FFFFFF;
+$primary-color-contrast: #19669E; /* whatever color contrasts header highlighting / etc */
+$primary-color-text-contrast: #FFFFFF; /* text color that should go with primary color */
+
+$secondary-color: #1144AA; /* secondary color that compliments primary */
 $secondary-color-light: #6B8FD4;
 
-$content-sections-color: #FFFFFF;
-$idea-elements-color: #FFFFFF;
+$content-sections-color: #FFFFFF; /* background color of page section containers (ex: content-container) */
+$idea-elements-color: #FFFFFF; /* background color of idea elements (ex: bgcolor of blocks) */
 
-$default-text-color: #000000;
-$default-a-link-color: #000000;
+/******** TEXT COLOR DEFS ********/
+$default-text-color: #000000; /* default text color for entire website */
+$default-a-link-color: #000000; /* default a-link color for entire website */
+
 $picture-border-color: #CDCDCD;
 $stats-block-background-color: #CDCDCD;
-$stats-block-number-color: $secondary-color;
+$stats-block-number-color: $primary-color;
 
 /* random colors used to experiment with 3 color header - discard if necessary */
 $pastel-color-1: #FF7A00;
@@ -45,11 +30,18 @@ $pastel-color-2: #D20000;
 $pastel-color-3: #FFB957;
 
 
+/****************************************
+ * Color definitions for specific elements of the website using main theme colors
+ *   designated above
+ ****************************************/
+
 /* main layout elements */
 $main-header-full-width-color: $primary-color;
   $main-header-left-section-color:      $primary-color;
   $main-header-center-section-color:    $primary-color;
   $main-header-right-section-color:     $primary-color;
+  
+  $header-text-color: $primary-color-text-contrast; /* text color for header */
 
 $main-content-container-color:  $content-sections-color;
   $main-content-title-color:    $secondary-color;
@@ -80,9 +72,9 @@ $chat-board-user-item-status-online-txt-color: #FFFFFF;
 
 /* button colors */
 $button-styling-major-color: $primary-color-contrast;
-$button-styling-major-text-color: black;
+$button-styling-major-text-color: $primary-color-text-contrast;
 $button-styling-minor-color: $primary-color-light;
-$button-styling-minor-text-color: black;
+$button-styling-minor-text-color: $primary-color-light-text-contrast;
 
 
 /* forum colors */

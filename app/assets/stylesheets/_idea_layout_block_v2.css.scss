@@ -40,28 +40,29 @@
 .block-stream-element-container, .block-stream-element-container-normal{
   float: left;
 
-  width: 29%;
+  width: 280px;
   margin: 15px; /* need to use pixels because masonry tiling does something that kills percentage margins in Chrome */
   padding-bottom: 5px;
 
   font-size: 12px;
 }
 .block-stream-element-container-normal{
-  height: 335px; /* limit height to normalize */
+  height: 345px; /* limit height to normalize */
 }
-.block-stream-element-container-normal .block-stream-element-description-block{
-  max-height: 36px; /* limit height to normalize */
-  overflow: hidden;
-}
+  .block-stream-element-container-normal .block-stream-element-description-block{
+    max-height: 36px; /* limit height to normalize */
+    overflow: hidden;
+  }
 
 
   .block-stream-element-picture, .block-stream-element-picture-normal{
     float: left;
     
-    width: 96%;
+    width: 92%;
     
-    padding: 0% 2%;
-    margin: 2% 0%;
+    padding: 0% 4%;
+    margin-top: 4%;
+    margin-bottom: 2%;
     
     border-style: solid;
     border-width: 0px;
@@ -81,10 +82,10 @@
   .block-stream-element-description-block{
     float: left;
 
-    width: 96%;
+    width: 92%;
     
     padding: 2% 0%;
-    margin: 0% 2%;
+    margin: 0% 4%;
     margin-bottom: 2%;
 
     line-height:130%;
@@ -117,8 +118,8 @@
 
   .block-stream-element-stats-and-buttons-container{
     float: left;
-    width: 96%;
-    padding: 0% 2%;
+    width: 92%;
+    padding: 0% 4%;
     margin-top: 2%;
   }
     /* block for statistics and join action */
@@ -155,18 +156,19 @@
       font-size: 14px;
       font-weight: bold;
     }
+      .block-stream-element-button-join-idea a{
+        text-decoration: none;
+      }
       .block-stream-element-button-join-idea .button-styling-major{ /* hack to center button text */
-        color: black;
         padding: 15px 10px;
       }
       .block-stream-element-button-join-idea .button-styling-minor{ /* hack to center button text */
-        color: black;
         padding: 15px 10px;
       }
     .block-stream-element-already-done-it {
       float: left;
-      width: 96%;
-      padding: 0% 2%;
+      width: 92%;
+      padding: 0% 4%;
 
       text-align: right;
     }
@@ -176,7 +178,7 @@
   .block-stream-element-chat-msg-block{
     float: left;
     
-    width: 96%;
+    width: 92%;
     margin: 0% 2%;
   }
     .block-stream-element-chat-msg{

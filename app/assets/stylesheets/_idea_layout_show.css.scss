@@ -72,18 +72,20 @@ $button-height: 20px;
     }
     .idea-view-action-commit-button{
       /* button style change: REMOVED FOR IDEA PAGE CLEANUP */    
+      float: right;
+
       font-family: Helvetica, Arial, sans-serif;
 
-      width: 90px;
-      height: 100%;
-      padding: 0% 2%;
+      width: 70px;
+      height: 18px;
+      padding: 5px 4px;
       
       text-align: center;
       font-weight: normal;
-      box-shadow: 1px 1px 1px #FFEBCD inset, -1px -1px 1px #201C10 inset;
 
-      background-color: $button-styling-major-color;
-      color: black;
+      background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($primary-color-light), to($primary-color));
+      background: -moz-linear-gradient(19% 75% 90deg,$primary-color, $primary-color-light);
+      color: $button-styling-major-text-color;
     }
     .idea-view-action-make-event-button {
       float: left;
