@@ -1,6 +1,6 @@
 <span class="<%=ID_TAG_AUTH_HOME_STREAM_ADD_IDEA_BUTTON + idea_id.to_s%>">
 
-  <%= link_to target_path, :method => 'post', :remote => true, :title => 'Add to your idea list' do %>
+  <%= link_to_readonly @read_only, target_path, {:method => 'post', :remote => true, :title => 'Add to your idea list'} do %>
 
     <% if float == 'left' %>
       <div class="button-styling-major button-float-left">

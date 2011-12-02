@@ -1,5 +1,4 @@
 <% content_for :head do %>
-
   <script src="/assets/external/jquery.masonry.min.js"></script>
   <script src="/assets/external/jquery.imagesloaded.js"></script>
   
@@ -40,7 +39,7 @@
       var $container = $('#AJAX_main_stream_content');
       // turn off masonry for stream view - masonry class div does not sit in content-container
       //   so css styling is off
-      <% unless current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+      <% unless @user_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
         // set Masonry variable and initialize tiling
         $container.imagesLoaded(function(){
           $container.masonry({
@@ -80,7 +79,7 @@
                   // ensure that images load before adding to masonry layout
                   $newElems.imagesLoaded(function(){
                     // do not use masonry for stream view
-                    <% unless current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+                    <% unless @user_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
                       $container.append($newElems).masonry( 'appended', $newElems, false); // boolean arg sets animation
                     <% else %>
                       $container.append($newElems);
@@ -91,7 +90,7 @@
                     $("#AJAX_page_num_store").html(String(page_num)); // increment pages processed if results came back
                   }
                   
-                  <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
+                  <% if @user_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
                     $('.JS_idea_row_action_preview').unbind('click'); // prevents double assignment of click
                     $('.JS_idea_row_action_preview').click(renderIdeaPreview);
                     $('.JS_idea_row_action_preview').mouseover(function () {
@@ -111,12 +110,18 @@
     });
 
 
-    <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
+    <% if @user_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
       $(document).ready(function(){
         $('.JS_idea_row_action_preview').click(renderIdeaPreview);
         $('.JS_idea_row_action_preview').mouseover(function () {
     	    $(this).css('cursor', 'pointer');
         });
+      });
+    <% end %>
+
+    <% if @read_only %>
+      $(document).ready(function() {
+        $('a[rel*=facebox]').facebox();
       });
     <% end %>
 
@@ -127,7 +132,7 @@
 <div id='AJAX_page_num_store' class='hidden-div'><%=session[:page]%></div> <!-- AJAX paginate call to load more ideas -->
 
 
-<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
+<% if @user_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %> 
 <!-- Using side bar menu so need to limit search and stream to right side -->
 <div class='content-container'>  
 <% end %>
@@ -138,7 +143,7 @@
   <div id='AJAX_main_stream_content'>
     <% unless @stream_ideas.count == 0 %>
       <!-- Determine what kind of layout to render -->
-      <% case current_user.auth_page_layout %>
+      <% case @user_page_layout %>
       <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
         <% @stream_ideas.each do |idea| %>
           <%= render :partial => "shared_modules/block_stream_element_v2", :locals => {:idea => idea} %>
@@ -165,7 +170,7 @@
     <% end %>
   </div>
 
-<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
+<% if @user_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM %>
 <!-- Using side bar menu so need to limit search and stream to right side -->
 </div>
 <div id='AJAX_right_preview_box_id' class='right-preview-box'>
