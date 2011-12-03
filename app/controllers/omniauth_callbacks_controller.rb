@@ -7,6 +7,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     
     sign_in(@user)
 
-    redirect_to authenticated_home_path
+    current_uri = request.env['PATH_INFO']
+    puts "PATH IS: "+current_uri+ " prev path: "+ session[:prev_path]
+
+    redirect_to session[:prev_path].nil? ? authenticated_home_path : session[:prev_path]
   end
 end
