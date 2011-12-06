@@ -1,0 +1,39 @@
+@import "color_definitions";
+
+
+/* Tagging container for input and listing users tags */
+.tags-container {
+  float: left;
+  width: 100%;
+}
+  .tags-user-input-block {
+    float: left;
+    width: 100%;    
+  }
+  .tags-view-block {
+    float: left;
+    width: 100%;
+  }
+
+
+
+/* Tag element styling */
+.tag-element-container {
+  float: left;
+  background-color: orange;
+  
+  margin-right: 10px;
+  padding: 3px;
+  -moz-border-radius:    5px;
+  -webkit-border-radius: 5px;
+  border-radius:         5px;
+}
+  .tag-element-container a {
+    text-decoration: none;
+  }
+  .tag-element-name {
+    float: left;
+  }
+  .tag-element-action {
+    float: right;
+  }

@@ -1,0 +1,51 @@
+<!-- USAGE
+    INPUT
+    - idea_id: id of the idea to do tagging for
+    - current_tag_list: array of strings representing tags
+
+    NOTE: Tags will be rendered to take advantage of facebox container functionality in order to display 
+      ideas with matching tags.
+-->
+
+<% content_for :head do %>
+  <script type="text/javascript">
+
+    $(document).ready(function(){
+      // count how many tags there are. if > max allowed, don't submit
+      $("#JS_add_tags_form").submit( function(){
+        if ($(".tag-element-container").length >= <%= NUM_TAGS_PER_USER_PER_IDEA %>){
+          alert("Maximum number of tags per user is 5. You can delete a tag to create a new one.");
+          return false;
+        }
+        return true;
+      });      
+    });
+
+  </script>
+<% end %>
+
+
+
+
+<div class='tags-container'>
+
+  <div class='tags-user-input-block'>
+    <%= form_tag add_tags_to_idea_path, :method => 'post', :remote => true, :id => 'JS_add_tags_form' do %>
+      
+      <%= autocomplete_field_tag :tag_list, '', autocomplete_tag_name_tags_path, :"data-delimiter" => ', ', :size => 40 %>
+      
+      <!--<%= text_field_tag :tags, "", :size => 40 %>-->
+      
+      <%= submit_tag "Add Tags" %>
+      <%= hidden_field_tag :idea_id, idea_id %>
+    <% end %>
+  </div>
+
+  <div id="<%=ID_TAG_VIEW_TAGS_SECTION%>" class='tags-view-block'>
+
+      <%= render :partial => 'tags/tag_display_elements_idea', 
+                 :locals => {:tags => current_tag_list, :idea_id => idea_id} %>
+
+  </div>
+
+</div>

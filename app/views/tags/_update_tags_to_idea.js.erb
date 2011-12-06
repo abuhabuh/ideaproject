@@ -1,0 +1,13 @@
+// INPUT
+// - current_tag_list: collection of tags and counts
+// - idea_id: idea id the tags area associated with
+
+// TODO: not working with $(document).ready(function{});
+
+$(document).ready(function(){
+
+  $("#<%=ID_TAG_VIEW_TAGS_SECTION%>").html("<%=escape_javascript(
+      render :partial => 'tags/tag_display_elements_idea', :locals => {:tags => current_tag_list, :idea_id => idea_id}
+    )%>");
+
+});

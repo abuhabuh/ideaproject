@@ -8,7 +8,7 @@
     var friend_ids_str = "<%= @friend_ids_str %>";
     var friend_ids_array = friend_ids_str.split(',');
     var public_view = true;
-    
+
     // Functions that are bound to the facebox deals search buttons: search, prev, next
     //   Each function calls the master submitDealsSearchFirst function
     function submitDealsSearchFirst(){
@@ -187,6 +187,15 @@
    
  
     $(document).ready(function(){
+
+      // Tags functionality
+      // - clicking on a tag will popup window with associated ideas in it
+      $('.tag-element-name').click(function(){
+        var tag_string = $(this).html();
+        $.facebox(tag_string);
+      });
+
+
       $(".reply-link-class").click(toggle_reply);
 
       $(".view-children-link").click(function() {
@@ -732,6 +741,17 @@
         <div class='minor-text' id='<%=ID_TAG_IDEA_CHAT_INPUT_AREA%>'>Add the idea to chat!</div>
       <% end %>
     </div>  
+  </div>
+
+  <div class='content-section'>
+    <div class='content-header'>
+      Tagging
+    </div>
+
+    <%= render :partial => 'tags/add_and_view_tags_for_idea', 
+               :locals => {:idea_id => @idea.id,
+                           :current_tag_list => @idea.tags_from(current_user)} %>
+
   </div>
 
   <div class='content-section'>
