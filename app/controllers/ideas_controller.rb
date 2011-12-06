@@ -67,7 +67,7 @@ class IdeasController < ApplicationController
     @can_commit = @num_commits_outstanding < NUM_COMMITS_PER_MONTH
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render 'show2' }
       #format.json { render json: @idea }
     end
   end

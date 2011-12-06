@@ -13,15 +13,14 @@
         
   </head>
   <body>
-    <div>
+    <div class="wrapper">
       <%= render 'layouts/header' %>
-      <hr class='main-horizontal-rule'/>
-      <div class="center-container">
         <div class="container" id="user_nav">
     	  <%= yield %>
-          <%= render 'layouts/footer' %>
         </div>
-      </div>
+        <div class="push"></div> <!-- used to keep footer in place -->
     </div>
+     <!-- %= render 'layouts/footer' %> Commented out for now cause footer doesn't work on home page when logged in -->
   </body>
+  
 </html>

@@ -10,18 +10,18 @@
      end
   %>
   <% if makelink == true %>
-    <%= link_to image_tag(profile_pic_location), path, {:class => 'profile-pic-element-picture', :method => 'get'} %><br />
+    <%= link_to image_tag(profile_pic_location), path, {:class => 'profile-pic-element-picture', :method => 'get'} %>
   <% else %>
     <div class='profile-pic-element-picture'>
-      <%= image_tag profile_pic_location %><br />
+      <%= image_tag profile_pic_location %>
     </div>
   <% end %>
 <% else %>
   <% if makelink == true %>
-    <%= link_to image_tag(current_user.profile_pic.url(:thumb)), path,  {:class => 'profile-pic-element-picture', :method => 'get'} %><br />
+    <%= link_to image_tag(current_user.profile_pic.url(:thumb)), path,  {:class => 'profile-pic-element-picture', :method => 'get'} %>
   <% else %>
     <div class='profile-pic-element-picture'>
-      <%= image_tag current_user.profile_pic.url(:thumb) %><br />
+      <%= image_tag current_user.profile_pic.url(:thumb) %>
     </div>
   <% end %>
 <% end %> 

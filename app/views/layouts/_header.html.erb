@@ -30,10 +30,10 @@
 
     <div class="main-header-left-content-container">
       <div class="main-header-left-content">
-        <%= link_to content_tag(:b, 'Jump In!', ), root_url, :class => 'header-text'%>
+        <%= link_to content_tag(:b, 'earth surf', ), root_url, :class => 'header-logo-text'%>
         <br/>
         <% if user_signed_in? %>
-          <span class="minor-link"><%=link_to "Feedback? Chat us up!", feedback_path, {:target => "_blank", :class => 'header-text'} %></span>
+          <!-- <span class="minor-link"><%=link_to "Feedback? Chat us up!", feedback_path, {:target => "_blank", :class => 'header-text'} %></span>  removed for now to clean up the header. This should probably go into the footer at some point-->
         <% end %>
 
       </div>
@@ -93,7 +93,7 @@
       <div class='main-header-right-content'>
         <div class='minor-text'>
           <% if user_signed_in? %>
-            <span class='header-text'>Hello <%= current_user.first_name.empty? ? current_user.user_name : current_user.first_name %> </span>
+            <span class='header-text'>Hello <%= link_to current_user.first_name.empty? ? current_user.user_name : current_user.first_name, users_profile_path, {:class => 'header-text'} %> </span>
             <br/>
             <a href='#' id='JQUERY-add-ideas-link', class='header-text'>Add Ideas</a> | 
             <a href='#' id='JQUERY-nav-link', class = 'header-text'>Navigation</a> | 
@@ -124,19 +124,6 @@
 
 </header>
 
-
-<!-- AJAX picks up DIV ids to insert proper notices -->
-<div id='flash-notice-div'>
-  <% if flash[:notice] %>
-    <%= render :partial => "layouts/flash_notice" %>
-  <% end %>
-</div>
-<div id='flash-alert-div'>
-  <% if flash[:alert] %>
-    <%= render :partial => "layouts/flash_alert" %>
-  <% end %>
-</div>
-<!-- or flash.each do |key, msg| -->
 
 
 <div id='JQUERY-nav-section' class='main-header-drop-down-container hidden-div'>

@@ -75,6 +75,12 @@ hr.main-horizontal-rule{
   background-color: $main-header-full-width-color;
 }
 
+.header-logo-text {
+  color: $header-text-color;
+  font-size: 130%;
+  text-decoration: none;
+}
+
 .header-text {
   color: $header-text-color;
 }
@@ -212,10 +218,11 @@ header{
 
 /* Centering container to center all page content */
 .center-container{
-  width: 100%;
-  max-width: 960px; /* fixing max and min width for now so elements are centered */
-  min-width: 300px;
-  height: 100%;
+  //width: 100%;
+  //max-width: 960px; /* fixing max and min width for now so elements are centered */
+  //min-width: 300px;
+  //width: 900px;
+  //height: 100%;
   
   margin-left: auto;
   margin-right: auto;
@@ -232,13 +239,13 @@ header{
   margin-left: auto;
   margin-right: auto;
   
-  width: 100%;
+  width: 960px;
   height: 100%; /* needs to inherit down to child elements */
   
   border-style:solid;
   border-width: 0px;
   
-  float: left;
+  //float: left;
 }
 
 /* Main header nav div for logo and session / profile mgmt */
@@ -577,7 +584,7 @@ nav.main-authentication ul li a:hover {
 */
 .stream-search-field-and-button{
   float: left;
-  width: 100%;
+  //width: 100%;
   padding: 0% 8%;
 }
 
@@ -783,6 +790,12 @@ p.alert{
   margin: 5px 10px 10px 10px;
 }
 
+.home-left-nav {
+  float: left;
+  width: 15%;
+  background-color: $primary-color;
+}
+
 /*************************************
  *************************************
  *
@@ -794,7 +807,7 @@ p.alert{
 #AJAX_main_stream_content{ /* TODO: rename to block-stream-container or something relevant, but this will need to be referenced by JQUERY function */
   float: left;
   
-  width: 100%;
+  width: 85%;
 }
 
 /*********************************
@@ -858,3 +871,38 @@ p.alert{
 .home-description-coming-soon-text {
   color: $coming-soon-color;
 }
+
+.footer-links {
+  float: left; 
+  width: 25%;
+  height: 100%;
+  text-align: center;
+  color: #b0b0b0;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -15px; /* the bottom margin is the negative value of the footer's height */
+}
+.push {
+  height: 15px; /* .push must be the same height as .footer */
+  clear:both;
+}
+
+.footer {
+  height: 15px;
+  border-top-style: solid; 
+  border-color: #b0b0b0; 
+  border-width: 1px;
+  clear: both;
+
+  width: 60%; 
+  margin-left: 20%; 
+  margin-right: 20%;
+  margin-bottom: -5px;
+}
+
+
+
