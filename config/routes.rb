@@ -61,6 +61,7 @@ IdeaApp::Application.routes.draw do
 	match "pusher/auth", :to => "pusher#auth",
 				:as => :pusher_auth, :via => "POST"
 
+  # routes for Ideas
   match "idea/ideas_chat_user", :to => "ideas#idea_chat_user",
         :as => :idea_chat_user, :via => "GET"
   match "idea/featured_idea_admin", :to => "ideas#featured_idea_admin",
@@ -82,6 +83,19 @@ IdeaApp::Application.routes.draw do
         :as => :button_associate_idea_stream, :via => 'POST'
   match "idea/join_idea_from_idea_view", :to => "ideas#join_idea_from_idea_view",
         :as => :join_idea_from_idea_view, :via => "POST"
+
+  # routes for Tags
+  match "tag/add_tags_to_idea", :to => "tags#add_tags_to_idea",
+        :as => :add_tags_to_idea, :via => "POST"
+  match "tag/remove_tag_from_idea", :to => "tags#remove_tag_from_idea",
+        :as => :remove_tag_from_idea, :via => 'POST'
+  #    Taken from auto generated path from resources statement 
+  #    From: http://stackoverflow.com/questions/4486745/rails-autocomplete-tags-separated-by-commas-using-regex
+  #    TODO: make sure this routing is right
+  match "tags/autocomplete_tag_name", :to => "tags#autocomplete_tag_name",
+        :as => :autocomplete_tag_name_tags, :via => "GET"
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -8,6 +8,9 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+//= require autocomplete-rails
+
 //  Using require_directory instead of require_tree because subdirectories are used
 //    to store page specific javascript
 //= require_directory .

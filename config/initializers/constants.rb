@@ -1,6 +1,12 @@
 # CONSTANTS FOR IDEA PROJECT
 
 ##########################################
+# Tagging Constants
+##########################################
+NUM_TAGS_PER_USER_PER_IDEA = 5 # limit # of tags so users select tags more carefully
+
+
+##########################################
 # Commitment Constants
 ##########################################
 NUM_COMMITS_PER_MONTH = 4
@@ -84,6 +90,10 @@ ID_TAG_IDEA_DEALS_LIST_CONTAINER = 'AJAX_idea_deals_list_container'
 ID_TAG_DEAL_ITEM = 'AJAX_deal_item_' #append deal id
 ID_TAG_DEAL_ITEM_ACTION_BUTTON = 'AJAX_deal_item_action_button_' #append deal id
 
+#   Tagging ids
+ID_TAG_VIEW_TAGS_SECTION = 'AJAX_view_tags_section'
+
+
 
 ##########################################
 # Configurable text for system messages
@@ -108,6 +118,7 @@ DEALS_PER_PAGE = 8
 IDEA_LAYOUT_BLOCK_NUM_CHATS = 4
 IDEA_LAYOUT_PREVIEW_NUM_CHATS = 6
 IDEA_KICK_USERS_NUM_PER_PAGE = 6
+TAGS_NUM_TOP_TAGS = 10
 
 
 ##########################################

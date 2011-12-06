@@ -351,6 +351,6 @@ class IdeasController < ApplicationController
       format.json 
     end
  
-       end
+  end
    
 end

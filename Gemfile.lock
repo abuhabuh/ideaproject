@@ -29,6 +29,8 @@ GEM
       activesupport (= 3.1.1)
     activesupport (3.1.1)
       multi_json (~> 1.0)
+    acts-as-taggable-on (2.1.1)
+      rails
     addressable (2.2.6)
     ansi (1.4.1)
     arel (2.2.1)
@@ -133,6 +135,8 @@ GEM
       activesupport (= 3.1.1)
       bundler (~> 1.0)
       railties (= 3.1.1)
+    rails3-jquery-autocomplete (1.0.4)
+      rails (~> 3.0)
     railties (3.1.1)
       actionpack (= 3.1.1)
       activesupport (= 3.1.1)
@@ -191,6 +195,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 2.1.0)
   aws-s3
   coffee-rails (~> 3.1.1)
   devise
@@ -205,6 +210,7 @@ DEPENDENCIES
   pusher
   pusher-client
   rails (= 3.1.1)
+  rails3-jquery-autocomplete
   sass-rails (~> 3.1.4)
   sunspot_rails
   turn

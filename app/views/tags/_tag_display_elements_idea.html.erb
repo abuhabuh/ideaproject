@@ -1,0 +1,23 @@
+<!-- USAGE 
+    INPUT
+    - tags: array of strings of tag names 
+    - idea_id: id of idea tags are associated with
+-->
+
+<% tags.each do |tag_name| %>
+
+  <div class='tag-element-container'>
+    <a href='#'>
+      <div class='tag-element-name'>
+        <%=tag_name%>
+      </div>
+    </a>
+    <div class='tag-element-action'>
+      &nbsp;| 
+      <%= link_to 'x', 
+                  remove_tag_from_idea_path(:tag_string => "#{tag_name}", :idea_id => idea_id),
+                  {:method => 'post', :remote => true}%>
+    </div>
+  </div>
+
+<% end %>

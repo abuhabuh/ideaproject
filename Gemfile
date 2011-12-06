@@ -37,7 +37,14 @@ gem 'will_paginate'
 gem 'omniauth-facebook'
 gem 'omniauth'
 
+# Tagging gem
+gem 'acts-as-taggable-on', '~>2.1.0'
+
+# Autocomplete
+gem 'rails3-jquery-autocomplete'
+
 # Database import / export functionality
+# NOTE: results in sqlite install error or something
 # gem 'taps'
 
 # TEST GEM INSTALL <BEGIN>
