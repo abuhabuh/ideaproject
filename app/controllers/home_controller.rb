@@ -86,6 +86,13 @@ class HomeController < ApplicationController
   def next_ideas_batch_js
     session[:page] = params[:page] # session[:page] written to hidden div to support ajax
 
+    @user_page_layout = PAGE_LAYOUT_AUTH_HOME_BLOCK
+    @read_only = true
+    unless current_user.nil?
+      @user_page_layout = current_user.auth_page_layout
+      @read_only = false
+    end
+
     respond_to do |format|
       format.html {
         if session[:stream_view] == STREAM_VIEW_FRIENDS
