@@ -214,8 +214,6 @@
         return false;
       });
 
-        $('.new_post').bind('ajax:success', replyFormAjax);
-
         $("#new_topic_link").click(function() {
           $("#new_topic").toggle();
           return false;
@@ -237,6 +235,7 @@
       });
 
       $('#JQUERY-view-chat-link').bind('click', function() {
+        <% unless @read_only %>
         if ($('#JQUERY-chat-container').css('display') == "none"){
           $('#JQUERY-chat-container').show('slow');
           $('#JQUERY-view-chat-link').html("Hide Chat");
@@ -246,6 +245,7 @@
           $('#JQUERY-view-chat-link').html("Chat");
           //$('.chat-board-container').height(230);
         }
+        <% end %>
         return false;
       });
       
@@ -458,7 +458,11 @@
 
       // send commit create to backend database and update page accordingly
       function commit_user_to_idea(){
-        $.post("<%=idea_commitments_path%>", {idea_commitment: {user_id: <%=current_user.id%>, idea_id: <%=@idea.id%>}}, null, "script");
+        <% if @read_only %>
+          $.facebox(<%= :new_session_path %>);
+        <% else %>
+          $.post("<%=idea_commitments_path%>", {idea_commitment: {user_id: <%=current_user.id%>, idea_id: <%=@idea.id%>}}, null, "script");
+        <% end %>
       }
 
       // sends want it counts to backend database and updates counter in person table
@@ -540,7 +544,7 @@
         </span>
         <br/>
         <br/>
-        <%= link_to 'Add / Change Pic', edit_idea_path(@idea), {:method => 'get'}%>
+        <%= link_to_readonly @read_only, 'Add / Change Pic', edit_idea_path(@idea), {:method => 'get'}%>
       <% else %>
         You're getting left out! <br/>
         <br/>
@@ -553,7 +557,7 @@
     </div>
     -->
 
-    <span class='minor-text'><%= link_to 'Add / Change Pic', edit_idea_path(@idea), {:method => 'get'}%></span>
+    <span class='minor-text'><%= link_to_readonly @read_only, 'Add / Change Pic', edit_idea_path(@idea), {:method => 'get'}%></span>
   </div>
 
   <div class='content-section'>
@@ -561,7 +565,7 @@
     <div class='content-header'>
         People Sharing
         <span style='float:right;' class='minor-link'>
-          <a href='#' id='JQUERY-view-chat-link'> Chat </a>
+          <%= link_to_readonly @read_only, 'Chat', '#', {:id => 'JQUERY-view-chat-link'} %>
         </span>
 
         <br/>
@@ -642,7 +646,7 @@
         <% end %>
       <% else %>
         <div class="button-styling-major button-float-right" style="width:80px;">
-          <%= link_to BUTTON_JOIN_IDEA,
+          <%= link_to_readonly @read_only, BUTTON_JOIN_IDEA,
               join_idea_from_idea_view_path(:idea_id => @idea.id, :idea_assc_type => IDEA_ASSC_ADD_IDEA),
                                {:method => 'post'} %>
         </div>
@@ -756,12 +760,16 @@
 
   <div class='content-section'>
     <div class='content-header'>Idea Discussion</div>
+    
+    <% unless @read_only %>
     <span class='minor-text'>Post information you want to share with the group</span>
 
+    
     <div><br/><%= link_to "Post New Topic", "#", :id => "new_topic_link" %></div>
     <div id="new_topic" <% unless @forum_posts.empty? %> class="hidden-div" <% end %> > 
       <%= render :partial => 'forum/forum_post', :locals => {:post_id => nil, :idea_id => @idea.id} %>
     </div><br/>
+    <% end %>
     <div id='forum-container'>
       <%= render :partial => 'forum/forum_display', :locals => {:posts => @forum_posts, :level => 0, :postCount => 0} %>
     </div>

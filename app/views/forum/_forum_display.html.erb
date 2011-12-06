@@ -7,7 +7,7 @@
   <div id=<%= p.id.to_s() + '_post' %> class="parent-post">
     <div class="profile-pic-div">
       <% post_user = User.find_by_id(p.user_id) %>
-      <%= render :partial => '/users/profile_pic', :locals => {:current_user => post_user, :path => user_path(p.user_id), :makelink => true} %>
+      <%= render :partial => '/users/profile_pic', :locals => {:current_user => post_user, :path => user_path(p.user_id), :makelink => !@read_only} %>
     </div>
   
     <div id=<%= p.id.to_s() + '_content' %> class="forum-post-right">
@@ -18,7 +18,14 @@
         <span class='post-timestamp-text'><%= p.created_at.strftime('%b %d, %Y %l:%M %P') %></span>
       </div>
       <div class="forum_reply" id=<%= p.id %>'_reply_link'>
-        <span class='minor-text'><%= link_to "Reply", "#", :class => 'reply-link-class', :id => p.id  %></span>
+        <span class='minor-text'>
+          <% if !@read_only %>
+            <%= link_to "Reply", "#", :class => 'reply-link-class', :id => p.id  %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </span>
+
       </div>
       <div id=<%= p.id.to_s() %> class="view-children">
         <% if !@child_posts.nil? and @child_posts.length > 0 %>

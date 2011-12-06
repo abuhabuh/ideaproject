@@ -15,6 +15,8 @@ class IdeasController < ApplicationController
   # GET /ideas/1.json
   def show
     #TODO - nil sanity checks on variables
+    @read_only = current_user.nil?
+      
     @idea = Idea.find(params[:id])
     @idea_chat_msgs = @idea.chat_messages.order("id ASC")
     @idea_deals = @idea.deals
@@ -23,23 +25,28 @@ class IdeasController < ApplicationController
     @idea_events = @idea.events
     @idea_users = @idea.users.order("want_it_count DESC, first_name ASC, last_name ASC");
     
-    @curr_user_idea_link = current_user.user_ideas.where("idea_id =?", @idea.id).first
+    @curr_user_idea_link = @read_only? nil : current_user.user_ideas.where("idea_id =?", @idea.id).first
 
     @has_idea = false;
-    if current_user.ideas.exists?(@idea.id)
+    if !@read_only && current_user.ideas.exists?(@idea.id)
       @has_idea = true;
     end
 
     # Get array of event ids for user's events
     @user_event_ids = Array.new
-    current_user.events.each do |event|
-      @user_event_ids << event.id
+    unless @read_only
+      current_user.events.each do |event|
+        @user_event_ids << event.id
+      end
     end
 
     # Get array of user's friends' ids
     friend_ids = Array.new
-    current_user.friends.each do |friend|
-      friend_ids << friend.id
+
+    unless @read_only
+      current_user.friends.each do |friend|
+        friend_ids << friend.id
+      end
     end
     @friend_ids_str = friend_ids.join(',')
 
@@ -55,8 +62,8 @@ class IdeasController < ApplicationController
     end
 
     # Get user commitment status
-    @is_committed = current_user.idea_commitments.exists?(:idea_id => @idea.id)
-    @num_commits_outstanding = IdeaCommitment.get_num_commits_outstanding(current_user.id)
+    @is_committed = @read_only? nil : current_user.idea_commitments.exists?(:idea_id => @idea.id)
+    @num_commits_outstanding = @read_only? 0 : IdeaCommitment.get_num_commits_outstanding(current_user.id)
     @can_commit = @num_commits_outstanding < NUM_COMMITS_PER_MONTH
 
     respond_to do |format|

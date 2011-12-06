@@ -13,19 +13,15 @@
         
   </head>
   <body>
-
-    <%= render 'layouts/header' %>
-
-    <hr class='main-horizontal-rule'/>
-
-    <div class="center-container">
-
-      <div class="container" id="user_nav">
+    <div>
+      <%= render 'layouts/header' %>
+      <hr class='main-horizontal-rule'/>
+      <div class="center-container">
+        <div class="container" id="user_nav">
     	  <%= yield %>
-        <%= render 'layouts/footer' %>
+          <%= render 'layouts/footer' %>
+        </div>
       </div>
-
     </div>
-
   </body>
 </html>

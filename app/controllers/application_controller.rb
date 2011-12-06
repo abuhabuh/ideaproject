@@ -7,12 +7,14 @@ class ApplicationController < ActionController::Base
 
   def layout
     # only turn it off for login pages:
-    puts "controller is class::::::::::: #{self.class}"
     #is_a?(Devise) ? "login" : "application"
     # or turn layout off for every devise controller:   
-    self.params.each do |x|
-      puts "param: #{x}"
-    end
+    #self.params.each do |x|
+    #  puts "param: #{x}"
+    #end
+
+    session[:prev_path] = session[:current_path]
+    session[:current_path] = request.env['PATH_INFO']
 
     devise_controller? ? deviseControllerLayout : "application"
 

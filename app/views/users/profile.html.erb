@@ -14,7 +14,7 @@
 
 
 <div class='left-nav'>
- <%= render :partial => '/users/profile_pic', :locals => {:current_user => current_user, :makelink => false} %> 
+ <%= render :partial => '/users/profile_pic', :locals => {:current_user => current_user, :pic_size => 'FULL', :makelink => false} %> 
   <%= link_to 'edit profile', edit_user_registration_path, :method => :get %><br/>
   <br/>
   <b>User Name</b>: <%= current_user.user_name %><br />

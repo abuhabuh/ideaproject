@@ -58,7 +58,14 @@ class HomeController < ApplicationController
     # Get featured ideas in order of most featured
     @featured_ideas = Idea.where("featured != ?", NOT_FEATURED).order("featured DESC")
 
-    if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM
+    @user_page_layout = PAGE_LAYOUT_AUTH_HOME_BLOCK
+    @read_only = true
+    unless current_user.nil?
+      @user_page_layout = current_user.auth_page_layout
+      @read_only = false
+    end
+
+    if @user_page_layout == PAGE_LAYOUT_AUTH_HOME_STREAM
       # Load first idea variables for default preview display
       @idea = @stream_ideas[0]
       unless @idea.nil?

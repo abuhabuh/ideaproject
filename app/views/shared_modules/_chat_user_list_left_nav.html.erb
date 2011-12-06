@@ -18,8 +18,8 @@
 
       <% users.each do |user| %>
         
-        <% if user.id == current_user.id || !friends_only || (friends_only && (friend_ids_arr.include?(user.id.to_s))) %>
-          <% if user.id == current_user.id %>
+        <% if (!@read_only && user.id == current_user.id) || !friends_only || (friends_only && (friend_ids_arr.include?(user.id.to_s))) %>
+          <% if !@read_only && user.id == current_user.id %>
             <% includes_current_user = true %>
           <% end %>
           
@@ -39,7 +39,7 @@
 
       <% end %>
       
-      <% unless includes_current_user %>
+      <% unless @read_only || includes_current_user %>
         <%= render :partial => 'shared_modules/chat_user_list_user_item', 
                    :locals => {:user => current_user, 
                                :is_online => false,

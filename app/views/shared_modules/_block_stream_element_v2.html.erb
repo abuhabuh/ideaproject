@@ -1,12 +1,12 @@
 <% idea_owner = User.find(idea.creator) %>
 
-<% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+<% if @user_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
 <div class='block-stream-element-container-normal'>
 <% else %>
 <div class='block-stream-element-container'>
 <% end %>
 
-  <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+  <% if @user_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
     <div class='block-stream-element-picture-normal'>
       <%= link_to image_tag(idea.photo.url(:medium)),
                 idea_path(idea.id),
@@ -22,7 +22,7 @@
 
   <div class='block-stream-element-description-block'>
     <div class='block-stream-element-description-owner-pic'>
-      <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :path => user_path(idea_owner.id), :makelink => true} %>
+      <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :path => user_path(idea_owner.id), :makelink => !@read_only} %>
     </div>
     <span class='block-stream-element-owner-name'><%=idea_owner.first_name %>:</span> &nbsp;<%=link_to idea.text, idea_path(idea.id), {:method => 'get'}%>
     
@@ -47,19 +47,26 @@
       </div>
 
       <div class='block-stream-element-stat-row'>
-        <div class='block-stream-element-stats-block-number'>
-          <%= current_user.friendships
+        
+          <div class='block-stream-element-stats-block-number'>
+            <% if !@read_only %>
+              <%= current_user.friendships
                                .joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id')
                                .where('user_ideas.idea_id = ?', idea.id)
                                .count %>
-        </div>
-        <div class='block-stream-element-stats-block-text'>
-          Friends sharing
-        </div>
+            <% else %>
+              0
+            <% end %>
+          </div>
+          <div class='block-stream-element-stats-block-text'>
+            Friends sharing
+          </div>
       </div>
     </div>
 
-    <% user_idea_link = current_user.user_ideas.where(:idea_id => idea.id).first %>
+    <% unless @read_only 
+        user_idea_link = current_user.user_ideas.where(:idea_id => idea.id).first 
+    end %>
     <div class='block-stream-element-button-join-idea'>
       <% if user_idea_link.nil? || user_idea_link.status != USER_IDEA_STATUS_SHARING %>
         <%= render :partial => "shared_modules/button_add_idea",
@@ -74,16 +81,18 @@
     </div>
     <div>
       <!--
-      <% if user_idea_link.nil? || user_idea_link.done_it != true %>
-        <%= render :partial => "shared_modules/button_done_it",
-                   :locals => {:target_path => 
+      <% unless @read_only %>
+        <% if user_idea_link.nil? || user_idea_link.done_it != true %>
+          <%= render :partial => "shared_modules/button_done_it",
+                     :locals => {:target_path => 
                                   button_associate_idea_block_path(
                                     :idea_id => idea.id, 
                                     :idea_assc_type => IDEA_ASSC_DONE_IDEA),
                                :idea_id => idea.id, 
                                :float => 'left'} %>
-      <% else %>
-        <%=DONE_IDEA_SUCCESS_TEXT%>
+        <% else %>
+          <%=DONE_IDEA_SUCCESS_TEXT%>
+        <% end %>
       <% end %>
       -->
     </div>
@@ -92,7 +101,7 @@
 
   <div class='block-stream-element-already-done-it'>
     <span class="<%=ID_TAG_AUTH_HOME_STREAM_DONE_IDEA_BUTTON + idea.id.to_s%>">
-      <% if user_idea_link.nil? || user_idea_link.done_it != true %>
+      <% if !@read_only && (user_idea_link.nil? || user_idea_link.done_it != true) %>
         <%= link_to BUTTON_DONE_IDEA, 
                     button_associate_idea_block_path(
                       :idea_id => idea.id, 
@@ -101,8 +110,10 @@
                       :remote => true,
                       :title => "Mark as an idea you've done before"
         %>
-      <% else %>
+      <% elsif !@read_only %>
         <%=DONE_IDEA_SUCCESS_TEXT%>
+      <% else %>
+        &nbsp;
       <% end %>
     </span>
   </div>
@@ -113,7 +124,7 @@
 
 
   <div class='block-stream-element-chat-msg-block'>
-    <% if current_user.auth_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
+    <% if @user_page_layout == PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL %>
       <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(IDEA_LAYOUT_BLOCK_NUM_CHATS-2).reverse %>
     <% else %>
       <% messages = ChatMessage.where("idea_id = ?", idea.id).order("id DESC").limit(IDEA_LAYOUT_BLOCK_NUM_CHATS).reverse %>

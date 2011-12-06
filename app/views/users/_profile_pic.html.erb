@@ -1,18 +1,27 @@
 <% if current_user.profile_pic_file_size.nil? %>
   <% profile_pic_location = current_user.profile_pic_file_name 
-  if profile_pic_location.nil?
-    profile_pic_location = 'default-profile-pic.jpeg' 
-  end
+     if profile_pic_location.nil?
+        profile_pic_location = 'default-profile-pic.jpeg' 
+     end
+
+     if !(defined? pic_size).nil? && pic_size == 'FULL'
+        puts "PIC SIZE: "+pic_size
+        profile_pic_location = profile_pic_location.sub('=square','=normal')
+     end
   %>
   <% if makelink == true %>
     <%= link_to image_tag(profile_pic_location), path, {:class => 'profile-pic-element-picture', :method => 'get'} %><br />
   <% else %>
-    <%= image_tag profile_pic_location, :class => 'profile-pic-element-picture' %><br />
+    <div class='profile-pic-element-picture'>
+      <%= image_tag profile_pic_location %><br />
+    </div>
   <% end %>
 <% else %>
   <% if makelink == true %>
     <%= link_to image_tag(current_user.profile_pic.url(:thumb)), path,  {:class => 'profile-pic-element-picture', :method => 'get'} %><br />
   <% else %>
-    <%= image_tag current_user.profile_pic.url(:thumb), :class => 'profile-pic-element-picture' %><br />
+    <div class='profile-pic-element-picture'>
+      <%= image_tag current_user.profile_pic.url(:thumb) %><br />
+    </div>
   <% end %>
 <% end %> 
