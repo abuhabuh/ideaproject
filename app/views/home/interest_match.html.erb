@@ -1,0 +1,22 @@
+<div class='unauth-content-container'>
+
+  <h2>Which idea do you like more? Click one.</h2>
+
+  <%= @idea_set_number.to_i %> of 4
+  <br/>
+  <br/>
+  <br/>
+  
+
+  <div style='float: left; width: 100%;'> <!-- container div to center idea picker container -->
+    <div class='idea-picker-container'>
+    
+      <% @ideas.each do |idea| %>
+        <%= render :partial => 'shared_modules/idea_element_interest_match', 
+                   :locals => {:idea => idea, :idea_set_number => @idea_set_number} %>
+      <% end %>
+
+    </div>
+  </div>
+
+</div>

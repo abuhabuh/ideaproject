@@ -1,0 +1,22 @@
+<!-- USAGE
+    INPUT:
+    - idea - idea object to display
+    - idea_set_number - idea set number to pass onto controller
+-->
+
+<%= link_to interest_match_path(:idea_set_number => (idea_set_number.to_i + 1), :idea_id => idea.id), 
+            {:method => 'get', :title => 'Pick this idea'} do %>
+
+  <div class='idea_interest_match_container'>
+
+    <div class='idea_interest_pic'>
+      <%= image_tag(idea.photo.url(:medium)) %>
+    </div>
+
+    <div class='idea_interest_title'>
+      <%= idea.text %>
+    </div>
+
+  </div>
+
+<% end %>

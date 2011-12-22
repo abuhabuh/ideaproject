@@ -10,6 +10,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     current_uri = request.env['PATH_INFO']
     puts "PATH IS: "+current_uri+ " prev path: "+ session[:prev_path]
 
+    #TODO: why redirect to previous path? Sign in should just go to auth home. 
+    #      this is breaking sign in from middle of interest match
     redirect_to session[:prev_path].nil? ? authenticated_home_path : session[:prev_path]
   end
 end

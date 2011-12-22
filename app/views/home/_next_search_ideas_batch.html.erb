@@ -1,6 +1,6 @@
 <% @stream_ideas.each do |idea_item| %>
 
-  <% case current_user.auth_page_layout %>
+  <% case @user_page_layout %>
   <% when PAGE_LAYOUT_AUTH_HOME_BLOCK %>
     <%= render :partial => "shared_modules/block_stream_element_v2", :locals => {:idea => idea_item} %>
   

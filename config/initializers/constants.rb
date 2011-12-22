@@ -39,10 +39,11 @@ CHAT_TYPE_EVENT = 1
 ##########################################
 # Stream View Constants
 ##########################################
-STREAM_VIEW_PUBLIC = 'public'
-STREAM_VIEW_FRIENDS = 'friends'
-STREAM_VIEW_SEARCH = 'search'
-STREAM_VIEW_FEATURED = 'featured'
+STREAM_VIEW_PUBLIC = '0' # not integers because matching on strings already and don't want to change for all TODO: fix this
+STREAM_VIEW_FRIENDS = '1'
+STREAM_VIEW_SEARCH = '2'
+STREAM_VIEW_FEATURED = '3'
+STREAM_VIEW_TAGS = '4'
 
 # idea stream rendering 
 PIC_VIEW_TYPE_IDEA = 'idea_pic'

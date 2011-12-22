@@ -20,6 +20,7 @@
 @import "idea_layout_show";
 @import "idea_layout_block_v2";
 @import "idea_layout_stream";
+@import "idea_layout_interest_match";
 @import "deals_layout";
 @import "forum";
 @import "tabs_layout"; /* TODO: NOT USING THIS YET. USE IT to make tabs for user profile page so user can manage stuff*/
@@ -27,6 +28,7 @@
 @import "chat_messages_layout";
 @import "users_layout";
 @import "tags_layout";
+@import "interest_match_layout";
 @import "jquery-ui-1.8.16.custom"; /* importing jquery-ui css */
 
   /***************************************
@@ -161,6 +163,8 @@ hr.main-horizontal-rule{
   color: $button-styling-major-text-color;
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($primary-color-light), to($primary-color));
   background: -moz-linear-gradient(19% 75% 90deg,$primary-color, $primary-color-light);
+
+  box-shadow: -1px -1px 1px #003386 inset, 1px 1px 1px #003366 inset;
 }
 
 .button-styling-major a{
@@ -502,6 +506,7 @@ nav.main-authentication ul li a:hover {
   float: left;
 
   width: 80%;
+  height: 100%;
 
   margin-left: 10%;
   margin-right: 10%;
