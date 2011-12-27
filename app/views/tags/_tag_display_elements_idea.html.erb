@@ -14,7 +14,7 @@
     </a>
     <div class='tag-element-action'>
       &nbsp;| 
-      <%= link_to 'x', 
+      <%= link_to_readonly @read_only, 'x', 
                   remove_tag_from_idea_path(:tag_string => "#{tag_name}", :idea_id => idea_id),
                   {:method => 'post', :remote => true}%>
     </div>

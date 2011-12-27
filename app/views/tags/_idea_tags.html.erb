@@ -29,18 +29,20 @@
 
 <div class='tags-container'>
 
-  <div class='tags-user-input-block'>
-    <%= form_tag add_tags_to_idea_path, :method => 'post', :remote => true, :id => 'JS_add_tags_form' do %>
+  <% unless read_only %>
+    <div class='tags-user-input-block'>
+      <%= form_tag add_tags_to_idea_path, :method => 'post', :remote => true, :id => 'JS_add_tags_form' do %>
+        
+        <%= autocomplete_field_tag :tag_list, '', autocomplete_tag_name_tags_path, :"data-delimiter" => ', ', :size => 20 %>
       
-      <%= autocomplete_field_tag :tag_list, '', autocomplete_tag_name_tags_path, :"data-delimiter" => ', ', :size => 20 %>
+        <!--<%= text_field_tag :tags, "", :size => 40 %>-->
       
-      <!--<%= text_field_tag :tags, "", :size => 40 %>-->
-      
-      <%= submit_tag "Add Tags" %>
-      <%= hidden_field_tag :idea_id, idea_id %>
-    <% end %>
-    <br/>
-  </div>
+        <%= submit_tag "Add Tags" %>
+        <%= hidden_field_tag :idea_id, idea_id %>
+      <% end %>
+      <br/>
+    </div>
+  <% end %>
 
   <div id="<%=ID_TAG_VIEW_TAGS_SECTION%>" class='tags-view-block'>
 

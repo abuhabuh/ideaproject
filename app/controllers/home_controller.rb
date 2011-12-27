@@ -10,6 +10,75 @@ class HomeController < ApplicationController
   end
 
   
+  def interest_match
+    @idea_set_number = params[:idea_set_number]
+
+    # clear ideas_picked session variable when we begin on the first idea set
+    if @idea_set_number.to_i == 1
+      session[:ideas_picked] = Array.new 
+    else
+      # save idea picked if available
+      if params[:idea_id]
+        if session[:ideas_picked]
+          session[:ideas_picked] << params[:idea_id]
+        end
+      end
+    end
+
+    tags = Array.new
+    if session[:ideas_picked].uniq.size == 4 # people may refresh match page they're on and insert multiple vals into array
+      
+      selected_ideas = Idea.find(session[:ideas_picked])
+      selected_ideas.each do |idea|
+        puts "====> " + idea.id.to_s + " : " + idea.text
+        idea.tag_counts.each do |new_tag|
+          tags << new_tag
+        end
+      end
+
+      if tags.length == 0
+        puts " No idea was tagged...redirect to auth home page with normal view" #TODO: implement this
+      end
+
+      tags.sort_by! {|tag_item| (tag_item.name)}
+
+      # aggregate tag counts into new array and sort array by count
+      aggregate_tags = Array.new
+      previous_name = tags[0].name
+      count_aggregator = 0
+      tags.each do |tag|
+        if tag.name == previous_name
+          count_aggregator += tag.count
+        else
+          aggregate_tags << {"name" => previous_name, "count" => count_aggregator}
+          previous_name = tag.name
+          count_aggregator = tag.count
+        end
+      end
+      # append any remaining tag aggregate that hasn't been appended (if array ends with a couple duplicate tags)
+      unless aggregate_tags.last["name"] == previous_name
+        aggregate_tags << {"name" => previous_name, "count" => count_aggregator}
+      end
+      
+      aggregate_tags.sort_by! {|tag_item| -(tag_item["count"])}
+
+      session[:tag_strings] = Array.new
+      aggregate_tags.take(5).each do |tag|
+        session[:tag_strings] << tag["name"]
+      end
+
+      redirect_to authenticated_home_path(:stream_view => STREAM_VIEW_TAGS)
+
+    else
+      @ideas = Idea.search_ideas("", 2, @idea_set_number.to_i)
+      respond_to do |format|
+        format.html
+      end
+    end
+
+  end
+  
+
   def authenticated_home
     # TODO check all session params in each function in this .rb file
     unless params[:stream_view]
@@ -48,17 +117,24 @@ class HomeController < ApplicationController
     # Determine what we're sorting on
     # TODO: IMPLEMENT THIS
     
-    if session[:stream_view] == STREAM_VIEW_FRIENDS    
+    if session[:stream_view] == STREAM_VIEW_TAGS
+      puts "************************* PRINTING TAGS"
+      puts "session tags: " + session[:tag_strings].to_s
+    end
+
+    if session[:stream_view] == STREAM_VIEW_FRIENDS
       # Don't need to get this if we're doing PUBLIC or SEARCH views
       @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+    elsif session[:stream_view] == STREAM_VIEW_TAGS
+      @stream_ideas = Idea.search_ideas_tags(session[:tag_strings], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
     else
-      @stream_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+      @stream_ideas = Idea.search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
     end
 
     # Get featured ideas in order of most featured
-    @featured_ideas = Idea.where("featured != ?", NOT_FEATURED).order("featured DESC")
+    #@featured_ideas = Idea.where("featured != ?", NOT_FEATURED).order("featured DESC")
 
-    @user_page_layout = PAGE_LAYOUT_AUTH_HOME_BLOCK
+    @user_page_layout = PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL
     @read_only = true
     unless current_user.nil?
       @user_page_layout = current_user.auth_page_layout
@@ -86,7 +162,7 @@ class HomeController < ApplicationController
   def next_ideas_batch_js
     session[:page] = params[:page] # session[:page] written to hidden div to support ajax
 
-    @user_page_layout = PAGE_LAYOUT_AUTH_HOME_BLOCK
+    @user_page_layout = PAGE_LAYOUT_AUTH_HOME_BLOCK_NORMAL
     @read_only = true
     unless current_user.nil?
       @user_page_layout = current_user.auth_page_layout
@@ -97,8 +173,10 @@ class HomeController < ApplicationController
       format.html {
         if session[:stream_view] == STREAM_VIEW_FRIENDS
           @stream_ideas = get_friends_ideas(session[:stream_view], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+        elsif session[:stream_view] == STREAM_VIEW_TAGS
+          @stream_ideas = Idea.search_ideas_tags(session[:tag_strings], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
         else
-          @stream_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+          @stream_ideas = Idea.search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
         end
 
         render :partial => "next_search_ideas_batch" # NOTE: PICTURE VIEW MODE is set to view PIC_VIEW_TYPE_USER in js.erb
@@ -123,7 +201,7 @@ class HomeController < ApplicationController
       #   authenticates
       session[:initial_idea_string] = params[:idea]
       
-      @stream_ideas = search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+      @stream_ideas = Idea.search_ideas(params[:idea], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
     else
       # Handle unexpected nil error
       puts " TRACE IdeasController:process_idea - no param for idea"
@@ -154,7 +232,7 @@ class HomeController < ApplicationController
 
         unless session[:stream_view] == STREAM_VIEW_FRIENDS
           puts " GETTING SEARCH RESULTS <add_idea> - [" + params[:search].to_s + "]"
-          @stream_ideas = search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
+          @stream_ideas = Idea.search_ideas(params[:search], AUTH_HOME_IDEAS_PER_PAGE, params[:page])
         else
           puts " GETTING FRIENDS RESULTS"
           # Get stream ideas based on what type of stream we're 
@@ -186,29 +264,4 @@ class HomeController < ApplicationController
     User.get_my_friends_ideas(current_user, ideas_per_page, page_number)
   end
   
-  def search_ideas(search_string, ideas_per_page, current_page)
-    if search_string == INPUT_BOX_SEARCH_IDEAS
-      search_string = ""
-    end
-
-    page_number = 1    
-    unless current_page.nil? || current_page.blank?
-      page_number = current_page.to_i
-    end
- 
-    if search_string.nil? || search_string.empty?
-      return Idea.limit(ideas_per_page).offset((page_number-1)*ideas_per_page).order("num_users_joined DESC")
-    else
-    
-      @search = Idea.search do
-        fulltext search_string.to_s, :minimum_match => 1
-        order_by :num_users_joined, :desc
-        paginate :page => page_number, :per_page => ideas_per_page
-      end
-      
-      @search.results
-    end
-
-  end
-
 end

@@ -118,6 +118,10 @@
       });
     
       $('.new_post').bind('ajax:success', replyFormAjax);
+
+      <% if @read_only %>
+        $('a[rel*=facebox]').facebox();
+      <% end %>
    }); 
     
   </script>
@@ -148,13 +152,16 @@
           <div style="font-weight: bold; font-size:16px; padding-top: 20px;">
             Tags
           </div>
-          <div style="padding: 5px 0px 5px 0px">
-            <span class="minor-text">Tags are keywords that describe the idea. Add as many tags as you'd like. Separate multiple tags with a comma (i.e. hiking, europe).
-            </span>
-          </div>
+          <% unless @read_only %>
+            <div style="padding: 5px 0px 5px 0px">
+              <span class="minor-text">Tags are keywords that describe the idea. Add as many tags as you'd like. Separate multiple tags with a comma (i.e. hiking, europe).
+              </span>
+            </div>
+          <% end %>
           <%= render :partial => 'tags/idea_tags', 
                :locals => {:idea_id => @idea.id,
-                           :current_tag_list => @idea.tags_from(current_user)} %>
+                           :current_tag_list => @idea.tags_from(current_user),
+                            :read_only => @read_only} %>
 
         </div>
         

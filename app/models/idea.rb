@@ -49,6 +49,62 @@ class Idea < ActiveRecord::Base
 
   ################# UTILITY FUNCTIONS ######################
 
+  def self.search_ideas(search_string, ideas_per_page, current_page)
+    if search_string == INPUT_BOX_SEARCH_IDEAS
+      search_string = ""
+    end
+
+    page_number = 1    
+    unless current_page.nil? || current_page.blank?
+      page_number = current_page.to_i
+    end
+ 
+    if search_string.nil? || search_string.empty?
+      return Idea.limit(ideas_per_page).offset((page_number-1)*ideas_per_page).order("num_users_joined DESC, text ASC")
+    else
+    
+      @search = Idea.search do
+        fulltext search_string.to_s, :minimum_match => 1
+        order_by :num_users_joined, :desc
+        paginate :page => page_number, :per_page => ideas_per_page
+      end
+      
+      @search.results
+    end
+
+  end
+
+
+  def self.search_ideas_tags(tag_str_arr, ideas_per_page, current_page)
+
+    puts " ************* SEARCH_IDEAS_TAGS ****************"
+    puts " ************* SEARCH_IDEAS_TAGS ****************"
+    puts " ************* SEARCH_IDEAS_TAGS ****************"
+
+    page_number = 1    
+    unless current_page.nil? || current_page.blank?
+      page_number = current_page.to_i
+    end
+
+    ideas = Idea.tagged_with(tag_str_arr, :any => true).limit(ideas_per_page).offset((page_number-1)*ideas_per_page)
+
+    ideas.each do |idea_item|
+      puts "idea text: " + idea_item.text + " id: " + idea_item.id.to_s
+      puts "  tag matches: " + idea_item.tag_counts.where(:name => tag_str_arr).count.to_s
+    end
+
+    ideas.sort_by! {|idea_item| -(idea_item.tag_counts.where(:name => tag_str_arr).count)}
+
+    puts "sorted"
+    ideas.each do |idea_item|
+      puts "idea text: " + idea_item.text
+    end
+
+    return ideas
+
+  end
+
+
   def self.join_idea(user_id, idea_id)
     Idea.add_user_joined(idea_id)
     user_idea = UserIdea.where(:user_id => user_id, :idea_id => idea_id).first

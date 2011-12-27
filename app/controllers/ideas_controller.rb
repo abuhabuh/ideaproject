@@ -66,7 +66,11 @@ class IdeasController < ApplicationController
     @num_commits_outstanding = @read_only? 0 : IdeaCommitment.get_num_commits_outstanding(current_user.id)
     @can_commit = @num_commits_outstanding < NUM_COMMITS_PER_MONTH
 
-    @idea_friends = User.find_friends_in_idea(current_user, @idea.id)
+    if @read_only
+      @idea_friends = nil
+    else
+      @idea_friends = User.find_friends_in_idea(current_user, @idea.id)
+    end
 
     puts "TESTING FRIEND LIST:::::::::::::: "+@idea_friends.to_yaml
 
