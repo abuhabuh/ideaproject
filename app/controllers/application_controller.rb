@@ -13,8 +13,13 @@ class ApplicationController < ActionController::Base
     #  puts "param: #{x}"
     #end
 
-    session[:prev_path] = session[:current_path]
-    session[:current_path] = request.env['PATH_INFO']
+    #do not add the session timeout url to the previous path otherwise the user will be redirected there after logging in again
+    if request.env['PATH_INFO'] != '/home/session_timeout' 
+      session[:prev_path] = session[:current_path]
+      session[:current_path] = request.env['PATH_INFO']
+    end
+
+    #puts "current: " + session[:current_path] +" previous: "+ session[:prev_path] 
 
     devise_controller? ? deviseControllerLayout : "application"
 

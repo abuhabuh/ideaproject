@@ -119,7 +119,25 @@ class User < ActiveRecord::Base
     
     return ideas
   end
-  
+ 
+  def self.find_friends_in_idea(current_user, idea_id)
+
+    #puts "FINDING MY FRIENDS::::::::::"+user_id.to_s()+" "+idea_id.to_s()
+#    return User.joins(:user_ideas, :friendships).where('user_ideas.idea_id' => idea_id, 'friendships.friend_id' => user_id)
+    #temp = User.joins(:ideas, :friendships).where('ideas.id' => idea_id, 'friendships.user_id' => user_id).first
+    #temp = current_user.friendships.joins(:friend => :user_ideas).where('user_ideas.idea_id' => idea_id)
+
+    #temp = User.joins('INNER JOIN user_ideas ON friendships.friend_id = user_ideas.user_id').joins('INNER JOIN users friendusers ON friendships.friend_id = friendusers.id').select('friendusers').where('ideas.id' => idea_id, 'friendships.user_id' => current_user.id)
+
+    temp = User.joins('INNER JOIN friendships ON friendships.user_id = users.id').joins('INNER JOIN users friendusers ON friendships.friend_id = friendusers.id').joins('INNER JOIN user_ideas ON user_ideas.user_id = friendusers.id').select('friendusers.*').where('user_ideas.idea_id' => idea_id, 'friendships.user_id' => current_user.id)
+
+    
+    puts "TO YAML!!!!!! "+temp.to_yaml
+    
+    return temp.nil? ? nil : temp
+  end
+
+
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil, provider)
     primary_user_data = access_token['info']
 
@@ -150,6 +168,5 @@ class User < ActiveRecord::Base
     params.delete(:current_password)
     self.update_without_password(params)
   end	
-
 
 end

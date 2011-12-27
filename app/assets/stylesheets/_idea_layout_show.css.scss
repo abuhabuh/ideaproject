@@ -113,9 +113,8 @@ $button-height: 20px;
 .idea-info {
   width: 898px;
   float:left;
-  border-style: solid;
-  border-width: 1px;
-//  margin: 2px;
+//  border-style: solid;
+//  border-width: 1px;
 }
 
 .idea-info-data {
@@ -127,7 +126,7 @@ $button-height: 20px;
 .idea-info-pic {
   float: left;
   width: 30%;
-  padding: 5px;
+  padding: 0px 5px 5px 0px;
 }
 
 .idea-info-pic img {
@@ -162,16 +161,60 @@ $button-height: 20px;
 .idea-user-block {
   float: left;
   width: 100%;
-  height: 150px;
+  height: 125px;
   overflow: auto;
+  margin-left: 10px;
   padding: 10px 0px;
+
+  background-color: #5c6985;
+  
 }
 
 .idea-user {
   float: left;
-  background-color:#CFC9D1;
+//  background-color:#CFC9D1;
   padding:5px;
-  width: 100px;
+  width: 150px;
   margin: 0px 8px 8px;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
+
+background: #e9f6fd; /* Old browsers */
+background: -moz-linear-gradient(top,  #e9f6fd 0%, #d3eefb 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e9f6fd), color-stop(100%,#d3eefb)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #e9f6fd 0%,#d3eefb 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #e9f6fd 0%,#d3eefb 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #e9f6fd 0%,#d3eefb 100%); /* IE10+ */
+background: linear-gradient(top,  #e9f6fd 0%,#d3eefb 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9f6fd', endColorstr='#d3eefb',GradientType=0 ); /* IE6-9 */
+  
 }
 
+.idea-people {
+  float: left;
+  padding: 5px 10px;
+  font-size: 16px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  background-color: #5c6985;
+
+}
+
+.idea-people:hover {
+  cursor:pointer;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+}

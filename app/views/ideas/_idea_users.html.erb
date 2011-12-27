@@ -1,0 +1,27 @@
+<div id="all-idea-users" class="idea-user-block">
+  <% @idea_users.each do |user|  %> 
+    <div class="idea-user">
+      <div style="float:left; width:50px; height:50px; overflow: hidden;">
+        <%= render :partial => '/users/profile_pic', :locals => {:current_user => user, :path => user_path(user.id), :makelink => !@read_only} %>
+      </div>
+      <div style="float: left; width:99px; margin-left: 1px;">
+        <%= user.first_name %> <%= user.last_name %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div id="friend-idea-users" class="idea-user-block hidden-div">
+  <% unless @idea_friends.nil? %>
+    <% @idea_friends.each do |user|  %> 
+      <div class="idea-user">
+        <div style="float:left; width:50px; height:50px; overflow: hidden;">
+          <%= render :partial => '/users/profile_pic', :locals => {:current_user => user, :path => user_path(user.id), :makelink => !@read_only} %>
+        </div>
+        <div style="float: left; width:99px; margin-left: 1px;">
+          <%= user.first_name %> <%= user.last_name %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+

@@ -32,13 +32,14 @@
   <div class='tags-user-input-block'>
     <%= form_tag add_tags_to_idea_path, :method => 'post', :remote => true, :id => 'JS_add_tags_form' do %>
       
-      <%= autocomplete_field_tag :tag_list, '', autocomplete_tag_name_tags_path, :"data-delimiter" => ', ', :size => 37 %>
+      <%= autocomplete_field_tag :tag_list, '', autocomplete_tag_name_tags_path, :"data-delimiter" => ', ', :size => 20 %>
       
       <!--<%= text_field_tag :tags, "", :size => 40 %>-->
       
       <%= submit_tag "Add Tags" %>
       <%= hidden_field_tag :idea_id, idea_id %>
     <% end %>
+    <br/>
   </div>
 
   <div id="<%=ID_TAG_VIEW_TAGS_SECTION%>" class='tags-view-block'>
