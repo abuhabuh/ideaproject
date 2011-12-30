@@ -16,13 +16,13 @@
     
     <!-- need to validate field for not empty -->
     <%= form_tag initial_idea_path, :method => 'post' do %>
-      <%= text_field_tag :idea, "", :size => 40 %><br />
+      <%= text_field_tag :idea, "", :size => 40 %><br /><br />
       <%= submit_tag "Submit" %>
     <% end %>
-
+<br/>
   </div>
   <div style="padding-top: 20px;">
-    Can't think of anything? Play <b><%= link_to 'the interest game', interest_match_path(:idea_set_number => 1) %></b> or take a peek at what <b><%= link_to 'other people are doing.', :authenticated_home %></b>
+    Can't think of anything? <br/><br/>Play <b><%= link_to 'the interest game', interest_match_path(:idea_set_number => 1) %></b> <br/>or<br/> take a peek at what <b><%= link_to 'other people are doing.', :authenticated_home %></b>
   </div>
 
   <br />
@@ -30,7 +30,7 @@
   <br />
   <div class="home-description-container">
     <div style="width:100%; float: left; text-align: center;">
-      <h3>What can you do on Earth Surf?</h3>
+      <h3>What can you do on MyOrbis?</h3>
     </div>
     <div class="home-description-hr">
       <hr /><br />

@@ -5,7 +5,7 @@
         <%= render :partial => '/users/profile_pic', :locals => {:current_user => user, :path => user_path(user.id), :makelink => !@read_only} %>
       </div>
       <div style="float: left; width:94px; margin-left: 1px;">
-        <%= user.first_name %> <%= user.last_name %>
+        <%= link_to user.first_name + ' '+user.last_name, user_path(user.id) %>
       </div>
     </div>
   <% end %>
@@ -18,7 +18,7 @@
           <%= render :partial => '/users/profile_pic', :locals => {:current_user => user, :path => user_path(user.id), :makelink => !@read_only} %>
         </div>
         <div style="float: left; width:94px; margin-left: 1px;">
-          <%= user.first_name %> <%= user.last_name %>
+          <%= link_to user.first_name + ' '+user.last_name, user_path(user.id) %>
         </div>
       </div>
     <% end %>
