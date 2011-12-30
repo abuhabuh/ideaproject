@@ -21,11 +21,13 @@
   <% end %>
 
   <div class='block-stream-element-description-block'>
+    <!--
     <div class='block-stream-element-description-owner-pic'>
       <%= render :partial => '/users/profile_pic', :locals => {:current_user => idea_owner, :path => user_path(idea_owner.id), :makelink => !@read_only} %>
     </div>
     <span class='block-stream-element-owner-name'><%=idea_owner.first_name %>:</span> &nbsp;<%=link_to idea.text, idea_path(idea.id), {:method => 'get'}%>
-    
+    -->
+    <span class='block-stream-element-owner-name'><%=link_to idea.text, idea_path(idea.id), {:method => 'get'}%>    
   </div>
 
   <hr/>
@@ -42,7 +44,7 @@
           </div>
         </div>
         <div class='block-stream-element-stats-block-text'>
-          Users sharing
+          &nbsp;Users
         </div>
       </div>
 
@@ -59,7 +61,7 @@
             <% end %>
           </div>
           <div class='block-stream-element-stats-block-text'>
-            Friends sharing
+            &nbsp;Friends
           </div>
       </div>
     </div>

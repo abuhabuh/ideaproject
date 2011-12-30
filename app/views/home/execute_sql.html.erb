@@ -1,0 +1,23 @@
+<%= form_tag execute_sql_path, :method => 'post' do %>
+  <%= text_area_tag :sql_statement, 'Enter SQL to execute (multiple statments accepted)', :size => "80x10"%>
+  <br/>
+  <%= submit_tag "Submit SQL" %>
+<% end %>
+
+<br/>
+<br/>
+<br/>
+
+Submitted sql: <%= @submitted_sql %> <br/>
+<br/>
+
+<% if @error_happened %>
+
+  Error executing sql query. <br/>
+  Error message: <%= @pgerror.message %> <br/>
+
+<% else %>
+
+  Execution successful!
+
+<% end %>

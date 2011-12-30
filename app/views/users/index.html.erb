@@ -1,22 +1,52 @@
-
 <div class='content-container'>
 
   <!-- TODO: also allow view users from facebook, g+ etc, also allow view groups -->
-  <div class='content-title'> Search Users </div>
+  <!--
+  <div class='content-title'> 
+
+    <%= form_tag users_path, :method => 'get' do %>
+      Search Users:
+      <%= text_field_tag :user_name, '', :size => "30" %>
+      <%= submit_tag "Search" %>
+      <div style='float:right;'><%= link_to 'view all', users_path(:user_name => '') %></div>
+    <% end %>
+
+  </div>
+-->
+  <br/>
 
   <div class='content-section'>
     <div class='content-header'>
-      Results:
+      Users:
     </div>
 
     <div class='user-stream-header-row'>
-      <div class='user-row-picture'>Picture</div>
-      <div class='user-row-text'>Name</div>
-      <div class='user-row-misc'>Action</div>
+      <div class='user-row-picture' style='height: 20px;'>Picture</div>
+      <div class='user-row-text' style='height: 20px;'>Name</div>
+      <div class='user-row-misc' style='height: 20px;'>Action</div>
     </div>
 
     <!-- renders the partial for each obj in @users collection -->
     <%= render :partial => "list_users", :collection => @users, :as => :user %>
+
+  </div>
+
+  <div>
+    <div style='float: left;'>
+      <% if @page_number > 1 %>
+        <u><%= link_to 'prev', users_path(:page_number => (@page_number-1)) %></u>
+      <% else %>
+        prev
+      <% end %>
+    </div>
+
+    <div style='float: right;'>
+      <% if @page_number < @num_total_pages %>
+        <u><%= link_to 'next', users_path(:page_number => (@page_number+1)) %></u>
+      <% else %>
+        next
+      <% end %>
+    </div>
 
   </div>
 

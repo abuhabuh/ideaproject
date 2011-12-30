@@ -40,14 +40,14 @@
 .block-stream-element-container, .block-stream-element-container-normal{
   float: left;
 
-  width: 220px;
+  width: 260px;
   margin: 15px; /* need to use pixels because masonry tiling does something that kills percentage margins in Chrome */
   padding-bottom: 5px;
 
   font-size: 12px;
 }
 .block-stream-element-container-normal{
-  height: 345px; /* limit height to normalize */
+  height: 335px; /* limit height to normalize */
 }
 .block-stream-element-container-normal .block-stream-element-description-block{
   max-height: 36px; /* limit height to normalize */
@@ -69,7 +69,7 @@
 }
 
 .block-stream-element-picture-normal{
-  height: 172px;
+  height: 159px;
 }
 
 .block-stream-element-picture img, .block-stream-element-picture-normal img{
@@ -140,20 +140,23 @@
   float: left;
   width: 100%; 
   margin: 2% 0%;
-  background-color: $stats-block-background-color;
 }
 
 .block-stream-element-stats-block-number{
   margin: 0% 5%;
           
   float: left;
-  font-size: 26px;
+  padding-top: 8px;
+  font-size: 17px;
   font-weight: bold;
   color: $stats-block-number-color;
 }
 
 .block-stream-element-stats-block-text{
   float: left;
+
+  font-size: 14px;
+  padding-top: 8px;
 
   margin: 2% 0%;
 }

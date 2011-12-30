@@ -45,6 +45,10 @@ IdeaApp::Application.routes.draw do
         :as => :next_ideas_batch_js, :via => 'GET'
   match 'home/session_timeout', :to => 'home#session_timeout',
         :as => :session_timeout, :via => 'GET'
+  match 'home/execute_sql', :to => 'home#execute_sql',
+        :as => :execute_sql, :via => 'GET'
+  match 'home/execute_sql', :to => 'home#execute_sql',
+        :as => :execute_sql, :via => 'POST'
 
   match 'users', :to => 'users#index',
         :as => :users, :via => 'GET'

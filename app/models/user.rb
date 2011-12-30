@@ -40,6 +40,16 @@ class User < ActiveRecord::Base
     :description, :interests, :profile_pic_file_name, :auth_page_layout
   validates_presence_of :email, :first_name, :last_name, :user_name
 
+  searchable do
+    text :first_name
+    text :last_name
+  end
+
+
+  ########################################
+  # METHODS
+  ########################################
+
   # Create new idea object for user
   def create_idea (idea_string)
 

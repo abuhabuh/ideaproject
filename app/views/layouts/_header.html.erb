@@ -4,11 +4,11 @@
     $(document).ready(function(){
 
       $('#JQUERY-add-ideas-link').bind('click', function() {
-        if ($('#JQUERY-add-ideas-section').css('display') == "none"){
-          $('#JQUERY-add-ideas-section').show(300);
+        if ($('#JQUERY-search-ideas-section').css('display') == "none"){
+          $('#JQUERY-search-ideas-section').show(300);
           $('#idea').focus();
         } else {
-          $('#JQUERY-add-ideas-section').hide(300);
+          $('#JQUERY-search-ideas-section').hide(300);
         }
         return false;
       });
@@ -42,19 +42,18 @@
     <div class='main-header-center-content-container'>
       <% if user_signed_in? %>
         <div class='main-header-center-content'>
-            <div class='stream-search-field-and-button'>
-              <%= form_tag authenticated_home_path, :method => :get do %>
-                <% if params[:search].blank? %>
-                  <%= text_field_tag :search, '', :size => "37" %>
-                <% else %>
-                  <%= text_field_tag :search, params[:search], :size => "37" %>
-                <% end %>        
-                <%= submit_tag "Search", :name => nil %>
-                
-                <input type="hidden" name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
-              <% end %>
-            </div>
-                
+
+          <div class='stream-add-idea-field-and-button'>
+            <%= form_tag add_idea_path, :method => 'post' do %>
+              <% if @initial_idea_string.nil? || @initial_idea_string.blank? %>
+                <%= text_field_tag :idea, INPUT_BOX_ADD_IDEA, :size => "40" %>
+              <% else %>
+                <%= text_field_tag :idea, @initial_idea_string, :size => "40" %>
+              <% end %>      
+              <%= submit_tag "Add Idea" %>
+            <% end %>
+          </div>
+
           <div class='idea-stream-content-view-selector'>
             <span class='header-text'>View Ideas: </span>
             <% case session[:stream_view] %>
@@ -95,7 +94,7 @@
           <% if user_signed_in? %>
             <span class='header-text'>Hello <%= link_to current_user.first_name.empty? ? current_user.user_name : current_user.first_name, users_profile_path, {:class => 'header-text'} %> </span>
             <br/>
-            <a href='#' id='JQUERY-add-ideas-link', class='header-text'>Add Ideas</a> | 
+            <a href='#' id='JQUERY-add-ideas-link', class='header-text'>Search Ideas</a> | 
             <a href='#' id='JQUERY-nav-link', class = 'header-text'>Navigation</a> | 
             <%= link_to 'Logout', destroy_user_session_path, :method => :delete, :class => 'header-text' %>
           <% else %>
@@ -132,14 +131,17 @@
   <%= link_to 'My Ideas & Profile', users_profile_path%>
 </div>
 
-<div id='JQUERY-add-ideas-section' class='main-header-drop-down-container hidden-div'>
-  <%= form_tag add_idea_path, :method => 'post' do %>
-    <% if @initial_idea_string.nil? || @initial_idea_string.blank? %>
-      <%= text_field_tag :idea, INPUT_BOX_ADD_IDEA, :size => "40" %>
+<div id='JQUERY-search-ideas-section' class='main-header-drop-down-container hidden-div'>
+  <%= form_tag authenticated_home_path, :method => :get do %>
+    <% if params[:search].blank? %>
+      <%= text_field_tag :search, '', :size => "37" %>
     <% else %>
-      <%= text_field_tag :idea, @initial_idea_string, :size => "40" %>
-    <% end %>      
-    <%= submit_tag "Add Idea" %>
+      <%= text_field_tag :search, params[:search], :size => "37" %>
+    <% end %>        
+    <%= submit_tag "Search", :name => nil %>
+    
+    <input type="hidden" name="stream_view" value='<%=STREAM_VIEW_SEARCH%>' />
   <% end %>
 </div>
+
 

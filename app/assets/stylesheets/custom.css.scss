@@ -224,11 +224,10 @@ header{
 
 /* Centering container to center all page content */
 .center-container{
-  //width: 100%;
-  //max-width: 960px; /* fixing max and min width for now so elements are centered */
-  //min-width: 300px;
-  //width: 900px;
-  //height: 100%;
+  width: 100%;
+  max-width: 960px; /* fixing max and min width for now so elements are centered */
+  min-width: 300px;
+  height: 100%;
   
   margin-left: auto;
   margin-right: auto;
@@ -242,16 +241,14 @@ header{
    Called in application.html.erb
  */
 .container {
+  width: 900px;
+  height: 100%; /* needs to inherit down to child elements */
+  
   margin-left: auto;
   margin-right: auto;
   
-  width: 980px;
-  height: 100%; /* needs to inherit down to child elements */
-  
   border-style:solid;
   border-width: 0px;
-  
-  //float: left;
 }
 
 /* Main header nav div for logo and session / profile mgmt */
@@ -589,10 +586,11 @@ nav.main-authentication ul li a:hover {
   border-width: 0px;
 }
 */
-.stream-search-field-and-button{
+.stream-add-idea-field-and-button{
   float: left;
-  //width: 100%;
+  width: 100%;
   padding: 0% 8%;
+  margin-bottom: 5px;
 }
 
 .idea-stream-header-row{
@@ -814,7 +812,7 @@ p.alert{
 #AJAX_main_stream_content{ /* TODO: rename to block-stream-container or something relevant, but this will need to be referenced by JQUERY function */
   float: left;
   
-  width: 85%;
+  width: 100%;
 }
 
 /*********************************

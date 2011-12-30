@@ -7,25 +7,6 @@
       ideas with matching tags.
 -->
 
-<% content_for :head do %>
-  <script type="text/javascript">
-
-    $(document).ready(function(){
-      // count how many tags there are. if > max allowed, don't submit
-      $("#JS_add_tags_form").submit( function(){
-        if ($(".tag-element-container").length >= <%= NUM_TAGS_PER_USER_PER_IDEA %>){
-          alert("Maximum number of tags per user is 5. You can delete a tag to create a new one.");
-          return false;
-        }
-        return true;
-      });      
-    });
-
-  </script>
-<% end %>
-
-
-
 
 <div class='tags-container'>
 

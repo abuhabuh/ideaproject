@@ -1,3 +1,5 @@
+require 'pg'
+
 class HomeController < ApplicationController
 
   def index
@@ -30,7 +32,6 @@ class HomeController < ApplicationController
       
       selected_ideas = Idea.find(session[:ideas_picked])
       selected_ideas.each do |idea|
-        puts "====> " + idea.id.to_s + " : " + idea.text
         idea.tag_counts.each do |new_tag|
           tags << new_tag
         end
@@ -251,7 +252,26 @@ class HomeController < ApplicationController
   end
 
   def session_timeout
+
   end
+
+  def execute_sql
+    
+    if params[:sql_statement] && !params[:sql_statement].blank?
+      @submitted_sql = params[:sql_statement]
+      @error_happened = false
+
+      begin
+        ActiveRecord::Base.connection.execute(@submitted_sql)
+      rescue Exception => e
+        @error_happened = true
+        @pgerror = e
+      end
+    end
+
+  end
+
+
   ######################################################
   ## BEGIN PRIVATE METHODS
   ######################################################
