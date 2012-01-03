@@ -47,7 +47,7 @@
   font-size: 12px;
 }
 .block-stream-element-container-normal{
-  height: 335px; /* limit height to normalize */
+  height: 325px; /* limit height to normalize */
 }
 .block-stream-element-container-normal .block-stream-element-description-block{
   max-height: 36px; /* limit height to normalize */
@@ -185,6 +185,8 @@
 .block-stream-element-already-done-it {
   float: left;
   width: 92%;
+
+  margin-top: 8px;
   padding: 0% 4%;
 
   text-align: right;
