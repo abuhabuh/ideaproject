@@ -143,7 +143,7 @@
       </span>
 
       <% if @curr_user_idea_link.nil? %>
-        <div style="height: 100%">
+        <div class='idea-add'>
           <%= link_to_readonly @read_only, BUTTON_JOIN_IDEA, join_idea_from_idea_view_path(:idea_id => @idea.id, :idea_assc_type => IDEA_ASSC_ADD_IDEA), {:method => 'post'} %>
         </div>
         
